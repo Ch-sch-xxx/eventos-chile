@@ -1,0 +1,163 @@
+/* Variables globales */
+:root {
+    --primario: #FF6F61;
+    --fondo: #F2E9E4;
+    --texto: #333333;
+    --secundario: #4A4E69;
+}
+
+/* Reset y base */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+body {
+    font-family: Arial, sans-serif;
+    background: var(--fondo);
+    color: var(--texto);
+}
+
+/* Header */
+header {
+    background: var(--secundario);
+    color: white;
+    padding: 1rem;
+}
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.perfil {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.perfil img {
+    width: 32px;
+    height: 32px;
+}
+.perfil ul {
+    list-style: none;
+    display: flex;
+    gap: 0.5rem;
+}
+.perfil a {
+    color: white;
+    text-decoration: none;
+}
+
+/* Layout */
+.layout {
+    display: flex;
+    margin-top: 1rem;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 200px;
+    background: white;
+    padding: 1rem;
+    border-right: 1px solid #ccc;
+}
+.sidebar h2 {
+    margin-bottom: 1rem;
+    color: var(--secundario);
+}
+.sidebar ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+.sidebar a {
+    color: var(--texto);
+    text-decoration: none;
+}
+.sidebar a:hover {
+    color: var(--primario);
+}
+
+/* Contenido admin */
+.admin-content {
+    flex: 1;
+    padding: 1rem;
+}
+section {
+    background: white;
+    padding: 1rem;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Formulario crear */
+#form-crear {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+#form-crear label {
+    font-weight: bold;
+}
+#form-crear input,
+#form-crear select {
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+#form-crear button {
+    align-self: flex-start;
+    background: var(--primario);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+}
+#form-crear button:hover {
+    opacity: 0.9;
+}
+
+/* Tabla listar */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+th, td {
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+th {
+    background: var(--primario);
+    color: white;
+}
+.btn-ver {
+    background: var(--primario);
+    color: white;
+    border: none;
+    padding: 0.3rem 0.6rem;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.btn-ver:hover {
+    opacity: 0.9;
+}
+
+/* Oculta sección */
+.oculto {
+    display: none;
+}
+
+/* Responsive móvil */
+@media (max-width: 768px) {
+    .layout {
+        flex-direction: column;
+    }
+    .sidebar {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid #ccc;
+    }
+}
