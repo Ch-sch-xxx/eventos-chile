@@ -5,6 +5,16 @@
     --texto: #333333;
 }
 
+/* Responsive para móviles */
+@media (max-width: 768px) {
+    nav ul {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    #destacado { padding: 1rem; }
+    #nosotros { margin: 0.5rem; padding: 1rem; }
+}
+
 body {
     margin: 0;
     font-family: Arial, sans-serif;
@@ -29,22 +39,22 @@ nav a {
     text-decoration: none;
 }
 
-#hero {
+#destacado {
     text-align: center;
     padding: 2rem;
 }
 
-/* CSS que hace la magia en section HERO */
-.hero-opcion {
+/* CSS que hace la magia en section DESTACADO */
+.destacado-opcion {
     position: relative;
     color: transparent; /* Oculta el texto original */
 }
 
-.hero-opcion::after {
+.destacado-opcion::after {
     position: absolute;
     left: 0;
     color: var(--primario);
-    content: "presenciales";
+    content: "PRESENCIALES";
     animation: cambiarTexto 6s infinite;
     font-weight: bold;
     text-transform: uppercase;
@@ -56,7 +66,7 @@ nav a {
     66%, 100% { content: "QR"; }
 }
 
-#hero a {
+#destacado a {
     display: inline-block;
     background: var(--primario);
     color: white;
