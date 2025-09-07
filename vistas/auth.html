@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Eventos Chile · Autenticación</title>
+    <link rel="stylesheet" href="../estructura/css/style_auth_admin.css">
+</head>
+<body>
+
+<!-- Header semántico con logo y nav -->
+<header>
+    <h1>Eventos Chile</h1>
+    <nav>
+        <ul>
+            <li><a href="inicio.html">Inicio</a></li>
+            <li><a href="eventos.html">Eventos</a></li>
+        </ul>
+    </nav>
+</header>
+
+<!-- Main: contenedor de formularios login/registro -->
+<main>
+    <section class="auth-contenedor">
+        <!-- Formulario de Login -->
+        <form id="login" class="auth-form">
+            <h2>Iniciar sesión</h2>
+            <label for="login-email">Email</label>
+            <input type="email" id="login-email" required placeholder="correo@dominio.cl">
+            <label for="login-password">Contraseña</label>
+            <input type="password" id="login-password" required minlength="4" maxlength="20" placeholder="Contraseña">
+            <button type="submit" id="logueado"><a href="administrador.html">Entrar</a></button>
+            <p>¿No tienes cuenta? <a href="#" id="link-register">Regístrate</a></p>
+        </form>
+
+        <!-- Formulario de Registro -->
+        <form id="register" class="auth-form oculto">
+            <h2>Registro</h2>
+            <label for="register-name">Nombre completo</label>
+            <input type="text" id="register-name" required placeholder="Tu nombre">
+            <label for="register-email">Email</label>
+            <input type="email" id="register-email" required placeholder="correo@dominio.cl">
+            <label for="register-password">Contraseña</label>
+            <input type="password" id="register-password" required minlength="8" maxlength="20" placeholder="Contraseña">
+            <label for="register-region">Región</label>
+            <select id="register-region" required>
+                <option value="">Selecciona región</option>
+                <option>Región Metropolitana</option>
+                <option>Valparaíso</option>
+                <option>Biobío</option>
+                <option>O’Higgins</option>
+            </select>
+            <label for="register-comuna">Comuna</label>
+            <select id="register-comuna" required>
+                <option value="">Selecciona comuna</option>
+                <option>Santiago</option>
+                <option>Providencia</option>
+                <option>Viña del Mar</option>
+                <option>Concepción</option>
+            </select>
+            <button type="submit">Registrar</button>
+            <p>¿Ya tienes cuenta? <a href="#" id="link-login">Inicia sesión</a></p>
+        </form>
+    </section>
+</main>
+
+<!-- Footer semántico con contacto y navegación -->
+<footer>
+    <p>Contacto: <a href="mailto:eventoschile@gmail.com">eventoschile@gmail.com</a></p>
+    <p><a href="inicio.html">Volver a Inicio</a></p>
+</footer>
+
+<!-- Script mínimo para alternar formularios -->
+<script src="../estructura/js/auth.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Panel Administrador · Eventos Chile</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../estructura/css/style_administrador.css">
+</head>
+<body>
+
+<!-- Header: logo y menú de perfil -->
+<header>
+    <div class="header-content">
+        <h1>Eventos Chile</h1>
+        <div class="perfil">
+            <img src="../estructura/imagenes/ICONOperfil.png" alt="Perfil">
+            <ul>
+                <li><a href="#">Perfil</a></li>
+                <li><a href="inicio.html">Cerrar sesión</a></li>
+            </ul>
+        </div>
+    </div>
+</header>
+
+<!-- barra lateral + contenido (Proximos eventos) -->
+<div class="layout">
+    <!-- Barra lateral: opciones CRUD -->
+    <aside class="sidebar">
+        <h2>Eventos</h2>
+        <ul>
+<!--                CRUD EVENTOS    -->
+            <li><a href="#" id="nav-crear">Crear Evento</a></li>
+            <li><a href="#" id="nav-listar">Listar Eventos</a></li>
+            <li><a href="#" id="nav-editar">Editar Evento</a></li>
+            <li><a href="#" id="nav-eliminar">Eliminar Evento</a></li>
+        </ul>
+    </aside>
+
+    <!-- Área de contenido: lista o formulario -->
+    <main class="admin-content">
+        <!-- Sección Crear Evento (oculta inicialmente) -->
+        <section id="crear-evento" class="oculto">
+            <h2>Crear Evento</h2>
+            <form id="form-crear">
+                <label for="titulo">Título</label>
+                <input id="titulo" type="text" required>
+                <label for="fecha">Fecha</label>
+                <input id="fecha" type="date" required>
+                <label for="lugar">Lugar</label>
+                <input id="lugar" type="text" required>
+                <label for="tipo">Tipo</label>
+                <select id="tipo" required>
+                    <option value="">Selecciona tipo</option>
+                    <option>Presencial</option>
+                    <option>Streaming</option>
+                    <option>Consumo</option>
+                </select>
+                <button type="submit">Crear</button>
+            </form>
+        </section>
+
+        <!-- Sección Listar Eventos (visible por defecto) -->
+        <section id="listar-eventos">
+            <h2>Mis Eventos</h2>
+            <table>
+                <thead>
+                <tr>
+                    <th>Título</th>
+                    <th>Fecha</th>
+                    <th>Lugar</th>
+                    <th>Tipo</th>
+                    <th>Acciones</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Evento de Prueba</td>
+                    <td>2025-09-10</td>
+                    <td>Santiago</td>
+                    <td>Presencial</td>
+                    <td><button class="btn-ver">Ver</button></td>
+                </tr>
+                <!-- agregar filas aquí -->
+                </tbody>
+            </table>
+        </section>
+    </main>
+</div>
+
+<script src="../estructura/js/administrador.js"></script>
+</body>
+</html>
