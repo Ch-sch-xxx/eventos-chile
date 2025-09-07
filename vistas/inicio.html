@@ -1,14 +1,58 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eventos Chile · Inicio</title>
+    <!-- Enlace a hoja de estilos -->
+    <link rel="stylesheet" href="../estructura/css/style_inicio.css">
 </head>
 <body>
 
+<!-- Header: logo y navegación principal -->
+<header>
+    <h1>Eventos Chile</h1>
+    <nav>
+        <ul>
+            <!-- Hipervínculos direccionables(cambios de pagina) -->
+            <li><a href="inicio.html">Inicio</a></li>
+            <li><a href="eventos.html">Eventos</a></li>
+            <li><a href="auth.html">Iniciar sesión</a></li>
+        </ul>
+    </nav>
+</header>
+
+<!-- Main: contenido principal de la página -->
+<main>
+    <!-- Sección destacada: bienvenida y llamada a la acción(mensaje llamativo) -->
+    <section id="destacado">
+        <h2>Bienvenido a Eventos Chile</h2>
+        <p>Descubre, crea y gestiona tus eventos <span class="destacado-opcion">presenciales</span></p>
+        <!-- Botón que redirige a la lista de eventos -->
+        <a href="eventos.html">Ver eventos</a>
+    </section>
+
+    <!-- Sección "Nosotros": información sobre la plataforma -->
+    <section id="nosotros">
+        <h2>¿Quiénes somos?</h2>
+        <p>
+            Plataforma chilena dedicada a facilitar la organización y confirmación de asistencia
+            a todo tipo de eventos. Con nosotros puedes crear eventos presenciales, en streaming
+            o generar acceso por QR.
+        </p>
+    </section>
+
+</main>
+
+<!-- Footerr: información de contacto y enlaces informativos -->
+<footer>
+    <p id="contacto">Contacto: <a id="mail" href="mailto:eventoschile@gmail.com"> <!-- funcion de enviar mail incluida(instant click)-->
+        eventoschile@gmail.com
+    </a></p>
+    <p><a id="Ftnosotros" href="#nosotros">Acerca de Nosotros</a></p>
+</footer>
+
+<!-- Agregar scripts JS futuros aquí -->
 
 </body>
 </html>

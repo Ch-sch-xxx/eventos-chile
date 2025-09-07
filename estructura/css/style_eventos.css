@@ -1,0 +1,108 @@
+:root {
+    --primario: #FF6F61;
+    --fondo: #F2E9E4;
+    --texto: #333333;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: var(--fondo);
+    color: var(--texto);
+}
+
+/* Header y footer (estructura) */
+header, footer {
+    background: #4A4E69;
+    color: white;
+    padding: 1rem;
+}
+
+/*(footer para el texto) igual que el inicio.html*/
+#contacto {
+    margin: 0.3rem 0;
+    color: #ffffff;
+    text-decoration: none;
+}
+#mail {
+    margin: 0.3rem 0;
+    color: #0ab0c0;
+}
+#Ftnosotros {
+    color: #0ab0c0;
+}
+nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: end;
+    gap: 1rem;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+}
+
+/* Sección de eventos con grid responsive */
+.eventos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+    padding: 1rem;
+}
+
+/* Cada tarjeta de evento */
+.Tarjetas {
+    background: white;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    padding: 1rem;
+}
+
+/*atributos de la tarjeta*/
+.Tarjetas img {
+    width: 100%;
+    height: auto;
+}
+
+.Tarjetas h3 {
+    margin: 0.5rem 0;
+}
+
+.Tarjetas p {
+    margin: 0.5rem 0;
+    font-size: 0.9rem;
+}
+/*imagen de tarjeta formato cuadrado*/
+#imgEventoTarjeta, #imgEventoTarjeta2 {
+    width: 60%;
+    height: auto;
+}
+
+/* Botón de asistencia */
+.btn-asistir {
+    background: var(--primario);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-asistir:hover {
+    opacity: 0.9;
+}
+
+/* Responsive para móvil */
+@media (max-width: 600px) {
+    nav ul {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .eventos {
+        grid-template-columns: 1fr;
+    }
+}
