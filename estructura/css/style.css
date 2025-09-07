@@ -24,15 +24,6 @@
     background: rgb(212, 138, 0);
 }
 
-/* Loader oculto cuando termina la carga */
-#loader {
-    transition: opacity 3.0s;
-}
-#loader.oculto {
-    opacity: 0;
-    pointer-events: none;
-    visibility: hidden;
-}
 
 
 
