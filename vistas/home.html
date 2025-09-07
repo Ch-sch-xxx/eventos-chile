@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Eventos Chile</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <!-- Tu CSS personalizado -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animate.min.css">
+
+</head>
+<body>
+<!-- Loader -->
+<div id="loader" style="position:fixed;top:0;left:0;width:100vw;height:100vh;background:#fff;z-index:9999;display:flex;align-items:center;justify-content:center;">
+    <img src="imagenesloader-animation.gif" alt="Cargando...">
+</div>
+
+
+<!-- Barra de navegación principal -->
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+
+        <!-- Logo y botón responsive -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-navbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <div class="logo-navbar">    
+                <img src="imagenes/Logoeventoschile.png" alt="Logo">
+            </div>
+        </div>
+        <!-- Enlaces de navegación -->
+        <div class="collapse navbar-collapse" id="main-navbar">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="home.html">Home</a></li>
+                <li><a href="#acerca">Acerca</a></li>
+                <li><a href="#menu">Perfil</a></li>
+                <li><a href="auth.html">Iniciar sesion</a></li>
+                
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="texto_menu">
+    <h2 class="animated fadeInDown delay-1s">Eventos Chile</h2>
+    <h4 class="animated fadeIn delay-2s">eventos publicos y privados</h4>
+    <p class="animated fadeIn delay-3s">Empieza a crear eventos o unete a ellos ya</p>
+    <a href="auth.html" class="btn btn-warning btn-lg animated bounceIn delay-4s">Comenzar</a>
+</div>
+
+
+<!-- Esto es para la pantalla de carga -->
+<script>
+window.addEventListener('load', function() {
+    setTimeout(function() {
+        document.getElementById('loader').classList.add('oculto');
+    }, 500); // cada 1000 ms son 1 segundo. aqui estoy diciendo que le tome 0.5 segundos en cargar
+});
+</script>
+</body>
+</html>
+
+

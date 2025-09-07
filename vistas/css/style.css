@@ -1,0 +1,96 @@
+/*Barra del nav*/
+.navbar {
+    background-color: #1b1f0b;
+    border-bottom: 5px solid #eaeaea;
+    box-shadow: 0 2px 8px rgba(238, 227, 5, 0.785);
+    font-family: 'Montserrat', Arial, sans-serif;
+}
+
+.navbar-brand img {
+    height: 30px;
+    margin-top: 5px;
+}
+/*se supone que esto sirve para agregar animaciones mas bonitas para el var pero sigo sin comprenderlas del todo */
+.navbar-nav > li > a {
+    color: rgb(240, 240, 240);
+    font-weight: 600;
+    padding: 18px 20px;
+    transition: color 0.9s;
+}
+ /*Esto sirve para colocar efectos al pasar el puntero del mouse sobre los puntos. pero no funciona como quiero xd */
+.navbar-nav > li > a:hover,
+.navbar-nav > li.active > a {
+    color: rgb(150, 97, 6);    
+    background: rgb(212, 138, 0);
+}
+
+/* Loader oculto cuando termina la carga */
+#loader {
+    transition: opacity 3.0s;
+}
+#loader.oculto {
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
+}
+
+
+
+.navbar-toggle {
+    border: none;
+    background: transparent;
+}
+  /*tamaño y margen del nav */
+.logo-navbar img {
+    height: 80px;      /* Ajusta el tamaño del logo */   
+    margin-top: -10px; /* Centra verticalmente */
+    border-radius: 0px;
+    margin-left: -200px; /* Ajusta el margen izquierdo */
+
+}
+
+
+
+
+
+/*home.html*/
+
+.texto_menu {
+    color: rgb(18, 17, 17);
+    text-align: center;
+    margin-top: 20%;
+    font-style: italic;
+}
+
+.texto_menu {
+  background-image: url('imagenes/Fondopagina.png');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  padding: 50px 20px;
+  color: rgb(18, 17, 17);
+  text-align: center;
+  margin-top: 20%;
+  font-style: italic;
+}
+
+
+
+
+
+
+
+
+
+
+/*auth.html*/
+.formulario {
+    max-width: 400px;
+    margin: 200px auto 0 auto; /* Centrado horizontal y margen superior */
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    ;
+}
+
