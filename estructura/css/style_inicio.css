@@ -5,16 +5,6 @@
     --texto: #333333;
 }
 
-/* Responsive para móviles */
-@media (max-width: 768px) {
-    nav ul {
-        flex-direction: column;
-        gap: 0.5rem;
-    }
-    #destacado { padding: 1rem; }
-    #nosotros { margin: 0.5rem; padding: 1rem; }
-}
-
 body {
     margin: 0;
     font-family: Arial, sans-serif;
@@ -27,10 +17,23 @@ header, footer {
     color: white;
     padding: 1rem;
 }
-
+#contacto {
+    margin: 0.3rem 0;
+    color: #ffffff;
+    text-decoration: none;
+}
+#mail {
+    margin: 0.3rem 0;
+    color: #0ab0c0;
+}
+#Ftnosotros {
+    margin: 0.3rem 0;
+    color: #0ab0c0;
+}
 nav ul {
     list-style: none;
     display: flex;
+    justify-content: end;
     gap: 1rem;
 }
 
@@ -60,6 +63,7 @@ nav a {
     text-transform: uppercase;
 }
 
+
 @keyframes cambiarTexto {
     0%, 32%   { content: "PRESENCIALES"; }
     33%, 65%  { content: "STREAMING"; }
@@ -81,11 +85,14 @@ nav a {
     margin: 1rem;
 }
 
-footer p, footer a {
-    margin: 0.3rem 0;
-    color: white;
-    text-decoration: none;
+/* Responsive para móvil */
+@media (max-width: 768px) {
+    nav ul {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    #destacado { padding: 1rem; }
+    #nosotros { margin: 0.5rem; padding: 1rem; }
 }
-
 
 
