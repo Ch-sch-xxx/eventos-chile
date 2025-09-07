@@ -1,0 +1,98 @@
+:root {             /* VARIABLES A REUTILIZAR */
+    --primario: #FF6F61;
+    --secundario: #4A4E69;
+    --fondo: #F2E9E4;
+    --texto: #333333;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: var(--fondo);
+    color: var(--texto);
+}
+
+header, footer {
+    background: var(--secundario);
+    color: white;
+    padding: 1rem;
+}
+#contacto {
+    margin: 0.3rem 0;
+    color: #ffffff;
+    text-decoration: none;
+}
+#mail {
+    margin: 0.3rem 0;
+    color: #0ab0c0;
+}
+#Ftnosotros {
+    margin: 0.3rem 0;
+    color: #0ab0c0;
+}
+nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: end;
+    gap: 1rem;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+}
+
+#destacado {
+    text-align: center;
+    padding: 2rem;
+}
+
+/* CSS que hace la magia en section DESTACADO */
+.destacado-opcion {
+    position: relative;
+    color: transparent; /* Oculta el texto original */
+}
+
+.destacado-opcion::after {
+    position: absolute;
+    left: 0;
+    color: var(--primario);
+    content: "PRESENCIALES";
+    animation: cambiarTexto 6s infinite;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+
+@keyframes cambiarTexto {
+    0%, 32%   { content: "PRESENCIALES"; }
+    33%, 65%  { content: "STREAMING"; }
+    66%, 100% { content: "QR"; }
+}
+
+#destacado a {
+    display: inline-block;
+    background: var(--primario);
+    color: white;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    border-radius: 4px;
+}
+
+#nosotros {
+    padding: 1.5rem;
+    background: white;
+    margin: 1rem;
+}
+
+/* Responsive para móvil */
+@media (max-width: 768px) {
+    nav ul {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    #destacado { padding: 1rem; }
+    #nosotros { margin: 0.5rem; padding: 1rem; }
+}
+
+

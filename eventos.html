@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Eventos Chile · Eventos</title>
+    <!-- Hoja de estilos propia para eventos -->
+    <link rel="stylesheet" href="css/style_eventos.css">
+</head>
+<body>
+
+<!-- Header compartido con index.html -->
+<header>
+    <h1>Eventos Chile</h1>
+    <nav>
+        <ul>
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="eventos.html">Eventos</a></li>
+            <li><a href="auth.html">Iniciar sesión</a></li>
+        </ul>
+    </nav>
+</header>
+
+<!-- Main: listado de eventos -->
+<main>
+    <section class="eventos">
+        <!-- Cada evento es un artículo con clase “Tarjetas” -->
+        <article class="Tarjetas">
+            <!-- Imagen placeholder -->
+            <img id="imgEventoTarjeta" src="imagenes/eventosIMG.png" alt="Imagen evento">
+            <!-- Título del evento -->
+            <h3>Nombre del Evento 1</h3>
+            <!-- Fecha y lugar -->
+            <p>Fecha: 10/09/2025<br>Lugar: Santiago</p>
+            <!-- Botón para confirmar asistencia -->
+            <button class="btn-asistir">Asistir al Evento</button>
+        </article>
+
+        <article class="Tarjetas">
+            <img id="imgEventoTarjeta2" src="imagenes/eventosIMG.png" alt="Imagen evento">
+            <h3>Nombre del Evento 2</h3>
+            <p>Fecha: 12/09/2025<br>Lugar: Valparaíso</p>
+            <button class="btn-asistir">Asistir al Evento</button>
+        </article>
+
+        <!-- Agrega más <article> según necesidad(usar misma estructura)-->
+    </section>
+</main>
+
+<!-- Footer compartido con index.html -->
+<footer>
+    <p id="contacto">Contacto: <a id="mail" href="mailto:eventoschile@gmail.com"> <!-- funcion de enviar mail incluida(instant click)-->
+        eventoschile@gmail.com
+    </a></p>
+    <p><a id="Ftnosotros" href="index.html">Acerca de Nosotros</a></p>
+</footer>
+
+<!-- JS basico, interacción de botones -->
+<script SRC="js/eventos_interaccion.js"></script>
+
+</body>
+</html>
