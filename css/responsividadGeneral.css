@@ -1,0 +1,239 @@
+/* responsive.css - Responsividad global para todas las páginas
+   Aplicando enfoque mobile-first con comentarios y orden lógico */
+
+/* ========== VARIABLES DE BREAKPOINTS ========== */
+:root {
+    --bp-mobile: 480px;   /* Moviles pequeños */
+    --bp-tablet: 768px;   /* Tablets y móviles grandes */
+    --bp-laptop: 1024px;  /* Laptops y pantallas medianas */
+    --bp-desktop: 1280px; /* Desktop y pantallas grandes */
+}
+
+/* ========== ESTILOS BASE PARA MOBILE (DEFAULT) ========== */
+
+/* Navegación vertical para móviles */
+nav ul {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding-left: 0;
+    margin: 0;
+    list-style: none;
+}
+
+/* Contenedores principales con padding */
+main {
+    padding: 1rem;
+}
+
+/* Contenedor de formularios auth */
+.auth-contenedor {
+    margin: 1rem;
+    padding: 1rem;
+    background: white;
+    border-radius: 4px;
+}
+
+/* Tablas adaptadas para mobile y fuente más pequeña */
+table {
+    font-size: 0.8rem;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+/* Botones full-width para mejor accesibilidad táctil */
+button, .btn {
+    width: 100%;
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+}
+
+/* ========== ESTILOS PARA TABLET Y SUPERIOR (min-width: 768px) ========== */
+@media (min-width: 768px) {
+    /* Navegación horizontal para pantallas medianas */
+    nav ul {
+        flex-direction: row;
+        gap: 1rem;
+    }
+
+    /* Mayor padding en los contenedores */
+    main {
+        padding: 1.5rem;
+    }
+
+    /* Formularios más centrados y con ancho máximo */
+    .auth-contenedor {
+        margin: 2rem auto;
+        max-width: 500px;
+    }
+
+    /* Botones en ancho ajustado y en línea */
+    button, .btn {
+        width: auto;
+        display: inline-block;
+    }
+
+    /* Tablas fuente más legible */
+    table {
+        font-size: 1rem;
+    }
+}
+
+/* ========== ESTILOS PARA LAPTOP Y SUPERIOR (min-width: 1024px) ========== */
+@media (min-width: 1024px) {
+    /* Layout máximo ancho para contenido principal */
+    main {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem;
+    }
+
+    /* Formularios ligeramente más anchos */
+    .auth-contenedor {
+        max-width: 600px;
+    }
+
+    /* Headers con más espacio */
+    header {
+        padding: 1.5rem;
+    }
+
+    /* Contenedor header con centrado útil para admin */
+    .header-content {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+}
+
+/* ========== ESTILOS PARA DESKTOP GRANDE (min-width: 1280px) ========== */
+@media (min-width: 1280px) {
+    main {
+        max-width: 1400px;
+        padding: 3rem;
+    }
+
+    .auth-contenedor {
+        max-width: 700px;
+    }
+}
+
+/* ========== ESTILOS PARA COMPONENTES ESPECÍFICOS ========== */
+
+/* Eventos: grid responsive con columnas fluidas */
+/* Mobile: una columna */
+@media (max-width: 767px) {
+    .eventos {
+        display: grid !important;
+        grid-template-columns: 1fr !important;
+        gap: 1rem;
+    }
+}
+
+/* Tablet: dos columnas */
+@media (min-width: 768px) and (max-width: 1023px) {
+    .eventos {
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 1rem;
+    }
+}
+
+/* Layout admin responsive */
+/* Mobile: sidebar arriba, contenido abajo */
+@media (max-width: 767px) {
+    .layout {
+        flex-direction: column;
+        padding: 0;
+    }
+
+    .sidebar {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid #ccc;
+        margin-bottom: 1rem;
+        padding: 0.5rem;
+    }
+
+    .admin-content {
+        width: 100%;
+        padding: 0.5rem;
+    }
+
+    table {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+    }
+    th, td {
+        white-space: nowrap;
+        font-size: 0.85rem;
+        padding: 0.5rem;
+    }
+
+    .header-content {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+}
+
+/* Hero section responsivo para móviles */
+@media (max-width: 767px) {
+    #destacado {
+        padding: 1rem !important;
+    }
+
+    #destacado h2 {
+        font-size: 1.5rem;
+    }
+}
+
+/* Layout para móviles medianos (hasta 700px) */
+/* Sidebar arriba, admin content abajo */
+@media (max-width: 700px) {
+    .layout {
+        flex-direction: column;
+        padding: 0;
+    }
+    .sidebar {
+        width: 100%;
+        border-bottom: 1px solid #ccc;
+        border-right: none;
+        margin-bottom: 1rem;
+        padding: 0.5rem;
+    }
+    .admin-content {
+        width: 100%;
+        padding: 0.5rem;
+    }
+    table {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+    }
+    th, td {
+        white-space: nowrap;
+        font-size: 0.85rem;
+        padding: 0.5rem;
+    }
+    .header-content {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+}
+
+/* Layout para desktop (>700px): centrado y padding */
+@media (min-width: 700px) {
+    .layout {
+        max-width: 1100px;
+        margin: 0 auto;
+    }
+    .admin-content,
+    .sidebar {
+        padding: 1.5rem;
+    }
+    .sidebar {
+        width: 200px;
+    }
+}
