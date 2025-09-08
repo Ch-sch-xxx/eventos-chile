@@ -85,14 +85,14 @@ nav a {
     margin: 1rem;
 }
 
-/* Responsive para móvil */
-@media (max-width: 768px) {
-    nav ul {
-        flex-direction: column;
-        gap: 0.5rem;
-    }
-    #destacado { padding: 1rem; }
-    #nosotros { margin: 0.5rem; padding: 1rem; }
-}
+/*!* Responsive para móvil *!*/
+/*@media (max-width: 768px) {*/
+/*    nav ul {*/
+/*        flex-direction: column;*/
+/*        gap: 0.5rem;*/
+/*    }*/
+/*    #destacado { padding: 1rem; }*/
+/*    #nosotros { margin: 0.5rem; padding: 1rem; }*/
+/*}*/
 
 

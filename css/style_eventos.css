@@ -95,14 +95,14 @@ nav a {
     opacity: 0.9;
 }
 
-/* Responsive para móvil */
-@media (max-width: 600px) {
-    nav ul {
-        flex-direction: column;
-        gap: 0.5rem;
-    }
+/*!* Responsive para móvil *!*/
+/*@media (max-width: 600px) {*/
+/*    nav ul {*/
+/*        flex-direction: column;*/
+/*        gap: 0.5rem;*/
+/*    }*/
 
-    .eventos {
-        grid-template-columns: 1fr;
-    }
-}
+/*    .eventos {*/
+/*        grid-template-columns: 1fr;*/
+/*    }*/
+/*}*/
