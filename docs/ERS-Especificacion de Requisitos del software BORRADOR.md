@@ -23,7 +23,7 @@ Eventos Chile es un sitio independiente para administrar eventos presenciales, s
 * ERS: Especificación de Requisitos de Software  
 * Admin: Usuario con rol de administrador  
 * Evento: Objeto con título, descripción, fecha, lugar, tipo  
-* QR: Código de respuesta rápida para control de acceso
+* QR: Código de respuesta rápida para control de acceso o consumo rapido
 
 ## **1.4 Referencias**
 
@@ -59,8 +59,7 @@ Aplicación web independiente, no integrada con otros sistemas. Publicada en Git
 ## **2.4 Restricciones**
 
 * Uso de HTML5, CSS3 y JS vanilla  
-* Bootstrap 5 para estilos  
-* Sin servidor backend en EP1 (interacciones simuladas/basicas)
+* Sin servidor backend en EP1 (interacciones simuladas/básicas)
 
 ## **2.5 Suposiciones y Dependencias**
 
@@ -71,7 +70,8 @@ Aplicación web independiente, no integrada con otros sistemas. Publicada en Git
 
 * Implementar persistencia con Supabase (ideal)  
 * Automatizar workflows con n8n (bajo revisión)  
-* Integrar pagos online (opcional)
+* Integrar pagos online (opcional)  
+* Posibles librerias
 
 ## **3\. Requisitos Específicos**
 
