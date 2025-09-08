@@ -5,10 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Eventos Chile · Autenticación</title>
     <link rel="stylesheet" href="css/style_auth_admin.css">
+    <link rel="stylesheet" href="css/responsividadGeneral.css">
 </head>
 <body>
 
-<!-- Header semántico con logo y nav -->
+<!-- Header con logo y nav -->
 <header>
     <h1>Eventos Chile</h1>
     <nav>
@@ -22,11 +23,11 @@
 <!-- Main: contenedor de formularios login/registro -->
 <main>
     <section class="auth-contenedor">
-        <!-- Formulario de Login -->
+        <!-- Formulario de Login (cuadro x defecto) -->
         <form id="login" class="auth-form">
             <h2>Iniciar sesión</h2>
             <label for="login-email">Email</label>
-            <input type="email" id="login-email" required placeholder="correo@dominio.cl">
+            <input type="email" id="login-email" required placeholder="ejemplo-correo@dominio.cl">
             <label for="login-password">Contraseña</label>
             <input type="password" id="login-password" required minlength="4" maxlength="20" placeholder="Contraseña">
             <button type="submit" id="logueado">Entrar</button>
@@ -39,9 +40,9 @@
             <label for="register-name">Nombre completo</label>
             <input type="text" id="register-name" required placeholder="Tu nombre">
             <label for="register-email">Email</label>
-            <input type="email" id="register-email" required placeholder="correo@dominio.cl">
+            <input type="email" id="register-email" required placeholder="ejemplo-correo@dominio.cl">
             <label for="register-password">Contraseña</label>
-            <input type="password" id="register-password" required minlength="8" maxlength="20" placeholder="Contraseña">
+            <input type="password" id="register-password" required minlength="4" maxlength="20" placeholder="Contraseña">
             <label for="register-region">Región</label>
             <select id="register-region" required>
                 <option value="">Selecciona región</option>
@@ -70,7 +71,7 @@
     <p><a href="index.html">Volver a Inicio</a></p>
 </footer>
 
-<!-- Script -->
+<!-- Script de interaccion y límites de inicio de sesion -->
 <script src="js/auth.js"></script>
 
 </body>

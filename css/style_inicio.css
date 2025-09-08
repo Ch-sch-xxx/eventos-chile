@@ -1,4 +1,5 @@
-:root {             /* VARIABLES A REUTILIZAR */
+/* Variables globales */
+:root {
     --primario: #FF6F61;
     --secundario: #4A4E69;
     --fondo: #F2E9E4;
@@ -63,7 +64,7 @@ nav a {
     text-transform: uppercase;
 }
 
-
+/*CICLO DE ANIMACION QUE AYUDA AL CAMBIO*/
 @keyframes cambiarTexto {
     0%, 32%   { content: "PRESENCIALES"; }
     33%, 65%  { content: "STREAMING"; }
