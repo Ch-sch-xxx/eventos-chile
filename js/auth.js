@@ -37,7 +37,7 @@ document.getElementById('login').addEventListener('submit', e => {
     }
 });
 
-// Manejo del formulario de registro
+// Manejo del formulario de registro (comprobaciones y flujo)
 document.getElementById('register').addEventListener('submit', e => {
     e.preventDefault();
     const name   = document.getElementById('register-name').value.trim();

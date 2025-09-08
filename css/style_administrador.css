@@ -150,14 +150,14 @@ th {
     display: none;
 }
 
-/* Responsive móvil */
-@media (max-width: 768px) {
-    .layout {
-        flex-direction: column;
-    }
-    .sidebar {
-        width: 100%;
-        border-right: none;
-        border-bottom: 1px solid #ccc;
-    }
-}
+/*!* Responsive móvil *!*/
+/*@media (max-width: 768px) {*/
+/*    .layout {*/
+/*        flex-direction: column;*/
+/*    }*/
+/*    .sidebar {*/
+/*        width: 100%;*/
+/*        border-right: none;*/
+/*        border-bottom: 1px solid #ccc;*/
+/*    }*/
+/*}*/
