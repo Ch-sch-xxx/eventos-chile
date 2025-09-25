@@ -7,6 +7,15 @@
     --acento-suave: #FED7D7;
 }
 
+/* Estilos generales */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: white;
+    color: var(--texto);
+    position: relative;
+}
+
 /*animaciones de confeti, estilo celebracion, mas atractivo */
 body::before {
     content: "";
@@ -43,12 +52,12 @@ header, footer {
     color: white;
     padding: 1rem;
     box-shadow: 0 6px 10px rgba(108, 99, 255, 0.2);
+    height: 90px;
 }
 
 /* título */
 header h1 {
-    transition: transform 0.3s ease;
-    animation: cambioColores 4s ease-in-out infinite;
+    animation: cambioColores 5s ease-in-out infinite;
     background: linear-gradient(45deg, white, #9F7AEA, var(--primario), var(--acento));
     background-size: 400% 400%;
     -webkit-background-clip: text;
@@ -138,7 +147,7 @@ nav a:hover {
     max-width: 800px;
     border-radius: 15px;
     box-shadow: 0 8px 25px rgba(74, 66, 217, 0.28);
-    animation: fadeInUp 2s ease-out;
+    animation: fadeInUp 3.2s ease-out;
     border-right: 8px solid var(--primario);
     position: relative;
     overflow: visible;
@@ -162,7 +171,7 @@ nav a:hover {
 @keyframes brilloEventoContenido {
     0%, 100% {
         opacity: 0.3;
-        transform: scale(1) rotate(0deg);
+        transform: scale(1.03) rotate(0deg);
     }
     25% {
         opacity: 0.6;
@@ -178,13 +187,11 @@ nav a:hover {
     }
 }
 
-
-
 /* Animación de entrada */
 @keyframes fadeInUp {
     from {
         opacity: 0;
-        transform: translateY(30px);
+        transform: translateY(170px);
     }
     to {
         opacity: 1;
@@ -201,7 +208,7 @@ nav a:hover {
     z-index: 1;
 }
 
-/* CSS que hace la magia en section DESTACADO */
+/* CSS que hace la magia en section DESTACADO  */
 .destacado-opcion {
     position: relative;
     color: transparent;
@@ -284,7 +291,7 @@ nav a:hover {
     border-radius: 15px;
     box-shadow: 0 6px 20px rgba(108, 99, 255, 0.1);
     border-left: 8px solid var(--acento);
-    animation: fadeInUp 2.5s ease-out 0.3s both;
+    animation: fadeInUp 3.2s ease-out ;
 }
 
 /* Título de nosotros */

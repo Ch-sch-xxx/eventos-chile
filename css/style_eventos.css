@@ -2,7 +2,6 @@
 :root {
     --primario: #6C63FF;
     --secundario: #2D3748;
-    --fondo: #F7FAFC;
     --texto: #2D3748;
     --acento: #ED8936;
     --acento-suave: #FED7D7;
@@ -12,7 +11,7 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background: var(--fondo);
+    background: white;
     color: var(--texto);
     position: relative;
 }
@@ -27,34 +26,38 @@ body:after {
     height: 100%;
     pointer-events: none;
 
-    background-image:
-            radial-gradient(circle, #f10a0a 2px, transparent 2px),
-            radial-gradient(circle, #0ab0c0 2px, transparent 2px),
-            radial-gradient(circle, #6018f1 2px, transparent 2px),
-            radial-gradient(circle, #ff0080 2px, transparent 2px),
-            radial-gradient(circle, #000000 2px, transparent 2px),
-            radial-gradient(circle, indianred 2px, transparent 2px);
+    background-image: radial-gradient(circle, #f10a0a 2px, transparent 2px),
+    radial-gradient(circle, #0ab0c0 2px, transparent 2px),
+    radial-gradient(circle, #6018f1 2px, transparent 2px),
+    radial-gradient(circle, #ff0080 2px, transparent 2px),
+    radial-gradient(circle, #000000 2px, transparent 2px),
+    radial-gradient(circle, indianred 2px, transparent 2px);
 
     background-size: 200px 200px, 250px 250px, 300px 300px, 350px 350px;
     animation: confetiMov 10s linear infinite;
 }
 
 @keyframes confetiMov {
-    from { background-position: 0 0, 50px 100px, 100px 200px, 150px 250px; }
-    to   { background-position: 500px 1000px, 550px 1100px, 600px 1200px, 650px 1250px; }
+    from {
+        background-position: 0 0, 50px 100px, 100px 200px, 150px 250px;
+    }
+    to {
+        background-position: 500px 1000px, 550px 1100px, 600px 1200px, 650px 1250px;
+    }
 }
 
-/* Header y Footer*/
+/* Header */
 header, footer {
     background: linear-gradient(135deg, var(--secundario) 0%, #4A5568 100%);
     color: white;
     padding: 1rem;
     box-shadow: 0 6px 10px rgba(108, 99, 255, 0.2);
+    height: 90px;
 }
 
 /* título animado */
 header h1 {
-    animation: cambioColores 6s ease-in-out infinite;
+    animation: cambioColores 5s ease-in-out infinite;
     background: linear-gradient(45deg, white, #9F7AEA, var(--primario), var(--acento));
     background-size: 400% 400%;
     -webkit-background-clip: text;
@@ -63,10 +66,23 @@ header h1 {
     font-weight: bold;
 }
 
+/* Colores que se mueven */
 @keyframes cambioColores {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+    0% {
+        background-position: 5% 50%;
+    }
+    25% {
+        background-position: 100% 50%;
+    }
+    50% {
+        background-position: 100% 100%;
+    }
+    75% {
+        background-position: 2% 100%;
+    }
+    100% {
+        background-position: 1% 50%;
+    }
 }
 
 /* Efecto hover en el título */
@@ -75,7 +91,6 @@ header h1:hover {
     cursor: default;
 }
 
-/* Enlaces y textos del footer  */
 #contacto {
     margin: 0.3rem 0;
     color: #ffffff;
@@ -93,6 +108,7 @@ header h1:hover {
 }
 
 #Ftnosotros {
+    margin: 0.3rem 0;
     color: #9F7AEA;
     transition: color 0.3s ease;
 }
@@ -101,7 +117,6 @@ header h1:hover {
     color: var(--acento);
 }
 
-/* Navegación */
 nav ul {
     list-style: none;
     display: flex;
@@ -117,7 +132,7 @@ nav a {
     transition: all 0.3s ease;
 }
 
-/* hover en navv */
+/* Hover en nav */
 nav a:hover {
     background: rgba(108, 99, 255, 0.2);
     transform: translateY(-2px);
@@ -125,15 +140,16 @@ nav a:hover {
 
 
 .carrusel-eventos {
-    max-width: 900px;
+    height: 450px;
+    width: auto;
     margin: 2rem auto;
-    background: linear-gradient(135deg, #fff 0%, var(--acento-suave) 100%);
-    border-radius: 18px;
+    background: linear-gradient(135deg, rgba(108, 99, 255, 0.05) 0%, var(--acento-suave) 100%);
+    border-radius: 15px;
     box-shadow: 0 8px 32px rgba(108, 99, 255, 0.15);
-    padding: 2rem 1rem;
-    overflow-x: auto;
+    padding: 3rem 2rem;
     animation: fadeInUp 1s ease-out;
-    border-left: 4px solid var(--primario);
+    border: 4px solid #dad8ee;
+    overflow: visible;
 }
 
 @keyframes fadeInUp {
@@ -152,28 +168,38 @@ nav a:hover {
     gap: 2rem;
     flex-wrap: nowrap;
     overflow-x: auto;
+    overflow-y: visible;
+    padding: 3rem 1rem;
+    scroll-behavior: smooth;
+    min-height: 300px;
+    align-items: center;
 }
 
 .Tarjetas {
     background: white;
     border-radius: 12px;
-    overflow: hidden;
+    overflow: visible;
     text-align: center;
     padding: 1rem;
-    min-width: 100px;
-    max-width: 150px;
-    box-shadow: 0 8px 24px rgba(108, 99, 255, 0.12);
+    box-shadow: 0 8px 24px rgba(108, 99, 255, 0.2);
     transition: transform 0.4s cubic-bezier(.25, .8, .25, 1), box-shadow 0.3s;
     perspective: 400px;
     transform: rotateY(8deg) scale(1);
-    margin: 0;
-    border: 1px solid rgba(108, 99, 255, 0.1);
+    margin: 2rem 0;
+    border: 2px solid rgba(108, 99, 255, 0.15);
+    position: relative;
+    z-index: 1;
+    height: 300px;
+    width: 80px;
+
 }
+
 
 .Tarjetas:hover {
     transform: rotateY(0deg) scale(1.08);
-    box-shadow: 0 16px 48px rgba(108, 99, 255, 0.58);
+    box-shadow: 0 25px 80px rgb(108, 99, 255);
 }
+
 
 .Tarjetas img,
 .img-tarjeta-evento {
@@ -243,7 +269,7 @@ nav a:hover {
 
 .btn-asistir:hover {
     background: linear-gradient(135deg, #5A52D5, #8B7EFF);
-    transform: translateY(-2px); 
+    transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(108, 99, 255, 0.3);
 }
 
