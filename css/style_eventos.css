@@ -89,7 +89,7 @@ header h1:hover {
 }
 
 #mail:hover {
-    color: var(--acento); /* Hover naranja */
+    color: var(--acento);
 }
 
 #Ftnosotros {
@@ -202,7 +202,7 @@ nav a:hover {
 
 .tipo-evento {
     background: rgba(237, 137, 54, 0.15);
-    color: var(--acento); /* Cambié a naranja directo */
+    color: var(--acento);
     border-radius: 4px;
     padding: 2px 7px;
     font-size: 0.9rem;
@@ -211,7 +211,7 @@ nav a:hover {
 }
 
 .btn-asistir {
-    background: linear-gradient(135deg, var(--primario), #9F7AEA); /* Cambié a gradiente violeta */
+    background: linear-gradient(135deg, var(--primario), #9F7AEA);
     color: white;
     border: none;
     padding: 0.5rem 1rem;
@@ -219,14 +219,13 @@ nav a:hover {
     cursor: pointer;
     font-size: 1rem;
     font-weight: 500;
-    box-shadow: 0 2px 8px rgba(108, 99, 255, 0.25); /* Cambié a nueva paleta */
-    transition: all 0.3s ease; /* Mejoré la transición */
-    /* Agregué efecto brillante */
+    box-shadow: 0 2px 8px rgba(108, 99, 255, 0.25);
+    transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
 }
 
-/* Agregué efecto brillante al botón */
+/* efecto brillante al botón */
 .btn-asistir::before {
     content: '';
     position: absolute;
@@ -243,8 +242,8 @@ nav a:hover {
 }
 
 .btn-asistir:hover {
-    background: linear-gradient(135deg, #5A52D5, #8B7EFF); /* Cambié hover */
-    transform: translateY(-2px); /* Agregué elevación */
+    background: linear-gradient(135deg, #5A52D5, #8B7EFF);
+    transform: translateY(-2px); 
     box-shadow: 0 6px 20px rgba(108, 99, 255, 0.3);
 }
 
