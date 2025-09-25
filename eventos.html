@@ -24,68 +24,18 @@
 
 <!-- Main: listado de eventos -->
 <main>
-    <!--Se actualiza sección,
-    organizando las tarjetas en un carrusel auto-rotativo / autooptimizado,
-    eventos en articulos con clase Tarjetas e imagenes en clase img-tarjeta-evento-->
+<!-- Se actualiza sección(automatizado de tarjetas)-->
     <div class="carrusel-eventos">
-        <div class="carrusel-lista">
-            <article class="Tarjetas">
-                <img class="img-tarjeta-evento" src="imagenes/eventosIMG.png" alt="Imagen evento">
-                <h3>Nombre del Evento 1</h3>
-                <p>Fecha: 10/09/2025<br>Lugar: Santiago</p>
-                <button class="btn-asistir">Asistir al Evento</button>
-            </article>
+        <div class="carrusel-lista" id="carrusel-lista"> <!--referencia para crear tarjetas-->
+            <!--aquí se crean las tarjetas(Child)-->
 
-            <article class="Tarjetas">
-                <img class="img-tarjeta-evento" src="imagenes/eventosIMG.png" alt="Imagen evento">
-                <h3>Nombre del Evento 2</h3>
-                <p>Fecha: 12/09/2025<br>Lugar: Valparaíso</p>
-                <button class="btn-asistir">Asistir al Evento</button>
-            </article>
-
-            <article class="Tarjetas">
-                <img class="img-tarjeta-evento" src="imagenes/eventosIMG.png" alt="Imagen evento">
-                <h3>Nombre del Evento 2</h3>
-                <p>Fecha: 12/09/2025<br>Lugar: Valparaíso</p>
-                <button class="btn-asistir">Asistir al Evento</button>
-            </article>
-
-            <article class="Tarjetas">
-                <img class="img-tarjeta-evento" src="imagenes/eventosIMG.png" alt="Imagen evento">
-                <h3>Nombre del Evento 2</h3>
-                <p>Fecha: 12/09/2025<br>Lugar: Valparaíso</p>
-                <button class="btn-asistir">Asistir al Evento</button>
-            </article>
-
-            <article class="Tarjetas">
-                <img class="img-tarjeta-evento" src="imagenes/eventosIMG.png" alt="Imagen evento">
-                <h3>Nombre del Evento 2</h3>
-                <p>Fecha: 12/09/2025<br>Lugar: Valparaíso</p>
-                <button class="btn-asistir">Asistir al Evento</button>
-            </article>
-
-            <article class="Tarjetas">
-                <img class="img-tarjeta-evento" src="imagenes/eventosIMG.png" alt="Imagen evento">
-                <h3>Nombre del Evento 2</h3>
-                <p>Fecha: 12/09/2025<br>Lugar: Valparaíso</p>
-                <button class="btn-asistir">Asistir al Evento</button>
-            </article>
-
-            <article class="Tarjetas">
-                <img class="img-tarjeta-evento" src="imagenes/eventosIMG.png" alt="Imagen evento">
-                <h3>Nombre del Evento 2</h3>
-                <p>Fecha: 12/09/2025<br>Lugar: Valparaíso</p>
-                <button class="btn-asistir">Asistir al Evento</button>
-            </article>
-
-            <article class="Tarjetas">
-                <img class="img-tarjeta-evento" src="imagenes/eventosIMG.png" alt="Imagen evento">
-                <h3>Nombre del Evento 2</h3>
-                <p>Fecha: 12/09/2025<br>Lugar: Valparaíso</p>
-                <button class="btn-asistir">Asistir al Evento</button>
-            </article>
-
-            <!-- Agregar más eventos con la estructura anterior-->
+        <!-- Estructura manual de tarjetas desde aca-->
+<!--            <article class="Tarjetas">-->
+<!--                <img class="img-tarjeta-evento" src="imagenes/eventosIMG.png" alt="Imagen evento">-->
+<!--                <h3>Nombre del Evento 2</h3>-->
+<!--                <p>Fecha: 12/09/2025<br>Lugar: Valparaíso</p>-->
+<!--                <button class="btn-asistir">Asistir al Evento</button>-->
+<!--            </article>-->
 
         </div>
     </div>
@@ -101,7 +51,8 @@
     <p><a id="Ftnosotros" href="index.html">Acerca de Nosotros</a></p>
 </footer>
 
-<!-- JS basico, interacción de botones -->
+<!-- JS basico, interacción de botones, datos de eventos-->
+<script src="js/crud_eventos.js"></script>
 <script src="js/eventos_interaccion.js"></script>
 
 </body>

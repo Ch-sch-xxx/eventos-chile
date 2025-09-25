@@ -118,6 +118,17 @@ efecto al pasar el mouse por la tarjeta */
     font-size: 0.95rem;
     color: #4A4E69;
 }
+/* texto destacado en la descripcion del evento */
+.tipo-evento {
+    background: #FFDFD1;
+    color: #d74f28;
+    border-radius: 4px;
+    padding: 2px 7px;
+    font-size: 0.9rem;
+    margin-left: 6px;
+    font-weight: 500;
+}
+
 
 /* Botón de asistencia   */
 .btn-asistir {

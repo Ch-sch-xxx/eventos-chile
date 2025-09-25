@@ -29,9 +29,10 @@ document.getElementById('login').addEventListener('submit', e => {
         alert('La contraseña debe tener entre 4 y 20 caracteres');
         return;
     }
-    // Simular login admin
+    // Simular login admin + autenticado para abrir la sgte pagina
     if (email === 'admin@admin.com' && pass === 'admin') {
-        window.location.href = 'administrador.html';
+        localStorage.setItem('sesionAdmin', 'true'); // Guarda sesión
+        window.location.href = 'gestion_admin.html';
     } else {
         alert('Credenciales incorrectas');
     }
@@ -54,8 +55,8 @@ document.getElementById('register').addEventListener('submit', e => {
         alert('Email inválido');
         return;
     }
-    if (pass.length < 8 || pass.length > 20) {
-        alert('La contraseña debe tener entre 8 y 20 caracteres');
+    if (pass.length < 4 || pass.length > 20) {
+        alert('La contraseña debe tener entre 4 y 20 caracteres');
         return;
     }
     if (!region) {
