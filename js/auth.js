@@ -29,16 +29,18 @@ document.getElementById('login').addEventListener('submit', e => {
         alert('La contraseña debe tener entre 4 y 20 caracteres');
         return;
     }
-    // Simular login admin + autenticado para abrir la sgte pagina
+
+    // Simular login admin
     if (email === 'admin@admin.com' && pass === 'admin') {
-        localStorage.setItem('sesionAdmin', 'true'); // Guarda sesión
+        localStorage.setItem('user-logged', 'admin');// Guardamos que el admin está logueado
+        localStorage.setItem('user-email', email);
         window.location.href = 'gestion_admin.html';
     } else {
         alert('Credenciales incorrectas');
     }
 });
 
-// Manejo del formulario de registro (comprobaciones y flujo)
+// Manejo del formulario de registro
 document.getElementById('register').addEventListener('submit', e => {
     e.preventDefault();
     const name   = document.getElementById('register-name').value.trim();

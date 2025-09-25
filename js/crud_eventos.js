@@ -1,54 +1,73 @@
-// Lógica de eventos
-// manejando datos de eventos con localStorage
-// Así tanto el admin como la página de eventos usan la misma info
+// guardamos todos los eventos como una bd, pero esta es local,
+// o sea, cargan en el navegador y no en el servidor
+// y no se guardan en la nube, son datos temporales
 
-// Recupera eventos desde almacenamiento local, o inicia vacío si no hay
-function cargarEventos() {
-    return JSON.parse(localStorage.getItem('eventosChile')) || [
-        // Datos iniciales para que no esté vacío(estructura por aca)
-        {
-            titulo: "Evento de Prueba",
-            fecha: "2025-09-10",
-            lugar: "Santiago",
-            tipo: "Presencial",
-            imagen: "imagenes/eventosIMG.png"
-        }
-    ];
+// obtener eventos desde localStorage
+function obtenerEventos() {
+    const eventos = localStorage.getItem('eventos-chile');
+    if (eventos) {
+        return JSON.parse(eventos); // Convierte string a array
+    } else {
+        // Si no hay eventos, creamos algunos
+        const eventosIniciales = [
+            {
+                titulo: "Evento de Prueba",
+                fecha: "2025-10-15",
+                lugar: "Parque Ohiggins, Santiago",
+                tipo: "Presencial",
+                imagen: "imagenes/eventosIMG.png"
+            },
+            {
+                titulo: "Streaming Tech",
+                fecha: "2025-11-01",
+                lugar: "ww.hola.com, Online",
+                tipo: "Streaming",
+                imagen: "imagenes/eventosIMG.png"
+            }
+        ];
+        localStorage.setItem('eventos-chile', JSON.stringify(eventosIniciales));
+        return eventosIniciales;
+    }
 }
 
-// Guardar eventos en localStorage
+// guardar eventos en localStorage
 function guardarEventos(eventos) {
-    localStorage.setItem('eventosChile', JSON.stringify(eventos));
+    localStorage.setItem('eventos-chile', JSON.stringify(eventos));
 }
 
-// Crear evento
-function crearEvento(objEvento) {
-    let eventos = cargarEventos();
-    // Agregamos imagen por defecto si no tiene
-    if (!objEvento.imagen) {
-        objEvento.imagen = "imagenes/eventosIMG.png";
-    }
-    eventos.push(objEvento);
-    guardarEventos(eventos);
+// CREAR nuevo evento
+function crearEvento(nuevoEvento) {
+    const eventos = obtenerEventos(); // Obtenemos lista actual
+    eventos.push(nuevoEvento); // Agregamos
+    guardarEventos(eventos); // Guardamos todo
+    console.log('Evento creado:', nuevoEvento.titulo);
 }
 
-// Editar evento (por índice)
-function editarEvento(idx, objNuevo) {
-    let eventos = cargarEventos();
-    if (eventos[idx]) {
-        eventos[idx] = objNuevo;
-        guardarEventos(eventos);
-    }
-}
-
-// Eliminar evento
-function eliminarEvento(idx) {
-    let eventos = cargarEventos();
-    eventos.splice(idx, 1);
-    guardarEventos(eventos);
-}
-
-// Devuelve todos los eventos
+// LISTAR
 function listarEventos() {
-    return cargarEventos();
+    return obtenerEventos();
+}
+
+// EDITAR un evento existente por índice
+function editarEvento(indice, eventoEditado) {
+    const eventos = obtenerEventos();
+    if (indice >= 0 && indice < eventos.length) {
+        eventos[indice] = eventoEditado; // Reemplazamos el evento
+        guardarEventos(eventos);
+        console.log('Evento editado:', eventoEditado.titulo);
+        return true;
+    }
+    return false;
+}
+
+// ELIMINAR un evento por índice
+function eliminarEvento(indice) {
+    const eventos = obtenerEventos();
+    if (indice >= 0 && indice < eventos.length) {
+        const eventoEliminado = eventos.splice(indice, 1)[0]; // Lo saca del array
+        guardarEventos(eventos);
+        console.log('Evento eliminado:', eventoEliminado.titulo);
+        return true;
+    }
+    return false;
 }
