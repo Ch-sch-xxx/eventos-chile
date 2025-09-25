@@ -29,15 +29,18 @@ document.getElementById('login').addEventListener('submit', e => {
         alert('La contraseña debe tener entre 4 y 20 caracteres');
         return;
     }
+
     // Simular login admin
     if (email === 'admin@admin.com' && pass === 'admin') {
-        window.location.href = 'administrador.html';
+        localStorage.setItem('user-logged', 'admin');// Guardamos que el admin está logueado
+        localStorage.setItem('user-email', email);
+        window.location.href = 'gestion_admin.html';
     } else {
         alert('Credenciales incorrectas');
     }
 });
 
-// Manejo del formulario de registro (comprobaciones y flujo)
+// Manejo del formulario de registro
 document.getElementById('register').addEventListener('submit', e => {
     e.preventDefault();
     const name   = document.getElementById('register-name').value.trim();
@@ -54,8 +57,8 @@ document.getElementById('register').addEventListener('submit', e => {
         alert('Email inválido');
         return;
     }
-    if (pass.length < 8 || pass.length > 20) {
-        alert('La contraseña debe tener entre 8 y 20 caracteres');
+    if (pass.length < 4 || pass.length > 20) {
+        alert('La contraseña debe tener entre 4 y 20 caracteres');
         return;
     }
     if (!region) {

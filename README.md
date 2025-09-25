@@ -20,7 +20,7 @@ Plataforma web para gestionar eventos en Chile, que permite la creación, organi
 
 **Carpeta JS**
 - `js/auth.js`
-- `js/administrador.js`
+- `js/gestion_admin.js`
 - `js/eventos_interaccion.js`
 
 **Carpeta Imágenes**
