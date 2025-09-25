@@ -1,42 +1,53 @@
-/* Variables globales - NUEVA PALETA PARA EVENTOS */
+/* Variables globales */
 :root {
-    /* Cambié toda la paleta para que sea más "evento/celebración" */
-    --primario: #6C63FF;        /* Violeta vibrante - perfecto para eventos */
-    --secundario: #2D3748;      /* Gris azulado oscuro - más elegante */
-    --fondo: rgba(224, 224, 224, 0.89);           /* Blanco grisáceo - más limpio */
-    --texto: #2D3748;           /* Mismo que secundario para coherencia */
-    --acento: #ED8936;          /* Naranja cálido - para highlights */
-    --acento-suave: #FED7D7;    /* Rosa suave - para fondos delicados */
+    --primario: #6C63FF;
+    --secundario: #2D3748;
+    --texto: #2D3748;
+    --acento: #ED8936;
+    --acento-suave: #FED7D7;
 }
 
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: var(--fondo);
-    color: var(--texto);
-    /* Agregué un patrón sutil de fondo que simula confeti de eventos */
+/*animaciones de confeti, estilo celebracion, mas atractivo */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+
     background-image:
-            radial-gradient(circle at 20% 50%, rgb(10, 176, 192) 2px, transparent 2px),
-            radial-gradient(circle at 60% 20%, rgb(96, 24, 241) 1px, transparent 2px),
-            radial-gradient(circle at 80% 80%, rgb(241, 10, 10) 1px, transparent 1px),
-            radial-gradient(circle at 40% 80%, rgb(236, 10, 10) 1px, transparent 1px),
-            radial-gradient(circle at 60% 60%, rgb(11, 218, 150) 1px, transparent 1px);
-    background-size: 100px 100px, 150px 150px, 200px 200px;
+            radial-gradient(circle, #f10a0a 2px, transparent 2px),
+            radial-gradient(circle, #0ab0c0 2px, transparent 2px),
+            radial-gradient(circle, #6018f1 2px, transparent 2px),
+            radial-gradient(circle, #ff0080 2px, transparent 2px),
+            radial-gradient(circle, #000000 2px, transparent 2px),
+            radial-gradient(circle, indianred 2px, transparent 2px);
+
+    background-size: 200px 200px, 250px 250px, 300px 300px, 350px 350px;
+    animation: confetiMov 10s linear infinite;
 }
 
-/* Header actualizado con la nueva paleta */
+@keyframes confetiMov {
+    from { background-position: 0 0, 50px 100px, 100px 200px, 150px 250px; }
+    to   { background-position: 500px 1000px, 550px 1100px, 600px 1200px, 650px 1250px; }
+}
+
+
+
+
+/* Header */
 header, footer {
     background: linear-gradient(135deg, var(--secundario) 0%, #4A5568 100%);
     color: white;
     padding: 1rem;
-    /* Cambié la sombra para que use los nuevos colores */
     box-shadow: 0 6px 10px rgba(108, 99, 255, 0.2);
 }
 
-/* Efecto hover en el título - mantuve tu animación pero con nuevos colores */
+/* título */
 header h1 {
     transition: transform 0.3s ease;
-    /* Actualicé el gradiente para la nueva paleta de eventos */
     animation: cambioColores 4s ease-in-out infinite;
     background: linear-gradient(45deg, white, #9F7AEA, var(--primario), var(--acento));
     background-size: 400% 400%;
@@ -46,7 +57,7 @@ header h1 {
     font-weight: bold;
 }
 
-/* ANIMACIÓN: Colores que se mueven - mantuve exacta tu animación */
+/* Colores que se mueven */
 @keyframes cambioColores {
     0% {
         background-position: 5% 50%;
@@ -65,6 +76,7 @@ header h1 {
     }
 }
 
+/* Efecto hover en el título */
 header h1:hover {
     transform: translateY(12px);
     cursor: default;
@@ -78,7 +90,6 @@ header h1:hover {
 
 #mail {
     margin: 0.3rem 0;
-    /* Cambié a un color más acorde con eventos */
     color: #9F7AEA;
     transition: color 0.3s ease;
 }
@@ -112,31 +123,30 @@ nav a {
     transition: all 0.3s ease;
 }
 
-/* Hover en navegación con nuevo color de acento */
+/* Hover en nav */
 nav a:hover {
     background: rgba(108, 99, 255, 0.2);
     transform: translateY(-2px);
 }
 
-/* Sección destacado con nueva paleta pero manteniendo tu estructura */
+/* Sección destacado */
 #destacado {
     text-align: center;
     padding: 2rem;
-    /* Mantuve el fondo blanco pero con un toque sutil del color de eventos */
     background: linear-gradient(135deg, white 0%, var(--acento-suave) 100%);
     margin: 2rem auto;
     max-width: 800px;
     border-radius: 15px;
-    box-shadow: 0 8px 25px rgba(108, 99, 255, 0.15);
+    box-shadow: 0 8px 25px rgba(74, 66, 217, 0.28);
     animation: fadeInUp 2s ease-out;
-    /* Cambié el borde a color violeta para eventos */
+    /* borde derecho */
     border-right: 8px solid var(--primario);
-    /* Agregué un efecto de brillo sutil que simula luces de evento */
+    /* Agregué un efecto de brillo que simula luces de evento */
     position: relative;
-    overflow: hidden;
+    overflow: visible;
 }
 
-/* Nuevo efecto: brillo de luces de evento que se mueve */
+/* brillo de luces de evento con movimiento */
 #destacado::before {
     content: '';
     position: absolute;
@@ -144,7 +154,7 @@ nav a:hover {
     left: -50%;
     width: 200%;
     height: 200%;
-    background: linear-gradient(45deg, transparent 30%, rgba(108, 99, 255, 0.05) 50%, transparent 70%);
+    background: linear-gradient(45deg, transparent 30%, rgba(175, 133, 255, 0.28) 50%, transparent 70%);
     animation: brilloEvento 8s linear infinite;
     pointer-events: none;
 }
@@ -154,7 +164,7 @@ nav a:hover {
     100% { transform: rotate(360deg); }
 }
 
-/* Animación de entrada - mantuve exacta tu animación */
+/* Animación de entrada */
 @keyframes fadeInUp {
     from {
         opacity: 0;
@@ -166,7 +176,7 @@ nav a:hover {
     }
 }
 
-/* Título destacado con nuevo color */
+/* Título destacado*/
 #destacado h2 {
     font-size: 2.2rem;
     margin-bottom: 1rem;
@@ -175,7 +185,7 @@ nav a:hover {
     z-index: 1;
 }
 
-/* CSS que hace la magia en section DESTACADO - mantuve tu lógica exacta */
+/* CSS que hace la magia en section DESTACADO */
 .destacado-opcion {
     position: relative;
     color: transparent;
@@ -187,17 +197,16 @@ nav a:hover {
     content: "PRESENCIALES";
     font-weight: bold;
     text-transform: uppercase;
-    /* Actualicé el degradado con colores más apropiados para eventos */
     background: linear-gradient(45deg, var(--secundario), var(--primario), var(--acento), #9F7AEA);
     background-size: 400% 400%;
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
-    /* Mantuve exactas tus animaciones */
+
     animation: cambiarTexto 6s infinite, cambioColores 4s ease-in-out infinite;
 }
 
-/* Cambia el contenido del texto - mantuve exacto */
+/* Cambia el contenido del texto */
 @keyframes cambiarTexto {
     0%, 32% {
         content: "PRESENCIALES";
@@ -210,7 +219,7 @@ nav a:hover {
     }
 }
 
-/* Botón principal actualizado con nueva paleta */
+/* Botón principal */
 #destacado a {
     display: inline-block;
     background: linear-gradient(135deg, var(--primario), #9F7AEA);
@@ -226,10 +235,9 @@ nav a:hover {
     transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
-    z-index: 1;
 }
 
-/* Efecto brillante en el botón - mantuve tu efecto exacto */
+/* Efecto brillante en el botón */
 #destacado a::before {
     content: '';
     position: absolute;
@@ -251,7 +259,7 @@ nav a:hover {
     background: linear-gradient(135deg, #5A52D5, #8B7EFF);
 }
 
-/* Sección nosotros con nueva paleta pero manteniendo tu estructura */
+/* Sección nosotros */
 #nosotros {
     padding: 1.5rem;
     background: white;
@@ -259,12 +267,11 @@ nav a:hover {
     max-width: 800px;
     border-radius: 15px;
     box-shadow: 0 6px 20px rgba(108, 99, 255, 0.1);
-    /* Cambié el borde al color naranja de acento */
     border-left: 8px solid var(--acento);
     animation: fadeInUp 2.5s ease-out 0.3s both;
 }
 
-/* Título de nosotros con nuevo color */
+/* Título de nosotros */
 #nosotros h2 {
     font-size: 1.8rem;
     color: var(--secundario);
@@ -272,7 +279,7 @@ nav a:hover {
     position: relative;
 }
 
-/* Línea decorativa con nuevo color */
+/* Línea decorativa */
 #nosotros h2::after {
     content: '';
     position: absolute;
@@ -284,7 +291,7 @@ nav a:hover {
     border-radius: 2px;
 }
 
-/* Texto más legible con nuevo color */
+/* Texto */
 #nosotros p {
     font-size: 1.1rem;
     line-height: 1.7;
