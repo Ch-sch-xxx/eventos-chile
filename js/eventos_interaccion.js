@@ -11,6 +11,8 @@ function generarTarjetasEventos() {
             <img class="img-tarjeta-evento" src="${evento.imagen}" alt="Imagen evento">
             <h3>${evento.titulo}</h3>
             <p>Fecha: ${evento.fecha}<br>Lugar: ${evento.lugar}</p>
+            <p><b class="tipo-evento">${evento.tipo}</b></p>
+            
             <button class="btn-asistir">Asistir al Evento</button>
         `;
         carruselLista.appendChild(tarjeta);

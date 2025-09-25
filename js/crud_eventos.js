@@ -11,16 +11,72 @@ function obtenerEventos() {
         // Si no hay eventos, creamos algunos
         const eventosIniciales = [
             {
-                titulo: "Evento de Prueba",
-                fecha: "2025-10-15",
-                lugar: "Parque Ohiggins, Santiago",
+                titulo: "Festival de Música Urbana",
+                fecha: "2025-09-30",
+                lugar: "Estadio Nacional, Santiago",
                 tipo: "Presencial",
                 imagen: "imagenes/eventosIMG.png"
             },
             {
-                titulo: "Streaming Tech",
-                fecha: "2025-11-01",
-                lugar: "ww.hola.com, Online",
+                titulo: "Conferencia de IA",
+                fecha: "2025-10-05",
+                lugar: "Online",
+                tipo: "Streaming",
+                imagen: "imagenes/eventosIMG.png"
+            },
+            {
+                titulo: "Feria del Libro",
+                fecha: "2025-10-12",
+                lugar: "Centro Cultural La Moneda, Santiago",
+                tipo: "Presencial",
+                imagen: "imagenes/eventosIMG.png"
+            },
+            {
+                titulo: "Taller de Fotografía",
+                fecha: "2025-10-18",
+                lugar: "Museo de Arte Contemporáneo, Santiago",
+                tipo: "Presencial",
+                imagen: "imagenes/eventosIMG.png"
+            },
+            {
+                titulo: "Seminario de Emprendimiento",
+                fecha: "2025-10-22",
+                lugar: "Online",
+                tipo: "Streaming",
+                imagen: "imagenes/eventosIMG.png"
+            },
+            {
+                titulo: "Concierto Sinfónico",
+                fecha: "2025-10-25",
+                lugar: "Teatro Municipal, Santiago",
+                tipo: "Presencial",
+                imagen: "imagenes/eventosIMG.png"
+            },
+            {
+                titulo: "Hackathon Tech",
+                fecha: "2025-11-02",
+                lugar: "Universidad de Chile, Santiago",
+                tipo: "Presencial",
+                imagen: "imagenes/eventosIMG.png"
+            },
+            {
+                titulo: "Webinar de Finanzas",
+                fecha: "2025-11-08",
+                lugar: "Online",
+                tipo: "Streaming",
+                imagen: "imagenes/eventosIMG.png"
+            },
+            {
+                titulo: "Festival de Cine",
+                fecha: "2025-11-15",
+                lugar: "Centro Cultural Gabriela Mistral, Santiago",
+                tipo: "Presencial",
+                imagen: "imagenes/eventosIMG.png"
+            },
+            {
+                titulo: "Clase Magistral de Cocina",
+                fecha: "2025-11-20",
+                lugar: "Online",
                 tipo: "Streaming",
                 imagen: "imagenes/eventosIMG.png"
             }
