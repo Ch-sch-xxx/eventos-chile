@@ -52,7 +52,10 @@ header, footer {
     color: white;
     padding: 1rem;
     box-shadow: 0 6px 10px rgba(108, 99, 255, 0.2);
-    height: 90px;
+    min-height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 /* título animado */
