@@ -46,14 +46,18 @@ body::before {
 
 
 
-/* Header */
+/* Header  */
 header, footer {
     background: linear-gradient(135deg, var(--secundario) 0%, #4A5568 100%);
     color: white;
     padding: 1rem;
     box-shadow: 0 6px 10px rgba(108, 99, 255, 0.2);
-    height: 90px;
+    min-height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
+
 
 /* título */
 header h1 {
@@ -225,9 +229,12 @@ nav a:hover {
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
-
     animation: cambiarTexto 6s infinite, cambioColores 4s ease-in-out infinite;
+    width: auto; /* Ocupa todo el ancho  */
+    text-align: center; /* Centrado */
+
 }
+
 
 /* Cambia el contenido del texto */
 @keyframes cambiarTexto {
@@ -322,3 +329,14 @@ nav a:hover {
 }
 
 /*el responsive esta en el css GENERAL*/
+
+
+/* Contenedor header con altura fija */
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 90px;
+    padding: 0 1rem;
+}
+

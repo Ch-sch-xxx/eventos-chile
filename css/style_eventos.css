@@ -122,7 +122,11 @@ nav ul {
     display: flex;
     justify-content: end;
     gap: 1rem;
+    margin: 0;
+    padding: 0;
+    align-items: center;
 }
+
 
 nav a {
     color: white;

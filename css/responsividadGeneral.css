@@ -316,3 +316,64 @@ body {
         font-size: 16px; /* Evita zoom en iOS */
     }
 }
+
+/* Header responsive - SIMPLE */
+@media (max-width: 767px) {
+    header {
+        flex-direction: column; /* Título arriba, nav abajo */
+        text-align: center;
+        padding: 1rem 0.5rem; /* Menos padding horizontal */
+    }
+
+    nav ul {
+        justify-content: center; /* Centrar links en móvil */
+        flex-wrap: wrap; /* Permitir que se wrappe si es necesario */
+        gap: 0.5rem; /* Menos gap en móvil */
+    }
+
+    nav a {
+        padding: 0.3rem 0.8rem; /* Botones más pequeños */
+        font-size: 0.9rem; /* Texto más pequeño */
+    }
+}
+
+
+/* FIX para texto destacado en móvil */
+@media (max-width: 767px) {
+    .destacado-opcion {
+        display: block; /* Cambia a block para mejor control */
+        width: 100%;
+    }
+
+    .destacado-opcion::after {
+        font-size: 1.2rem; /* Más pequeño en móvil */
+        left: 50%; /* Centrar horizontalmente */
+        transform: translateX(-50%); /* Ajuste perfecto al centro */
+        width: auto; /* Ancho automático */
+        white-space: nowrap; /* Evita que se corte */
+    }
+
+    /* Ajustar párrafo que contiene el texto */
+    #destacado p {
+        padding: 0 1rem; /* Más padding lateral */
+        word-wrap: break-word; /* Permite partir texto */
+    }
+}
+
+
+/* Para móviles MUY pequeños */
+@media (max-width: 480px) {
+    .destacado-opcion::after {
+        font-size: 1rem; /* AÚN más pequeño */
+    }
+
+    #destacado {
+        padding: 1.5rem 1rem; /* Menos padding general */
+    }
+
+    #destacado p {
+        font-size: 1rem; /* Texto más pequeño */
+        line-height: 1.4; /* Mejor espaciado */
+    }
+}
+
