@@ -139,30 +139,46 @@ nav a:hover {
     border-radius: 15px;
     box-shadow: 0 8px 25px rgba(74, 66, 217, 0.28);
     animation: fadeInUp 2s ease-out;
-    /* borde derecho */
     border-right: 8px solid var(--primario);
-    /* Agregué un efecto de brillo que simula luces de evento */
     position: relative;
     overflow: visible;
 }
 
-/* brillo de luces de evento con movimiento */
 #destacado::before {
     content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: linear-gradient(45deg, transparent 30%, rgba(175, 133, 255, 0.28) 50%, transparent 70%);
-    animation: brilloEvento 8s linear infinite;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 80%;
+    height: 120%;
+    background:
+            radial-gradient(circle at 20% 30%, rgba(241, 207, 189, 0.73) 10%, transparent 30%),
+            radial-gradient(circle at 80% 70%, rgba(201, 210, 248, 0.83) 15%, transparent 40%),
+            radial-gradient(circle at 50% 50%, rgba(193, 237, 241, 0.71) 20%, transparent 50%);
+    animation: brilloEventoContenido 6s ease-in-out infinite;
     pointer-events: none;
 }
 
-@keyframes brilloEvento {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+@keyframes brilloEventoContenido {
+    0%, 100% {
+        opacity: 0.3;
+        transform: scale(1) rotate(0deg);
+    }
+    25% {
+        opacity: 0.6;
+        transform: scale(1.05) rotate(90deg);
+    }
+    50% {
+        opacity: 0.4;
+        transform: scale(0.95) rotate(180deg);
+    }
+    75% {
+        opacity: 0.7;
+        transform: scale(1.02) rotate(270deg);
+    }
 }
+
+
 
 /* Animación de entrada */
 @keyframes fadeInUp {
