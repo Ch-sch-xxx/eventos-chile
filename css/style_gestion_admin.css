@@ -21,36 +21,46 @@ body {
     position: relative;
 }
 
-/* Header */
-header {
-    background: var(--secundario);
+/* Header  */
+header, footer {
+    background: linear-gradient(135deg, var(--secundario) 0%, #4A5568 100%);
     color: white;
     padding: 1rem;
-    height: 90px;
+    box-shadow: 0 6px 10px rgba(108, 99, 255, 0.2);
+    min-height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* logo izquierda, perfil derecha */
+}
 
-}
-.header-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-.perfil {
+/* Bloque de perfil en el header */
+.perfil-admin {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 12px; /* espacio entre imagen y botones */
 }
-.perfil img {
-    width: 32px;
-    height: 32px;
+
+/* Imagen de perfil */
+.imagen-perfil {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
 }
-.perfil ul {
-    list-style: none;
-    display: flex;
-    gap: 0.5rem;
-}
-.perfil a {
+
+/* Enlaces de perfil/botón */
+.btn-admin, .btn-cerrar {
     color: white;
     text-decoration: none;
+    padding: 8px 14px;
+    border-radius: 5px;
+    background-color: #4A5568;
+    border: none;
+    font-weight: bold;
+    transition: background 0.2s;
+}
+.btn-admin:hover, .btn-cerrar:hover {
+    background-color: var(--secundario);
 }
 
 /* Layout */
