@@ -182,6 +182,21 @@ th {
     display: none;
 }
 
+footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background: var(--secundario);
+    color: #fff;
+    text-align: center;
+    padding: 1rem 0;
+    box-shadow: 0 6px 10px rgba(108, 99, 255, 0.2);
+    min-height: 60px;
+    z-index: 100;
+    margin-top: 0; /* quita el margen superior en fixed */
+}
+
 /*!* Responsive móvil *!*/
 /*@media (max-width: 768px) {*/
 /*    .layout {*/
