@@ -29,7 +29,7 @@ body {
 }
 
 /* Header  */
-header, footer {
+header{
     background: linear-gradient(135deg, var(--secundario) 0%, #4A5568 100%);
     color: white;
     padding: 1rem;
@@ -51,7 +51,7 @@ header h1 {
 }
 
 /* Bloque de perfil en el header */
-.perfil-admin {
+.gestion-admin {
     display: flex;
     align-items: center;
     gap: 12px; /* espacio entre imagen y botones */
