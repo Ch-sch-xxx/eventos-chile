@@ -31,7 +31,7 @@ document.getElementById('login').addEventListener('submit', e => {
     }
 
     // Simular login admin
-    if (email === 'admin@admin.com' && pass === 'admin') {
+    if (email === 'ad@ad.com' && pass === 'admin') {
         localStorage.setItem('user-logged', 'admin');// Guardamos que el admin está logueado
         localStorage.setItem('user-email', email);
         window.location.href = 'gestion_admin.html';
