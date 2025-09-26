@@ -4,6 +4,13 @@
     --fondo: #F2E9E4;
     --texto: #333333;
     --secundario: #4A4E69;
+    --acento: #9F7AEA;           /* <--- la agrego aquí */
+}
+
+@keyframes cambioColores {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
 
 /* Reset y base */
@@ -31,6 +38,16 @@ header, footer {
     display: flex;
     align-items: center;
     justify-content: space-between; /* logo izquierda, perfil derecha */
+}
+/*Efecto especial de titulo*/
+header h1 {
+    animation: cambioColores 5s ease-in-out infinite;
+    background: linear-gradient(45deg, white, #9F7AEA, var(--primario), var(--acento));
+    background-size: 400% 400%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-weight: bold;
 }
 
 /* Bloque de perfil en el header */
