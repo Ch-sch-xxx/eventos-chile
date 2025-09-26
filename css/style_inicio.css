@@ -1,36 +1,126 @@
 /* Variables globales */
 :root {
-    --primario: #FF6F61;
-    --secundario: #4A4E69;
-    --fondo: #F2E9E4;
-    --texto: #333333;
+    --primario: #6C63FF;
+    --secundario: #2D3748;
+    --texto: #2D3748;
+    --acento: #ED8936;
+    --acento-suave: #FED7D7;
 }
 
+/* Estilos generales */
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background: var(--fondo);
+    background: white;
     color: var(--texto);
+    position: relative;
 }
 
+/*animaciones de confeti, estilo celebracion, mas atractivo */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+
+    background-image:
+            radial-gradient(circle, #f10a0a 2px, transparent 2px),
+            radial-gradient(circle, #0ab0c0 2px, transparent 2px),
+            radial-gradient(circle, #6018f1 2px, transparent 2px),
+            radial-gradient(circle, #ff0080 2px, transparent 2px),
+            radial-gradient(circle, #000000 2px, transparent 2px),
+            radial-gradient(circle, indianred 2px, transparent 2px);
+
+    background-size: 200px 200px, 250px 250px, 300px 300px, 350px 350px;
+    animation: confetiMov 10s linear infinite;
+}
+
+@keyframes confetiMov {
+    from { background-position: 0 0, 50px 100px, 100px 200px, 150px 250px; }
+    to   { background-position: 500px 1000px, 550px 1100px, 600px 1200px, 650px 1250px; }
+}
+
+
+
+
+/* Header  */
 header, footer {
-    background: var(--secundario);
+    background: linear-gradient(135deg, var(--secundario) 0%, #4A5568 100%);
     color: white;
     padding: 1rem;
+    box-shadow: 0 6px 10px rgba(108, 99, 255, 0.2);
+    min-height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
+
+
+/* título */
+header h1 {
+    animation: cambioColores 5s ease-in-out infinite;
+    background: linear-gradient(45deg, white, #9F7AEA, var(--primario), var(--acento));
+    background-size: 400% 400%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-weight: bold;
+}
+
+/* Colores que se mueven */
+@keyframes cambioColores {
+    0% {
+        background-position: 5% 50%;
+    }
+    25% {
+        background-position: 100% 50%;
+    }
+    50% {
+        background-position: 100% 100%;
+    }
+    75% {
+        background-position: 2% 100%;
+    }
+    100% {
+        background-position: 1% 50%;
+    }
+}
+
+/* Efecto hover en el título */
+header h1:hover {
+    transform: translateY(12px);
+    cursor: default;
+}
+
 #contacto {
     margin: 0.3rem 0;
     color: #ffffff;
     text-decoration: none;
 }
+
 #mail {
     margin: 0.3rem 0;
-    color: #0ab0c0;
+    color: #9F7AEA;
+    transition: color 0.3s ease;
 }
+
+#mail:hover {
+    color: var(--acento);
+}
+
 #Ftnosotros {
     margin: 0.3rem 0;
-    color: #0ab0c0;
+    color: #9F7AEA;
+    transition: color 0.3s ease;
 }
+
+#Ftnosotros:hover {
+    color: var(--acento);
+}
+
 nav ul {
     list-style: none;
     display: flex;
@@ -41,59 +131,212 @@ nav ul {
 nav a {
     color: white;
     text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    transition: all 0.3s ease;
 }
 
+/* Hover en nav */
+nav a:hover {
+    background: rgba(108, 99, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+/* Sección destacado */
 #destacado {
     text-align: center;
     padding: 2rem;
+    background: linear-gradient(135deg, white 0%, var(--acento-suave) 100%);
+    margin: 2rem auto;
+    max-width: 800px;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(74, 66, 217, 0.28);
+    animation: fadeInUp 3.2s ease-out;
+    border-right: 8px solid var(--primario);
+    position: relative;
+    overflow: visible;
 }
 
-/* CSS que hace la magia en section DESTACADO */
+#destacado::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 80%;
+    height: 120%;
+    background:
+            radial-gradient(circle at 20% 30%, rgba(241, 207, 189, 0.73) 10%, transparent 30%),
+            radial-gradient(circle at 80% 70%, rgba(201, 210, 248, 0.83) 15%, transparent 40%),
+            radial-gradient(circle at 50% 50%, rgba(193, 237, 241, 0.71) 20%, transparent 50%);
+    animation: brilloEventoContenido 6s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes brilloEventoContenido {
+    0%, 100% {
+        opacity: 0.3;
+        transform: scale(1.03) rotate(0deg);
+    }
+    25% {
+        opacity: 0.6;
+        transform: scale(1.05) rotate(90deg);
+    }
+    50% {
+        opacity: 0.4;
+        transform: scale(0.95) rotate(180deg);
+    }
+    75% {
+        opacity: 0.7;
+        transform: scale(1.02) rotate(270deg);
+    }
+}
+
+/* Animación de entrada */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(170px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Título destacado*/
+#destacado h2 {
+    font-size: 2.2rem;
+    margin-bottom: 1rem;
+    color: var(--secundario);
+    position: relative;
+    z-index: 1;
+}
+
+/* CSS que hace la magia en section DESTACADO  */
 .destacado-opcion {
     position: relative;
-    color: transparent; /* Oculta el texto original */
+    color: transparent;
 }
 
 .destacado-opcion::after {
     position: absolute;
     left: 0;
-    color: var(--primario);
     content: "PRESENCIALES";
-    animation: cambiarTexto 6s infinite;
     font-weight: bold;
     text-transform: uppercase;
+    background: linear-gradient(45deg, var(--secundario), var(--primario), var(--acento), #9F7AEA);
+    background-size: 400% 400%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: cambiarTexto 6s infinite, cambioColores 4s ease-in-out infinite;
+    width: auto; /* Ocupa todo el ancho  */
+    text-align: center; /* Centrado */
+
 }
 
-/*CICLO DE ANIMACION QUE AYUDA AL CAMBIO*/
+
+/* Cambia el contenido del texto */
 @keyframes cambiarTexto {
-    0%, 32%   { content: "PRESENCIALES"; }
-    33%, 65%  { content: "STREAMING"; }
-    66%, 100% { content: "QR"; }
+    0%, 32% {
+        content: "PRESENCIALES";
+    }
+    33%, 65% {
+        content: "STREAMING";
+    }
+    66%, 100% {
+        content: "QR";
+    }
 }
 
+/* Botón principal */
 #destacado a {
     display: inline-block;
-    background: var(--primario);
+    background: linear-gradient(135deg, var(--primario), #9F7AEA);
     color: white;
     padding: 0.5rem 1rem;
     text-decoration: none;
     border-radius: 4px;
+    font-weight: bold;
+    font-size: 1.1rem;
+    padding: 0.8rem 2rem;
+    border-radius: 25px;
+    box-shadow: 0 4px 15px rgba(108, 99, 255, 0.3);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
 }
 
+/* Efecto brillante en el botón */
+#destacado a::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    transition: left 0.6s;
+}
+
+#destacado a:hover::before {
+    left: 100%;
+}
+
+#destacado a:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(108, 99, 255, 0.4);
+    background: linear-gradient(135deg, #5A52D5, #8B7EFF);
+}
+
+/* Sección nosotros */
 #nosotros {
     padding: 1.5rem;
     background: white;
-    margin: 1rem;
+    margin: 1rem auto;
+    max-width: 800px;
+    border-radius: 15px;
+    box-shadow: 0 6px 20px rgba(108, 99, 255, 0.1);
+    border-left: 8px solid var(--acento);
+    animation: fadeInUp 3.2s ease-out ;
 }
 
-/*!* Responsive para móvil *!*/
-/*@media (max-width: 768px) {*/
-/*    nav ul {*/
-/*        flex-direction: column;*/
-/*        gap: 0.5rem;*/
-/*    }*/
-/*    #destacado { padding: 1rem; }*/
-/*    #nosotros { margin: 0.5rem; padding: 1rem; }*/
-/*}*/
+/* Título de nosotros */
+#nosotros h2 {
+    font-size: 1.8rem;
+    color: var(--secundario);
+    margin-bottom: 1rem;
+    position: relative;
+}
 
+/* Línea decorativa */
+#nosotros h2::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 80px;
+    height: 3px;
+    background: var(--primario);
+    border-radius: 2px;
+}
+
+/* Texto */
+#nosotros p {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: var(--texto);
+}
+
+/*el responsive esta en el css GENERAL*/
+
+
+/* Contenedor header con altura fija */
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 90px;
+    padding: 0 1rem;
+}
 

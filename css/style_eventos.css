@@ -1,26 +1,99 @@
-/* Variables globales   */
+/* Variables globales */
 :root {
-    --primario: #FF6F61; /* Color principal para botones y acentos */
-    --fondo: #F2E9E4; /* Color de fondo general */
-    --texto: #333333; /* Color principal del texto */
+    --primario: #6C63FF;
+    --secundario: #2D3748;
+    --texto: #2D3748;
+    --acento: #ED8936;
+    --acento-suave: #FED7D7;
 }
 
-/* Estilos generales     */
+/* Estilos generales */
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background: var(--fondo);
+    background: white;
     color: var(--texto);
+    position: relative;
 }
 
-/* Header y Footer       */
+/* confeti */
+body:after {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+
+    background-image: radial-gradient(circle, #f10a0a 2px, transparent 2px),
+    radial-gradient(circle, #0ab0c0 2px, transparent 2px),
+    radial-gradient(circle, #6018f1 2px, transparent 2px),
+    radial-gradient(circle, #ff0080 2px, transparent 2px),
+    radial-gradient(circle, #000000 2px, transparent 2px),
+    radial-gradient(circle, indianred 2px, transparent 2px);
+
+    background-size: 200px 200px, 250px 250px, 300px 300px, 350px 350px;
+    animation: confetiMov 10s linear infinite;
+}
+
+@keyframes confetiMov {
+    from {
+        background-position: 0 0, 50px 100px, 100px 200px, 150px 250px;
+    }
+    to {
+        background-position: 500px 1000px, 550px 1100px, 600px 1200px, 650px 1250px;
+    }
+}
+
+/* Header */
 header, footer {
-    background: #4A4E69;
+    background: linear-gradient(135deg, var(--secundario) 0%, #4A5568 100%);
     color: white;
     padding: 1rem;
+    box-shadow: 0 6px 10px rgba(108, 99, 255, 0.2);
+    min-height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
-/* Enlaces y textos del footer */
+/* título animado */
+header h1 {
+    animation: cambioColores 5s ease-in-out infinite;
+    background: linear-gradient(45deg, white, #9F7AEA, var(--primario), var(--acento));
+    background-size: 400% 400%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-weight: bold;
+}
+
+/* Colores que se mueven */
+@keyframes cambioColores {
+    0% {
+        background-position: 5% 50%;
+    }
+    25% {
+        background-position: 100% 50%;
+    }
+    50% {
+        background-position: 100% 100%;
+    }
+    75% {
+        background-position: 2% 100%;
+    }
+    100% {
+        background-position: 1% 50%;
+    }
+}
+
+/* Efecto hover en el título */
+header h1:hover {
+    transform: translateY(12px);
+    cursor: default;
+}
+
 #contacto {
     margin: 0.3rem 0;
     color: #ffffff;
@@ -29,99 +102,140 @@ header, footer {
 
 #mail {
     margin: 0.3rem 0;
-    color: #0ab0c0;
+    color: #9F7AEA;
+    transition: color 0.3s ease;
+}
+
+#mail:hover {
+    color: var(--acento);
 }
 
 #Ftnosotros {
-    color: #0ab0c0;
+    margin: 0.3rem 0;
+    color: #9F7AEA;
+    transition: color 0.3s ease;
 }
 
-/* Navegación            */
+#Ftnosotros:hover {
+    color: var(--acento);
+}
+
 nav ul {
     list-style: none;
     display: flex;
     justify-content: end;
     gap: 1rem;
+    margin: 0;
+    padding: 0;
+    align-items: center;
 }
+
 
 nav a {
     color: white;
     text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    transition: all 0.3s ease;
 }
 
-/* Bloque Carrusel nuevo, reemplaza la seccion anterior estatica y grande*/
-/* bloque que encierra todas mis tarjetas de evento, carrusel horizontal */
+/* Hover en nav */
+nav a:hover {
+    background: rgba(108, 99, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+
 .carrusel-eventos {
-    max-width: 900px;
+    height: 450px;
+    width: auto;
     margin: 2rem auto;
-    background: #fff;
-    border-radius: 18px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
-    padding: 2rem 1rem;
-    overflow-x: auto; /* Si hay muchas tarjetas, puedo scrollear hacia los lados */
+    background: linear-gradient(135deg, rgba(108, 99, 255, 0.05) 0%, var(--acento-suave) 100%);
+    border-radius: 15px;
+    box-shadow: 0 8px 32px rgba(108, 99, 255, 0.15);
+    padding: 3rem 2rem;
+    animation: fadeInUp 1s ease-out;
+    border: 4px solid #dad8ee;
+    overflow: visible;
 }
 
-/* direccion de las tarjetas en fil->horizontal */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 .carrusel-lista {
     display: flex;
     gap: 2rem;
     flex-wrap: nowrap;
     overflow-x: auto;
+    overflow-y: visible;
+    padding: 3rem 1rem;
+    scroll-behavior: smooth;
+    min-height: 300px;
+    align-items: center;
 }
 
-/* Tarjetas de evento    */
 .Tarjetas {
     background: white;
     border-radius: 12px;
-    overflow: hidden;
+    overflow: visible;
     text-align: center;
     padding: 1rem;
-    min-width: 220px; /* adaptable al carrusel */
-    max-width: 260px;
-    /* Efecto 3D, nueva apariencia eventos, inclinación y sombra */
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.14);
+    box-shadow: 0 8px 24px rgba(108, 99, 255, 0.2);
     transition: transform 0.4s cubic-bezier(.25, .8, .25, 1), box-shadow 0.3s;
-    perspective: 600px;
+    perspective: 400px;
     transform: rotateY(8deg) scale(1);
-    margin: 0;
+    margin: 2rem 0;
+    border: 2px solid rgba(108, 99, 255, 0.15);
+    position: relative;
+    z-index: 1;
+    height: 300px;
+    width: 80px;
+
 }
 
-/* hover funciona cuando el mouse pasa por el objeto,
-efecto al pasar el mouse por la tarjeta */
+
 .Tarjetas:hover {
     transform: rotateY(0deg) scale(1.08);
-    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.18);
+    box-shadow: 0 25px 80px rgb(108, 99, 255);
 }
 
-/* Imagen en tarjeta */
+
 .Tarjetas img,
 .img-tarjeta-evento {
-    width: 90px; /* uniforme para todas las tarjetas existentes y nuevas */
+    width: 90px;
     height: 90px;
     object-fit: cover;
     display: block;
     margin: 0 auto 1rem auto;
     border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.10);
+    box-shadow: 0 2px 8px rgba(108, 99, 255, 0.15);
 }
 
-/* Título del evento */
 .Tarjetas h3 {
     margin: 0.5rem 0;
     font-size: 1.1rem;
     font-weight: 600;
+    color: var(--secundario);
 }
 
-/* Descripcion evento */
+/* descripción */
 .Tarjetas p {
     margin: 0.6rem 0 1rem 0;
     font-size: 0.95rem;
-    color: #4A4E69;
+    color: var(--secundario);
 }
-/* texto destacado en la descripcion del evento */
+
 .tipo-evento {
-    background: #FFDFD1;
-    color: #d74f28;
+    background: rgba(237, 137, 54, 0.15);
+    color: var(--acento);
     border-radius: 4px;
     padding: 2px 7px;
     font-size: 0.9rem;
@@ -129,10 +243,8 @@ efecto al pasar el mouse por la tarjeta */
     font-weight: 500;
 }
 
-
-/* Botón de asistencia   */
 .btn-asistir {
-    background: var(--primario);
+    background: linear-gradient(135deg, var(--primario), #9F7AEA);
     color: white;
     border: none;
     padding: 0.5rem 1rem;
@@ -140,14 +252,32 @@ efecto al pasar el mouse por la tarjeta */
     cursor: pointer;
     font-size: 1rem;
     font-weight: 500;
-    box-shadow: 0 2px 8px rgba(255, 111, 97, 0.13);
-    transition: background 0.2s, box-shadow 0.2s;
+    box-shadow: 0 2px 8px rgba(108, 99, 255, 0.25);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+/* efecto brillante al botón */
+.btn-asistir::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.5s;
+}
+
+.btn-asistir:hover::before {
+    left: 100%;
 }
 
 .btn-asistir:hover {
-    background: #ff431b;
-    opacity: 0.97;
-    box-shadow: 0 4px 16px rgba(255, 111, 97, 0.18);
+    background: linear-gradient(135deg, #5A52D5, #8B7EFF);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(108, 99, 255, 0.3);
 }
 
 /*Responsividad general en otro css*/
