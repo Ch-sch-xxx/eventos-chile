@@ -4,7 +4,7 @@
     --fondo: #F2E9E4;
     --texto: #333333;
     --secundario: #4A4E69;
-    --acento: #9F7AEA;           /* <--- la agrego aquí */
+    --acento: #9F7AEA;
 }
 
 @keyframes cambioColores {
