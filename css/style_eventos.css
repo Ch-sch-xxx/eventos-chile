@@ -130,7 +130,6 @@ nav ul {
     align-items: center;
 }
 
-
 nav a {
     color: white;
     text-decoration: none;
@@ -144,7 +143,6 @@ nav a:hover {
     background: rgba(108, 99, 255, 0.2);
     transform: translateY(-2px);
 }
-
 
 .carrusel-eventos {
     height: 450px;
@@ -198,15 +196,12 @@ nav a:hover {
     z-index: 1;
     height: 300px;
     width: 80px;
-
 }
-
 
 .Tarjetas:hover {
     transform: rotateY(0deg) scale(1.08);
     box-shadow: 0 25px 80px rgb(108, 99, 255);
 }
-
 
 .Tarjetas img,
 .img-tarjeta-evento {
@@ -280,135 +275,229 @@ nav a:hover {
     box-shadow: 0 6px 20px rgba(108, 99, 255, 0.3);
 }
 
+/* Nueva sección tarjetas 3D  */
 
-/*nueva seccion, tarjetas general UNICAS en 3D :D*/
-/* Sección eventos 3D */
-.eventos-3d {
-    padding: 2rem;
+/* Contenedor principal tarjetas 3D */
+.eventos-tarjetas-3d {
+    padding: 3rem 2rem;
     max-width: 1200px;
-    margin: 0 auto;
+    margin: 3rem auto;
+    background: linear-gradient(135deg, #f9faff 0%, #ffffff 100%);
+    border-radius: 16px;
+    box-shadow: 0 8px 30px rgba(108, 99, 255, 0.1);
 }
 
-.eventos-3d h2 {
+/* Título de la sección */
+.eventos-tarjetas-3d h2 {
     text-align: center;
     color: var(--secundario);
-    margin-bottom: 2rem;
-}
-
-.grid-eventos {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 2rem;
-    padding: 1rem;
-}
-
-/* Contenedor 3D */
-.tarjeta-3d {
-    width: 280px;
-    height: 350px;
-    perspective: 1000px;
-    margin: 0 auto;
-}
-
-/* Tarjeta que gira */
-.tarjeta-flip {
-    width: 100%;
-    height: 100%;
-    transform-style: preserve-3d;
-    transition: transform 0.6s;
-    cursor: pointer;
+    font-size: 2.1rem;
+    font-weight: 700;
+    margin-bottom: 3rem;
     position: relative;
 }
 
-/* Caras de la tarjeta */
-.cara-front, .cara-back {
+.eventos-tarjetas-3d h2::after {
+    content: '';
+    position: absolute;
+    bottom: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 4px;
+    background: linear-gradient(135deg, var(--primario), var(--acento));
+    border-radius: 2px;
+}
+
+/* Grid de 3   */
+.contenedor-grid-eventos {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4rem 3rem;   /* más espacio */
+    justify-items: center;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding-bottom: 4rem; /* espacio abajo del grid */
+}
+
+/* Tarjeta 3D individual */
+.tarjeta-evento-3d {
+    width: 280px;
+    height: 350px;
+    perspective: 1000px;
+    cursor: pointer;
+}
+
+/* Tarjeta que hace flip, interconecta el espacio tridimensional al voltear */
+.carta-evento-flip {
     width: 100%;
     height: 100%;
-    position: absolute;
-    backface-visibility: hidden;
-    border-radius: 15px;
-    box-shadow: 0 8px 25px rgba(108, 99, 255, 0.2);
-    padding: 1.5rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-/* Cara frontal */
-.cara-front {
-    background: linear-gradient(135deg, white 0%, #f8f9ff 100%);
-    border: 2px solid rgba(108, 99, 255, 0.1);
-}
-
-/* Cara trasera */
-.cara-back {
-    background: linear-gradient(135deg, var(--primario) 0%, #9F7AEA 100%);
-    color: white;
-    transform: rotateY(180deg);
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.7s ease;
+    border-radius: 14px;
 }
 
 /* Estado volteado */
-.tarjeta-flip.volteada {
+.carta-evento-flip.volteada {
     transform: rotateY(180deg);
 }
 
-/* Imagen del evento */
-.cara-front img {
+/* Caras base */
+.cara-frontal,
+.cara-posterior {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 14px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    border: 2px solid rgba(108, 99, 255, 0.2);
+    box-shadow: 0 10px 25px rgba(108, 99, 255, 0.2);
+    transition: all 0.3s ease;
+}
+
+/* Cara frontal */
+.cara-frontal {
+    background: linear-gradient(145deg, #ffffff 0%, #f4f6ff 100%);
+    padding: 1.5rem;
+    justify-content: space-between;
+}
+
+/* Cara trasera */
+.cara-posterior {
+    background: linear-gradient(145deg, var(--primario) 0%, #9F7AEA 50%, var(--acento) 100%);
+    color: white;
+    padding: 1.5rem;
+    transform: rotateY(180deg);
+    justify-content: space-between;
+}
+
+/* Imagen evento */
+.imagen-evento {
     width: 100%;
     height: 120px;
     object-fit: cover;
     border-radius: 10px;
     margin-bottom: 1rem;
+    box-shadow: 0 4px 15px rgba(108, 99, 255, 0.15);
 }
 
-/* Título */
-.cara-front h3, .cara-back h3 {
-    margin: 0 0 0.5rem 0;
-    font-size: 1.2rem;
+/* Info compacta */
+.informacion-evento {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* Títulos */
+.cara-frontal h3,
+.cara-posterior h3 {
+    margin: 0 0 0.8rem 0;
+    font-size: 1.1rem;
     font-weight: 600;
+    line-height: 1.3;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
-.cara-front h3 {
+.cara-frontal h3 {
     color: var(--secundario);
 }
 
-/* Descripción */
-.info-evento {
-    flex-grow: 1;
-}
-
-.cara-front p {
-    color: var(--texto);
+/* Párrafos compactos */
+.cara-frontal p,
+.cara-posterior p {
     margin: 0.3rem 0;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
+    line-height: 1.4;
 }
 
-/* Botones */
-.btn-detalle, .btn-volver {
-    background: var(--primario);
+.cara-frontal p {
+    color: var(--texto);
+}
+
+.cara-posterior p {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* Etiqueta de tipo */
+.etiqueta-tipo {
+    display: inline-block;
+    background: rgba(237, 137, 54, 0.2);
+    color: var(--acento);
+    border-radius: 15px;
+    padding: 3px 10px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    margin: 0.5rem 0;
+}
+
+/* Botones evento */
+.boton-detalle,
+.boton-volver {
+    background: linear-gradient(135deg, var(--primario), #9F7AEA);
     color: white;
     border: none;
-    padding: 0.7rem 1rem;
-    border-radius: 8px;
+    padding: 0.6rem 1.2rem;
+    border-radius: 20px;
     cursor: pointer;
     font-weight: 500;
+    font-size: 0.9rem;
     transition: all 0.3s ease;
-    margin-top: 1rem;
+    margin-top: 0.8rem;
 }
 
-.btn-detalle:hover {
-    background: #5A52D5;
+.boton-volver {
+    background: rgba(255, 255, 255, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.boton-detalle:hover {
+    background: linear-gradient(135deg, #5A52D5, #8B7EFF);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(108, 99, 255, 0.3);
+}
+
+.boton-volver:hover {
+    background: rgba(255, 255, 255, 0.35);
     transform: translateY(-2px);
 }
 
-.btn-volver {
-    background: rgba(255, 255, 255, 0.2);
-    border: 1px solid rgba(255, 255, 255, 0.3);
+/* Efectos hover 3D */
+.tarjeta-evento-3d:hover .cara-frontal,
+.tarjeta-evento-3d:hover .cara-posterior {
+    box-shadow: 0 15px 35px rgba(108, 99, 255, 0.3);
+    border-color: rgba(108, 99, 255, 0.4);
 }
 
-/* Efecto mouse movimiento */
-.tarjeta-3d:hover .tarjeta-flip:not(.volteada) {
-    transform: perspective(1000px);
+/* Animación de entrada */
+@keyframes aparecerTarjeta {
+    from { opacity: 0; transform: translateY(30px) scale(0.95);}
+    to { opacity: 1; transform: translateY(0) scale(1);}
+}
+.tarjeta-evento-3d {
+    animation: aparecerTarjeta 0.6s ease-out forwards;
+}
+.tarjeta-evento-3d:nth-child(1) { animation-delay: 0.1s; }
+.tarjeta-evento-3d:nth-child(2) { animation-delay: 0.2s; }
+.tarjeta-evento-3d:nth-child(3) { animation-delay: 0.3s; }
+.tarjeta-evento-3d:nth-child(4) { animation-delay: 0.4s; }
+.tarjeta-evento-3d:nth-child(5) { animation-delay: 0.5s; }
+.tarjeta-evento-3d:nth-child(6) { animation-delay: 0.6s; }
+
+/* Responsive: móvil y tablet */
+@media (max-width: 768px) {
+    .contenedor-grid-eventos { grid-template-columns: 1fr; gap: 2rem; }
+    .tarjeta-evento-3d { width: 100%; max-width: 300px; }
+}
+@media (max-width: 1024px) {
+    .contenedor-grid-eventos { grid-template-columns: repeat(2, 1fr);}
 }
 
 
