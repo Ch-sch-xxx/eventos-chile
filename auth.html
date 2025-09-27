@@ -12,10 +12,12 @@
 <!-- Header con nav -->
 <header>
     <h1>Vista perfil</h1>
-    <div class="auth">
-        <a href="index.html" class="btn-admin">Inicio</a>
-        <a href="eventos.html" class="btn-admin">Eventos</a>
-    </div>
+    <nav>
+        <ul>
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="eventos.html">Eventos</a></li>
+        </ul>
+    </nav>
 </header>
 
 
@@ -54,7 +56,7 @@
             <label for="register-comuna">Comuna</label>
             <select id="register-comuna" required>
                 <option value="">Selecciona comuna</option>
-                <!-- el js se encarga de el resto -->
+                <!-- el js se encarga del resto -->
             </select>
             <button type="submit">Registrar</button>
             <p>¿Ya tienes cuenta? <a href="#" id="link-login">Inicia sesión</a></p>
@@ -64,8 +66,11 @@
 
 <!-- Footer semántico con contacto y navegación -->
 <footer>
-    <p>Contacto: <a href="mailto:eventoschile@gmail.com">eventoschile@gmail.com</a></p>
-    <p><a href="index.html">Acerca de Nosotros</a></p>
+    <p id="contacto">Contacto: <a id="mail" href="mailto:eventoschile@gmail.com">
+        <!-- funcion de enviar mail incluida(instant click)-->
+        eventoschile@gmail.com
+    </a></p>
+    <p><a id="Ftnosotros" href="index.html">Acerca de Nosotros</a></p>
 </footer>
 
 <!-- Script de interaccion y límites de inicio de sesion -->

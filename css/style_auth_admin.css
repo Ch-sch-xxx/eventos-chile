@@ -1,24 +1,13 @@
 /* Variables globales */
 :root {
-    --primario: #FF6F61;
-    --fondo: #F2E9E4;
-    --texto: #333333;
-    --secundario: #4A4E69;
-    --acento: #9F7AEA;
+    --primario: #6C63FF;
+    --secundario: #2D3748;
+    --texto: #2D3748;
+    --acento: #ED8936;
+    --acento-suave: #FED7D7;
 }
 
-@keyframes cambioColores {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}
 
-/* Reset y base */
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
 /* Estilos generales */
 body {
     margin: 0;
@@ -28,7 +17,7 @@ body {
     position: relative;
 }
 
-/* Header y navegación */
+/* Header */
 header, footer {
     background: linear-gradient(135deg, var(--secundario) 0%, #4A5568 100%);
     color: white;
@@ -37,10 +26,10 @@ header, footer {
     min-height: 80px;
     display: flex;
     align-items: center;
-    justify-content: space-between; /* logo izquierda, perfil derecha */
+    justify-content: space-between;
 }
 
-/*Efecto especial de titulo*/
+/* título animado */
 header h1 {
     animation: cambioColores 5s ease-in-out infinite;
     background: linear-gradient(45deg, white, #9F7AEA, var(--primario), var(--acento));
@@ -49,6 +38,82 @@ header h1 {
     background-clip: text;
     color: transparent;
     font-weight: bold;
+}
+
+/* Colores que se mueven */
+@keyframes cambioColores {
+    0% {
+        background-position: 5% 50%;
+    }
+    25% {
+        background-position: 100% 50%;
+    }
+    50% {
+        background-position: 100% 100%;
+    }
+    75% {
+        background-position: 2% 100%;
+    }
+    100% {
+        background-position: 1% 50%;
+    }
+}
+
+/* Efecto hover en el título */
+header h1:hover {
+    transform: translateY(12px);
+    cursor: default;
+}
+
+
+#contacto {
+    margin: 0.3rem 0;
+    color: #ffffff;
+    text-decoration: none;
+}
+
+#mail {
+    margin: 0.3rem 0;
+    color: #9F7AEA;
+    transition: color 0.3s ease;
+}
+
+#mail:hover {
+    color: var(--acento);
+}
+
+#Ftnosotros {
+    margin: 0.3rem 0;
+    color: #9F7AEA;
+    transition: color 0.3s ease;
+}
+
+#Ftnosotros:hover {
+    color: var(--acento);
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: end;
+    gap: 1rem;
+    margin: 0;
+    padding: 0;
+    align-items: center;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+}
+
+/* Hover en nav */
+nav a:hover {
+    background: rgba(108, 99, 255, 0.2);
+    transform: translateY(-2px);
 }
 .btn-admin, .btn-cerrar {
     color: white;
@@ -120,31 +185,7 @@ header h1 {
     text-decoration: underline;
 }
 
-footer {
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    background: var(--secundario);
-    color: #fff;
-    text-align: center;
-    padding: 1rem 0;
-    box-shadow: 0 6px 10px rgba(108, 99, 255, 0.2);
-    min-height: 60px;
-    z-index: 100;
-    margin-top: 0; /* quita el margen superior en fixed */
-}
 
 
 
-/*!* Responsive para móvil *!*/
-/*@media (max-width: 480px) {*/
-/*    .auth-contenedor {*/
-/*        margin: 1rem;*/
-/*        padding: 1rem;*/
-/*    }*/
-/*    nav ul {*/
-/*        flex-direction: column;*/
-/*        gap: 0.5rem;*/
-/*    }*/
-/*}*/
+
