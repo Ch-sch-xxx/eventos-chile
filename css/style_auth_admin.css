@@ -17,6 +17,29 @@ body {
     position: relative;
 }
 
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    background-image:
+            radial-gradient(circle, #f10a0a 2px, transparent 2px),
+            radial-gradient(circle, #0ab0c0 2px, transparent 2px),
+            radial-gradient(circle, #6018f1 2px, transparent 2px),
+            radial-gradient(circle, #ff0080 2px, transparent 2px);
+    background-size: 200px 200px, 250px 250px, 300px 300px;
+    animation: confetiMov 10s linear infinite;
+}
+
+@keyframes confetiMov {
+    from { background-position: 0 0, 50px 100px, 100px 200px; }
+    to { background-position: 500px 1000px, 550px 1100px, 600px 1200px; }
+}
+
+
 /* Header */
 header, footer {
     background: linear-gradient(135deg, var(--secundario) 0%, #4A5568 100%);
