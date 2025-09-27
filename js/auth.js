@@ -68,10 +68,10 @@ const regionesYcomunas = {
         "Machalí"
 
     ],
-    // se pueden agregar más regiones y comunas a futuro
+    // se pueden agregar más regiones y comunas siguien la estructura de arriba
 };
 
-// Manejo del formulario de login
+// Manejo formulario de login
 document.getElementById('login').addEventListener('submit', e => {
     e.preventDefault();
     const email = document.getElementById('login-email').value.trim();
@@ -86,7 +86,7 @@ document.getElementById('login').addEventListener('submit', e => {
         return;
     }
 
-    // Admin hardcodeado
+    // Admin hardcodeaoo
     if (email === 'ad@ad.com' && pass === 'admin') {
         localStorage.setItem('user-logged', 'admin');
         localStorage.setItem('user-email', email);
@@ -101,7 +101,7 @@ document.getElementById('login').addEventListener('submit', e => {
         localStorage.setItem('user-email', email);
         localStorage.setItem('user-data', JSON.stringify(usuario));
         alert('¡Bienvenido ' + usuario.name + '!');
-        window.location.href = 'perfil_admin.html'; // o donde quieras redirigir
+        window.location.href = 'perfil_admin.html';
     } else {
         alert('Credenciales incorrectas');
     }
@@ -109,8 +109,7 @@ document.getElementById('login').addEventListener('submit', e => {
 
 
 
-// Manejo del formulario de registro
-// REEMPLAZAR el addEventListener de register:
+// Manejo formulario de registro
 document.getElementById('register').addEventListener('submit', e => {
     e.preventDefault();
     const name = document.getElementById('register-name').value.trim();

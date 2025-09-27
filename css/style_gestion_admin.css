@@ -196,15 +196,3 @@ footer {
     z-index: 100;
     margin-top: 0; /* quita el margen superior en fixed */
 }
-
-/*!* Responsive móvil *!*/
-/*@media (max-width: 768px) {*/
-/*    .layout {*/
-/*        flex-direction: column;*/
-/*    }*/
-/*    .sidebar {*/
-/*        width: 100%;*/
-/*        border-right: none;*/
-/*        border-bottom: 1px solid #ccc;*/
-/*    }*/
-/*}*/

@@ -138,16 +138,7 @@ nav a:hover {
     background: rgba(108, 99, 255, 0.2);
     transform: translateY(-2px);
 }
-.btn-admin, .btn-cerrar {
-    color: white;
-    text-decoration: none;
-    padding: 8px 14px;
-    border-radius: 5px;
-    background-color: #4A5568;
-    border: none;
-    font-weight: bold;
-    transition: background 0.2s;
-}
+
 
 /* Contenedor de formularios */
 .auth-contenedor {
