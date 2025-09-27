@@ -280,4 +280,136 @@ nav a:hover {
     box-shadow: 0 6px 20px rgba(108, 99, 255, 0.3);
 }
 
+
+/*nueva seccion, tarjetas general UNICAS en 3D :D*/
+/* Sección eventos 3D */
+.eventos-3d {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.eventos-3d h2 {
+    text-align: center;
+    color: var(--secundario);
+    margin-bottom: 2rem;
+}
+
+.grid-eventos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    padding: 1rem;
+}
+
+/* Contenedor 3D */
+.tarjeta-3d {
+    width: 280px;
+    height: 350px;
+    perspective: 1000px;
+    margin: 0 auto;
+}
+
+/* Tarjeta que gira */
+.tarjeta-flip {
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.6s;
+    cursor: pointer;
+    position: relative;
+}
+
+/* Caras de la tarjeta */
+.cara-front, .cara-back {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    backface-visibility: hidden;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(108, 99, 255, 0.2);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* Cara frontal */
+.cara-front {
+    background: linear-gradient(135deg, white 0%, #f8f9ff 100%);
+    border: 2px solid rgba(108, 99, 255, 0.1);
+}
+
+/* Cara trasera */
+.cara-back {
+    background: linear-gradient(135deg, var(--primario) 0%, #9F7AEA 100%);
+    color: white;
+    transform: rotateY(180deg);
+}
+
+/* Estado volteado */
+.tarjeta-flip.volteada {
+    transform: rotateY(180deg);
+}
+
+/* Imagen del evento */
+.cara-front img {
+    width: 100%;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+}
+
+/* Título */
+.cara-front h3, .cara-back h3 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.cara-front h3 {
+    color: var(--secundario);
+}
+
+/* Descripción */
+.info-evento {
+    flex-grow: 1;
+}
+
+.cara-front p {
+    color: var(--texto);
+    margin: 0.3rem 0;
+    font-size: 0.9rem;
+}
+
+/* Botones */
+.btn-detalle, .btn-volver {
+    background: var(--primario);
+    color: white;
+    border: none;
+    padding: 0.7rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    margin-top: 1rem;
+}
+
+.btn-detalle:hover {
+    background: #5A52D5;
+    transform: translateY(-2px);
+}
+
+.btn-volver {
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Efecto mouse movimiento */
+.tarjeta-3d:hover .tarjeta-flip:not(.volteada) {
+    transform: perspective(1000px);
+}
+
+
 /*Responsividad general en otro css*/
