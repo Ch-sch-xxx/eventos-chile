@@ -44,7 +44,8 @@ function configurarListeners() {
     // Cerrar sesión
     document.querySelector('.btn-cerrar').addEventListener('click', () => {
         localStorage.removeItem('user-logged');
-        window.location.href = 'auth.html';
+        // Reemplaza entrada en el historial, si haces back, ya estas deslogueado
+        window.location.replace('auth.html');
     });
 }
 
