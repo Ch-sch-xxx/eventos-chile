@@ -1,3 +1,29 @@
+// Sistema de usuarios en localStorage
+function obtenerUsuarios() {
+    const usuarios = localStorage.getItem('usuarios-chile');
+    return usuarios ? JSON.parse(usuarios) : [];
+}
+
+function guardarUsuarios(usuarios) {
+    localStorage.setItem('usuarios-chile', JSON.stringify(usuarios));
+}
+
+function crearUsuario(userData) {
+    const usuarios = obtenerUsuarios();
+    // Verificar si el email ya existe
+    if (usuarios.find(user => user.email === userData.email)) {
+        return false; // Ya existe
+    }
+    usuarios.push(userData);
+    guardarUsuarios(usuarios);
+    return true;
+}
+
+function validarUsuario(email, password) {
+    const usuarios = obtenerUsuarios();
+    return usuarios.find(user => user.email === email && user.password === password);
+}
+
 // Expresión regular para validar email
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -42,42 +68,54 @@ const regionesYcomunas = {
         "Machalí"
 
     ],
-    // se pueden agregar mas regiones y comunas a futuro
+    // se pueden agregar más regiones y comunas a futuro
 };
 
 // Manejo del formulario de login
 document.getElementById('login').addEventListener('submit', e => {
     e.preventDefault();
     const email = document.getElementById('login-email').value.trim();
-    const pass  = document.getElementById('login-password').value.trim();
+    const pass = document.getElementById('login-password').value.trim();
 
-    // Validar formato de email
     if (!emailRegex.test(email)) {
         alert('Email inválido');
         return;
     }
-    // Validar longitud de contraseña
     if (pass.length < 4 || pass.length > 20) {
         alert('La contraseña debe tener entre 4 y 20 caracteres');
         return;
     }
 
-    // Simular login admin
+    // Admin hardcodeado
     if (email === 'ad@ad.com' && pass === 'admin') {
-        localStorage.setItem('user-logged', 'admin');// Guardamos que el admin está logueado
+        localStorage.setItem('user-logged', 'admin');
         localStorage.setItem('user-email', email);
         window.location.href = 'gestion_admin.html';
+        return;
+    }
+
+    // Validar usuario registrado
+    const usuario = validarUsuario(email, pass);
+    if (usuario) {
+        localStorage.setItem('user-logged', 'usuario');
+        localStorage.setItem('user-email', email);
+        localStorage.setItem('user-data', JSON.stringify(usuario));
+        alert('¡Bienvenido ' + usuario.name + '!');
+        window.location.href = 'perfil_admin.html'; // o donde quieras redirigir
     } else {
         alert('Credenciales incorrectas');
     }
 });
 
+
+
 // Manejo del formulario de registro
+// REEMPLAZAR el addEventListener de register:
 document.getElementById('register').addEventListener('submit', e => {
     e.preventDefault();
-    const name   = document.getElementById('register-name').value.trim();
-    const email  = document.getElementById('register-email').value.trim();
-    const pass   = document.getElementById('register-password').value.trim();
+    const name = document.getElementById('register-name').value.trim();
+    const email = document.getElementById('register-email').value.trim();
+    const pass = document.getElementById('register-password').value.trim();
     const region = document.getElementById('register-region').value;
     const comuna = document.getElementById('register-comuna').value;
 
@@ -94,11 +132,28 @@ document.getElementById('register').addEventListener('submit', e => {
         return;
     }
 
+    // Crear usuario
+    const nuevoUsuario = {
+        name: name,
+        email: email,
+        password: pass,
+        region: region,
+        comuna: comuna,
+        fechaRegistro: new Date().toISOString()
+    };
 
-    alert('Registro exitoso. Ahora puedes iniciar sesión.');
-    document.getElementById('register').classList.add('oculto');
-    document.getElementById('login').classList.remove('oculto');
+    if (crearUsuario(nuevoUsuario)) {
+        alert('Registro exitoso. Ahora puedes iniciar sesión.');
+        // Limpiar formulario
+        document.getElementById('register').reset();
+        // Cambiar a login
+        document.getElementById('register').classList.add('oculto');
+        document.getElementById('login').classList.remove('oculto');
+    } else {
+        alert('Este email ya está registrado');
+    }
 });
+
 
 document.getElementById('register-region').addEventListener('change', function() {
     const region = this.value;
