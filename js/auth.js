@@ -13,6 +13,38 @@ document.getElementById('link-login').addEventListener('click', e => {
     document.getElementById('login').classList.remove('oculto');
 });
 
+
+const regionesYcomunas = {
+    "Región Metropolitana": [
+        "Santiago",
+        "Providencia",
+        "Las Condes",
+        "Puente Alto",
+        "Maipú",
+
+    ],
+    "Valparaíso": [
+        "Valparaíso",
+        "Viña del Mar",
+        "Concón",
+        "Quilpué"
+
+    ],
+    "Biobío": [
+        "Concepción",
+        "Talcahuano",
+        "Los Ángeles"
+
+    ],
+    "O’Higgins": [
+        "Rancagua",
+        "San Fernando",
+        "Machalí"
+
+    ],
+    // se pueden agregar mas regiones y comunas a futuro
+};
+
 // Manejo del formulario de login
 document.getElementById('login').addEventListener('submit', e => {
     e.preventDefault();
@@ -61,16 +93,23 @@ document.getElementById('register').addEventListener('submit', e => {
         alert('La contraseña debe tener entre 4 y 20 caracteres');
         return;
     }
-    if (!region) {
-        alert('Selecciona una región');
-        return;
-    }
-    if (!comuna) {
-        alert('Selecciona una comuna');
-        return;
-    }
+
 
     alert('Registro exitoso. Ahora puedes iniciar sesión.');
     document.getElementById('register').classList.add('oculto');
     document.getElementById('login').classList.remove('oculto');
+});
+
+document.getElementById('register-region').addEventListener('change', function() {
+    const region = this.value;
+    const comunaSelect = document.getElementById('register-comuna');
+    comunaSelect.innerHTML = '<option value="">Selecciona comuna</option>';
+    if(region && regionesYcomunas[region]) {
+        regionesYcomunas[region].forEach(comuna => {
+            const option = document.createElement('option');
+            option.value = comuna;
+            option.textContent = comuna;
+            comunaSelect.appendChild(option);
+        });
+    }
 });

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Eventos Chile · Perfil Administrador</title>
+    <link rel="stylesheet" href="css/style_pefil_admin.css">
+    <link rel="stylesheet" href="css/responsividadGeneral.css">
+</head>
+<body>
+    <header>
+        <h1>Panel de Administrador</h1>
+        <div class="perfil-admin">
+            <a href="gestion_admin.html" class="btn-home">Inicio</a>
+            <a href="#" id="cerrar-sesion" class="btn-cerrar">Cerrar sesión</a>
+        </div>
+    </header>
+
+    <main class="contenedor-principal">
+        <section class="perfil-header">
+            <div class="imagen-container">
+                <img src="imagenes/ICONOperfil.png" alt="Foto de perfil" class="imagen-perfil">
+                <button class="btn-cambiar-foto">Cambiar foto</button>
+            </div>
+            <div class="info-basica">
+                <h2 id="nombreAdmin">Nombre del Administrador</h2>
+                <p id="correoAdmin">correo@ejemplo.com</p>
+                <span class="badge-rol">Administrador Principal</span>
+            </div>
+        </section>
+
+        <section class="detalles-admin">
+            <div class="card">
+                <h3>Información Personal</h3>
+                <div class="info-grupo">
+                    <label>Nombre completo:</label>
+                    <p id="nombreCompleto"></p>
+                </div>
+                <div class="info-grupo">
+                    <label>Correo electrónico:</label>
+                    <p id="correoContacto"></p>
+                </div>
+                <div class="info-grupo">
+                    <label>Region:</label>
+                </div>
+                <div class="info-grupo">
+                    <label>Comuna:</label>
+                </div>
+
+            </div>
+
+            <div class="card">
+                <h3>Estadísticas</h3>
+                <div class="estadisticas-grid">
+                    <div class="stat-item">
+                        <span class="numero" id="totalEventos">0</span>
+                        <span class="etiqueta">Eventos Creados</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="numero" id="eventosActivos">0</span>
+                        <span class="etiqueta">Eventos Activos</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="acciones-rapidas">
+            <h3>Aciones</h3>
+            <div class="botones-accion">
+                <button class="btn-accion" id="verReportes">Ver Reportes</button>
+                <button class="btn-accion" id="configuracion">Configuración</button>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Eventos Chile - Panel de Administración</p>
+    </footer>
+
+    <script src="js/perfil_admin.js"></script>
+</body>
+</html>
