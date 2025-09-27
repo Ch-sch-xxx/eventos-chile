@@ -1,10 +1,10 @@
 /* Variables globales */
 :root {
-    --primario: #FF6F61;
-    --fondo: #F2E9E4;
-    --texto: #333333;
-    --secundario: #4A4E69;
-    --acento: #9F7AEA;
+    --primario: #6C63FF;
+    --secundario: #2D3748;
+    --texto: #2D3748;
+    --acento: #ED8936;
+    --acento-suave: #FED7D7;
 }
 
 @keyframes cambioColores {
@@ -13,12 +13,6 @@
     100% { background-position: 0% 50%; }
 }
 
-/* Reset y base */
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
 /* Estilos generales */
 body {
     margin: 0;
@@ -37,9 +31,9 @@ header{
     min-height: 80px;
     display: flex;
     align-items: center;
-    justify-content: space-between; /* logo izquierda, perfil derecha */
+    justify-content: space-between;
 }
-/*Efecto especial de titulo*/
+/*Efecto especial titulo*/
 header h1 {
     animation: cambioColores 5s ease-in-out infinite;
     background: linear-gradient(45deg, white, #9F7AEA, var(--primario), var(--acento));
@@ -54,7 +48,7 @@ header h1 {
 .gestion-admin {
     display: flex;
     align-items: center;
-    gap: 12px; /* espacio entre imagen y botones */
+    gap: 12px;
 }
 
 /* Imagen de perfil */
@@ -80,13 +74,13 @@ header h1 {
     background-color: var(--secundario);
 }
 
-/* Layout */
+
 .layout {
     display: flex;
     margin-top: 1rem;
 }
 
-/* Sidebar */
+
 .sidebar {
     width: 200px;
     background: white;
@@ -111,7 +105,7 @@ header h1 {
     color: var(--primario);
 }
 
-/* Contenido admin */
+/* Cont admin */
 .admin-content {
     flex: 1;
     padding: 1rem;
@@ -123,7 +117,7 @@ section {
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-/* Formulario crear */
+/* Formulario */
 #form-crear {
     display: flex;
     flex-direction: column;
@@ -177,13 +171,12 @@ th {
     opacity: 0.9;
 }
 
-/* Oculta sección */
+/* Ocultar sección */
 .oculto {
     display: none;
 }
 
 footer {
-    position: fixed;
     left: 0;
     bottom: 0;
     width: 100%;
@@ -194,5 +187,16 @@ footer {
     box-shadow: 0 6px 10px rgba(108, 99, 255, 0.2);
     min-height: 60px;
     z-index: 100;
-    margin-top: 0; /* quita el margen superior en fixed */
+    margin-top: 0;
 }
+
+
+@media (max-width:600px) {
+    .sidebar { display:none; }
+    .layout { flex-direction:column; }
+}
+input:focus, select:focus, button:focus {
+    outline: 2px solid var(--primario);
+}
+
+

@@ -9,13 +9,13 @@
 </head>
 <body>
 
-<!-- Header: logo y menú de perfil -->
+<!--logo y menú de perfil -->
 <header>
     <h1>Eventos Chile</h1>
     <div class="gestion-admin">
         <img src="imagenes/ICONOperfil.png" alt="perfil" class="imagen-perfil">
-        <a href="#" class="btn-admin">Perfil Admin</a>
-        <a href="#" class="btn-cerrar">Cerrar sesión</a>
+        <button class="btn-admin" aria-label="Ver perfil de administrador">Perfil Admin</button>
+        <button class="btn-cerrar" aria-label="Cerrar sesión">Cerrar sesión</button>
     </div>
 </header>
 
@@ -24,13 +24,13 @@
 
 <!-- barra lateral + contenido (Proximos eventos) -->
 <div class="layout">
-    <!-- Barra lateral: opciones CRUD -->
+    <!-- opciones CRUD en BARRA -->
     <aside class="sidebar">
         <h2>Eventos</h2>
         <ul>
 <!--                CRUD EVENTOS    -->
             <li><a href="#" id="nav-crear">Crear Evento</a></li>
-            <li><a href="#" id="nav-listar">Listar Eventos</a></li>
+            <li><a href="#" id="nav-listar" aria-current="page">Listar Eventos</a></li>
         </ul>
     </aside>
 
@@ -63,6 +63,7 @@
             <table>
                 <thead>
                 <tr>
+                    <th>#</th> <!-- ÍNDICE -->
                     <th>Título</th>
                     <th>Fecha</th>
                     <th>Lugar</th>
