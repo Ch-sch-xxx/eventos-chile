@@ -9,16 +9,15 @@
 </head>
 <body>
 
-<!-- Header con logo y nav -->
+<!-- Header con nav -->
 <header>
-    <h1>Eventos Chile</h1>
-    <nav>
-        <ul>
-            <li><a href="index.html">Inicio</a></li>
-            <li><a href="eventos.html">Eventos</a></li>
-        </ul>
-    </nav>
+    <h1>Vista perfil</h1>
+    <div class="auth">
+        <a href="index.html" class="btn-admin">Inicio</a>
+        <a href="eventos.html" class="btn-admin">Eventos</a>
+    </div>
 </header>
+
 
 <!-- Main: contenedor de formularios login/registro -->
 <main>
@@ -46,18 +45,16 @@
             <label for="register-region">Región</label>
             <select id="register-region" required>
                 <option value="">Selecciona región</option>
-                <option>Región Metropolitana</option>
-                <option>Valparaíso</option>
-                <option>Biobío</option>
-                <option>O’Higgins</option>
+                <option value="Región Metropolitana">Región Metropolitana</option>
+                <option value="Valparaíso">Valparaíso</option>
+                <option value="Biobío">Biobío</option>
+                <option value="O’Higgins">O’Higgins</option>
+                <!-- ...más regiones a futuro  -->
             </select>
             <label for="register-comuna">Comuna</label>
             <select id="register-comuna" required>
                 <option value="">Selecciona comuna</option>
-                <option>Santiago</option>
-                <option>Providencia</option>
-                <option>Viña del Mar</option>
-                <option>Concepción</option>
+                <!-- el js se encarga de el resto -->
             </select>
             <button type="submit">Registrar</button>
             <p>¿Ya tienes cuenta? <a href="#" id="link-login">Inicia sesión</a></p>
@@ -68,7 +65,7 @@
 <!-- Footer semántico con contacto y navegación -->
 <footer>
     <p>Contacto: <a href="mailto:eventoschile@gmail.com">eventoschile@gmail.com</a></p>
-    <p><a href="index.html">Volver a Inicio</a></p>
+    <p><a href="index.html">Acerca de Nosotros</a></p>
 </footer>
 
 <!-- Script de interaccion y límites de inicio de sesion -->
