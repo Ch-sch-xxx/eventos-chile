@@ -32,14 +32,6 @@ function personalizarInterfazSegunRol() {
         titulo.textContent = 'Mi Gestor · Eventos Chile';
         tituloSeccion.textContent = 'Mis Eventos Creados';
     }
-
-    // Mostrar información del usuario en el botón perfil
-    const btnPerfil = document.querySelector('.btn-admin');
-    if (btnPerfil && userData.name) {
-        btnPerfil.textContent = userData.name;
-    }
-
-    console.log('Interfaz personalizada para:', userLogged, '- Usuario:', userData.name || userEmail);
 }
 
 // CONFIG LISTENERS Y MODAL
@@ -65,7 +57,7 @@ function configurarListeners() {
         procesarFormulario();
     });
 
-    // Acciones tabla - MEJORADO: ahora usa event delegation
+    // Acciones tabla
     document.querySelector('#listar-eventos tbody').addEventListener('click', e => {
         const idx = parseInt(e.target.dataset.idx);
 
@@ -74,22 +66,29 @@ function configurarListeners() {
         if (e.target.classList.contains('btn-eliminar')) return borrarEvento(idx);
     });
 
-    // Botón perfil - NUEVO: redirige a perfil_admin.html
-    const btnPerfil = document.querySelector('.btn-admin');
+    // Botón perfil - redirige a perfil_admin.html
+    const btnPerfil = document.getElementById('enlace-perfil');
     if (btnPerfil) {
-        btnPerfil.addEventListener('click', () => {
+        btnPerfil.addEventListener('click', (e) => {
+            e.preventDefault();
             window.location.href = 'perfil_admin.html';
         });
     }
 
-    // Cerrar sesión - MEJORADO: limpia todos los datos
-    document.querySelector('.btn-cerrar').addEventListener('click', () => {
-        localStorage.removeItem('user-logged');
-        localStorage.removeItem('user-email');
-        localStorage.removeItem('user-data');
-        alert('Sesión cerrada correctamente');
-        window.location.replace('auth.html');
-    });
+    // Cerrar sesión
+    const btnCerrarSesion = document.getElementById('cerrar-sesion');
+    if (btnCerrarSesion) {
+        btnCerrarSesion.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (confirm('¿Seguro que deseas cerrar sesión?')) {
+                localStorage.removeItem('user-logged');
+                localStorage.removeItem('user-email');
+                localStorage.removeItem('user-data');
+                alert('Sesión cerrada correctamente');
+                window.location.replace('auth.html');
+            }
+        });
+    }
 
     // Modal detalles: cerrar
     const cerrarModal = document.getElementById('cerrar-modal');
@@ -107,6 +106,7 @@ function configurarListeners() {
     });
 }
 
+// Resto de funciones igual (sin console.log)...
 // Mostrar u ocultar secciones
 function togglearSecciones(seccionVisible) {
     document.getElementById('crear-evento').classList.toggle('oculto', seccionVisible !== 'crear-evento');
@@ -119,7 +119,7 @@ function limpiarFormulario() {
     document.querySelector('#form-crear button').textContent = 'Crear';
 }
 
-// Proceso de formulario: crear o editar - MEJORADO con validaciones
+// Proceso de formulario: crear o editar
 function procesarFormulario() {
     const titulo = document.getElementById('titulo').value.trim();
     const fecha = document.getElementById('fecha').value;
@@ -130,7 +130,7 @@ function procesarFormulario() {
     const capacidad = document.getElementById('capacidad').value || '100';
     const precio = document.getElementById('precio').value.trim() || 'Gratis';
 
-    // Validaciones mejoradas
+    // Validaciones
     if (!titulo || titulo.length < 3) {
         return alert('El título debe tener al menos 3 caracteres');
     }
@@ -186,14 +186,13 @@ function procesarFormulario() {
             }
         }
     } catch (error) {
-        console.error('Error al procesar evento:', error);
         alert('Error al guardar el evento');
     }
 }
 
-// Precarga campos para edición - MEJORADO con validaciones de permisos
+// Precarga campos para edición
 function iniciarEdicion(idx) {
-    const eventos = obtenerMisEventos();  // CAMBIO: usa la nueva función
+    const eventos = obtenerMisEventos();
     const evento = eventos[idx];
 
     if (!evento) {
@@ -228,9 +227,9 @@ function iniciarEdicion(idx) {
     togglearSecciones('crear-evento');
 }
 
-// Elimina evento - MEJORADO con validaciones de permisos
+// Elimina evento
 function borrarEvento(idx) {
-    const eventos = obtenerMisEventos();  // CAMBIO: usa la nueva función
+    const eventos = obtenerMisEventos();
     const evento = eventos[idx];
 
     if (!evento) {
@@ -261,15 +260,14 @@ function borrarEvento(idx) {
                 alert('Error: No se pudo eliminar el evento');
             }
         } catch (error) {
-            console.error('Error al eliminar evento:', error);
             alert('Error al eliminar el evento');
         }
     }
 }
 
-// Mostrar modal de detalles del evento - MEJORADO
+// Mostrar modal de detalles del evento
 function verEvento(idx) {
-    const eventos = obtenerMisEventos();  // CAMBIO: usa la nueva función
+    const eventos = obtenerMisEventos();
     const evento = eventos[idx];
 
     if (!evento) {
@@ -290,9 +288,9 @@ function verEvento(idx) {
     document.getElementById('modal-detalle').classList.remove('oculto');
 }
 
-// Renderiza la tabla - MODIFICADO para usar la nueva función de filtrado
+// Renderiza la tabla
 function renderTablaEventos() {
-    const eventos = obtenerMisEventos();  // CAMBIO CLAVE: usa la nueva función
+    const eventos = obtenerMisEventos();
     const tbody = document.querySelector('#listar-eventos tbody');
     const userLogged = localStorage.getItem('user-logged');
     const userEmail = localStorage.getItem('user-email');
@@ -323,12 +321,10 @@ function renderTablaEventos() {
           <td style="max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${evento.lugar}</td>
           <td><span style="background: var(--acento); color: white; padding: 2px 6px; border-radius: 4px; font-size: 0.8rem;">${evento.tipo}</span></td>
           <td>
-            <button class="btn-ver" data-idx="${i}" style="margin: 2px; font-size: 0.85rem;" title="Ver detalles">Ver</button>
-            ${puedeEditar ? `<button class="btn-editar" data-idx="${i}" style="margin: 2px; background: #28a745; font-size: 0.85rem;" title="Editar evento">Editar</button>` : ''}
-            ${puedeEditar ? `<button class="btn-eliminar" data-idx="${i}" style="margin: 2px; background: #dc3545; font-size: 0.85rem;" title="Eliminar evento">Eliminar</button>` : ''}
+            <button class="btn-ver" data-idx="${i}" title="Ver detalles">Ver</button>
+            ${puedeEditar ? `<button class="btn-editar" data-idx="${i}" title="Editar evento">Editar</button>` : ''}
+            ${puedeEditar ? `<button class="btn-eliminar" data-idx="${i}" title="Eliminar evento">Eliminar</button>` : ''}
           </td>`;
         tbody.appendChild(tr);
     });
-
-    console.log(`Tabla renderizada: ${eventos.length} eventos para ${userLogged} (${userEmail})`);
 }

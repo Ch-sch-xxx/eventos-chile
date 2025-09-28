@@ -25,12 +25,12 @@ body::before {
     height: 100%;
     pointer-events: none;
     background-image:
-            radial-gradient(circle, #f10a0a 2px, transparent 2px),
-            radial-gradient(circle, #0ab0c0 2px, transparent 2px),
-            radial-gradient(circle, #6018f1 2px, transparent 2px);
+            radial-gradient(circle, #f10a0a 2px, transparent 4px),
+            radial-gradient(circle, #0ab0c0 2px, transparent 6px),
+            radial-gradient(circle, #6018f1 2px, transparent 8px);
     background-size: 300px 300px, 400px 400px;
     animation: confetiMov 15s linear infinite;
-    opacity: 0.1;
+    opacity: 0.2;
 }
 
 @keyframes confetiMov {
@@ -176,22 +176,6 @@ main {
     transform: scale(1.05);
 }
 
-.btn-cambiar-foto {
-    background: linear-gradient(135deg, var(--primario), #9F7AEA);
-    color: white;
-    border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 20px;
-    cursor: pointer;
-    font-weight: 500;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 8px rgba(108, 99, 255, 0.2);
-}
-
-.btn-cambiar-foto:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(108, 99, 255, 0.3);
-}
 
 .info-basica {
     flex-grow: 1;

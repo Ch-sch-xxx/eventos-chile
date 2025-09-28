@@ -62,9 +62,11 @@ function generarTarjetas3D() {
                     <div class="informacion-evento">
                         <h3>${evento.titulo}</h3>
                         <p><strong>Descripción:</strong></p>
-                        <p>${evento.descripcion || 'Evento increíble que no te puedes perder. Ven y disfruta de una experiencia única.'}</p>
-                        <p><strong>Capacidad:</strong> ${evento.capacidad || '100'} personas</p>
-                        <p><strong>Precio:</strong> ${evento.precio || 'Gratis'}</p>
+                        <p>${evento.descripcion}</p>
+                        <p><strong>Capacidad:</strong> ${evento.capacidad} personas</p>
+                        <p><strong>Precio:</strong> ${evento.precio}</p>
+                        <p><strong>Creado por:</strong> ${evento.creadoPor}</span></p>
+                        <p><strong>Fecha creación:</strong> ${evento.fecha}</p>
                     </div>
                     <button class="boton-volver">Volver</button>
                 </div>
