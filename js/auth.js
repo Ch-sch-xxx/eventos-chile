@@ -198,7 +198,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (email === 'ad@ad.com' && pass === 'admin') {
             localStorage.setItem('user-logged', 'admin');
             localStorage.setItem('user-email', email);
-            localStorage.setItem('user-role_', 'admin'); // AGREGAR rol específico
+            localStorage.setItem('user-role', 'admin'); // AGREGAR rol específico
             window.location.href = 'gestion_admin.html';
             return;
         }
@@ -206,14 +206,13 @@ document.addEventListener('DOMContentLoaded', function() {
         // Validar usuario normal registrado
         const usuario = validarUsuario(email, pass);
         if (usuario) {
-            localStorage.setItem('user-logged', 'usuario');
+            localStorage.setItem('user-logged', 'usuario'); // SIEMPRE 'usuario' para registrados
             localStorage.setItem('user-email', email);
-            localStorage.setItem('user-role', 'usuario');
+            localStorage.setItem('user-role', 'usuario'); // AGREGAR rol específico
             localStorage.setItem('user-data', JSON.stringify(usuario));
             alert('¡Bienvenido ' + usuario.name + '!');
-            window.location.href = 'gestor_eventos.html'; // CAMBIAR de perfil_usuario.html
-        }
-        else {
+            window.location.href = 'perfil_usuario.html'; // perfil_usuario.html
+        } else {
             alert('Credenciales incorrectas');
         }
     });
