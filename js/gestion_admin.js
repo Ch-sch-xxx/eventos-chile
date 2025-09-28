@@ -13,11 +13,6 @@ let editandoIndice = null;
 
 // CONFIG LISTENERS Y MODAL
 function configurarListeners() {
-    // AGREGAR botón perfil usuario en gestion_admin.js si no existe
-    document.querySelector('.btn-admin').addEventListener('click', () => {
-        window.location.href = 'perfil_usuario.html';
-    });
-
     document.getElementById('nav-crear').addEventListener('click', e => {
         e.preventDefault();
         editandoIndice = null;

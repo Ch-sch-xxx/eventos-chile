@@ -29,7 +29,6 @@ document.addEventListener('click', function (e) {
     }
 });
 
-
 // generar las tarjetas al cargar página
 document.addEventListener('DOMContentLoaded', function () {
     generarTarjetasEventos();

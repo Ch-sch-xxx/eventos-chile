@@ -1,6 +1,6 @@
-// js/perfil_usuario.js - ARCHIVO NUEVO COMPLETO
+// js/perfil_admin.js - ARCHIVO NUEVO COMPLETO
 
-// Regiones y comunas
+// Regiones y comunas (reutilizando de auth.js)
 const regionesYcomunas = {
     "Región Metropolitana": ["Santiago", "Providencia", "Las Condes", "Puente Alto", "Maipú"],
     "Valparaíso": ["Valparaíso", "Viña del Mar", "Concón", "Quilpué"],
@@ -16,7 +16,6 @@ document.addEventListener('DOMContentLoaded', () => {
     cargarEventosUsuario();
     actualizarEstadisticas();
     configurarListeners();
-    configurarCambioFoto();
 });
 
 // VERIFICAR ACCESO
@@ -39,7 +38,7 @@ function cargarDatosUsuario() {
     let userData = {};
 
     if (userLogged === 'admin') {
-        // Admin hardcodeado
+        // Datos del admin hardcodeado
         userData = {
             name: 'Administrador Sistema',
             email: 'ad@ad.com',
@@ -51,24 +50,17 @@ function cargarDatosUsuario() {
         document.getElementById('titulo-eventos').textContent = 'Todos los Eventos del Sistema';
         document.getElementById('enlace-admin').style.display = 'inline-block';
     } else {
-        // Usuario registrado - CORREGIR obtención de datos
+        // Usuario registrado
         const usuarios = JSON.parse(localStorage.getItem('usuarios-chile') || '[]');
         const usuario = usuarios.find(u => u.email === userEmail);
+        userData = usuario || {};
 
-        if (!usuario) {
-            alert('Error: Usuario no encontrado');
-            localStorage.clear();
-            window.location.href = 'auth.html';
-            return;
-        }
-
-        userData = usuario;
         document.getElementById('rol-usuario').textContent = 'Usuario';
         document.getElementById('titulo-eventos').textContent = 'Mis Eventos Creados';
         document.getElementById('enlace-admin').style.display = 'none';
     }
 
-    // MOSTRAR DATOS EN LA VISTA
+    // Mostrar en la vista
     document.getElementById('nombre-usuario').textContent = userData.name || 'Usuario';
     document.getElementById('correo-usuario').textContent = userData.email || userEmail;
     document.getElementById('vista-nombre').textContent = userData.name || 'No registrado';
@@ -77,10 +69,10 @@ function cargarDatosUsuario() {
     document.getElementById('vista-region').textContent = userData.region || 'No registrada';
     document.getElementById('vista-comuna').textContent = userData.comuna || 'No registrada';
 
-    // PRELLENAR FORMULARIO (RUT readonly)
+    // Prellenar formulario
     document.getElementById('nombre').value = userData.name || '';
     document.getElementById('correo').value = userData.email || userEmail;
-    document.getElementById('rut').value = userData.rut || ''; // READONLY
+    document.getElementById('rut').value = userData.rut || '';
 
     if (userData.region) {
         setTimeout(() => {
@@ -106,7 +98,7 @@ function cargarRegiones() {
     });
 }
 
-// CARGAR COMUNAS POR REGIÓN
+// CARGAR COMUNAS
 function cargarComunasPorRegion(region) {
     const comunaSelect = document.getElementById('comuna');
     comunaSelect.innerHTML = '<option value="">Selecciona comuna</option>';
@@ -121,53 +113,30 @@ function cargarComunasPorRegion(region) {
     }
 }
 
-// CONFIGURAR CAMBIO DE FOTO
-function configurarCambioFoto() {
-    const btnCambiarFoto = document.getElementById('btn-cambiar-foto');
-    const inputFoto = document.getElementById('input-cambiar-foto');
-    const imagenDisplay = document.getElementById('imagen-perfil-display');
+// VALIDAR RUT (misma función que en auth.js)
+function validarRUTCompleto(rut) {
+    if (!/^[0-9]+[-|‐]{1}[0-9kK]{1}$/.test(rut)) return false;
 
-    // Evento del botón
-    btnCambiarFoto.addEventListener('click', () => {
-        inputFoto.click();
-    });
+    const tmp = rut.split('-');
+    const digv = tmp[1].toLowerCase();
+    const rutNum = tmp[0];
 
-    // Evento del input file
-    inputFoto.addEventListener('change', function(e) {
-        const file = e.target.files[0];
+    return calcularDV(rutNum) === digv;
+}
 
-        if (file) {
-            // Validar que sea imagen
-            if (!file.type.includes('image')) {
-                alert('Solo se permiten archivos de imagen');
-                return;
-            }
+function calcularDV(rut) {
+    let suma = 0;
+    let multiplicador = 2;
 
-            // Validar tamaño (máximo 5MB)
-            if (file.size > 5 * 1024 * 1024) {
-                alert('El archivo es muy grande. Máximo 5MB');
-                return;
-            }
-
-            // Crear FileReader para preview
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                imagenDisplay.src = e.target.result;
-
-                // Guardar imagen en localStorage (solo para demo)
-                const userEmail = localStorage.getItem('user-email');
-                localStorage.setItem(`foto-perfil-${userEmail}`, e.target.result);
-            };
-            reader.readAsDataURL(file);
-        }
-    });
-
-    // Cargar foto guardada si existe
-    const userEmail = localStorage.getItem('user-email');
-    const fotoGuardada = localStorage.getItem(`foto-perfil-${userEmail}`);
-    if (fotoGuardada) {
-        imagenDisplay.src = fotoGuardada;
+    for (let i = rut.length - 1; i >= 0; i--) {
+        suma += parseInt(rut.charAt(i)) * multiplicador;
+        multiplicador = multiplicador === 7 ? 2 : multiplicador + 1;
     }
+
+    const dv = 11 - (suma % 11);
+    if (dv === 11) return '0';
+    if (dv === 10) return 'k';
+    return dv.toString();
 }
 
 // CARGAR EVENTOS DEL USUARIO
@@ -220,9 +189,7 @@ function actualizarEstadisticas() {
         document.getElementById('total-usuarios').textContent = totalUsuarios;
         document.getElementById('stat-usuarios').style.display = 'block';
     } else {
-        const eventos = JSON.parse(localStorage.getItem('eventos-chile') || '[]');
-        const eventosUsuario = eventos.filter(evento => evento.creadoPor === userEmail).length;
-
+        const eventosUsuario = contarEventosUsuario(userEmail);
         document.getElementById('eventos-creados').textContent = eventosUsuario;
         document.getElementById('stat-usuarios').style.display = 'none';
     }
@@ -255,14 +222,16 @@ function configurarListeners() {
     document.getElementById('cerrar-sesion').addEventListener('click', (e) => {
         e.preventDefault();
         if (confirm('¿Seguro que deseas cerrar sesión?')) {
-            localStorage.clear();
+            localStorage.removeItem('user-logged');
+            localStorage.removeItem('user-email');
+            localStorage.removeItem('user-data');
             alert('Sesión cerrada exitosamente');
             window.location.href = 'auth.html';
         }
     });
 }
 
-// GUARDAR PERFIL (SIN MODIFICAR RUT)
+// GUARDAR PERFIL
 function guardarPerfil(e) {
     e.preventDefault();
 
@@ -271,10 +240,11 @@ function guardarPerfil(e) {
 
     const nombre = document.getElementById('nombre').value.trim();
     const correo = document.getElementById('correo').value.trim();
+    const rut = document.getElementById('rut').value.trim();
     const region = document.getElementById('region').value;
     const comuna = document.getElementById('comuna').value;
 
-    // Validaciones básicas
+    // Validaciones
     if (!nombre || nombre.length < 3) {
         alert('El nombre debe tener al menos 3 caracteres');
         return;
@@ -285,10 +255,24 @@ function guardarPerfil(e) {
         return;
     }
 
+    if (rut && !validarRUTCompleto(rut)) {
+        alert('Formato de RUT inválido. Usar formato: 12345678-9');
+        return;
+    }
+
     if (!region || !comuna) {
         alert('Selecciona región y comuna');
         return;
     }
+
+    const nuevosDatos = {
+        name: nombre,
+        email: correo,
+        rut: rut,
+        region: region,
+        comuna: comuna,
+        fechaActualizacion: new Date().toISOString()
+    };
 
     if (userLogged !== 'admin') {
         // Usuario normal: actualizar en usuarios-chile
@@ -296,28 +280,17 @@ function guardarPerfil(e) {
         const indiceUsuario = usuarios.findIndex(u => u.email === userEmail);
 
         if (indiceUsuario !== -1) {
-            // MANTENER RUT original y otros datos críticos
-            usuarios[indiceUsuario] = {
-                ...usuarios[indiceUsuario], // Mantener datos originales
-                name: nombre,
-                email: correo,
-                region: region,
-                comuna: comuna,
-                fechaActualizacion: new Date().toISOString()
-            };
+            usuarios[indiceUsuario] = { ...usuarios[indiceUsuario], ...nuevosDatos };
             localStorage.setItem('usuarios-chile', JSON.stringify(usuarios));
-
-            // Actualizar user-data también
-            localStorage.setItem('user-data', JSON.stringify(usuarios[indiceUsuario]));
-
-            alert('Perfil actualizado exitosamente');
-
-            // Ocultar formulario y mostrar vista
-            document.getElementById('datos-perfil').classList.add('oculto');
-            document.getElementById('datos-actuales').classList.remove('oculto');
-            cargarDatosUsuario();
-        } else {
-            alert('Error: No se pudo actualizar el perfil');
         }
     }
+
+    // Actualizar user-data para ambos tipos
+    localStorage.setItem('user-data', JSON.stringify(nuevosDatos));
+
+    alert('Perfil actualizado exitosamente');
+
+    document.getElementById('datos-perfil').classList.add('oculto');
+    document.getElementById('datos-actuales').classList.remove('oculto');
+    cargarDatosUsuario();
 }
