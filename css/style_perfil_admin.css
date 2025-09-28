@@ -1,0 +1,520 @@
+/* Variables globales (IGUALES que index, eventos, auth) */
+:root {
+    --primario: #6C63FF;
+    --secundario: #2D3748;
+    --texto: #2D3748;
+    --acento: #ED8936;
+    --acento-suave: #FED7D7;
+}
+
+/* Estilos generales */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: white;
+    color: var(--texto);
+    position: relative;
+}
+
+/* Confeti de fondo (igual que index/eventos pero más liviano) */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    background-image:
+            radial-gradient(circle, #f10a0a 2px, transparent 2px),
+            radial-gradient(circle, #0ab0c0 2px, transparent 2px),
+            radial-gradient(circle, #6018f1 2px, transparent 2px),
+            radial-gradient(circle, #ff0080 2px, transparent 2px);
+    background-size: 300px 300px, 400px 400px;
+    animation: confetiMov 15s linear infinite;
+    opacity: 0.3;
+}
+
+@keyframes confetiMov {
+    from { background-position: 0 0, 50px 100px; }
+    to { background-position: 600px 1200px, 650px 1250px; }
+}
+
+/* Header IGUAL que index/eventos/auth */
+header, footer {
+    background: linear-gradient(135deg, var(--secundario) 0%, #4A5568 100%);
+    color: white;
+    padding: 1rem;
+    box-shadow: 0 6px 10px rgba(108, 99, 255, 0.2);
+    min-height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Título animado IGUAL que el resto */
+header h1 {
+    animation: cambioColores 5s ease-in-out infinite;
+    background: linear-gradient(45deg, white, #9F7AEA, var(--primario), var(--acento));
+    background-size: 400% 400%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-weight: bold;
+}
+
+/* Colores que se mueven (IGUAL que index) */
+@keyframes cambioColores {
+    0% {
+        background-position: 5% 50%;
+    }
+    25% {
+        background-position: 100% 50%;
+    }
+    50% {
+        background-position: 100% 100%;
+    }
+    75% {
+        background-position: 2% 100%;
+    }
+    100% {
+        background-position: 1% 50%;
+    }
+}
+
+/* Efecto hover en el título */
+header h1:hover {
+    transform: translateY(12px);
+    cursor: default;
+}
+
+/* Footer coherente */
+#contacto {
+    margin: 0.3rem 0;
+    color: #ffffff;
+    text-decoration: none;
+}
+
+#mail {
+    margin: 0.3rem 0;
+    color: #9F7AEA;
+    transition: color 0.3s ease;
+}
+
+#mail:hover {
+    color: var(--acento);
+}
+
+#Ftnosotros {
+    margin: 0.3rem 0;
+    color: #9F7AEA;
+    transition: color 0.3s ease;
+}
+
+#Ftnosotros:hover {
+    color: var(--acento);
+}
+
+/* Nav IGUAL que el resto de páginas */
+nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: end;
+    gap: 1rem;
+    margin: 0;
+    padding: 0;
+    align-items: center;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+}
+
+/* Hover en nav */
+nav a:hover {
+    background: rgba(108, 99, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+/* Main: contenido principal */
+main {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+/* Sección hero del perfil (similar al destacado de index) */
+#perfil-hero {
+    text-align: center;
+    padding: 2rem;
+    background: linear-gradient(135deg, white 0%, var(--acento-suave) 100%);
+    margin: 0 auto;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(108, 99, 255, 0.15);
+    animation: fadeInUp 1s ease-out;
+    border-left: 8px solid var(--primario);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3rem;
+    flex-wrap: wrap;
+}
+
+/* Animación de entrada (igual que eventos) */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Contenedor de imagen del perfil */
+.imagen-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+/* Imagen del perfil */
+.imagen-perfil {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid var(--primario);
+    box-shadow: 0 6px 20px rgba(108, 99, 255, 0.2);
+    transition: transform 0.3s ease;
+}
+
+.imagen-perfil:hover {
+    transform: scale(1.05);
+}
+
+/* Botón cambiar foto (igual estilo que botones del proyecto) */
+.btn-cambiar-foto {
+    background: linear-gradient(135deg, var(--primario), #9F7AEA);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(108, 99, 255, 0.2);
+}
+
+.btn-cambiar-foto:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(108, 99, 255, 0.3);
+}
+
+/* Info básica del usuario */
+.info-basica {
+    flex-grow: 1;
+    text-align: left;
+}
+
+.info-basica h2 {
+    margin: 0 0 0.5rem 0;
+    color: var(--secundario);
+    font-size: 2rem;
+    font-weight: 600;
+}
+
+.info-basica p {
+    margin: 0 0 1rem 0;
+    color: var(--texto);
+    font-size: 1.1rem;
+}
+
+/* Badge del rol */
+.badge-rol {
+    display: inline-block;
+    padding: 0.4rem 1rem;
+    background: var(--acento);
+    color: white;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    box-shadow: 0 2px 8px rgba(237, 137, 54, 0.2);
+}
+
+/* Secciones principales */
+#datos-perfil,
+#stats-usuario,
+#acciones-rapidas {
+    padding: 2rem;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 6px 20px rgba(108, 99, 255, 0.1);
+    animation: fadeInUp 1.2s ease-out;
+}
+
+#datos-perfil {
+    border-left: 8px solid var(--primario);
+}
+
+#stats-usuario {
+    border-left: 8px solid var(--acento);
+}
+
+#acciones-rapidas {
+    border-left: 8px solid #9F7AEA;
+}
+
+/* Títulos de sección */
+#datos-perfil h2,
+#stats-usuario h2,
+#acciones-rapidas h2 {
+    font-size: 1.6rem;
+    color: var(--secundario);
+    margin-bottom: 1.5rem;
+    position: relative;
+}
+
+/* Línea decorativa bajo títulos (igual que index) */
+#datos-perfil h2::after,
+#stats-usuario h2::after,
+#acciones-rapidas h2::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background: var(--primario);
+    border-radius: 2px;
+}
+
+/* Formulario del perfil */
+.formulario-perfil {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    align-items: start;
+}
+
+/* Grupos de campos */
+.grupo-campos {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* Labels del formulario */
+.formulario-perfil label {
+    font-weight: 600;
+    color: var(--secundario);
+    font-size: 0.95rem;
+    margin-bottom: 0.3rem;
+}
+
+/* Inputs y selects */
+.formulario-perfil input,
+.formulario-perfil select {
+    padding: 0.8rem;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: white;
+}
+
+/* Focus en campos (coherente con el primario) */
+.formulario-perfil input:focus,
+.formulario-perfil select:focus {
+    outline: none;
+    border-color: var(--primario);
+    box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.1);
+    transform: translateY(-1px);
+}
+
+/* Texto de ayuda */
+.ayuda-texto {
+    font-size: 0.8rem;
+    color: #666;
+    font-style: italic;
+    margin-top: -0.5rem;
+}
+
+/* Botón guardar (igual estilo que botones principales) */
+.btn-guardar {
+    grid-column: 1 / -1;
+    background: linear-gradient(135deg, var(--primario), #9F7AEA);
+    color: white;
+    border: none;
+    padding: 0.8rem 2rem;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(108, 99, 255, 0.2);
+    justify-self: start;
+}
+
+/* Efectos del botón (igual que resto del proyecto) */
+.btn-guardar::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.5s;
+}
+
+.btn-guardar:hover::before {
+    left: 100%;
+}
+
+.btn-guardar:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(108, 99, 255, 0.3);
+}
+
+/* Contenedor de estadísticas */
+.contenedor-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+}
+
+/* Tarjetas de estadísticas (similar a las tarjetas de eventos) */
+.stat-card {
+    background: linear-gradient(135deg, var(--acento-suave) 0%, #f9faff 100%);
+    padding: 2rem;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(108, 99, 255, 0.1);
+    transition: transform 0.3s ease;
+    border: 2px solid rgba(108, 99, 255, 0.1);
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(108, 99, 255, 0.2);
+}
+
+/* Números grandes en stats */
+.numero-stat {
+    display: block;
+    font-size: 3rem;
+    font-weight: bold;
+    color: var(--primario);
+    margin-bottom: 0.5rem;
+    text-shadow: 0 2px 4px rgba(108, 99, 255, 0.1);
+}
+
+/* Labels de stats */
+.label-stat {
+    font-size: 0.95rem;
+    color: var(--secundario);
+    font-weight: 500;
+    line-height: 1.3;
+}
+
+/* Botones de acción */
+.botones-accion {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+/* Estilo de botones de acción (coherente con el acento) */
+.btn-accion {
+    background: linear-gradient(135deg, var(--acento), #ff9f66);
+    color: white;
+    border: none;
+    padding: 0.7rem 1.5rem;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(237, 137, 54, 0.2);
+    text-decoration: none;
+    display: inline-block;
+    font-size: 0.95rem;
+}
+
+.btn-accion:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(237, 137, 54, 0.3);
+    background: linear-gradient(135deg, #e57828, #ff8f56);
+}
+
+/* Responsive: tablet */
+@media (max-width: 1024px) {
+    .formulario-perfil {
+        grid-template-columns: 1fr;
+    }
+
+    .contenedor-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Responsive: móvil */
+@media (max-width: 768px) {
+    #perfil-hero {
+        flex-direction: column;
+        text-align: center;
+        gap: 2rem;
+    }
+
+    .info-basica {
+        text-align: center;
+    }
+
+    .contenedor-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .botones-accion {
+        flex-direction: column;
+    }
+
+    .btn-accion {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+/* Responsive: móvil pequeño */
+@media (max-width: 480px) {
+    main {
+        padding: 0 0.5rem;
+        gap: 1rem;
+    }
+
+    #perfil-hero,
+    #datos-perfil,
+    #stats-usuario,
+    #acciones-rapidas {
+        padding: 1.5rem;
+    }
+
+    .info-basica h2 {
+        font-size: 1.5rem;
+    }
+
+    .numero-stat {
+        font-size: 2.5rem;
+    }
+}
+
+/*el responsive general esta en otro css*/
