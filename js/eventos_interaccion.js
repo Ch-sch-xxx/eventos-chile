@@ -1,4 +1,3 @@
-
 // Genera tarjetas de eventos de forma pública al abrir la página
 function generarTarjetasEventos() {
     const eventos = listarEventos(); // lee todos los eventos públicos
@@ -36,14 +35,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // SECCION DE TARJETAS 3D
 function generarTarjetas3D() {
-    const eventos = listarEventos(); // Siempre la base oficial
+    const eventos = listarEventos(); // Siempre la base
     const grid = document.getElementById('contenedor-grid-eventos');
     grid.innerHTML = '';
 
     eventos.forEach((evento, i) => {
         const tarjeta3D = document.createElement('div');
-        tarjeta3D.className = 'tarjeta-evento-3d'; // ← nombre CSS coherente con contexto
-
+        tarjeta3D.className = 'tarjeta-evento-3d';
         tarjeta3D.innerHTML = `
             <div class="carta-evento-flip" data-indice="${i}">
                 <!-- Cara frontal -->
@@ -78,13 +76,13 @@ function generarTarjetas3D() {
     agregarEfectos3D();
 }
 
-// EFECTOS 3D CON MOUSE Y FLIP
+// EFECTOS 3D MOUSE Y FLIP
 function agregarEfectos3D() {
     const tarjetas3D = document.querySelectorAll('.tarjeta-evento-3d');
 
     tarjetas3D.forEach(tarjeta => {
         const flip = tarjeta.querySelector('.carta-evento-flip');
-        // Mouse movimiento - ángulo más fuerte y realista
+        // Mouse movimiento - ángulo más fuerte y realista al 3D
         tarjeta.addEventListener('mousemove', (e) => {
             if (flip.classList.contains('volteada')) return;
             const rect = tarjeta.getBoundingClientRect();
