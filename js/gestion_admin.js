@@ -1,6 +1,6 @@
 // CONTROL DE ACCESO Y INICIO CARGA - MODIFICADO PARA ADMITIR ADMIN Y USUARIO
 document.addEventListener('DOMContentLoaded', () => {
-    // Control de acceso - CAMBIO CLAVE: ahora permite admin Y usuario
+    // Control de acceso - ahora permite admin Y usuario
     const userLogged = localStorage.getItem('user-logged');
     if (userLogged !== 'admin' && userLogged !== 'usuario') {
         alert('Debes iniciar sesión para acceder');
@@ -9,13 +9,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Personalizar interfaz según el rol
     personalizarInterfazSegunRol();
+
     renderTablaEventos();
     configurarListeners();
 });
 
 let editandoIndice = null;
 
-// NUEVA FUNCIÓN: Personalizar la interfaz según el rol del usuario
+//Personalizar la interfaz según el rol del usuario
 function personalizarInterfazSegunRol() {
     const userLogged = localStorage.getItem('user-logged');
     const userData = JSON.parse(localStorage.getItem('user-data') || '{}');
@@ -106,7 +107,6 @@ function configurarListeners() {
     });
 }
 
-// Resto de funciones igual (sin console.log)...
 // Mostrar u ocultar secciones
 function togglearSecciones(seccionVisible) {
     document.getElementById('crear-evento').classList.toggle('oculto', seccionVisible !== 'crear-evento');

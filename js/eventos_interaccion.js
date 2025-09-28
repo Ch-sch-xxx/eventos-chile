@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // SECCION DE TARJETAS 3D
 function generarTarjetas3D() {
-    const eventos = listarEventos(); // Siempre la base
+    const eventos = listarEventos(); // la base
     const grid = document.getElementById('contenedor-grid-eventos');
     grid.innerHTML = '';
 
@@ -82,7 +82,7 @@ function agregarEfectos3D() {
 
     tarjetas3D.forEach(tarjeta => {
         const flip = tarjeta.querySelector('.carta-evento-flip');
-        // Mouse movimiento - ángulo más fuerte y realista al 3D
+        // Mouse movimiento - ángulo más fuerte y realista en el 3D
         tarjeta.addEventListener('mousemove', (e) => {
             if (flip.classList.contains('volteada')) return;
             const rect = tarjeta.getBoundingClientRect();
@@ -90,7 +90,7 @@ function agregarEfectos3D() {
             const y = e.clientY - rect.top;
             const centerX = rect.width / 2;
             const centerY = rect.height / 2;
-            // Más intenso el efecto al dividir por menos: (más cerca del borde, más ángulo)
+            // Más intenso el efecto al dividir por menos: (más cerca del borde, más ángulo, menor número)
             const rotateX = (y - centerY) / 8;
             const rotateY = (centerX - x) / 0.6;
             flip.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;

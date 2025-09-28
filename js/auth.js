@@ -24,13 +24,13 @@ function validarUsuario(email, password) {
     return usuarios.find(user => user.email === email && user.password === password);
 }
 
-// Validación RUT chileno completa con algoritmo Módulo 11 CORREGIDA
+// Validación RUT completa con algoritmo Módulo 11
 function validarRUTCompleto(rut) {
     // Limpiar y validar formato básico
     const rutLimpio = rut.replace(/[^0-9kK-]/g, '');
 
     if (!/^[0-9]+-[0-9kK]$/i.test(rutLimpio)) {
-        console.log('❌ Formato inválido:', rutLimpio);
+        console.log('Formato inválido:', rutLimpio);
         return false;
     }
 
@@ -40,17 +40,17 @@ function validarRUTCompleto(rut) {
 
     // Validar que el cuerpo tenga entre 7 y 8 dígitos
     if (cuerpo.length < 7 || cuerpo.length > 8) {
-        console.log('❌ Longitud inválida:', cuerpo.length);
+        console.log('Longitud inválida:', cuerpo.length);
         return false;
     }
 
     const dvCalculado = calcularDV(cuerpo);
-    console.log('🔍 Debug RUT:', cuerpo, '- DV ingresado:', dv, '- DV calculado:', dvCalculado);
+    console.log('Debug RUT:', cuerpo, '- DV ingresado:', dv, '- DV calculado:', dvCalculado);
 
     return dv === dvCalculado;
 }
 
-// Calcular dígito verificador usando Módulo 11 CORREGIDO
+// Calcular dígito verificador usando Mód 11
 function calcularDV(rutSinDV) {
     let suma = 0;
     let multiplicador = 2;
@@ -67,18 +67,18 @@ function calcularDV(rutSinDV) {
         }
     }
 
-    console.log('📊 Suma total:', suma);
+    console.log('Suma total:', suma);
     const resto = suma % 11;
     const dv = 11 - resto;
 
-    console.log('📐 Resto:', resto, '- DV calculado:', dv);
+    console.log('Resto:', resto, '- DV calculado:', dv);
 
     if (dv === 11) return '0';
     if (dv === 10) return 'k';
     return dv.toString();
 }
 
-// Formatear RUT automáticamente MEJORADO
+// Formatear RUT automáticamente
 function formatearRUT(rut) {
     // Limpiar completamente
     let rutLimpio = rut.replace(/[^0-9kK]/g, '').toUpperCase();
@@ -116,7 +116,7 @@ const regionesYcomunas = {
     ]
 };
 
-// FUNCIÓN PARA CARGAR COMUNAS DINÁMICAMENTE
+// FUNCIÓN CARGAR COMUNAS DINÁMICAMENTE
 function cargarComunasPorRegion(regionSeleccionada) {
     const comunaSelect = document.getElementById('register-comuna');
 
@@ -126,7 +126,7 @@ function cargarComunasPorRegion(regionSeleccionada) {
     // Limpiar opciones existentes
     comunaSelect.innerHTML = '<option value="">Selecciona comuna</option>';
 
-    // Cargar nuevas comunas si existe la región
+    // Cargar nuevas comunas si existe en la región
     if (regionSeleccionada && regionesYcomunas[regionSeleccionada]) {
         regionesYcomunas[regionSeleccionada].forEach(comuna => {
             const option = document.createElement('option');
@@ -210,7 +210,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
 
-            // Admin hardcodeado - CAMBIO CLAVE: también va a gestion_admin.html
+            // Admin hardcodeado - también va a gestion_admin.html
             if (email === 'ad@ad.com' && pass === 'admin') {
                 localStorage.setItem('user-logged', 'admin');
                 localStorage.setItem('user-email', email);
@@ -220,18 +220,18 @@ document.addEventListener('DOMContentLoaded', function() {
                     role: 'admin'
                 }));
                 alert('¡Bienvenido Administrador!');
-                window.location.href = 'gestion_admin.html';  // CAMBIO: admin también va aquí
+                window.location.href = 'gestion_admin.html';  // admin  va aquí
                 return;
             }
 
-            // Validar usuario registrado - CAMBIO CLAVE: también va a gestion_admin.html
+            // Validar usuario registrado - también va a gestion_admin.html
             const usuario = validarUsuario(email, pass);
             if (usuario) {
                 localStorage.setItem('user-logged', 'usuario');
                 localStorage.setItem('user-email', email);
                 localStorage.setItem('user-data', JSON.stringify(usuario));
                 alert('¡Bienvenido ' + usuario.name + '!');
-                window.location.href = 'gestion_admin.html';  // CAMBIO: usuario también va aquí
+                window.location.href = 'gestion_admin.html';  // usuario va aquí
             } else {
                 alert('Credenciales incorrectas');
             }
@@ -282,7 +282,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
 
-            // Crear usuario con estructura completa
+            // Crear usuario - estructura completa
             const nuevoUsuario = {
                 name: name,
                 email: email,
