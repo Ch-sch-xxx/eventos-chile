@@ -5,16 +5,14 @@ document.addEventListener('DOMContentLoaded', () => {
         alert('Debes iniciar sesión como administrador');
         return window.location.href = 'auth.html';
     }
-    //configuración de listeners
     renderTablaEventos();
     configurarListeners();
 });
 
 let editandoIndice = null;
 
-// CONFIG LISTENERS
+// CONFIG LISTENERS Y MODAL
 function configurarListeners() {
-    // Navegación Crear/Listar
     document.getElementById('nav-crear').addEventListener('click', e => {
         e.preventDefault();
         editandoIndice = null;
@@ -33,7 +31,7 @@ function configurarListeners() {
         procesarFormulario();
     });
 
-    // Acciones de la tabla (Ver, Editar, Eliminar)
+    // Acciones tabla
     document.querySelector('#listar-eventos tbody').addEventListener('click', e => {
         const idx = parseInt(e.target.dataset.idx);
         if (e.target.classList.contains('btn-ver')) return verEvento(idx);
@@ -44,9 +42,16 @@ function configurarListeners() {
     // Cerrar sesión
     document.querySelector('.btn-cerrar').addEventListener('click', () => {
         localStorage.removeItem('user-logged');
-        // Reemplaza entrada en el historial, si haces back, ya estas deslogueado
         window.location.replace('auth.html');
     });
+
+    // Modal detalles: cerrar
+    const cerrarModal = document.getElementById('cerrar-modal');
+    if (cerrarModal) {
+        cerrarModal.addEventListener('click', () => {
+            document.getElementById('modal-detalle').classList.add('oculto');
+        });
+    }
 }
 
 // Mostrar u ocultar secciones
@@ -55,24 +60,28 @@ function togglearSecciones(seccionVisible) {
     document.getElementById('listar-eventos').classList.toggle('oculto', seccionVisible !== 'listar-eventos');
 }
 
-// Limpia tod el formulario
+// Limpia el formulario y bot
 function limpiarFormulario() {
     document.getElementById('form-crear').reset();
     document.querySelector('#form-crear button').textContent = 'Crear';
 }
 
-// creación o edición según estado
+// Proceso de formulario: crear o editar
 function procesarFormulario() {
     const titulo = document.getElementById('titulo').value.trim();
-    const fecha  = document.getElementById('fecha').value;
-    const lugar  = document.getElementById('lugar').value.trim();
-    const tipo   = document.getElementById('tipo').value;
+    const fecha = document.getElementById('fecha').value;
+    const lugar = document.getElementById('lugar').value.trim();
+    const tipo = document.getElementById('tipo').value;
+    const imagen = document.getElementById('imagen').value.trim() || 'imagenes/eventosIMG.png';
+    const descripcion = document.getElementById('descripcion').value.trim();
+    const capacidad = document.getElementById('capacidad').value;
+    const precio = document.getElementById('precio').value.trim();
 
-    if (!titulo || !fecha || !lugar || !tipo) {
-        return alert('Por favor completa todos los campos');
+    if (!titulo || !fecha || !lugar || !tipo || !imagen) {
+        return alert('Por favor completa todos los campos principales');
     }
 
-    const eventoData = { titulo, fecha, lugar, tipo, imagen: 'imagenes/eventosIMG.png' };
+    const eventoData = { titulo, fecha, lugar, tipo, imagen, descripcion, capacidad, precio };
 
     try {
         if (editandoIndice !== null) {
@@ -90,20 +99,24 @@ function procesarFormulario() {
     document.getElementById('nav-listar').click();
 }
 
-// Carga datos de un evento al formulario para edición
+// Precarga campos para edición
 function iniciarEdicion(idx) {
-    const evento = listarEventos()[idx];
-    document.getElementById('titulo').value = evento.titulo;
-    document.getElementById('fecha').value  = evento.fecha;
-    document.getElementById('lugar').value  = evento.lugar;
-    document.getElementById('tipo').value   = evento.tipo;
+    const e = listarEventos()[idx];
+    document.getElementById('titulo').value = e.titulo;
+    document.getElementById('fecha').value = e.fecha;
+    document.getElementById('lugar').value = e.lugar;
+    document.getElementById('tipo').value = e.tipo;
+    document.getElementById('imagen').value = e.imagen;
+    document.getElementById('descripcion').value = e.descripcion || '';
+    document.getElementById('capacidad').value = e.capacidad || '';
+    document.getElementById('precio').value = e.precio || '';
 
     editandoIndice = idx;
     document.querySelector('#form-crear button').textContent = 'Guardar Cambios';
     togglearSecciones('crear-evento');
 }
 
-// Elimina un evento con confirmación
+// Elimina evento
 function borrarEvento(idx) {
     const eventos = listarEventos();
     if (confirm(`¿Eliminar "${eventos[idx].titulo}"?`)) {
@@ -117,19 +130,21 @@ function borrarEvento(idx) {
     }
 }
 
-// Muestra detalles de un evento en alert
+// Mostrar modal de detalles del evento
 function verEvento(idx) {
     const e = listarEventos()[idx];
-    alert(
-        `Detalles del evento:\n\n` +
-        `Título: ${e.titulo}\n` +
-        `Fecha: ${e.fecha}\n` +
-        `Lugar: ${e.lugar}\n` +
-        `Tipo: ${e.tipo}`
-    );
+    document.getElementById('detalle-img').src = e.imagen;
+    document.getElementById('detalle-titulo').textContent = e.titulo;
+    document.getElementById('detalle-fecha').textContent = e.fecha;
+    document.getElementById('detalle-lugar').textContent = e.lugar;
+    document.getElementById('detalle-tipo').textContent = e.tipo;
+    document.getElementById('detalle-descripcion').textContent = e.descripcion || 'Sin descripción';
+    document.getElementById('detalle-capacidad').textContent = e.capacidad || 'No informada';
+    document.getElementById('detalle-precio').textContent = e.precio || 'Gratis';
+    document.getElementById('modal-detalle').classList.remove('oculto');
 }
 
-// Renderiza la tabla de eventos en el DOM (actualiza)
+// Renderiza la tabla, ahora con imagen como thumbnail
 function renderTablaEventos() {
     const eventos = listarEventos();
     const tbody = document.querySelector('#listar-eventos tbody');
@@ -137,16 +152,19 @@ function renderTablaEventos() {
     eventos.forEach((ev, i) => {
         const tr = document.createElement('tr');
         tr.innerHTML = `
-      <td>${i+1}</td> <!-- ÍNDICE -->
-      <td>${ev.titulo}</td>
-      <td>${ev.fecha}</td>
-      <td>${ev.lugar}</td>
-      <td>${ev.tipo}</td>
-      <td>
-        <button class="btn-ver"   data-idx="${i}">Ver</button>
-        <button class="btn-editar"data-idx="${i}">Editar</button>
-        <button class="btn-eliminar" data-idx="${i}">Eliminar</button>
-      </td>`;
+          <td>${i+1}</td>
+          <td><img src="${ev.imagen}" style="width:48px;
+                                                height:48px;
+                                                object-fit:cover;
+                                                border-radius:4px;"></td>
+          <td>${ev.titulo}</td>
+          <td>${ev.fecha}</td>
+          <td>${ev.tipo}</td>
+          <td>
+            <button class="btn-ver" data-idx="${i}">Ver</button>
+            <button class="btn-editar" data-idx="${i}">Editar</button>
+            <button class="btn-eliminar" data-idx="${i}">Eliminar</button>
+          </td>`;
         tbody.appendChild(tr);
     });
 }

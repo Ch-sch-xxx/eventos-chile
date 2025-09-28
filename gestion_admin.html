@@ -39,23 +39,39 @@
         <!-- Sección Crear Evento (oculta inicialmente) -->
         <section id="crear-evento" class="oculto">
             <h2>Crear Evento</h2>
-            <form id="form-crear">
-                <label for="titulo">Título</label>
-                <input id="titulo" type="text" required>
-                <label for="fecha">Fecha</label>
-                <input id="fecha" type="date" required>
-                <label for="lugar">Lugar</label>
-                <input id="lugar" type="text" required>
-                <label for="tipo">Tipo</label>
-                <select id="tipo" required>
-                    <option value="">Selecciona tipo</option>
-                    <option>Presencial</option>
-                    <option>Streaming</option>
-                    <option>Consumo</option>
-                </select>
+            <form id="form-crear" class="form-dos-columnas">
+                <!-- Columna 1 -->
+                <div class="col">
+                    <label for="titulo">Título</label>
+                    <input id="titulo" type="text" required minlength="3">
+                    <label for="fecha">Fecha</label>
+                    <input id="fecha" type="date" required>
+                    <label for="lugar">Lugar</label>
+                    <input id="lugar" type="text" required>
+                    <label for="tipo">Tipo</label>
+                    <select id="tipo" required>
+                        <option value="">Selecciona tipo</option>
+                        <option>Presencial</option>
+                        <option>Streaming</option>
+                        <option>Consumo</option>
+                    </select>
+                </div>
+                <!-- Columna 2 -->
+                <div class="col">
+                    <label for="imagen">URL Imagen</label>
+                    <input id="imagen" type="url" placeholder="https://..." required>
+                    <label for="descripcion">Descripción</label>
+                    <textarea id="descripcion" rows="4" placeholder="Detalles del evento"></textarea>
+                    <label for="capacidad">Capacidad</label>
+                    <input id="capacidad" type="number" min="1" placeholder="100">
+                    <label for="precio">Precio</label>
+                    <input id="precio" type="text" placeholder="Gratis o $">
+                </div>
+                <!-- Botón -->
                 <button type="submit">Crear</button>
             </form>
         </section>
+
 
         <!-- Sección Listar Eventos (visible por defecto) -->
         <section id="listar-eventos">
@@ -64,6 +80,7 @@
                 <thead>
                 <tr>
                     <th>#</th> <!-- ÍNDICE -->
+                    <th>Imagen</th>
                     <th>Título</th>
                     <th>Fecha</th>
                     <th>Lugar</th>
@@ -84,6 +101,21 @@
             </table>
         </section>
     </main>
+    <!-- Modal detalle evento -->
+    <div id="modal-detalle" class="modal oculto">
+        <div class="modal-contenido">
+            <span id="cerrar-modal" class="cerrar" title="Cerrar modal" aria-label="Cerrar ventana">&times;</span>
+            <img id="detalle-img" src="" alt="Imagen Evento" style="width:100%;max-width:250px;margin-bottom:1rem;">
+            <h3 id="detalle-titulo"></h3>
+            <p><strong>Fecha:</strong> <span id="detalle-fecha"></span></p>
+            <p><strong>Lugar:</strong> <span id="detalle-lugar"></span></p>
+            <p><strong>Tipo:</strong> <span id="detalle-tipo"></span></p>
+            <p><strong>Descripcion:</strong> <span id="detalle-descripcion"></span> </p>
+            <p><strong>Capacidad:</strong> <span id="detalle-capacidad"></span></p>
+            <p><strong>Precio:</strong> <span id="detalle-precio"></span></p>
+        </div>
+    </div>
+
 </div>
 <footer>
     <p>&copy; 2025 Eventos Chile - Panel de Administración</p>
