@@ -1,12 +1,11 @@
-
 // Genera tarjetas de eventos de forma pública al abrir la página
 function generarTarjetasEventos() {
     const eventos = listarEventos(); // lee todos los eventos públicos
     const carruselLista = document.querySelector('.carrusel-lista');
     carruselLista.innerHTML = ''; // limpia el contenido anterior
 
-    eventos.forEach(evento => {
-        let tarjeta = document.createElement('article');
+    eventos.forEach((evento, indice) => {
+        const tarjeta = document.createElement('article');
         tarjeta.className = "Tarjetas";
         tarjeta.innerHTML = `
             <img class="img-tarjeta-evento" src="${evento.imagen}" alt="Imagen evento">
@@ -14,7 +13,7 @@ function generarTarjetasEventos() {
             <p>Fecha: ${evento.fecha}<br>Lugar: ${evento.lugar}</p>
             <p><b class="tipo-evento">${evento.tipo}</b></p>
             
-            <button class="btn-asistir">Asistir al Evento</button>
+            <button class="btn-asistir" data-indice="${indice}">Asistir al Evento</button>
         `;
         carruselLista.appendChild(tarjeta);
         //creamos la tarjeta bajo la clase carrusel-lista
@@ -29,30 +28,41 @@ document.addEventListener('click', function (e) {
             alert('Por favor inicia sesión para confirmar asistencia.');
             location.href = 'auth.html';
         } else {
-            alert('¡Te has unido al evento! Revisa tu perfil para más detalles.');
-            // Aquí  implementar lógica de "asistencia" futura, sin registrarse, como invitado (datos basicos)
+            const indiceEvento = parseInt(e.target.dataset.indice);
+            const eventos = listarEventos();
+            const evento = eventos[indiceEvento];
+
+            if (evento) {
+                alert(`¡Te has unido a "${evento.titulo}"! Revisa tu perfil para más detalles.`);
+                // Aquí se puede implementar lógica de "asistencia" futura
+            } else {
+                alert('Error: Evento no encontrado.');
+            }
         }
     }
 });
 
-
 // generar las tarjetas al cargar página
 document.addEventListener('DOMContentLoaded', function () {
     generarTarjetasEventos();
+    generarTarjetas3D(); // Cargar ambas vistas de una vez
 });
 
 // SECCION DE TARJETAS 3D
 function generarTarjetas3D() {
     const eventos = listarEventos(); // Siempre la base oficial
     const grid = document.getElementById('contenedor-grid-eventos');
+
+    if (!grid) return; // Verificación de existencia del contenedor
+
     grid.innerHTML = '';
 
-    eventos.forEach((evento, i) => {
+    eventos.forEach((evento, indice) => {
         const tarjeta3D = document.createElement('div');
         tarjeta3D.className = 'tarjeta-evento-3d'; // ← nombre CSS coherente con contexto
 
         tarjeta3D.innerHTML = `
-            <div class="carta-evento-flip" data-indice="${i}">
+            <div class="carta-evento-flip" data-indice="${indice}">
                 <!-- Cara frontal -->
                 <div class="cara-frontal">
                     <img class="imagen-evento" src="${evento.imagen}" alt="${evento.titulo}">
@@ -89,6 +99,9 @@ function agregarEfectos3D() {
 
     tarjetas3D.forEach(tarjeta => {
         const flip = tarjeta.querySelector('.carta-evento-flip');
+
+        if (!flip) return; // Verificación de existencia del elemento flip
+
         // Mouse movimiento - ángulo más fuerte y realista
         tarjeta.addEventListener('mousemove', (e) => {
             if (flip.classList.contains('volteada')) return;
@@ -113,20 +126,16 @@ function agregarEfectos3D() {
         // Voltear tarjeta (detalle)
         const btnDetalle = tarjeta.querySelector('.boton-detalle');
         const btnVolver = tarjeta.querySelector('.boton-volver');
-        btnDetalle.addEventListener('click', () => {
-            flip.classList.add('volteada');
-            flip.style.transform = 'rotateY(180deg)';
-        });
-        btnVolver.addEventListener('click', () => {
-            flip.classList.remove('volteada');
-            flip.style.transform = 'rotateX(0deg) rotateY(0deg)';
-        });
+
+        if (btnDetalle && btnVolver) {
+            btnDetalle.addEventListener('click', () => {
+                flip.classList.add('volteada');
+                flip.style.transform = 'rotateY(180deg)';
+            });
+            btnVolver.addEventListener('click', () => {
+                flip.classList.remove('volteada');
+                flip.style.transform = 'rotateX(0deg) rotateY(0deg)';
+            });
+        }
     });
 }
-
-// Cargar ambas vistas
-
-document.addEventListener('DOMContentLoaded', function () {
-    generarTarjetasEventos(); // Carrusel
-    generarTarjetas3D();      // Grid 3D
-});

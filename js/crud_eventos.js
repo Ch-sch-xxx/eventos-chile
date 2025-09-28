@@ -10,77 +10,107 @@ function obtenerEventos() {
     } else {
         // Si no hay eventos, creamos algunos
         const eventosIniciales = [
-            {
-                titulo: "Festival de Música Urbana",
-                fecha: "2025-09-30",
-                lugar: "Estadio Nacional, Santiago",
-                tipo: "Presencial",
-                imagen: "imagenes/eventosIMG.png"
-            },
-            {
-                titulo: "Conferencia de IA",
-                fecha: "2025-10-05",
-                lugar: "Online",
-                tipo: "Streaming",
-                imagen: "imagenes/eventosIMG.png"
-            },
-            {
-                titulo: "Feria del Libro",
-                fecha: "2025-10-12",
-                lugar: "Centro Cultural La Moneda, Santiago",
-                tipo: "Presencial",
-                imagen: "imagenes/eventosIMG.png"
-            },
-            {
-                titulo: "Taller de Fotografía",
-                fecha: "2025-10-18",
-                lugar: "Museo de Arte Contemporáneo, Santiago",
-                tipo: "Presencial",
-                imagen: "imagenes/eventosIMG.png"
-            },
-            {
-                titulo: "Seminario de Emprendimiento",
-                fecha: "2025-10-22",
-                lugar: "Online",
-                tipo: "Streaming",
-                imagen: "imagenes/eventosIMG.png"
-            },
-            {
-                titulo: "Concierto Sinfónico",
-                fecha: "2025-10-25",
-                lugar: "Teatro Municipal, Santiago",
-                tipo: "Presencial",
-                imagen: "imagenes/eventosIMG.png"
-            },
-            {
-                titulo: "Hackathon Tech",
-                fecha: "2025-11-02",
-                lugar: "Universidad de Chile, Santiago",
-                tipo: "Presencial",
-                imagen: "imagenes/eventosIMG.png"
-            },
-            {
-                titulo: "Webinar de Finanzas",
-                fecha: "2025-11-08",
-                lugar: "Online",
-                tipo: "Streaming",
-                imagen: "imagenes/eventosIMG.png"
-            },
-            {
-                titulo: "Festival de Cine",
-                fecha: "2025-11-15",
-                lugar: "Centro Cultural Gabriela Mistral, Santiago",
-                tipo: "Presencial",
-                imagen: "imagenes/eventosIMG.png"
-            },
-            {
-                titulo: "Clase Magistral de Cocina",
-                fecha: "2025-11-20",
-                lugar: "Online",
-                tipo: "Streaming",
-                imagen: "imagenes/eventosIMG.png"
-            }
-        ];
+                {
+                    titulo: "Festival de Música Urbana",
+                    fecha: "2025-09-30",
+                    lugar: "Estadio Nacional, Santiago",
+                    tipo: "Presencial",
+                    imagen: "imagenes/eventosIMG.png",
+                    descripcion: "Un festival con los mejores exponentes de la música urbana nacional e internacional.",
+                    capacidad: 45000,
+                    precio: 25000
+                },
+                {
+                    titulo: "Conferencia de IA",
+                    fecha: "2025-10-05",
+                    lugar: "Online",
+                    tipo: "Streaming",
+                    imagen: "imagenes/eventosIMG.png",
+                    descripcion: "Expertos en inteligencia artificial presentan las últimas tendencias y avances.",
+                    capacidad: 5000,
+                    precio: 0
+                },
+                {
+                    titulo: "Feria del Libro",
+                    fecha: "2025-10-12",
+                    lugar: "Centro Cultural La Moneda, Santiago",
+                    tipo: "Presencial",
+                    imagen: "imagenes/eventosIMG.png",
+                    descripcion: "Encuentro cultural con editoriales, escritores y actividades literarias para toda la familia.",
+                    capacidad: 8000,
+                    precio: 3000
+                },
+                {
+                    titulo: "Taller de Fotografía",
+                    fecha: "2025-10-18",
+                    lugar: "Museo de Arte Contemporáneo, Santiago",
+                    tipo: "Presencial",
+                    imagen: "imagenes/eventosIMG.png",
+                    descripcion: "Taller práctico sobre técnicas de fotografía artística y uso de cámara.",
+                    capacidad: 150,
+                    precio: 10000
+                },
+                {
+                    titulo: "Seminario de Emprendimiento",
+                    fecha: "2025-10-22",
+                    lugar: "Online",
+                    tipo: "Streaming",
+                    imagen: "imagenes/eventosIMG.png",
+                    descripcion: "Conferencias sobre innovación, startups y oportunidades de negocio.",
+                    capacidad: 3000,
+                    precio: 0
+                },
+                {
+                    titulo: "Concierto Sinfónico",
+                    fecha: "2025-10-25",
+                    lugar: "Teatro Municipal, Santiago",
+                    tipo: "Presencial",
+                    imagen: "imagenes/eventosIMG.png",
+                    descripcion: "Una presentación especial de la Orquesta Filarmónica con repertorio clásico.",
+                    capacidad: 1800,
+                    precio: 15000
+                },
+                {
+                    titulo: "Hackathon Tech",
+                    fecha: "2025-11-02",
+                    lugar: "Universidad de Chile, Santiago",
+                    tipo: "Presencial",
+                    imagen: "imagenes/eventosIMG.png",
+                    descripcion: "Competencia intensiva de programación y desarrollo de proyectos tecnológicos.",
+                    capacidad: 600,
+                    precio: 5000
+                },
+                {
+                    titulo: "Webinar de Finanzas",
+                    fecha: "2025-11-08",
+                    lugar: "Online",
+                    tipo: "Streaming",
+                    imagen: "imagenes/eventosIMG.png",
+                    descripcion: "Charla en línea sobre inversión, ahorro y estrategias financieras personales.",
+                    capacidad: 2000,
+                    precio: 0
+                },
+                {
+                    titulo: "Festival de Cine",
+                    fecha: "2025-11-15",
+                    lugar: "Centro Cultural Gabriela Mistral, Santiago",
+                    tipo: "Presencial",
+                    imagen: "imagenes/eventosIMG.png",
+                    descripcion: "Proyecciones de películas nacionales e internacionales con paneles de discusión.",
+                    capacidad: 2500,
+                    precio: 7000
+                },
+                {
+                    titulo: "Clase Magistral de Cocina",
+                    fecha: "2025-11-20",
+                    lugar: "Online",
+                    tipo: "Streaming",
+                    imagen: "imagenes/eventosIMG.png",
+                    descripcion: "Un chef reconocido enseña técnicas y recetas exclusivas paso a paso.",
+                    capacidad: 1000,
+                    precio: 8000
+                }
+            ]
         localStorage.setItem('eventos-chile', JSON.stringify(eventosIniciales));
         return eventosIniciales;
     }
@@ -99,7 +129,7 @@ function crearEvento(nuevoEvento) {
     // Agregar metadatos del autor
     nuevoEvento.creadoPor = userEmail;
     nuevoEvento.fechaCreacion = new Date().toISOString();
-    nuevoEvento.id = 'evt_' + Date.now(); // ID único
+    nuevoEvento.id = 'evt_' + Date.now(); //  único
 
     eventos.push(nuevoEvento);
     guardarEventos(eventos);
