@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Eventos Chile · Mi Perfil</title>
-    <link rel="stylesheet" href="css/style_perfil_admin.css">
+    <link rel="stylesheet" href="css/style_perfil_usuario.css">
     <link rel="stylesheet" href="css/responsividadGeneral.css">
 </head>
 <body>
@@ -14,25 +14,26 @@
     <nav>
         <ul>
             <li><a href="eventos.html">Eventos</a></li>
-            <li><a href="gestion_admin.html" id="enlace-admin">Panel Admin</a></li>
+            <li><a href="gestion_admin.html">Panel Usuario</a></li>
             <li><a href="#" id="cerrar-sesion">Cerrar sesión</a></li>
         </ul>
     </nav>
 </header>
 
 <!-- principal del perfil -->
-<main>
-    <section id="perfil-hero">
-        <div class="imagen-container">
-            <img src="imagenes/ICONOperfil.png" alt="Foto de perfil" class="imagen-perfil">
-            <button class="btn-cambiar-foto">Cambiar foto</button>
-        </div>
-        <div class="info-basica">
-            <h2 id="nombre-usuario">Cargando...</h2>
-            <p id="correo-usuario">Cargando...</p>
-            <span class="badge-rol" id="rol-usuario">Usuario</span>
-        </div>
-    </section>
+<section id="perfil-hero">
+    <div class="imagen-container">
+        <img src="imagenes/ICONOperfil.png" alt="Foto de perfil" class="imagen-perfil" id="imagen-perfil-display">
+        <input type="file" id="input-cambiar-foto" accept="image/*" style="display: none;">
+        <button class="btn-cambiar-foto" id="btn-cambiar-foto">Cambiar foto</button>
+    </div>
+    <div class="info-basica">
+        <h2 id="nombre-usuario">Cargando...</h2>
+        <p id="correo-usuario">Cargando...</p>
+        <span class="badge-rol" id="rol-usuario">Usuario</span>
+    </div>
+</section>
+
 
     <!-- Información actual del usuario (vista) -->
     <section id="datos-actuales">
@@ -69,9 +70,11 @@
                 <label for="correo">Email</label>
                 <input type="email" id="correo" required placeholder="ejemplo@correo.cl">
 
-                <label for="rut">RUT chileno</label>
-                <input type="text" id="rut" required placeholder="12345678-9" maxlength="12">
-                <small class="ayuda-texto">Formato: 12345678-9</small>
+                <label for="rut">RUT chileno (No modificable)</label>
+                <input type="text" id="rut" readonly placeholder="12345678-9" maxlength="12"
+                       style="background-color: #f5f5f5; cursor: not-allowed;">
+                <small class="ayuda-texto">El RUT no puede modificarse una vez registrado</small>
+
             </div>
 
             <div class="grupo-campos">
@@ -135,7 +138,7 @@
 </footer>
 
 <!-- Scripts  -->
-<script src="js/perfil_admin.js"></script>
+<script src="js/perfil_usuario.js"></script>
 
 </body>
 </html>

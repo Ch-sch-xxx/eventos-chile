@@ -194,22 +194,24 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        // Admin hardcodeado
+        // Admin hardcodeado - ÚNICO admin
         if (email === 'ad@ad.com' && pass === 'admin') {
             localStorage.setItem('user-logged', 'admin');
             localStorage.setItem('user-email', email);
+            localStorage.setItem('user-role', 'admin'); // AGREGAR rol específico
             window.location.href = 'gestion_admin.html';
             return;
         }
 
-        // Validar usuario registrado
+        // Validar usuario normal registrado
         const usuario = validarUsuario(email, pass);
         if (usuario) {
-            localStorage.setItem('user-logged', 'usuario');
+            localStorage.setItem('user-logged', 'usuario'); // SIEMPRE 'usuario' para registrados
             localStorage.setItem('user-email', email);
+            localStorage.setItem('user-role', 'usuario'); // AGREGAR rol específico
             localStorage.setItem('user-data', JSON.stringify(usuario));
             alert('¡Bienvenido ' + usuario.name + '!');
-            window.location.href = 'perfil_admin.html';
+            window.location.href = 'perfil_usuario.html'; // perfil_usuario.html
         } else {
             alert('Credenciales incorrectas');
         }
