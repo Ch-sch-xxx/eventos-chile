@@ -11,11 +11,13 @@
 
 <!-- Header con nav -->
 <header>
-    <h1>Vista perfil</h1>
-    <div class="auth">
-        <a href="index.html" class="btn-admin">Inicio</a>
-        <a href="eventos.html" class="btn-admin">Eventos</a>
-    </div>
+    <h1>Autenticación</h1>
+    <nav>
+        <ul>
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="eventos.html">Eventos</a></li>
+        </ul>
+    </nav>
 </header>
 
 
@@ -37,35 +39,46 @@
         <form id="register" class="auth-form oculto">
             <h2>Registro</h2>
             <label for="register-name">Nombre completo</label>
-            <input type="text" id="register-name" required placeholder="Tu nombre">
+            <input type="text" id="register-name" required placeholder="Tu nombre completo">
+
             <label for="register-email">Email</label>
             <input type="email" id="register-email" required placeholder="ejemplo-correo@dominio.cl">
+
+            <label for="register-rut">RUT chileno</label>
+            <input type="text" id="register-rut" required placeholder="12345678-9" maxlength="12">
+            <small style="font-size: 0.8rem; color: #666;">Formato: 12345678-9</small>
+
             <label for="register-password">Contraseña</label>
             <input type="password" id="register-password" required minlength="4" maxlength="20" placeholder="Contraseña">
+
             <label for="register-region">Región</label>
             <select id="register-region" required>
                 <option value="">Selecciona región</option>
                 <option value="Región Metropolitana">Región Metropolitana</option>
                 <option value="Valparaíso">Valparaíso</option>
                 <option value="Biobío">Biobío</option>
-                <option value="O’Higgins">O’Higgins</option>
-                <!-- ...más regiones a futuro  -->
+                <option value="O'Higgins">O'Higgins</option>
             </select>
+
             <label for="register-comuna">Comuna</label>
             <select id="register-comuna" required>
                 <option value="">Selecciona comuna</option>
-                <!-- el js se encarga de el resto -->
             </select>
+
             <button type="submit">Registrar</button>
             <p>¿Ya tienes cuenta? <a href="#" id="link-login">Inicia sesión</a></p>
         </form>
+
     </section>
 </main>
 
 <!-- Footer semántico con contacto y navegación -->
 <footer>
-    <p>Contacto: <a href="mailto:eventoschile@gmail.com">eventoschile@gmail.com</a></p>
-    <p><a href="index.html">Acerca de Nosotros</a></p>
+    <p id="contacto">Contacto: <a id="mail" href="mailto:eventoschile@gmail.com">
+        <!-- funcion de enviar mail incluida(instant click)-->
+        eventoschile@gmail.com
+    </a></p>
+    <p><a id="Ftnosotros" href="index.html">Acerca de Nosotros</a></p>
 </footer>
 
 <!-- Script de interaccion y límites de inicio de sesion -->

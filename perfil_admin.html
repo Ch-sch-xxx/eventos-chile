@@ -2,80 +2,139 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Eventos Chile · Perfil Administrador</title>
-    <link rel="stylesheet" href="css/style_pefil_admin.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Eventos Chile · Mi Perfil</title>
+    <link rel="stylesheet" href="css/style_perfil_admin.css">
     <link rel="stylesheet" href="css/responsividadGeneral.css">
 </head>
 <body>
-    <header>
-        <h1>Panel de Administrador</h1>
-        <div class="perfil-admin">
-            <a href="gestion_admin.html" class="btn-home">Inicio</a>
-            <a href="#" id="cerrar-sesion" class="btn-cerrar">Cerrar sesión</a>
+
+<header>
+    <h1>Eventos Chile</h1>
+    <nav>
+        <ul>
+            <li><a href="eventos.html">Eventos</a></li>
+            <li><a href="gestion_admin.html" id="enlace-admin">Panel Admin</a></li>
+            <li><a href="#" id="cerrar-sesion">Cerrar sesión</a></li>
+        </ul>
+    </nav>
+</header>
+
+<!-- perfil -->
+<main>
+    <section id="perfil-hero">
+        <div class="imagen-container">
+            <img src="imagenes/ICONOperfil.png" alt="Foto de perfil" class="imagen-perfil">
         </div>
-    </header>
+        <div class="info-basica">
+            <h2 id="nombre-usuario">Cargando...</h2>
+            <p id="correo-usuario">Cargando...</p>
+            <span class="badge-rol" id="rol-usuario">Usuario</span>
+        </div>
+    </section>
 
-    <main class="contenedor-principal">
-        <section class="perfil-header">
-            <div class="imagen-container">
-                <img src="imagenes/ICONOperfil.png" alt="Foto de perfil" class="imagen-perfil">
-                <button class="btn-cambiar-foto">Cambiar foto</button>
+    <!-- Información actual del usuario (vista) -->
+    <section id="datos-actuales">
+        <h2>Mi Información Actual</h2>
+        <div class="vista-datos">
+            <div class="dato-item">
+                <strong>Nombre:</strong> <span id="vista-nombre">Cargando...</span>
             </div>
-            <div class="info-basica">
-                <h2 id="nombreAdmin">Nombre del Administrador</h2>
-                <p id="correoAdmin">correo@ejemplo.com</p>
-                <span class="badge-rol">Administrador Principal</span>
+            <div class="dato-item">
+                <strong>Email:</strong> <span id="vista-correo">Cargando...</span>
             </div>
-        </section>
+            <div class="dato-item">
+                <strong>RUT:</strong> <span id="vista-rut">No registrado</span>
+            </div>
+            <div class="dato-item">
+                <strong>Región:</strong> <span id="vista-region">No registrada</span>
+            </div>
+            <div class="dato-item">
+                <strong>Comuna:</strong> <span id="vista-comuna">No registrada</span>
+            </div>
+        </div>
+        <button class="btn-editar" id="btn-editar-perfil">Editar mi información</button>
+    </section>
 
-        <section class="detalles-admin">
-            <div class="card">
-                <h3>Información Personal</h3>
-                <div class="info-grupo">
-                    <label>Nombre completo:</label>
-                    <p id="nombreCompleto"></p>
-                </div>
-                <div class="info-grupo">
-                    <label>Correo electrónico:</label>
-                    <p id="correoContacto"></p>
-                </div>
-                <div class="info-grupo">
-                    <label>Region:</label>
-                </div>
-                <div class="info-grupo">
-                    <label>Comuna:</label>
-                </div>
+    <!-- Formulario OCULTO editar -->
+    <section id="datos-perfil" class="oculto">
+        <h2>Editar Mi Información</h2>
 
+        <form id="form-perfil" class="formulario-perfil">
+            <div class="grupo-campos">
+                <label for="nombre">Nombre completo</label>
+                <input type="text" id="nombre" required placeholder="Tu nombre completo">
+
+                <label for="correo">Email</label>
+                <input type="email" id="correo" required placeholder="ejemplo@correo.cl">
+
+                <label for="foto-url">URL Foto de perfil</label>
+                <input type="url" id="foto-url" placeholder="https://ejemplo.com/foto.jpg">
+                <small class="ayuda-texto">Pega la URL de tu imagen de perfil</small>
             </div>
 
-            <div class="card">
-                <h3>Estadísticas</h3>
-                <div class="estadisticas-grid">
-                    <div class="stat-item">
-                        <span class="numero" id="totalEventos">0</span>
-                        <span class="etiqueta">Eventos Creados</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="numero" id="eventosActivos">0</span>
-                        <span class="etiqueta">Eventos Activos</span>
-                    </div>
-                </div>
+            <div class="grupo-campos">
+                <label for="region">Región</label>
+                <select id="region" required>
+                    <option value="">Selecciona región</option>
+                    <!-- se cargan dinámicamente -->
+                </select>
+
+                <label for="comuna">Comuna</label>
+                <select id="comuna" required>
+                    <option value="">Selecciona comuna</option>
+                    <!-- se cargan según región -->
+                </select>
             </div>
-        </section>
 
-        <section class="acciones-rapidas">
-            <h3>Aciones</h3>
-            <div class="botones-accion">
-                <button class="btn-accion" id="verReportes">Ver Reportes</button>
-                <button class="btn-accion" id="configuracion">Configuración</button>
+            <div class="botones-formulario">
+                <button type="submit" class="btn-guardar">Guardar cambios</button>
+                <button type="button" class="btn-cancelar" id="btn-cancelar">Cancelar</button>
             </div>
-        </section>
-    </main>
+        </form>
+    </section>
 
-    <footer>
-        <p>&copy; 2025 Eventos Chile - Panel de Administración</p>
-    </footer>
+    <!-- Mis eventos creados (solo si es admin o usuario con eventos creados) -->
+    <section id="mis-eventos">
+        <h2 id="titulo-eventos">Mis Eventos Creados</h2>
+        <div class="lista-eventos-perfil" id="lista-eventos-perfil">
+            <!-- se cargan dinámicamente según eventos creados por el usuario -->
+        </div>
+    </section>
 
-    <script src="js/perfil_admin.js"></script>
+    <!-- Estadísticas básicas -->
+    <section id="stats-usuario">
+        <h2>Mis Estadísticas</h2>
+        <div class="contenedor-stats">
+            <div class="stat-card">
+                <span class="numero-stat" id="eventos-creados">0</span>
+                <span class="label-stat">Eventos creados</span>
+            </div>
+            <div class="stat-card" id="stat-usuarios">
+                <span class="numero-stat" id="total-usuarios">0</span>
+                <span class="label-stat">Usuarios registrados</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Acciones rápidas -->
+    <section id="acciones-rapidas">
+        <h2>Acciones Rápidas</h2>
+        <div class="botones-accion">
+            <a href="eventos.html" class="btn-accion">Ver todos los eventos</a>
+            <a href="index.html" class="btn-accion">Ir al inicio</a>
+        </div>
+    </section>
+
+</main>
+
+<footer>
+    <p id="contacto">Contacto: <a id="mail" href="mailto:eventoschile@gmail.com">eventoschile@gmail.com</a></p>
+    <p><a id="Ftnosotros" href="index.html">Acerca de Nosotros</a></p>
+</footer>
+
+<!-- Scripts  -->
+<script src="js/perfil_admin.js"></script>
+
 </body>
 </html>
