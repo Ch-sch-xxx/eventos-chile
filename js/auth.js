@@ -24,8 +24,6 @@ function validarUsuario(email, password) {
     return usuarios.find(user => user.email === email && user.password === password);
 }
 
-// REEMPLAZAR estas funciones de validación RUT en js/auth.js
-
 // Validación RUT chileno completa con algoritmo Módulo 11 CORREGIDA
 function validarRUTCompleto(rut) {
     // Limpiar y validar formato básico
@@ -99,7 +97,6 @@ function formatearRUT(rut) {
     return `${cuerpoFormateado}-${dv}`;
 }
 
-
 // Expresión regular para validar email
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -123,6 +120,9 @@ const regionesYcomunas = {
 function cargarComunasPorRegion(regionSeleccionada) {
     const comunaSelect = document.getElementById('register-comuna');
 
+    // Verificar si el elemento existe (por si se usa en otras páginas)
+    if (!comunaSelect) return;
+
     // Limpiar opciones existentes
     comunaSelect.innerHTML = '<option value="">Selecciona comuna</option>';
 
@@ -141,141 +141,166 @@ function cargarComunasPorRegion(regionSeleccionada) {
 document.addEventListener('DOMContentLoaded', function() {
 
     // INTERCAMBIO ENTRE FORMULARIOS
-    document.getElementById('link-register').addEventListener('click', e => {
-        e.preventDefault();
-        document.getElementById('login').classList.add('oculto');
-        document.getElementById('register').classList.remove('oculto');
-    });
+    const linkRegister = document.getElementById('link-register');
+    const linkLogin = document.getElementById('link-login');
+    const formLogin = document.getElementById('login');
+    const formRegister = document.getElementById('register');
 
-    document.getElementById('link-login').addEventListener('click', e => {
-        e.preventDefault();
-        document.getElementById('register').classList.add('oculto');
-        document.getElementById('login').classList.remove('oculto');
-    });
+    if (linkRegister) {
+        linkRegister.addEventListener('click', e => {
+            e.preventDefault();
+            formLogin.classList.add('oculto');
+            formRegister.classList.remove('oculto');
+        });
+    }
+
+    if (linkLogin) {
+        linkLogin.addEventListener('click', e => {
+            e.preventDefault();
+            formRegister.classList.add('oculto');
+            formLogin.classList.remove('oculto');
+        });
+    }
 
     // EVENT LISTENER PARA CAMBIO DE REGIÓN
-    document.getElementById('register-region').addEventListener('change', function() {
-        const regionSeleccionada = this.value;
-        cargarComunasPorRegion(regionSeleccionada);
-    });
+    const selectRegion = document.getElementById('register-region');
+    if (selectRegion) {
+        selectRegion.addEventListener('change', function() {
+            const regionSeleccionada = this.value;
+            cargarComunasPorRegion(regionSeleccionada);
+        });
+    }
 
     // FORMATEO AUTOMÁTICO DEL RUT
-    document.getElementById('register-rut').addEventListener('input', function(e) {
-        const input = e.target;
-        const cursorPos = input.selectionStart;
-        const valorOriginal = input.value;
+    const inputRUT = document.getElementById('register-rut');
+    if (inputRUT) {
+        inputRUT.addEventListener('input', function(e) {
+            const input = e.target;
+            const cursorPos = input.selectionStart;
+            const valorOriginal = input.value;
 
-        // Formatear el RUT
-        const valorFormateado = formatearRUT(valorOriginal);
+            // Formatear el RUT
+            const valorFormateado = formatearRUT(valorOriginal);
 
-        // Solo actualizar si cambió
-        if (valorFormateado !== valorOriginal) {
-            input.value = valorFormateado;
+            // Solo actualizar si cambió
+            if (valorFormateado !== valorOriginal) {
+                input.value = valorFormateado;
 
-            // Ajustar cursor para mantener posición lógica
-            const diferencia = valorFormateado.length - valorOriginal.length;
-            const nuevaPos = Math.min(cursorPos + diferencia, valorFormateado.length);
-            input.setSelectionRange(nuevaPos, nuevaPos);
-        }
-    });
+                // Ajustar cursor para mantener posición lógica
+                const diferencia = valorFormateado.length - valorOriginal.length;
+                const nuevaPos = Math.min(cursorPos + diferencia, valorFormateado.length);
+                input.setSelectionRange(nuevaPos, nuevaPos);
+            }
+        });
+    }
 
     // MANEJO FORMULARIO DE LOGIN
-    document.getElementById('login').addEventListener('submit', e => {
-        e.preventDefault();
-        const email = document.getElementById('login-email').value.trim();
-        const pass = document.getElementById('login-password').value.trim();
+    if (formLogin) {
+        formLogin.addEventListener('submit', e => {
+            e.preventDefault();
+            const email = document.getElementById('login-email').value.trim();
+            const pass = document.getElementById('login-password').value.trim();
 
-        if (!emailRegex.test(email)) {
-            alert('Email inválido');
-            return;
-        }
-        if (pass.length < 4 || pass.length > 20) {
-            alert('La contraseña debe tener entre 4 y 20 caracteres');
-            return;
-        }
+            if (!emailRegex.test(email)) {
+                alert('Email inválido');
+                return;
+            }
+            if (pass.length < 4 || pass.length > 20) {
+                alert('La contraseña debe tener entre 4 y 20 caracteres');
+                return;
+            }
 
-        // Admin hardcodeado
-        if (email === 'ad@ad.com' && pass === 'admin') {
-            localStorage.setItem('user-logged', 'admin');
-            localStorage.setItem('user-email', email);
-            window.location.href = 'gestion_admin.html';
-            return;
-        }
+            // Admin hardcodeado - CAMBIO CLAVE: también va a gestion_admin.html
+            if (email === 'ad@ad.com' && pass === 'admin') {
+                localStorage.setItem('user-logged', 'admin');
+                localStorage.setItem('user-email', email);
+                localStorage.setItem('user-data', JSON.stringify({
+                    name: 'Administrador',
+                    email: email,
+                    role: 'admin'
+                }));
+                alert('¡Bienvenido Administrador!');
+                window.location.href = 'gestion_admin.html';  // CAMBIO: admin también va aquí
+                return;
+            }
 
-        // Validar usuario registrado
-        const usuario = validarUsuario(email, pass);
-        if (usuario) {
-            localStorage.setItem('user-logged', 'usuario');
-            localStorage.setItem('user-email', email);
-            localStorage.setItem('user-data', JSON.stringify(usuario));
-            alert('¡Bienvenido ' + usuario.name + '!');
-            window.location.href = 'perfil_admin.html';
-        } else {
-            alert('Credenciales incorrectas');
-        }
-    });
+            // Validar usuario registrado - CAMBIO CLAVE: también va a gestion_admin.html
+            const usuario = validarUsuario(email, pass);
+            if (usuario) {
+                localStorage.setItem('user-logged', 'usuario');
+                localStorage.setItem('user-email', email);
+                localStorage.setItem('user-data', JSON.stringify(usuario));
+                alert('¡Bienvenido ' + usuario.name + '!');
+                window.location.href = 'gestion_admin.html';  // CAMBIO: usuario también va aquí
+            } else {
+                alert('Credenciales incorrectas');
+            }
+        });
+    }
 
     // MANEJO FORMULARIO DE REGISTRO
-    document.getElementById('register').addEventListener('submit', e => {
-        e.preventDefault();
-        const name = document.getElementById('register-name').value.trim();
-        const email = document.getElementById('register-email').value.trim();
-        const rut = document.getElementById('register-rut').value.trim();
-        const pass = document.getElementById('register-password').value.trim();
-        const region = document.getElementById('register-region').value;
-        const comuna = document.getElementById('register-comuna').value;
+    if (formRegister) {
+        formRegister.addEventListener('submit', e => {
+            e.preventDefault();
+            const name = document.getElementById('register-name').value.trim();
+            const email = document.getElementById('register-email').value.trim();
+            const rut = document.getElementById('register-rut').value.trim();
+            const pass = document.getElementById('register-password').value.trim();
+            const region = document.getElementById('register-region').value;
+            const comuna = document.getElementById('register-comuna').value;
 
-        // Validaciones
-        if (name === '' || name.length < 3) {
-            alert('El nombre debe tener al menos 3 caracteres');
-            return;
-        }
+            // Validaciones
+            if (name === '' || name.length < 3) {
+                alert('El nombre debe tener al menos 3 caracteres');
+                return;
+            }
 
-        if (!emailRegex.test(email)) {
-            alert('Email inválido');
-            return;
-        }
+            if (!emailRegex.test(email)) {
+                alert('Email inválido');
+                return;
+            }
 
-        if (!rut || !validarRUTCompleto(rut)) {
-            alert('RUT inválido. Usar formato: 12345678-9');
-            return;
-        }
+            if (!rut || !validarRUTCompleto(rut)) {
+                alert('RUT inválido. Usar formato: 12345678-9');
+                return;
+            }
 
-        if (pass.length < 4 || pass.length > 20) {
-            alert('La contraseña debe tener entre 4 y 20 caracteres');
-            return;
-        }
+            if (pass.length < 4 || pass.length > 20) {
+                alert('La contraseña debe tener entre 4 y 20 caracteres');
+                return;
+            }
 
-        if (!region || !comuna) {
-            alert('Selecciona región y comuna');
-            return;
-        }
+            if (!region || !comuna) {
+                alert('Selecciona región y comuna');
+                return;
+            }
 
-        // Verificar si RUT ya existe
-        const usuarios = obtenerUsuarios();
-        if (usuarios.find(user => user.rut === formatearRUT(rut))) {
-            alert('Este RUT ya está registrado');
-            return;
-        }
+            // Verificar si RUT ya existe
+            const usuarios = obtenerUsuarios();
+            if (usuarios.find(user => user.rut === formatearRUT(rut))) {
+                alert('Este RUT ya está registrado');
+                return;
+            }
 
-        // Crear usuario con estructura completa
-        const nuevoUsuario = {
-            name: name,
-            email: email,
-            rut: formatearRUT(rut),
-            password: pass,
-            region: region,
-            comuna: comuna,
-            fechaRegistro: new Date().toISOString()
-        };
+            // Crear usuario con estructura completa
+            const nuevoUsuario = {
+                name: name,
+                email: email,
+                rut: formatearRUT(rut),
+                password: pass,
+                region: region,
+                comuna: comuna,
+                fechaRegistro: new Date().toISOString()
+            };
 
-        if (crearUsuario(nuevoUsuario)) {
-            alert('Registro exitoso. Ahora puedes iniciar sesión.');
-            document.getElementById('register').reset();
-            document.getElementById('register').classList.add('oculto');
-            document.getElementById('login').classList.remove('oculto');
-        } else {
-            alert('Este email ya está registrado');
-        }
-    });
+            if (crearUsuario(nuevoUsuario)) {
+                alert('Registro exitoso. Ahora puedes iniciar sesión.');
+                formRegister.reset();
+                formRegister.classList.add('oculto');
+                formLogin.classList.remove('oculto');
+            } else {
+                alert('Este email ya está registrado');
+            }
+        });
+    }
 });

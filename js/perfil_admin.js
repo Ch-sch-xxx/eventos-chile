@@ -113,32 +113,6 @@ function cargarComunasPorRegion(region) {
     }
 }
 
-// VALIDAR RUT (misma función que en auth.js)
-function validarRUTCompleto(rut) {
-    if (!/^[0-9]+[-|‐]{1}[0-9kK]{1}$/.test(rut)) return false;
-
-    const tmp = rut.split('-');
-    const digv = tmp[1].toLowerCase();
-    const rutNum = tmp[0];
-
-    return calcularDV(rutNum) === digv;
-}
-
-function calcularDV(rut) {
-    let suma = 0;
-    let multiplicador = 2;
-
-    for (let i = rut.length - 1; i >= 0; i--) {
-        suma += parseInt(rut.charAt(i)) * multiplicador;
-        multiplicador = multiplicador === 7 ? 2 : multiplicador + 1;
-    }
-
-    const dv = 11 - (suma % 11);
-    if (dv === 11) return '0';
-    if (dv === 10) return 'k';
-    return dv.toString();
-}
-
 // CARGAR EVENTOS DEL USUARIO
 function cargarEventosUsuario() {
     const userLogged = localStorage.getItem('user-logged');
