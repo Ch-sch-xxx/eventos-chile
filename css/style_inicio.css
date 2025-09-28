@@ -324,9 +324,6 @@ nav a:hover {
     color: var(--texto);
 }
 
-/*el responsive esta en el css GENERAL*/
-
-
 /* Contenedor header con altura fija */
 .header-content {
     display: flex;
@@ -336,3 +333,7 @@ nav a:hover {
     padding: 0 1rem;
 }
 
+
+
+
+/*el responsive esta en el css GENERAL*/

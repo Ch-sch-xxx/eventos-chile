@@ -181,7 +181,7 @@ nav a:hover {
     opacity: 0.9;
 }
 
-/* Oculta formulario con clase 'oculto' */
+/* Oculta formulario  */
 .oculto {
     display: none;
 }

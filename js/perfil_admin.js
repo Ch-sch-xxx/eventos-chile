@@ -376,7 +376,6 @@ function guardarPerfil(e) {
             localStorage.setItem('user-email', correo);
         }
 
-        // ÉXITO
         alert(' Perfil actualizado exitosamente');
 
         document.getElementById('datos-perfil').classList.add('oculto');

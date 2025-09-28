@@ -1,12 +1,12 @@
 // guardamos todos los eventos como una bd, pero esta es local,
 // o sea, cargan en el navegador y no en el servidor
-// y no se guardan en la nube, son datos temporales
+// y no se guardan en la nube, son datos temporales(es mejor eliminar los datos del navegador(conEstaPagina) para volver a probar)
 
 // obtener eventos desde localStorage
 function obtenerEventos() {
     const eventos = localStorage.getItem('eventos-chile');
     if (eventos) {
-        return JSON.parse(eventos); // Convierte string a array
+        return JSON.parse(eventos); // Convierte texto a objeto JSON
     } else {
         // Si no hay eventos, creamos algunos
         const eventosIniciales = [
@@ -157,16 +157,15 @@ function crearEvento(nuevoEvento) {
     const userEmail = localStorage.getItem('user-email');
     const eventos = obtenerEventos();
 
-    // Verificar que hay usuario logueado
+    // Verificar usuario logueado
     if (!userEmail) {
         console.error('No hay usuario logueado');
         return false;
     }
 
-    // Agregar metadatos del autor
     nuevoEvento.creadoPor = userEmail;
     nuevoEvento.fechaCreacion = new Date().toISOString();
-    nuevoEvento.id = 'evt_' + Date.now(); // ID único
+    nuevoEvento.id = 'evt_' + Date.now(); // único
 
     eventos.push(nuevoEvento);
     guardarEventos(eventos);
@@ -174,12 +173,11 @@ function crearEvento(nuevoEvento) {
     return true;
 }
 
-// LISTAR todos los eventos (función pública)
+// LISTAR todos los eventos
 function listarEventos() {
     return obtenerEventos();
 }
 
-// LISTAR solo eventos públicos (sin filtro de usuario - para página eventos.html)
 function listarEventosPublicos() {
     return obtenerEventos();
 }
@@ -237,7 +235,7 @@ function eliminarEvento(indice) {
     return false;
 }
 
-// FUNCIONES AUXILIARES para filtrar eventos
+// FUNCIONES filtrar eventos
 function obtenerEventosPorUsuario(email) {
     const eventos = obtenerEventos();
     return eventos.filter(evento => evento.creadoPor === email);
@@ -252,7 +250,7 @@ function contarTotalUsuarios() {
     return usuarios.length;
 }
 
-// FUNCIONES para el gestor personal (nueva funcionalidad)
+// FUNCIONES gestor personal
 function obtenerMisEventos() {
     const userEmail = localStorage.getItem('user-email');
     const userLogged = localStorage.getItem('user-logged');
