@@ -149,26 +149,21 @@ function renderTablaEventos() {
     const eventos = listarEventos();
     const tbody = document.querySelector('#listar-eventos tbody');
     tbody.innerHTML = '';
-
     eventos.forEach((ev, i) => {
-        const fechaCreacion = ev.fechaCreacion ? new Date(ev.fechaCreacion).toLocaleDateString() : 'N/A';
-        const autor = ev.creadoPor || 'Sistema';
-
         const tr = document.createElement('tr');
         tr.innerHTML = `
           <td>${i+1}</td>
-          <td><img src="${ev.imagen}" style="width:48px;height:48px;object-fit:cover;border-radius:4px;" alt="Evento"></td>
-          <td>
-            <strong>${ev.titulo}</strong><br>
-            <small style="color: #666;">Por: ${autor}</small>
-          </td>
+          <td><img src="${ev.imagen}" style="width:48px;
+                                                height:48px;
+                                                object-fit:cover;
+                                                border-radius:4px;"></td>
+          <td>${ev.titulo}</td>
           <td>${ev.fecha}</td>
-          <td>${ev.lugar}</td>
-          <td><span style="background: var(--acento); color: white; padding: 2px 6px; border-radius: 4px; font-size: 0.8rem;">${ev.tipo}</span></td>
+          <td>${ev.tipo}</td>
           <td>
-            <button class="btn-ver" data-idx="${i}" style="margin: 2px;">Ver</button>
-            <button class="btn-editar" data-idx="${i}" style="margin: 2px; background: #28a745;">Editar</button>
-            <button class="btn-eliminar" data-idx="${i}" style="margin: 2px; background: #dc3545;">Eliminar</button>
+            <button class="btn-ver" data-idx="${i}">Ver</button>
+            <button class="btn-editar" data-idx="${i}">Editar</button>
+            <button class="btn-eliminar" data-idx="${i}">Eliminar</button>
           </td>`;
         tbody.appendChild(tr);
     });

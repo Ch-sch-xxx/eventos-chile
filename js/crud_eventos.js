@@ -91,20 +91,12 @@ function guardarEventos(eventos) {
     localStorage.setItem('eventos-chile', JSON.stringify(eventos));
 }
 
-// CREAR nuevo evento CON AUTOR
+// CREAR nuevo evento
 function crearEvento(nuevoEvento) {
-    const userEmail = localStorage.getItem('user-email');
-    const eventos = obtenerEventos();
-
-    // Agregar metadatos del autor
-    nuevoEvento.creadoPor = userEmail;
-    nuevoEvento.fechaCreacion = new Date().toISOString();
-    nuevoEvento.id = 'evt_' + Date.now(); // ID único
-
-    eventos.push(nuevoEvento);
-    guardarEventos(eventos);
-    console.log('Evento creado por:', userEmail, '| Título:', nuevoEvento.titulo);
-    return true;
+    const eventos = obtenerEventos(); // Obtenemos lista actual
+    eventos.push(nuevoEvento); // Agregamos
+    guardarEventos(eventos); // Guardamos todo
+    console.log('Evento creado:', nuevoEvento.titulo);
 }
 
 // LISTAR
@@ -112,29 +104,11 @@ function listarEventos() {
     return obtenerEventos();
 }
 
-// EDITAR evento (solo si es el creador o admin)
+// EDITAR un evento existente por índice
 function editarEvento(indice, eventoEditado) {
-    const userEmail = localStorage.getItem('user-email');
-    const userLogged = localStorage.getItem('user-logged');
     const eventos = obtenerEventos();
-
     if (indice >= 0 && indice < eventos.length) {
-        const eventoOriginal = eventos[indice];
-
-        // Verificar permisos
-        if (userLogged !== 'admin' && eventoOriginal.creadoPor !== userEmail) {
-            console.error('Sin permisos para editar este evento');
-            return false;
-        }
-
-        // Mantener metadatos originales y agregar actualización
-        eventoEditado.creadoPor = eventoOriginal.creadoPor;
-        eventoEditado.fechaCreacion = eventoOriginal.fechaCreacion;
-        eventoEditado.id = eventoOriginal.id;
-        eventoEditado.fechaActualizacion = new Date().toISOString();
-        eventoEditado.actualizadoPor = userEmail;
-
-        eventos[indice] = eventoEditado;
+        eventos[indice] = eventoEditado; // Reemplazamos el evento
         guardarEventos(eventos);
         console.log('Evento editado:', eventoEditado.titulo);
         return true;
@@ -142,41 +116,14 @@ function editarEvento(indice, eventoEditado) {
     return false;
 }
 
-// ELIMINAR evento (solo si es el creador o admin)
+// ELIMINAR un evento por índice
 function eliminarEvento(indice) {
-    const userEmail = localStorage.getItem('user-email');
-    const userLogged = localStorage.getItem('user-logged');
     const eventos = obtenerEventos();
-
     if (indice >= 0 && indice < eventos.length) {
-        const evento = eventos[indice];
-
-        // Verificar permisos
-        if (userLogged !== 'admin' && evento.creadoPor !== userEmail) {
-            console.error('Sin permisos para eliminar este evento');
-            return false;
-        }
-
-        const eventoEliminado = eventos.splice(indice, 1)[0];
+        const eventoEliminado = eventos.splice(indice, 1)[0]; // Lo saca del array
         guardarEventos(eventos);
         console.log('Evento eliminado:', eventoEliminado.titulo);
         return true;
     }
     return false;
-}
-
-
-// funciones para filtrar eventos
-function obtenerEventosPorUsuario(email) {
-    const eventos = obtenerEventos();
-    return eventos.filter(evento => evento.creadoPor === email);
-}
-
-function contarEventosUsuario(email) {
-    return obtenerEventosPorUsuario(email).length;
-}
-
-function contarTotalUsuarios() {
-    const usuarios = JSON.parse(localStorage.getItem('usuarios-chile') || '[]');
-    return usuarios.length;
 }
