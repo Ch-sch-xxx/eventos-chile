@@ -32,8 +32,31 @@
         </div>
     </section>
 
-    <!-- Sección editables -->
-    <section id="datos-perfil">
+    <!-- Sección de datos VISIBLES (antes del formulario editable) -->
+    <section id="datos-actuales">
+        <h2>Mi Información Actual</h2>
+        <div class="vista-datos">
+            <div class="dato-item">
+                <strong>Nombre:</strong> <span id="vista-nombre">Cargando...</span>
+            </div>
+            <div class="dato-item">
+                <strong>Email:</strong> <span id="vista-correo">Cargando...</span>
+            </div>
+            <div class="dato-item">
+                <strong>RUT:</strong> <span id="vista-rut">No registrado</span>
+            </div>
+            <div class="dato-item">
+                <strong>Región:</strong> <span id="vista-region">No registrada</span>
+            </div>
+            <div class="dato-item">
+                <strong>Comuna:</strong> <span id="vista-comuna">No registrada</span>
+            </div>
+        </div>
+        <button class="btn-editar" id="btn-editar-perfil">Editar mi información</button>
+    </section>
+
+    <!-- Formulario OCULTO inicialmente -->
+    <section id="datos-perfil" class="oculto">
         <h2>Mi Información</h2>
 
         <form id="form-perfil" class="formulario-perfil">
@@ -69,6 +92,28 @@
         </form>
     </section>
 
+<!-- Mis eventos (si es admin) o eventos confirmados (si es usuario)-->
+    <section id="mis-eventos">
+        <h2 id="titulo-eventos">Mis Eventos</h2>
+        <div class="lista-eventos-perfil" id="lista-eventos-perfil">
+            <!-- se cargan dinámicamente según el rol -->
+        </div>
+    </section>
+
+
+    <!--    Historial de actividades del usuario-->
+    <section id="historial-usuario">
+        <h2>Mi Actividad</h2>
+        <div class="actividades-recientes">
+            <div class="actividad-item">
+                <span class="fecha-actividad">Hoy</span>
+                <span class="desc-actividad">Iniciaste sesión</span>
+            </div>
+            <!-- se cargan dinámicamente -->
+        </div>
+    </section>
+
+
     <!-- Sección de estadísticas del usuario -->
     <section id="stats-usuario">
         <h2>Mis Estadísticas</h2>
@@ -88,6 +133,8 @@
         </div>
     </section>
 
+
+
     <!-- Sección de acciones rápidas -->
     <section id="acciones-rapidas">
         <h2>Acciones Rápidas</h2>
@@ -97,6 +144,7 @@
             <button class="btn-accion" id="btn-reportes">Ver mis reportes</button>
         </div>
     </section>
+
 
 </main>
 
