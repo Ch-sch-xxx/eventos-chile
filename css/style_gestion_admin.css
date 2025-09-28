@@ -63,16 +63,38 @@ header h1 {
 .btn-admin, .btn-cerrar {
     color: white;
     text-decoration: none;
-    padding: 8px 14px;
-    border-radius: 5px;
-    background-color: #4A5568;
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    background-color: var(--secundario);
     border: none;
     font-weight: bold;
     transition: background 0.2s;
 }
 .btn-admin:hover, .btn-cerrar:hover {
-    background-color: var(--secundario);
+    background-color: #3a3f50;
 }
+/* Botón cerrar destacado fuera del modal-contenido */
+.cerrar {
+    position: fixed;
+    line-height: 1;
+    color: #fff;
+    background: #b7b7b7;
+    border-radius: 1%;
+    width:2rem;
+    height:2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(108,99,255,0.3);
+    cursor: pointer;
+    transition: transform 0.2s, background 0.2s;
+    z-index: 2;
+}
+.cerrar:hover {
+    transform: scale(1.1);
+    background: #5A52D5;
+}
+
 
 
 .layout {
@@ -145,6 +167,52 @@ section {
     opacity: 0.9;
 }
 
+
+/* Crear/Editar */
+.form-dos-columnas {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem 2rem;
+    margin-bottom: 2rem;
+}
+.form-dos-columnas .col {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.form-dos-columnas label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 0.2rem;
+}
+.form-dos-columnas input,
+.form-dos-columnas select,
+.form-dos-columnas textarea {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 0.95rem;
+    box-sizing: border-box;
+}
+
+/* Botón más amplio */
+#form-crear button {
+    grid-column: 1 / -1;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    background: var(--primario);
+    color: #fff;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+#form-crear button:hover {
+    background: #584de3;
+}
+
 /* Tabla listar */
 table {
     width: 100%;
@@ -191,6 +259,7 @@ footer {
 }
 
 
+
 @media (max-width:600px) {
     .sidebar { display:none; }
     .layout { flex-direction:column; }
@@ -199,4 +268,9 @@ input:focus, select:focus, button:focus {
     outline: 2px solid var(--primario);
 }
 
-
+/* Responsive para mobile */
+@media (max-width: 768px) {
+    .form-dos-columnas {
+        grid-template-columns: 1fr;
+    }
+}
