@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestión de Eventos · Eventos Chile</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/style_gestor_eventos_usuario.css">
+    <link rel="stylesheet" href="css/responsividadGeneral.css">
+</head>
+<body>
+
+<!-- Header con información de usuario -->
+<header>
+    <h1 id="titulo-gestor">Mis Eventos · Eventos Chile</h1>
+    <div class="gestion-usuario">
+        <img src="imagenes/ICONOperfil.png" alt="perfil" class="imagen-perfil" id="imagen-perfil-header">
+        <span id="nombre-usuario-header">Usuario</span>
+        <button class="btn-perfil" onclick="window.location.href='perfil_usuario.html'">Mi Perfil</button>
+        <button class="btn-cerrar" id="btn-cerrar-sesion">Cerrar sesión</button>
+    </div>
+</header>
+
+<!-- Layout con sidebar -->
+<div class="layout">
+    <!-- Sidebar de navegación -->
+    <aside class="sidebar">
+        <h2>Gestión</h2>
+        <ul>
+            <li><a href="#" id="nav-crear">✏️ Crear Evento</a></li>
+            <li><a href="#" id="nav-listar" aria-current="page">📋 Mis Eventos</a></li>
+            <li><a href="eventos.html">🌟 Ver Todos los Eventos</a></li>
+        </ul>
+
+        <!-- Estadísticas rápidas -->
+        <div class="stats-sidebar">
+            <h3>Mis Estadísticas</h3>
+            <div class="stat-item">
+                <span class="stat-numero" id="total-eventos-usuario">0</span>
+                <span class="stat-label">Eventos Creados</span>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Área principal -->
+    <main class="gestor-content">
+        <!-- Sección Crear Evento -->
+        <section id="crear-evento" class="oculto">
+            <h2>Crear Nuevo Evento</h2>
+            <form id="form-crear" class="form-dos-columnas">
+                <!-- Columna 1 -->
+                <div class="col">
+                    <label for="titulo">Título del Evento</label>
+                    <input id="titulo" type="text" required minlength="3" placeholder="Nombre del evento">
+
+                    <label for="fecha">Fecha</label>
+                    <input id="fecha" type="date" required>
+
+                    <label for="lugar">Lugar</label>
+                    <input id="lugar" type="text" required placeholder="Dirección o lugar del evento">
+
+                    <label for="tipo">Tipo de Evento</label>
+                    <select id="tipo" required>
+                        <option value="">Selecciona tipo</option>
+                        <option>Presencial</option>
+                        <option>Streaming</option>
+                        <option>Híbrido</option>
+                    </select>
+                </div>
+
+                <!-- Columna 2 -->
+                <div class="col">
+                    <label for="imagen">URL de Imagen</label>
+                    <input id="imagen" type="url" placeholder="https://..." required>
+
+                    <label for="descripcion">Descripción</label>
+                    <textarea id="descripcion" rows="4" placeholder="Describe tu evento"></textarea>
+
+                    <label for="capacidad">Capacidad (personas)</label>
+                    <input id="capacidad" type="number" min="1" placeholder="100">
+
+                    <label for="precio">Precio</label>
+                    <input id="precio" type="text" placeholder="Gratis o $15.000">
+                </div>
+
+                <!-- Botones -->
+                <div class="botones-form">
+                    <button type="submit" id="btn-submit">Crear Evento</button>
+                    <button type="button" id="btn-cancelar-form" class="btn-secundario">Cancelar</button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Sección Listar Eventos -->
+        <section id="listar-eventos">
+            <div class="header-seccion">
+                <h2 id="titulo-lista">Mis Eventos Creados</h2>
+                <button class="btn-crear-rapido" id="btn-crear-rapido">+ Nuevo Evento</button>
+            </div>
+
+            <div class="eventos-grid" id="eventos-grid">
+                <!-- Eventos se cargan dinámicamente aquí -->
+            </div>
+
+            <!-- Mensaje cuando no hay eventos -->
+            <div id="mensaje-vacio" class="mensaje-vacio oculto">
+                <h3>¡Aún no has creado eventos!</h3>
+                <p>Comparte tus ideas y organiza eventos increíbles.</p>
+                <button class="btn-crear-primero" id="btn-crear-primero">Crear mi primer evento</button>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal para ver detalles del evento -->
+    <div id="modal-detalle" class="modal oculto">
+        <div class="modal-contenido">
+            <span id="cerrar-modal" class="cerrar">&times;</span>
+            <div class="modal-header">
+                <img id="detalle-img" src="" alt="Imagen del evento">
+                <div class="detalle-info">
+                    <h3 id="detalle-titulo"></h3>
+                    <div class="detalle-meta">
+                        <span id="detalle-fecha"></span> • <span id="detalle-tipo"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body">
+                <p><strong>Lugar:</strong> <span id="detalle-lugar"></span></p>
+                <p><strong>Descripción:</strong> <span id="detalle-descripcion"></span></p>
+                <p><strong>Capacidad:</strong> <span id="detalle-capacidad"></span></p>
+                <p><strong>Precio:</strong> <span id="detalle-precio"></span></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <p>&copy; 2025 Eventos Chile - Gestión de Eventos</p>
+</footer>
+
+<!-- Scripts -->
+<script src="js/crud_eventos.js"></script>
+<script src="js/gestor_eventos.js"></script>
+</body>
+</html>

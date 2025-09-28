@@ -24,8 +24,14 @@ function generarTarjetasEventos() {
 // Botón "Asistir al Evento", debe autenticarse
 document.addEventListener('click', function (e) {
     if (e.target.classList.contains('btn-asistir')) {
-        alert('Por favor inicia sesión para confirmar asistencia.');
-        location.href = 'auth.html';
+        const userLogged = localStorage.getItem('user-logged');
+        if (!userLogged) {
+            alert('Por favor inicia sesión para confirmar asistencia.');
+            location.href = 'auth.html';
+        } else {
+            alert('¡Te has unido al evento! Revisa tu perfil para más detalles.');
+            // Aquí  implementar lógica de "asistencia" futura, sin registrarse, como invitado (datos basicos)
+        }
     }
 });
 
