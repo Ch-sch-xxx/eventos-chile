@@ -10,7 +10,7 @@
 </head>
 <body>
 
-<!-- Header compartido con index.html -->
+<!-- compartido con index.html -->
 <header>
     <h1>Eventos Chile</h1>
     <nav>
@@ -22,14 +22,17 @@
     </nav>
 </header>
 
-<!-- Main: listado de eventos -->
+<!-- listado de eventos -->
 <main>
-<!-- Se actualiza sección(automatizado de tarjetas)-->
+<!-- actualiza sección(automatizado de tarjetas)-->
     <div class="carrusel-eventos">
         <div class="carrusel-lista" id="carrusel-lista"> <!--referencia para crear tarjetas-->
             <!--aquí se crean las tarjetas(Child)-->
 
-        <!-- Estructura manual de tarjetas desde aca-->
+
+
+        <!-- Estructura manual de tarjetas desde aca(ANTERIOR)-->
+
 <!--            <article class="Tarjetas">-->
 <!--                <img class="img-tarjeta-evento" src="imagenes/eventosIMG.png" alt="Imagen evento">-->
 <!--                <h3>Nombre del Evento 2</h3>-->
@@ -54,16 +57,13 @@
 
 </main>
 
-<!-- Footer compartido con index.html -->
+<!-- compartido con index.html -->
 <footer>
-    <p id="contacto">Contacto: <a id="mail" href="mailto:eventoschile@gmail.com">
-        <!-- funcion de enviar mail incluida(instant click)-->
-        eventoschile@gmail.com
-    </a></p>
+    <p id="contacto">Contacto: <a id="mail" href="mailto:eventoschile@gmail.com"> eventoschile@gmail.com </a></p>
     <p><a id="Ftnosotros" href="index.html">Acerca de Nosotros</a></p>
 </footer>
 
-<!-- JS basico, interacción de botones, datos de eventos-->
+<!-- JS, interacción de botones, datos de eventos-->
 <script src="js/crud_eventos.js"></script>
 <script src="js/eventos_interaccion.js"></script>
 

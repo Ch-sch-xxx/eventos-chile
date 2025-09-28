@@ -10,7 +10,7 @@
 <body>
 
 <header>
-    <h1>Eventos Chile</h1>
+    <h1>Mi Perfil · Eventos Chile</h1>
     <nav>
         <ul>
             <li><a href="eventos.html">Eventos</a></li>
@@ -56,7 +56,7 @@
         <button class="btn-editar" id="btn-editar-perfil">Editar mi información</button>
     </section>
 
-    <!-- Formulario OCULTO editar -->
+    <!-- Formulario OCULTO (editar) -->
     <section id="datos-perfil" class="oculto">
         <h2>Editar Mi Información</h2>
 
@@ -83,7 +83,7 @@
                 <label for="comuna">Comuna</label>
                 <select id="comuna" required>
                     <option value="">Selecciona comuna</option>
-                    <!-- se cargan según región -->
+                    <!-- se cargan por región -->
                 </select>
             </div>
 
@@ -98,11 +98,11 @@
     <section id="mis-eventos">
         <h2 id="titulo-eventos">Mis Eventos Creados</h2>
         <div class="lista-eventos-perfil" id="lista-eventos-perfil">
-            <!-- se cargan dinámicamente según eventos creados por el usuario -->
+            <!-- se cargan dinámicamente(y temporal) según eventos creados por el usuario -->
         </div>
     </section>
 
-    <!-- Estadísticas básicas -->
+    <!-- Stats básicas -->
     <section id="stats-usuario">
         <h2>Mis Estadísticas</h2>
         <div class="contenedor-stats">
@@ -128,10 +128,13 @@
 
 </main>
 
+
 <footer>
     <p id="contacto">Contacto: <a id="mail" href="mailto:eventoschile@gmail.com">eventoschile@gmail.com</a></p>
     <p><a id="Ftnosotros" href="index.html">Acerca de Nosotros</a></p>
 </footer>
+
+
 
 <!-- Scripts  -->
 <script src="js/perfil_admin.js"></script>

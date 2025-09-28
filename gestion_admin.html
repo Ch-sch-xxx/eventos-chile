@@ -9,7 +9,6 @@
 </head>
 <body>
 
-<!-- Header coherente con perfil_admin.html -->
 <header>
     <h1>Mi Gestor · Eventos Chile</h1>
     <nav>
@@ -23,7 +22,7 @@
 
 <!-- barra lateral + contenido -->
 <div class="layout">
-    <!-- opciones CRUD en BARRA -->
+    <!-- opciones en BARRA -->
     <aside class="sidebar">
         <h2>Eventos</h2>
         <ul>
@@ -32,9 +31,9 @@
         </ul>
     </aside>
 
-    <!-- Área de contenido: lista o formulario -->
+    <!-- lista o formulario -->
     <main class="admin-content">
-        <!-- Sección Crear Evento (oculta inicialmente) -->
+        <!-- Crear Evento (oculta inicialmente) -->
         <section id="crear-evento" class="oculto">
             <h2>Crear Evento</h2>
             <form id="form-crear" class="form-dos-columnas">
@@ -65,12 +64,12 @@
                     <label for="precio">Precio</label>
                     <input id="precio" type="text" placeholder="Gratis o $">
                 </div>
-                <!-- Botón -->
+                <!-- Botón Crear -->
                 <button type="submit">Crear</button>
             </form>
         </section>
 
-        <!-- Sección Listar Eventos (visible por defecto) -->
+        <!-- Listar Eventos (visible por defecto) -->
         <section id="listar-eventos">
             <h2>Mis Eventos</h2>
             <table>
@@ -91,7 +90,7 @@
         </section>
     </main>
 
-    <!-- Modal detalle evento -->
+    <!-- Modal detalle evento (vista oculta) -->
     <div id="modal-detalle" class="modal oculto">
         <div class="modal-contenido">
             <span id="cerrar-modal" class="cerrar" title="Cerrar modal" aria-label="Cerrar ventana">&times;</span>
@@ -100,7 +99,7 @@
             <p><strong>Fecha:</strong> <span id="detalle-fecha"></span></p>
             <p><strong>Lugar:</strong> <span id="detalle-lugar"></span></p>
             <p><strong>Tipo:</strong> <span id="detalle-tipo"></span></p>
-            <p><strong>Descripcion:</strong> <span id="detalle-descripcion"></span> </p>
+            <p><strong>Descripción:</strong> <span id="detalle-descripcion"></span> </p>
             <p><strong>Capacidad:</strong> <span id="detalle-capacidad"></span></p>
             <p><strong>Precio:</strong> <span id="detalle-precio"></span></p>
         </div>
@@ -112,7 +111,10 @@
     <p><a id="Ftnosotros" href="index.html">Acerca de Nosotros</a></p>
 </footer>
 
+
+
 <script src="js/crud_eventos.js"></script>
 <script src="js/gestion_admin.js"></script>
+
 </body>
 </html>
