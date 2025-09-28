@@ -268,8 +268,8 @@ nav a:hover {
     box-shadow: 0 6px 20px rgba(108, 99, 255, 0.3);
 }
 
-/* Nueva sección tarjetas 3D  */
 
+/* Nueva sección tarjetas 3D, unicas en la pagina  */
 /* Contenedor principal tarjetas 3D */
 .eventos-tarjetas-3d {
     padding: 3rem 2rem;
@@ -302,7 +302,7 @@ nav a:hover {
     border-radius: 2px;
 }
 
-/* Grid de 3   */
+/* Grid de 3 */
 .contenedor-grid-eventos {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -378,7 +378,7 @@ nav a:hover {
     box-shadow: 0 4px 15px rgba(108, 99, 255, 0.15);
 }
 
-/* Info compacta */
+/* Info */
 .informacion-evento {
     flex-grow: 1;
     display: flex;
@@ -403,7 +403,7 @@ nav a:hover {
     color: var(--secundario);
 }
 
-/* Párrafos compactos */
+/* Párrafos */
 .cara-frontal p,
 .cara-posterior p {
     margin: 0.3rem 0;

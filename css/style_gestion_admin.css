@@ -16,7 +16,7 @@ body {
     position: relative;
 }
 
-/* Confeti sutil */
+/* Confeti */
 body::before {
     content: "";
     position: fixed;
@@ -39,7 +39,7 @@ body::before {
     to { background-position: 600px 1200px, 650px 1250px; }
 }
 
-/* Header coherente con perfil_admin.html */
+/* Header */
 header, footer {
     background: linear-gradient(135deg, var(--secundario) 0%, #4A5568 100%);
     color: white;
@@ -51,7 +51,7 @@ header, footer {
     justify-content: space-between;
 }
 
-/* Título animado coherente */
+/* Título animado */
 header h1 {
     animation: cambioColores 5s ease-in-out infinite;
     background: linear-gradient(45deg, white, #9F7AEA, var(--primario), var(--acento));
@@ -75,7 +75,7 @@ header h1:hover {
     cursor: default;
 }
 
-/* Footer coherente */
+/* Footer */
 #contacto {
     margin: 0.3rem 0;
     color: #ffffff;
@@ -102,7 +102,7 @@ header h1:hover {
     color: var(--acento);
 }
 
-/* Navegación coherente con perfil_admin.html */
+/* Nav */
 nav ul {
     list-style: none;
     display: flex;
@@ -126,13 +126,13 @@ nav a:hover {
     transform: translateY(-2px);
 }
 
-/* Layout principal */
+
 .layout {
     display: flex;
     margin-top: 1rem;
 }
 
-/* Sidebar */
+
 .sidebar {
     width: 200px;
     background: white;
