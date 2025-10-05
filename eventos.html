@@ -4,15 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Eventos Chile · Eventos</title>
-    <!-- Bootstrap: integrar igual que el index, para unificar diseño -->
+    <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Mi hoja de estilos propia para eventos -->
     <link rel="stylesheet" href="css/style_eventos.css">
     <link rel="stylesheet" href="css/responsividadGeneral.css">
 </head>
 <body>
 
-<!-- Navbar igual que el index, usando clases Bootstrap y manteniendo mi estilo propio -->
+<!-- Navbar -->
 <header class="navbar navbar-expand-lg navbar-dark" style="background: linear-gradient(135deg, #2D3748 0%, #4A5568 100%); min-height: 80px;">
     <div class="container-fluid px-4">
         <h1 class="navbar-brand mb-0 fw-bold">Eventos Chile</h1>
@@ -35,14 +34,14 @@
     </div>
 </header>
 
-<!-- MAIN: contenedor general de Bootstrap para asegurar responsividad -->
+<!-- contenedor general Bootstrap para asegurar responsividad -->
 <main class="container my-5">
-    <!-- Carrusel de eventos: lo dejo como contenedor Bootstrap + clases propias -->
+    <!-- Carrusel de eventos, Bootstrap + clases propias -->
     <section class="row justify-content-center mb-5">
         <div class="col-lg-10">
             <div class="carrusel-eventos">
                 <div class="carrusel-lista" id="carrusel-lista">
-                    <!-- Aquí JS inyecta las tarjetas de eventos -->
+                    <!-- Aquí JS genera las tarjetas de eventos -->
                 </div>
             </div>
         </div>
@@ -60,7 +59,7 @@
 </main>
 
 
-<!-- Footer igual que el index, con clases Bootstrap para consistencia visual -->
+<!-- Footer -->
 <footer class="mt-5 py-4 text-white" style="background: linear-gradient(135deg, #2D3748 0%, #4A5568 100%);">
     <div class="container text-center">
         <p class="mb-2" id="contacto">
