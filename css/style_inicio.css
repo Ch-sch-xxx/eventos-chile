@@ -1,5 +1,4 @@
 /* VARIABLES GLOBALES */
-/* Uso estas variables para manejar todos los colores importantes del sitio */
 :root {
     --primario: #6C63FF;
     --secundario: #2D3748;
@@ -8,7 +7,7 @@
     --acento-suave: #FED7D7;
 }
 
-/* ESTILO GENERAL DEL BODY */
+/* BODY */
 body {
     margin: 0;
     font-family: Arial, sans-serif;
@@ -17,7 +16,7 @@ body {
     position: relative;
 }
 
-/* ANIMACIÓN CONFETI EN EL FONDO – para que la página se vea alegre y diferente */
+/* ANIMACIÓN CONFETI */
 body::before {
     content: "";
     position: fixed;
@@ -41,7 +40,6 @@ body::before {
 }
 
 /* HEADER Y FOOTER */
-/* Mantengo mis gradientes y alto mínimo, pero los espacios y centrado ahora los controla Bootstrap con sus clases (.container, .text-center, etc) */
 header, footer {
     background: linear-gradient(135deg, var(--secundario) 0%, #4A5568 100%);
     color: white;
@@ -54,7 +52,6 @@ header, footer {
 }
 
 /* TÍTULO PRINCIPAL CON ANIMACIÓN */
-/* Le dejo el efecto de colores cambiantes para que destaque como estudiante, sin perder el diseño de Bootstrap*/
 header h1 {
     animation: cambioColores 5s ease-in-out infinite;
     background: linear-gradient(45deg, white, #9F7AEA, var(--primario), var(--acento));
@@ -80,7 +77,6 @@ header h1:hover {
 }
 
 /* FOOTER Y LINKS DE CONTACTO */
-/* Le agrego los estilos propios para los emails y quienes somos, pero ahora puedo ajustar paddings con Bootstrap con .py-2/.mb-2 */
 #contacto {
     margin: 0.3rem 0;
     color: #ffffff;
@@ -104,9 +100,7 @@ header h1:hover {
 }
 
 /* NAVBAR Y LINKS */
-/* Ahora uso mayormente la navbar de Bootstrap. Si queda algún efecto distinto, lo mantengo solo si no compite con las clases .nav-link, .navbar-brand, etc */
 nav ul {
-    /*list-style: none;    // Bootstrap ya elimina esto por defecto */
     display: flex;
     justify-content: end;
     gap: 1rem;
@@ -124,7 +118,8 @@ nav a:hover {
 }
 
 /* SECCIÓN DESTACADO */
-/* Esta card queda con el look propio, pero la estructura la hago con Bootstrap .card .border-0 .shadow-lg, etc. */
+/* Esta card queda con el look propio,
+pero la estructura la hago con Bootstrap .card .border-0 .shadow-lg, etc. */
 #destacado {
     text-align: center;
     padding: 2rem;
@@ -174,7 +169,7 @@ nav a:hover {
     z-index: 1;
 }
 
-/* TEXTO ANIMADO DEL DESTACADO – para que cambie el tipo de evento de forma divertida */
+/* TEXTO ANIMADO DESTACADO  */
 .destacado-opcion {
     position: relative;
     color: transparent;
@@ -202,7 +197,8 @@ nav a:hover {
 }
 
 /* BOTONES PRINCIPALES */
-/* Adapto los estilos visuales pero siempre le pongo las clases de Bootstrap .btn .btn-primary, .rounded-pill, etc */
+/* Adapto los estilos visuales
+pero le pongo las clases de Bootstrap .btn .btn-primary, .rounded-pill, etc */
 #destacado a {
     display: inline-block;
     background: linear-gradient(135deg, var(--primario), #9F7AEA);
@@ -238,7 +234,6 @@ nav a:hover {
 }
 
 /* SECCIÓN NOSOTROS */
-/* Esta parte también la hago con cards Bootstrap y solo retoques aquí para darle mi propio estilo */
 #nosotros {
     padding: 1.5rem;
     background: white;
@@ -280,4 +275,6 @@ nav a:hover {
     padding: 0 1rem;
 }
 
-/* Cuando uso Bootstrap, muchos de estos estilos pueden remplazarse con clases tipo .container, .row, .col, .mb-2, .px-3, .py-4 */
+/* Cuando uso Bootstrap,
+muchos de estos estilos
+pueden remplazarse con clases tipo .container, .row, .col, .mb-2, .px-3, .py-4 */

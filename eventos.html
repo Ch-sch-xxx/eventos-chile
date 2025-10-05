@@ -4,68 +4,84 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Eventos Chile · Eventos</title>
-    <!-- Hoja de estilos propia para eventos -->
+    <!-- Bootstrap: integrar igual que el index, para unificar diseño -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Mi hoja de estilos propia para eventos -->
     <link rel="stylesheet" href="css/style_eventos.css">
     <link rel="stylesheet" href="css/responsividadGeneral.css">
 </head>
 <body>
 
-<!-- compartido con index.html -->
-<header>
-    <h1>Eventos Chile</h1>
-    <nav>
-        <ul>
-            <li><a href="index.html">Inicio</a></li>
-            <li><a href="eventos.html">Eventos</a></li>
-            <li><a href="auth.html">Iniciar sesión</a></li>
-        </ul>
-    </nav>
+<!-- Navbar igual que el index, usando clases Bootstrap y manteniendo mi estilo propio -->
+<header class="navbar navbar-expand-lg navbar-dark" style="background: linear-gradient(135deg, #2D3748 0%, #4A5568 100%); min-height: 80px;">
+    <div class="container-fluid px-4">
+        <h1 class="navbar-brand mb-0 fw-bold">Eventos Chile</h1>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navegacionPrincipal">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <nav class="collapse navbar-collapse justify-content-end" id="navegacionPrincipal">
+            <ul class="navbar-nav gap-2">
+                <li class="nav-item">
+                    <a class="nav-link px-3 py-2 rounded-pill" href="index.html">Inicio</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link px-3 py-2 rounded-pill" href="eventos.html">Eventos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link px-3 py-2 rounded-pill" href="auth.html">Iniciar sesión</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
 </header>
 
-<!-- listado de eventos -->
-<main>
-<!-- actualiza sección(automatizado de tarjetas)-->
-    <div class="carrusel-eventos">
-        <div class="carrusel-lista" id="carrusel-lista"> <!--referencia para crear tarjetas-->
-            <!--aquí se crean las tarjetas(Child)-->
-
-
-
-        <!-- Estructura manual de tarjetas desde aca(ANTERIOR)-->
-
-<!--            <article class="Tarjetas">-->
-<!--                <img class="img-tarjeta-evento" src="imagenes/eventosIMG.png" alt="Imagen evento">-->
-<!--                <h3>Nombre del Evento 2</h3>-->
-<!--                <p>Fecha: 12/09/2025<br>Lugar: Valparaíso</p>-->
-<!--                <button class="btn-asistir">Asistir al Evento</button>-->
-<!--            </article>-->
-        </div>
-    </div>
-
-
-
-<!--            se anade seccion de tarjetas GENERAL, -->
-<!--            asi mostramos más eventos pero de forma UNICA-->
-    <section class="eventos-tarjetas-3d">
-        <h2>Todos los Eventos Disponibles</h2>
-        <div class="contenedor-grid-eventos" id="contenedor-grid-eventos">
-            <!-- Las tarjetas 3D se generan aquí dinámicamente -->
+<!-- MAIN: contenedor general de Bootstrap para asegurar responsividad -->
+<main class="container my-5">
+    <!-- Carrusel de eventos: lo dejo como contenedor Bootstrap + clases propias -->
+    <section class="row justify-content-center mb-5">
+        <div class="col-lg-10">
+            <div class="carrusel-eventos">
+                <div class="carrusel-lista" id="carrusel-lista">
+                    <!-- Aquí JS inyecta las tarjetas de eventos -->
+                </div>
+            </div>
         </div>
     </section>
 
-
-
+    <!-- Sección tarjetas 3D de todos los eventos -->
+    <section class="eventos-tarjetas-3d row justify-content-center">
+        <div class="col-lg-10">
+            <h2 class="mb-4">Todos los Eventos Disponibles</h2>
+            <div class="contenedor-grid-eventos d-flex flex-wrap gap-4 justify-content-between" id="contenedor-grid-eventos">
+                <!-- Aquí se generan las tarjetas 3D con JS -->
+            </div>
+        </div>
+    </section>
 </main>
 
-<!-- compartido con index.html -->
-<footer>
-    <p id="contacto">Contacto: <a id="mail" href="mailto:eventoschile@gmail.com"> eventoschile@gmail.com </a></p>
-    <p><a id="Ftnosotros" href="index.html">Acerca de Nosotros</a></p>
+
+<!-- Footer igual que el index, con clases Bootstrap para consistencia visual -->
+<footer class="mt-5 py-4 text-white" style="background: linear-gradient(135deg, #2D3748 0%, #4A5568 100%);">
+    <div class="container text-center">
+        <p class="mb-2" id="contacto">
+            Contacto:
+            <a id="mail" href="mailto:eventoschile@gmail.com" class="text-info text-decoration-none">
+                [eventoschile@gmail.com](mailto:eventoschile@gmail.com)
+            </a>
+        </p>
+        <p class="mb-0">
+            <a id="Ftnosotros" href="index.html" class="text-info text-decoration-none">
+                Acerca de Nosotros
+            </a>
+        </p>
+    </div>
 </footer>
 
-<!-- JS, interacción de botones, datos de eventos-->
+<!-- JavaScript de eventos y funcionamiento -->
 <script src="js/crud_eventos.js"></script>
 <script src="js/eventos_interaccion.js"></script>
+<!-- Bootstrap JS para el menú responsive -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>
