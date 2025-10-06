@@ -1,15 +1,23 @@
-// Función para truncar texto y mantener compacidad
+// interacción visual y lógica en la página de eventos
+// Este script se conecta con 'crud_eventos.js' y usa sus funciones para mostrar los eventos
+
+// Función para recortar textos largos en las tarjetas (por visual, si no se pierde la respo)
 function truncarTexto(texto, maxCaracteres) {
+    // Evito textos demasiado extensos en las tarjetas, que podrían romper el diseño
+    if (typeof texto !== "string") return "";
     return texto.length > maxCaracteres ? texto.substring(0, maxCaracteres) + '...' : texto;
 }
 
-// Genera tarjetas de eventos de forma pública al abrir la página
-function generarTarjetasEventos() {
-    const eventos = listarEventos(); // lee todos los eventos públicos
-    const carruselLista = document.querySelector('.carrusel-lista');
-    carruselLista.innerHTML = ''; // limpia el contenido anterior
+//Carrusel infinito
+// listarEventos() del crud_eventos.js
+function generarTarjetasCarruselInfinito() {
+    const eventos = listarEventos();
+    const carruselLista = document.getElementById('carrusel-lista');
+    carruselLista.innerHTML = '';
 
-    eventos.forEach(evento => {
+    // Duplicar el array para dar efecto de loop infinito
+    const eventosDobles = [...eventos, ...eventos];
+    eventosDobles.forEach(evento => {
         let tarjeta = document.createElement('article');
         tarjeta.className = "Tarjetas";
         tarjeta.innerHTML = `
@@ -17,29 +25,46 @@ function generarTarjetasEventos() {
             <h3>${truncarTexto(evento.titulo, 40)}</h3>
             <p>📅 Fecha: ${evento.fecha}<br>📍 Lugar: ${truncarTexto(evento.lugar, 50)}</p>
             <p><b class="tipo-evento">${evento.tipo}</b></p>
-            
             <button class="btn-asistir">Asistir al Evento</button>
         `;
         carruselLista.appendChild(tarjeta);
     });
+
+    // Logica básica de scroll infinito; si llego al final, vuelvo al inicio y viceversa
+    carruselLista.addEventListener('scroll', function () {
+        // Fin derecho, salto adelante un pixel para no quedar pegado
+        if (carruselLista.scrollLeft + carruselLista.clientWidth >= carruselLista.scrollWidth - 1) {
+            carruselLista.scrollLeft = 1;
+        }
+        // Inicio, salto a mitad del scroll
+        if (carruselLista.scrollLeft === 0) {
+            carruselLista.scrollLeft = carruselLista.scrollWidth / 2;
+        }
+    });
+
+    // auto-scroll (opcional, para que el carrusel se mueva solo)
+    setInterval(() => {
+        carruselLista.scrollLeft += 1.2;
+    }, 18);
+
 }
 
-// Botón "Asistir al Evento", debe autenticarse
+// autenticacion al "Asistir al Evento" sin login
 document.addEventListener('click', function (e) {
     if (e.target.classList.contains('btn-asistir')) {
         alert('Por favor inicia sesión para confirmar asistencia.');
-        location.href = 'auth.html';
+        location.href = 'auth.html'; // Redirige al login
     }
 });
 
-// SECCION DE TARJETAS 3D - CONTENIDO COMPACTO Y ORGANIZADO
+//SECCIÓN tarjetas 3D para todos los eventos
 function generarTarjetas3D() {
-    const eventos = listarEventos(); // la base de datos
+    const eventos = listarEventos();
     const grid = document.getElementById('contenedor-grid-eventos');
     grid.innerHTML = '';
 
     eventos.forEach((evento, i) => {
-        // Cada tarjeta en su columna Bootstrap
+        // Card responsive usando Bootstrap
         const col = document.createElement('div');
         col.className = 'col-md-6 col-lg-4 d-flex justify-content-center align-items-stretch mb-4';
 
@@ -47,7 +72,7 @@ function generarTarjetas3D() {
         tarjeta3D.className = 'tarjeta-evento-3d';
         tarjeta3D.innerHTML = `
             <div class="carta-evento-flip" data-indice="${i}">
-                <!-- Cara frontal - información esencial y compacta -->
+                <!-- Cara frontal -->
                 <div class="cara-frontal">
                     <img class="imagen-evento" src="${evento.imagen}" alt="${truncarTexto(evento.titulo, 30)}">
                     <div class="informacion-evento">
@@ -58,14 +83,12 @@ function generarTarjetas3D() {
                     </div>
                     <button class="boton-detalle">Ver Detalle</button>
                 </div>
-                <!-- Cara posterior - detalles completos organizados -->
+                <!-- Cara posterior -->
                 <div class="cara-posterior">
                     <div class="informacion-evento">
                         <h3>${truncarTexto(evento.titulo, 40)}</h3>
-                        
                         <p><strong>📋 Descripción:</strong></p>
                         <p class="detalle-completo">${truncarTexto(evento.descripcion, 200)}</p>
-                        
                         <p><strong>👥 Capacidad:</strong> ${evento.capacidad} personas</p>
                         <p><strong>💰 Precio:</strong> ${evento.precio}</p>
                         <p><strong>👤 Organizador:</strong> ${truncarTexto(evento.creadoPor, 30)}</p>
@@ -75,8 +98,6 @@ function generarTarjetas3D() {
                 </div>
             </div>
         `;
-
-        // Agregar la tarjeta al col y el col al grid
         col.appendChild(tarjeta3D);
         grid.appendChild(col);
     });
@@ -84,48 +105,40 @@ function generarTarjetas3D() {
     agregarEfectos3D();
 }
 
-// EFECTOS 3D MOUSE Y FLIP - optimizados
+// Efectos 3D y flip en tarjetas
 function agregarEfectos3D() {
     const tarjetas3D = document.querySelectorAll('.tarjeta-evento-3d');
-
     tarjetas3D.forEach(tarjeta => {
         const flip = tarjeta.querySelector('.carta-evento-flip');
 
-        // Mouse movimiento - efecto 3D suave
+        // Movimiento mouse para efecto 3D
         tarjeta.addEventListener('mousemove', (e) => {
             if (flip.classList.contains('volteada')) return;
-
             const rect = tarjeta.getBoundingClientRect();
             const x = e.clientX - rect.left;
             const y = e.clientY - rect.top;
             const centerX = rect.width / 4;
             const centerY = rect.height / 4;
-
-            // Efecto 3D más suave para no marear
             const rotateX = (y - centerY) / 6;
             const rotateY = (centerX - x) / 0.8;
-
-
             flip.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
         });
 
-        // Mouse sale - regresa a posición original
+        // Al salir del mouse, regreso a posición inicial
         tarjeta.addEventListener('mouseleave', () => {
             if (!flip.classList.contains('volteada')) {
                 flip.style.transform = 'rotateX(0deg) rotateY(0deg)';
             }
         });
 
-        // Voltear tarjeta (mostrar detalle)
+        // Botón ver detalle (voltea tarjeta)
         const btnDetalle = tarjeta.querySelector('.boton-detalle');
         const btnVolver = tarjeta.querySelector('.boton-volver');
-
         btnDetalle.addEventListener('click', (e) => {
             e.preventDefault();
             flip.classList.add('volteada');
             flip.style.transform = 'rotateY(180deg)';
         });
-
         btnVolver.addEventListener('click', (e) => {
             e.preventDefault();
             flip.classList.remove('volteada');
@@ -134,8 +147,8 @@ function agregarEfectos3D() {
     });
 }
 
-// Cargar ambas vistas al iniciar la página
+// Al cargar la página, ejecuto ambos
 document.addEventListener('DOMContentLoaded', function () {
-    generarTarjetasEventos(); // Carrusel horizontal
-    generarTarjetas3D();      // Grid 3D compacto
+    generarTarjetasCarruselInfinito(); // Carrusel horizontal infinito
+    generarTarjetas3D();               // Grid de tarjetas 3D
 });
