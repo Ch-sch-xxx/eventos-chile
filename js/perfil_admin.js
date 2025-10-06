@@ -135,6 +135,7 @@ function cargarDatosUsuario() {
     }
 
 
+
     // CARGAR REGIÓN Y COMUNA EN SELECTS
     setTimeout(() => {
         if (userData.region) {
@@ -193,6 +194,7 @@ function cargarComunasPorRegion(region) {
     }
 }
 
+
 // NUEVA FUNCIÓN: Guardar foto instantáneamente en localStorage
 function guardarFotoInstantanea(fotoUrl) {
     const userLogged = localStorage.getItem('user-logged');
@@ -218,12 +220,11 @@ function guardarFotoInstantanea(fotoUrl) {
             }
         }
 
-        console.log('✅ Foto actualizada instantáneamente:', fotoUrl);
+        console.log(' Foto del portal actualizada instantáneamente');
     } catch (error) {
-        console.error('❌ Error al guardar foto:', error);
+        console.error(' Error al guardar foto:', error);
     }
 }
-
 
 // CARGAR EVENTOS DEL USUARIO - usando Bootstrap grid
 function cargarEventosUsuario() {
@@ -345,7 +346,7 @@ function configurarListeners() {
     // SELECT: Cambio de región - recarga comunas
     const selectRegion = document.getElementById('region');
     if (selectRegion) {
-        selectRegion.addEventListener('change', function() {
+        selectRegion.addEventListener('change', function () {
             cargarComunasPorRegion(this.value);
         });
     }
@@ -378,7 +379,7 @@ function configurarListeners() {
     // INPUT: Preview foto URL - actualiza imagen en tiempo real CON PERSISTENCIA
     const fotoUrlInput = document.getElementById('foto-url');
     if (fotoUrlInput) {
-        fotoUrlInput.addEventListener('input', function() {
+        fotoUrlInput.addEventListener('input', function () {
             const url = this.value.trim();
 
             if (url) {
@@ -392,15 +393,15 @@ function configurarListeners() {
                     img.src = url;
 
                     // Fallback si la URL no es válida
-                    img.onerror = function() {
+                    img.onerror = function () {
                         this.src = urlAnterior; // Volver a la anterior
                         console.warn('⚠️ URL de imagen no válida');
                     };
 
                     // Si la imagen carga correctamente, guardar en localStorage INMEDIATAMENTE
-                    img.onload = function() {
+                    img.onload = function () {
                         // Solo guardar si es una URL válida (no la imagen por defecto temporal)
-                        if (this.src.includes('http')) {
+                        if (this.src.includes('http') || this.src.includes('imagenes/')) {
                             guardarFotoInstantanea(url);
                         }
                     };
