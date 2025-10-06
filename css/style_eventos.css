@@ -233,19 +233,17 @@ nav a:hover {
 
 /* TARJETAS 3D DE EVENTOS */
 .eventos-tarjetas-3d {
-    /* Uso utilidades Bootstrap en el HTML, así que elimino el padding/margin aquí */
     background: linear-gradient(135deg, #f9faff 0%, #ffffff 100%);
     border-radius: 20px;
     box-shadow: 0 12px 40px rgba(108,99,255,0.15);
 }
 
-/* Título de eventos 3D */
 .eventos-tarjetas-3d h2 {
     text-align: center;
     color: var(--secundario);
     font-size: 2.3rem;
     font-weight: 700;
-    margin-bottom: 2rem; /* antes era 4rem, lo ajusto para que no haga salto de sección */
+    margin-bottom: 2rem;
     position: relative;
 }
 
@@ -261,23 +259,20 @@ nav a:hover {
     border-radius: 2px;
 }
 
-/* Grid con Bootstrap: cada tarjeta 3D creada por JS va en un col */
-#contenedor-grid-eventos {
-    /* El JS mete las .tarjeta-evento-3d dentro de col-md-6 col-lg-4 d-flex justify-content-center */
-}
-
+/* TARJETA 3D INDIVIDUAL - FONDO GRANDE Y EFECTO FLOTANTE DESTACADO */
 .tarjeta-evento-3d {
     width: 100%;
     max-width: 320px;
     min-width: 220px;
-    height: 400px;
+    height: 380px;
     margin: 0;
     padding: 0;
-    /* Para centrar vertical y horizontal dentro del col */
     display: flex;
     align-items: stretch;
     justify-content: center;
+    perspective: 2000px;
 }
+
 
 .carta-evento-flip {
     width: 100%;
@@ -285,10 +280,10 @@ nav a:hover {
     position: relative;
     transform-style: preserve-3d;
     transition: transform 0.7s ease-out, box-shadow 0.4s;
-    border-radius: 16px;
-    box-shadow: 0 20px 35px rgba(108,99,255,0.2),
-    0 15px 25px rgba(108,99,255,0.15),
-    0 6px 18px rgba(0,0,0,0.1);
+    border-radius: 35px;
+    box-shadow: 0 20px 35px rgba(34, 65, 220, 0.43),
+    0 15px 25px rgba(108, 99, 255, 0.82),
+    0 6px 18px rgba(0, 0, 0, 0.22);
     transform: translateZ(0) rotateX(2deg);
 }
 
@@ -296,7 +291,7 @@ nav a:hover {
     transform: rotateY(180deg) translateZ(40px);
 }
 
-/* Caras de la tarjeta */
+/* CARAS DE LA TARJETA  */
 .cara-frontal, .cara-posterior {
     position: absolute;
     width: 100%;
@@ -308,14 +303,14 @@ nav a:hover {
     flex-direction: column;
     border: 2px solid rgba(108,99,255,0.2);
     transition: all 0.3s ease;
-    padding: 2rem 1rem;
+    padding: 0.2rem 1rem;
     box-sizing: border-box;
 
 }
 
 .cara-frontal {
     background: linear-gradient(145deg, #ffffff 0%, #f4f6ff 100%);
-    text-align: left;
+    text-align: center;
 }
 
 .cara-posterior {
@@ -325,96 +320,119 @@ nav a:hover {
     text-align: left;
 }
 
+/* IMAGEN DEL EVENTO */
 .imagen-evento {
     width: 100%;
-    height: 160px;
-    object-fit: contain;
+    height: 120px; /* Reduje altura para dejar más espacio al contenido */
+    object-fit: contain; /* Cambié a cover para mejor aprovechamiento */
     display: block;
-    margin: 0 auto 1.5rem auto;
+    margin: 0 auto 1rem auto;
     border-radius: 12px;
     box-shadow: 0 8px 20px rgba(108,99,255,0.2);
     flex-shrink: 0;
 }
 
+/* INFORMACIÓN DEL EVENTO */
 .informacion-evento {
     flex: 1;
     display: flex;
     flex-direction: column;
-    overflow: visible;
-    text-align: justify-all;
-    padding: 4px 0;
+    min-height: 140px; /* Alto mínimo garantizado */
+    max-height: 380px; /* Alto máximo para evitar desbordamiento */
+    padding: 0.4rem 0.2rem;
+    text-align: left;
 }
 
+/* TÍTULOS AJUSTADOS */
 .cara-frontal h3,
 .cara-posterior h3 {
-    margin: 0;
-    font-size: 1.2rem;
+    margin: 0 0 0.8rem 0;
+    font-size: 1rem;
     font-weight: 600;
-    line-height: 1.4;
+    line-height: 1.1;
     color: var(--secundario);
+    /* Limito el título a 2 líneas máximo */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-.cara-frontal h3 { color: var(--secundario); }
+.cara-frontal h3 { color: var(--secundario); text-align: center; }
+.cara-posterior h3 { color: white; }
 
-.cara-frontal p { color: var(--texto); }
-
-.cara-posterior p { color: rgba(255,255,255,0.95); }
-
+/* PÁRRAFOS  */
 .cara-frontal p,
 .cara-posterior p {
-    margin: 0;
-    font-size: 0.9rem;
-    line-height: 1.5;
+    margin: 0.3rem 0;
+    font-size: 0.7rem;
+    line-height: 1; /* Evito que los párrafos se expandan demasiado */
+    max-height: 2.8rem; /* Aprox 2 líneas */
+    overflow: hidden;
     text-overflow: ellipsis;
-    white-space: preserve-breaks;
-    height: auto;
-}
-.cara-frontal button,
-.cara-posterior button {
-    align-self: center;
-    margin-top: auto;
+
 }
 
+.cara-frontal p { color: var(--texto); }
+.cara-posterior p { color: rgba(255,255,255,0.95); }
+
+/* PÁRRAFOS ESPECÍFICOS - DETALLES TRASEROS */
+.cara-posterior .detalle-completo {
+    font-size: 0.8rem;
+    line-height: 1.3;
+    max-height: none; /* Para la descripción completa */
+    margin: 0.2rem 0;
+}
+
+/* ETIQUETA DE TIPO */
 .etiqueta-tipo {
     background: rgba(237,137,54,0.15);
     color: var(--acento);
     border-radius: 12px;
-    padding: 5px 12px;
-    font-size: 0.8rem;
+    padding: 4px 10px;
+    font-size: 0.75rem;
     font-weight: 500;
     display: inline-block;
-    margin-bottom: 0.5rem;
+    margin: 0.5rem 0;
+    align-self: center;
 }
 
-/* BOTONES EN TARJETAS 3D */
+/* BOTONES EN TARJETAS 3D - SIEMPRE AL FINAL */
 .boton-detalle, .boton-volver {
     background: linear-gradient(135deg, var(--primario), #9F7AEA);
     color: white;
     border: none;
-    padding: 0.8rem 1.6rem;
+    padding: 0.7rem 1.4rem;
     border-radius: 25px;
     cursor: pointer;
     font-weight: 500;
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     transition: all 0.3s ease;
-    margin-top: auto;
+    margin-top: auto; /* Siempre al final */
     margin-bottom: 0;
     white-space: nowrap;
     text-align: center;
+    align-self: center;
+    flex-shrink: 0; /* No se achica */
 }
 
 .boton-volver {
     background: rgba(255,255,255,0.25);
     border: 1px solid rgba(255,255,255,0.4);
 }
+
 .boton-detalle:hover {
     background: linear-gradient(135deg, #5A52D5, #8B7EFF);
     box-shadow: 0 8px 20px rgba(108,99,255,0.4);
 }
+
 .boton-volver:hover {
     background: rgba(255,255,255,0.35);
     transform: translateY(-2px);
 }
+
+/* EFECTOS HOVER */
 .tarjeta-evento-3d:hover .carta-evento-flip {
     box-shadow:
             0 25px 50px rgba(108,99,255,0.4),
@@ -422,16 +440,22 @@ nav a:hover {
             0 8px 20px rgba(0,0,0,0.15);
     transform: translateZ(15px) rotateX(1deg) translateY(-5px);
 }
-.tarjeta-evento-3d:hover .cara-frontal, .tarjeta-evento-3d:hover .cara-posterior {
+
+.tarjeta-evento-3d:hover .cara-frontal,
+.tarjeta-evento-3d:hover .cara-posterior {
     border-color: rgba(108,99,255,0.4);
 }
+
+/* ANIMACIONES DE APARICIÓN */
 @keyframes aparecerTarjeta {
     from { opacity: 0; transform: translateY(30px) scale(0.95);}
     to { opacity: 1; transform: translateY(0) scale(1);}
 }
+
 .tarjeta-evento-3d {
     animation: aparecerTarjeta 0.6s ease-out forwards;
 }
+
 .tarjeta-evento-3d:nth-child(1) { animation-delay: 0.1s; }
 .tarjeta-evento-3d:nth-child(2) { animation-delay: 0.2s; }
 .tarjeta-evento-3d:nth-child(3) { animation-delay: 0.3s; }
@@ -439,23 +463,28 @@ nav a:hover {
 .tarjeta-evento-3d:nth-child(5) { animation-delay: 0.5s; }
 .tarjeta-evento-3d:nth-child(6) { animation-delay: 0.6s; }
 
-/* MEDIA-QUERIES RESPONSIVE */
-/* Bootstrap se encarga de la grid, así que solo ajusto las tarjetas dentro de cada col */
+/* RESPONSIVE */
 @media (max-width: 1024px) {
     .tarjeta-evento-3d {
         max-width: 260px;
-        height: 320px;
+        height: 350px;
     }
     .eventos-tarjetas-3d h2 { font-size: 2rem; }
 }
+
 @media (max-width: 768px) {
     .tarjeta-evento-3d {
-        max-width: 200px;
-        height: 280px;
-        min-width: 120px;
+        max-width: 280px;
+        height: 320px;
+        min-width: 200px;
     }
-    .eventos-tarjetas-3d {
-        border-radius: 12px;
-        box-shadow: 0 8px 18px rgba(108,99,255,0.12);
+    .cara-frontal, .cara-posterior {
+        padding: 0.8rem 0.6rem;
+        max-height: 320px;
+    }
+    .imagen-evento { height: 100px; }
+    .informacion-evento {
+        min-height: 120px;
+        max-height: 160px;
     }
 }
