@@ -37,6 +37,7 @@ document.addEventListener('DOMContentLoaded', function () {
 function generarTarjetas3D() {
     const eventos = listarEventos(); // la base de datos local/JS
     const grid = document.getElementById('contenedor-grid-eventos');
+
     grid.innerHTML = '';
 
     eventos.forEach((evento, i) => {

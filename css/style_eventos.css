@@ -270,7 +270,7 @@ nav a:hover {
     width: 100%;
     max-width: 320px;
     min-width: 220px;
-    height: 340px;
+    height: 400px;
     margin: 0;
     padding: 0;
     /* Para centrar vertical y horizontal dentro del col */
@@ -310,6 +310,7 @@ nav a:hover {
     transition: all 0.3s ease;
     padding: 2rem 1rem;
     box-sizing: border-box;
+
 }
 
 .cara-frontal {
@@ -337,11 +338,11 @@ nav a:hover {
 
 .informacion-evento {
     flex: 1;
-    padding: 0.6rem 0.2rem;
     display: flex;
     flex-direction: column;
-    overflow: hidden;
-    text-align: justify;
+    overflow: visible;
+    text-align: justify-all;
+    padding: 4px 0;
 }
 
 .cara-frontal h3,
@@ -364,6 +365,14 @@ nav a:hover {
     margin: 0;
     font-size: 0.9rem;
     line-height: 1.5;
+    text-overflow: ellipsis;
+    white-space: preserve-breaks;
+    height: auto;
+}
+.cara-frontal button,
+.cara-posterior button {
+    align-self: center;
+    margin-top: auto;
 }
 
 .etiqueta-tipo {
