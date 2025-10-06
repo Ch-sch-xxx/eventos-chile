@@ -1,10 +1,11 @@
-// CONTROL DE ACCESO Y CARGA INICIAL - permite admin y usuario
+// CONTROL DE ACCESO Y PREVENCIÓN DE CACHÉ
 document.addEventListener('DOMContentLoaded', () => {
     // Control de acceso - verifica sesión activa
     const userLogged = localStorage.getItem('user-logged');
     if (userLogged !== 'admin' && userLogged !== 'usuario') {
         alert('Debes iniciar sesión para acceder');
-        return window.location.href = 'auth.html';
+        window.location.replace('auth.html'); // replace en vez de href
+        return;
     }
 
     // Personalizar interfaz según el rol
@@ -16,6 +17,29 @@ document.addEventListener('DOMContentLoaded', () => {
     // Configurar event listeners
     configurarListeners();
 });
+
+// Prevenir navegación hacia atrás después de cerrar sesión
+window.addEventListener('pageshow', function(event) {
+    // Si la página se carga desde caché (botón atrás)
+    if (event.persisted) {
+        verificarSesionYRedirigir();
+    }
+});
+
+// Verificar sesión al cargar o volver a la página
+window.addEventListener('load', function() {
+    verificarSesionYRedirigir();
+});
+
+// Función para verificar sesión y redirigir si no existe
+function verificarSesionYRedirigir() {
+    const userLogged = localStorage.getItem('user-logged');
+    if (userLogged !== 'admin' && userLogged !== 'usuario') {
+        // Forzar redirección sin permitir volver atrás
+        window.location.replace('auth.html');
+    }
+}
+
 
 let editandoIndice = null; // Variable para controlar si estamos editando
 
@@ -100,14 +124,25 @@ function configurarListeners() {
         btnCerrarSesion.addEventListener('click', e => {
             e.preventDefault();
             if (confirm('¿Seguro que deseas cerrar sesión?')) {
+                // Limpiar localStorage
                 localStorage.removeItem('user-logged');
                 localStorage.removeItem('user-email');
                 localStorage.removeItem('user-data');
+
                 alert('Sesión cerrada correctamente');
+
+                // Usar replace para evitar que vuelva atrás
                 window.location.replace('auth.html');
+
+                // Prevenir navegación hacia atrás después de cerrar sesión
+                window.history.pushState(null, '', window.location.href);
+                window.onpopstate = function() {
+                    window.history.go(1);
+                };
             }
         });
     }
+
 
     // Modal: botón cerrar con Bootstrap
     const cerrarModal = document.getElementById('cerrar-modal');

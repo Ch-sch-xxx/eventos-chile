@@ -76,7 +76,14 @@ function cerrarSesionNavbar() {
 
         alert('Sesión cerrada correctamente');
 
-        // Redirigir a página de inicio
-        window.location.href = 'index.html';
+        // Limpiar historial y redirigir
+        window.location.replace('index.html');
+
+        // Prevenir navegación hacia atrás
+        window.history.pushState(null, '', window.location.href);
+        window.onpopstate = function() {
+            window.location.replace('index.html');
+        };
     }
 }
+
