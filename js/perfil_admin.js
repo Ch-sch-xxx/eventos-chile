@@ -239,6 +239,12 @@ function cargarEventosUsuario() {
         col.appendChild(eventoDiv);
         container.appendChild(col);
     });
+    // ACTUALIZAR BADGE DE CANTIDAD DE EVENTOS (nuevo)
+    const badgeEventos = document.getElementById('badge-eventos');
+    if (badgeEventos) {
+        badgeEventos.textContent = eventosUsuario.length;
+    }
+
 }
 
 // ACTUALIZAR ESTADÍSTICAS - según rol del usuario
