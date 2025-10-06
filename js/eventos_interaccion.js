@@ -15,7 +15,7 @@ function generarTarjetasEventos() {
         tarjeta.innerHTML = `
             <img class="img-tarjeta-evento" src="${evento.imagen}" alt="Imagen evento">
             <h3>${truncarTexto(evento.titulo, 40)}</h3>
-            <p>Fecha: ${evento.fecha}<br>Lugar: ${truncarTexto(evento.lugar, 25)}</p>
+            <p>📅 Fecha: ${evento.fecha}<br>📍 Lugar: ${truncarTexto(evento.lugar, 50)}</p>
             <p><b class="tipo-evento">${evento.tipo}</b></p>
             
             <button class="btn-asistir">Asistir al Evento</button>

@@ -7,7 +7,7 @@
     --acento-suave: #FED7D7;
 }
 
-/* BODY */
+/* ESTILO GENERAL */
 body {
     margin: 0;
     font-family: Arial, sans-serif;
@@ -16,7 +16,7 @@ body {
     position: relative;
 }
 
-/* ANIMACIÓN CONFETI */
+/* CONFETI DECORATIVO */
 body::before {
     content: "";
     position: fixed;
@@ -33,7 +33,6 @@ body::before {
     background-size: 200px 200px, 250px 250px, 300px 300px;
     animation: confetiMov 10s linear infinite;
 }
-
 @keyframes confetiMov {
     from { background-position: 0 0, 50px 100px, 100px 200px; }
     to { background-position: 500px 1000px, 550px 1100px, 600px 1200px; }
@@ -43,15 +42,13 @@ body::before {
 header, footer {
     background: linear-gradient(135deg, var(--secundario) 0%, #4A5568 100%);
     color: white;
-    /*padding: 1rem;  // Reemplazado por Bootstrap: uso clases .py-4, .px-4 */
-    box-shadow: 0 6px 10px rgba(108, 99, 255, 0.2);
+    box-shadow: 0 6px 10px rgba(108,99,255,0.2);
     min-height: 80px;
-    /*display: flex;   // Reemplazado por Bootstrap: uso .d-flex */
+    display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
-/* TÍTULO PRINCIPAL CON ANIMACIÓN */
 #h1_titulo {
     animation: cambioColores 5s ease-in-out infinite;
     background: linear-gradient(45deg, white, #9F7AEA, var(--primario), var(--acento));
@@ -70,40 +67,28 @@ header, footer {
     100% { background-position: 1% 50%; }
 }
 
-/* Efecto en el título al pasar el mouse */
 header h1:hover {
     transform: translateY(12px);
     cursor: default;
 }
 
-/* FOOTER Y LINKS DE CONTACTO */
-#contacto {
+/* ENLACES EN FOOTER */
+#contacto, #mail, #Ftnosotros {
     margin: 0.3rem 0;
-    color: #ffffff;
-    text-decoration: none;
-}
-#mail {
-    margin: 0.3rem 0;
-    color: #9F7AEA;
     transition: color 0.3s ease;
 }
-#mail:hover {
-    color: var(--acento);
-}
-#Ftnosotros {
-    margin: 0.3rem 0;
-    color: #9F7AEA;
-    transition: color 0.3s ease;
-}
-#Ftnosotros:hover {
-    color: var(--acento);
-}
+#contacto { color: #fff; text-decoration: none; }
+#mail, #Ftnosotros { color: #9F7AEA; }
+#mail:hover, #Ftnosotros:hover { color: var(--acento); }
 
-/* NAVBAR Y LINKS */
+/* NAVBAR */
 nav ul {
     display: flex;
     justify-content: end;
     gap: 1rem;
+    margin: 0;
+    padding: 0;
+    align-items: center;
 }
 nav a {
     color: white;
@@ -113,7 +98,7 @@ nav a {
     transition: all 0.3s ease;
 }
 nav a:hover {
-    background: rgba(108, 99, 255, 0.2);
+    background: rgba(108,99,255,0.2);
     transform: translateY(-2px);
 }
 

@@ -133,26 +133,27 @@ nav a:hover {
 
 /* TARJETAS DEL CARRUSEL */
 .Tarjetas {
+    width: 240px;
+    max-width: 90vw;
+    min-width: 200px;
+    height: 340px;
     background: #fff;
     border-radius: 12px;
-    text-align: center;
-    padding: 1.2rem;
-    box-shadow: 0 8px 24px rgba(31,48,239,0.7);
-    transition: transform 0.4s cubic-bezier(.25, .8, .25, 1), box-shadow 0.3s;
-    perspective: 400px;
-    transform: rotateY(8deg) scale(1);
-    margin: 0;
-    border: 2px solid rgba(108,99,255,0.15);
-    position: relative;
-    z-index: 1;
-    min-width: 220px;
-    max-width: 250px;
-    height: auto;
-    min-height: 320px;
+    box-shadow: 0 8px 24px rgba(31,48,239,0.13);
+    /* Centrado y layout igual en todas */
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    align-items: center;
+    margin: 0 0.5rem;
+    /* Siempre el mismo padding para las tarjetas */
+    padding: 1.2rem;
+    transition: transform 0.4s cubic-bezier(.25, .6, .25, .9), box-shadow 0.3s;
+    border: 2px solid rgba(108,99,255,0.12);
+    position: relative;
     flex-shrink: 0;
+    /* Para que todas tengan el mismo alto, incluso si una tiene menos texto */
+    box-sizing: border-box;
 }
 .Tarjetas:hover {
     transform: rotateY(0deg) scale(1.07);
@@ -160,32 +161,33 @@ nav a:hover {
 }
 .Tarjetas img,
 .img-tarjeta-evento {
-    width: 60px;
-    height: 60px;
-    object-fit: cover;
+    width: 100%;
+    height: 80px; /* Reduje altura para dejar más espacio al contenido */
+    object-fit: contain; /* Cambié a cover para mejor aprovechamiento */
     display: block;
     margin: 0 auto 1rem auto;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(108,99,255,0.15);
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(108,99,255,0.2);
     flex-shrink: 0;
 }
 .Tarjetas h3 {
-    margin: 0.5rem 0;
-    font-size: 1rem;
+    margin: 0 0 0.8rem 0;
+    font-size: 0.8rem;
     font-weight: 600;
     color: var(--secundario);
-    line-height: 1.3;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
+    text-overflow: ellipsis;
 }
 .Tarjetas p {
-    margin: 0.4rem 0;
-    font-size: 0.85rem;
-    color: var(--secundario);
-    line-height: 1.4;
-    flex-grow: 1;
+    margin: 0.3rem 0;
+    font-size: 0.7rem;
+    line-height: 1.2; /* Evito que los párrafos se expandan demasiado */
+    max-height: 2.8rem;
+    text-align: justify;
+
 }
 .tipo-evento {
     background: rgba(237,137,54,0.15);
@@ -197,6 +199,7 @@ nav a:hover {
     font-weight: 500;
     display: inline-block;
     white-space: nowrap;
+    text-align: center;
 }
 
 /* BOTONES PRINCIPALES DE LAS TARJETAS */
@@ -215,6 +218,8 @@ nav a:hover {
     overflow: hidden;
     margin-top: auto;
     white-space: nowrap;
+    text-align: center;
+    align-self: center;
 }
 .btn-asistir::before {
     content: '';
