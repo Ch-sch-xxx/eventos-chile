@@ -114,17 +114,26 @@ function cargarDatosUsuario() {
     document.getElementById('correo').value = userData.email || userEmail;
     document.getElementById('foto-url').value = userData.fotoUrl || '';
 
-    // ACTUALIZAR IMAGEN DE PERFIL - tanto en hero como en navbar si existe
+    // ACTUALIZAR IMAGEN DE PERFIL - cargar desde localStorage con persistencia
     const imagenesPerfil = document.querySelectorAll('.imagen-perfil');
-    if (userData.fotoUrl) {
-        imagenesPerfil.forEach(img => {
-            img.src = userData.fotoUrl;
-            // Fallback si la imagen no carga
-            img.onerror = function() {
-                this.src = 'imagenes/ICONOperfil.png';
-            };
-        });
+    const fotoGuardada = userData.fotoUrl || 'imagenes/ICONOperfil.png';
+
+    imagenesPerfil.forEach(img => {
+        img.src = fotoGuardada;
+
+        // Fallback si la imagen no carga
+        img.onerror = function() {
+            this.src = 'imagenes/ICONOperfil.png';
+            console.warn('⚠️ Imagen de perfil no disponible, usando imagen por defecto');
+        };
+    });
+
+// Actualizar también el input con la URL guardada
+    const inputFotoUrl = document.getElementById('foto-url');
+    if (inputFotoUrl && fotoGuardada !== 'imagenes/ICONOperfil.png') {
+        inputFotoUrl.value = fotoGuardada;
     }
+
 
     // CARGAR REGIÓN Y COMUNA EN SELECTS
     setTimeout(() => {
@@ -183,6 +192,38 @@ function cargarComunasPorRegion(region) {
         });
     }
 }
+
+// NUEVA FUNCIÓN: Guardar foto instantáneamente en localStorage
+function guardarFotoInstantanea(fotoUrl) {
+    const userLogged = localStorage.getItem('user-logged');
+    const userEmail = localStorage.getItem('user-email');
+
+    try {
+        if (userLogged === 'admin') {
+            // Admin: actualizar user-data
+            let adminData = JSON.parse(localStorage.getItem('user-data') || '{}');
+            adminData.fotoUrl = fotoUrl;
+            adminData.fechaActualizacion = new Date().toISOString();
+            localStorage.setItem('user-data', JSON.stringify(adminData));
+        } else {
+            // Usuario: actualizar en array de usuarios
+            const usuarios = JSON.parse(localStorage.getItem('usuarios-chile') || '[]');
+            const indiceUsuario = usuarios.findIndex(u => u.email === userEmail);
+
+            if (indiceUsuario !== -1) {
+                usuarios[indiceUsuario].fotoUrl = fotoUrl;
+                usuarios[indiceUsuario].fechaActualizacion = new Date().toISOString();
+                localStorage.setItem('usuarios-chile', JSON.stringify(usuarios));
+                localStorage.setItem('user-data', JSON.stringify(usuarios[indiceUsuario]));
+            }
+        }
+
+        console.log('✅ Foto actualizada instantáneamente:', fotoUrl);
+    } catch (error) {
+        console.error('❌ Error al guardar foto:', error);
+    }
+}
+
 
 // CARGAR EVENTOS DEL USUARIO - usando Bootstrap grid
 function cargarEventosUsuario() {
@@ -334,18 +375,34 @@ function configurarListeners() {
         });
     }
 
-    // INPUT: Preview foto URL - actualiza imagen en tiempo real
+    // INPUT: Preview foto URL - actualiza imagen en tiempo real CON PERSISTENCIA
     const fotoUrlInput = document.getElementById('foto-url');
     if (fotoUrlInput) {
         fotoUrlInput.addEventListener('input', function() {
             const url = this.value.trim();
+
             if (url) {
+                // Actualizar todas las imágenes inmediatamente
                 const imagenesPerfil = document.querySelectorAll('.imagen-perfil');
                 imagenesPerfil.forEach(img => {
+                    // Guardar URL anterior por si falla
+                    const urlAnterior = img.src;
+
+                    // Cambiar a nueva URL
                     img.src = url;
+
                     // Fallback si la URL no es válida
                     img.onerror = function() {
-                        this.src = 'imagenes/ICONOperfil.png';
+                        this.src = urlAnterior; // Volver a la anterior
+                        console.warn('⚠️ URL de imagen no válida');
+                    };
+
+                    // Si la imagen carga correctamente, guardar en localStorage INMEDIATAMENTE
+                    img.onload = function() {
+                        // Solo guardar si es una URL válida (no la imagen por defecto temporal)
+                        if (this.src.includes('http')) {
+                            guardarFotoInstantanea(url);
+                        }
                     };
                 });
             }
