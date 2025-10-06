@@ -129,8 +129,14 @@ nav a:hover {
     scroll-behavior: smooth;
     align-items: stretch;
     min-height: 260px;
+    
+    /*ocultando la barra de scroll, se ve fea xd*/
+    scrollbar-width: none;      /* Firefox */
+    -ms-overflow-style: none;
 }
-
+.carrusel-lista::-webkit-scrollbar {
+    display: none;              /* Chrome, Safari y Opera */
+}
 /* TARJETAS DEL CARRUSEL */
 .Tarjetas {
     width: 240px;
