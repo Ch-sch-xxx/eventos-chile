@@ -98,12 +98,13 @@ function agregarEfectos3D() {
             const rect = tarjeta.getBoundingClientRect();
             const x = e.clientX - rect.left;
             const y = e.clientY - rect.top;
-            const centerX = rect.width / 2;
-            const centerY = rect.height / 2;
+            const centerX = rect.width / 4;
+            const centerY = rect.height / 4;
 
             // Efecto 3D más suave para no marear
-            const rotateX = (y - centerY) / 9.5;
+            const rotateX = (y - centerY) / 6;
             const rotateY = (centerX - x) / 0.8;
+
 
             flip.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
         });

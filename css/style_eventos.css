@@ -279,12 +279,12 @@ nav a:hover {
     height: 100%;
     position: relative;
     transform-style: preserve-3d;
-    transition: transform 0.7s ease-out, box-shadow 0.4s;
+    transition: transform 0.5s ease-out, box-shadow 0.4s;
     border-radius: 35px;
     box-shadow: 0 20px 35px rgba(34, 65, 220, 0.43),
     0 15px 25px rgba(108, 99, 255, 0.82),
     0 6px 18px rgba(0, 0, 0, 0.22);
-    transform: translateZ(0) rotateX(2deg);
+    transform: translateZ(0) rotateX(25deg);
 }
 
 .carta-evento-flip.volteada {
@@ -344,7 +344,19 @@ nav a:hover {
 }
 
 /* TÍTULOS AJUSTADOS */
-.cara-frontal h3,
+.cara-frontal h3 {
+    margin: 0 0 0.8rem 0;
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.1;
+    color: var(--secundario);
+    /* Limito el título a 2 líneas máximo */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 .cara-posterior h3 {
     margin: 0 0 0.8rem 0;
     font-size: 1rem;
@@ -357,6 +369,7 @@ nav a:hover {
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
+    text-align: center;
 }
 
 .cara-frontal h3 { color: var(--secundario); text-align: center; }
