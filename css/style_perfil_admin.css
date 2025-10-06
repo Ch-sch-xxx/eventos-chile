@@ -158,51 +158,19 @@ nav a:hover {
 }
 
 /* ========================================
-   AGUJERO NEGRO - VERSIÓN DEFINITIVA
+   PORTAL DIMENSIONAL - IMAGEN DE PERFIL
    ======================================== */
 
-/* Contenedor principal del agujero negro */
+/* Contenedor principal del portal */
 .imagen-container {
     position: relative;
     display: inline-block;
-    width: 220px;
-    height: 220px;
+    width: 200px;
+    height: 200px;
     margin: 0 auto;
-    filter: drop-shadow(0 0 40px rgba(108, 99, 255, 0.8));
 }
 
-/* Distorsión gravitacional de fondo */
-.imagen-container::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 280px;
-    height: 280px;
-    background: radial-gradient(circle,
-    rgba(0, 0, 0, 0.8) 0%,
-    rgba(108, 99, 255, 0.4) 20%,
-    rgba(159, 122, 234, 0.3) 40%,
-    transparent 70%
-    );
-    transform: translate(-50%, -50%);
-    animation: distorsionGravitacional 6s ease-in-out infinite;
-    z-index: 0;
-    border-radius: 50%;
-}
-
-@keyframes distorsionGravitacional {
-    0%, 100% {
-        transform: translate(-50%, -50%) scale(1);
-        opacity: 0.6;
-    }
-    50% {
-        transform: translate(-50%, -50%) scale(1.15);
-        opacity: 0.9;
-    }
-}
-
-/* Imagen de perfil - horizonte de eventos */
+/* Imagen de perfil - centro del portal */
 .imagen-perfil {
     width: 140px;
     height: 140px;
@@ -214,380 +182,283 @@ nav a:hover {
     transform: translate(-50%, -50%);
     border: 3px solid rgba(255, 255, 255, 0.9);
     box-shadow:
-            0 0 50px rgba(0, 0, 0, 1),
-            0 0 100px rgba(108, 99, 255, 0.8),
-            inset 0 0 40px rgba(0, 0, 0, 0.6);
+            0 0 30px rgba(108, 99, 255, 0.8),
+            0 0 60px rgba(159, 122, 234, 0.6),
+            inset 0 0 20px rgba(255, 255, 255, 0.2);
     z-index: 10;
-    transition: all 0.4s ease;
-    animation: pulsarHorizonte 4s ease-in-out infinite;
+    transition: transform 0.3s ease;
+    animation: resplandorCentral 3s ease-in-out infinite;
 }
 
 .imagen-perfil:hover {
     transform: translate(-50%, -50%) scale(1.08);
-    box-shadow:
-            0 0 70px rgba(0, 0, 0, 1),
-            0 0 140px rgba(108, 99, 255, 1),
-            inset 0 0 50px rgba(0, 0, 0, 0.8);
 }
 
-@keyframes pulsarHorizonte {
+/* Resplandor central pulsante */
+@keyframes resplandorCentral {
     0%, 100% {
         box-shadow:
-                0 0 50px rgba(0, 0, 0, 1),
-                0 0 100px rgba(108, 99, 255, 0.8),
-                inset 0 0 40px rgba(0, 0, 0, 0.6);
+                0 0 30px rgba(108, 99, 255, 0.8),
+                0 0 60px rgba(159, 122, 234, 0.6),
+                inset 0 0 20px rgba(255, 255, 255, 0.2);
     }
     50% {
         box-shadow:
-                0 0 70px rgba(0, 0, 0, 1),
-                0 0 140px rgba(108, 99, 255, 1),
-                inset 0 0 50px rgba(0, 0, 0, 0.8);
+                0 0 50px rgba(108, 99, 255, 1),
+                0 0 100px rgba(159, 122, 234, 0.8),
+                inset 0 0 30px rgba(255, 255, 255, 0.4);
     }
 }
 
-/* DISCO DE ACRECIÓN 1 - Exterior (nítido, rápido) */
+/* ANILLO 1 - Exterior (runas grandes) */
 .anillo-portal-1 {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 210px;
-    height: 210px;
-    border-radius: 50%;
-    background: conic-gradient(
-            from 0deg,
-            transparent 0%,
-            #6C63FF 3%,
-            #9F7AEA 6%,
-            transparent 9%,
-            transparent 18%,
-            #ED8936 21%,
-            #FF6B35 24%,
-            transparent 27%,
-            transparent 36%,
-            #6C63FF 39%,
-            #9F7AEA 42%,
-            transparent 45%,
-            transparent 54%,
-            #9F7AEA 57%,
-            #6C63FF 60%,
-            transparent 63%,
-            transparent 72%,
-            #ED8936 75%,
-            #FF6B35 78%,
-            transparent 81%,
-            transparent 90%,
-            #6C63FF 93%,
-            transparent 96%,
-            transparent 100%
-    );
-    transform: translate(-50%, -50%) rotate(0deg);
-    animation: rotarDiscoRapido 4s linear infinite;
-    opacity: 0.95;
-    z-index: 2;
-}
-
-.anillo-portal-1::after {
-    content: '';
     position: absolute;
     top: 50%;
     left: 50%;
     width: 190px;
     height: 190px;
-    background: transparent;
+    border: 3px solid transparent;
     border-radius: 50%;
-    transform: translate(-50%, -50%);
+    border-image: conic-gradient(
+            from 0deg,
+            #6C63FF 0%,
+            #9F7AEA 30%,
+            #ED8936 60%,
+            #6C63FF 100%
+    ) 1;
+    transform: translate(-50%, -50%) rotate(0deg);
+    animation: rotarAnillo1 8s linear infinite;
+    filter: drop-shadow(0 0 15px rgba(108, 99, 255, 0.8));
 }
 
-/* DISCO DE ACRECIÓN 2 - Medio (semi-nítido, medio) */
+/* Símbolos/runas en anillo 1 */
+.anillo-portal-1::before,
+.anillo-portal-1::after {
+    content: '◈';
+    position: absolute;
+    font-size: 20px;
+    color: #6C63FF;
+    text-shadow: 0 0 10px rgba(108, 99, 255, 1);
+    animation: brilloRuna 2s ease-in-out infinite;
+}
+
+.anillo-portal-1::before {
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.anillo-portal-1::after {
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* ANILLO 2 - Medio (runas medianas) */
 .anillo-portal-2 {
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 185px;
-    height: 185px;
+    width: 170px;
+    height: 170px;
+    border: 2px solid transparent;
     border-radius: 50%;
-    background: conic-gradient(
+    border-image: conic-gradient(
             from 180deg,
-            transparent 0%,
-            #9F7AEA 4%,
-            #ED8936 8%,
-            transparent 12%,
-            transparent 25%,
-            #6C63FF 29%,
-            #9F7AEA 33%,
-            transparent 37%,
-            transparent 50%,
-            #ED8936 54%,
-            #FF6B35 58%,
-            transparent 62%,
-            transparent 75%,
-            #9F7AEA 79%,
-            #6C63FF 83%,
-            transparent 87%,
-            transparent 100%
-    );
+            #9F7AEA 0%,
+            #ED8936 40%,
+            #6C63FF 80%,
+            #9F7AEA 100%
+    ) 1;
     transform: translate(-50%, -50%) rotate(0deg);
-    animation: rotarDiscoMedio 6s linear infinite reverse;
-    filter: blur(0.5px);
-    opacity: 0.9;
-    z-index: 3;
+    animation: rotarAnillo2 6s linear infinite reverse;
+    filter: drop-shadow(0 0 12px rgba(159, 122, 234, 0.7));
+}
+
+.anillo-portal-2::before,
+.anillo-portal-2::after {
+    content: '◆';
+    position: absolute;
+    font-size: 16px;
+    color: #9F7AEA;
+    text-shadow: 0 0 10px rgba(159, 122, 234, 1);
+    animation: brilloRuna 2.5s ease-in-out infinite;
+}
+
+.anillo-portal-2::before {
+    top: 50%;
+    right: -8px;
+    transform: translateY(-50%);
 }
 
 .anillo-portal-2::after {
-    content: '';
-    position: absolute;
     top: 50%;
-    left: 50%;
-    width: 165px;
-    height: 165px;
-    background: transparent;
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
+    left: -8px;
+    transform: translateY(-50%);
 }
 
-/* DISCO DE ACRECIÓN 3 - Interior (más nítido, lento) */
+/* ANILLO 3 - Interior (runas pequeñas) */
 .anillo-portal-3 {
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 165px;
-    height: 165px;
+    width: 155px;
+    height: 155px;
+    border: 2px solid transparent;
     border-radius: 50%;
-    background: conic-gradient(
+    border-image: conic-gradient(
             from 90deg,
-            transparent 0%,
-            #ED8936 5%,
-            #FF6B35 10%,
-            transparent 15%,
-            transparent 25%,
-            #6C63FF 30%,
-            #9F7AEA 35%,
-            transparent 40%,
-            transparent 50%,
-            #9F7AEA 55%,
-            #6C63FF 60%,
-            transparent 65%,
-            transparent 75%,
-            #ED8936 80%,
-            #FF6B35 85%,
-            transparent 90%,
-            transparent 100%
-    );
+            #ED8936 0%,
+            #6C63FF 50%,
+            #9F7AEA 75%,
+            #ED8936 100%
+    ) 1;
     transform: translate(-50%, -50%) rotate(0deg);
-    animation: rotarDiscoLento 8s linear infinite;
-    opacity: 0.85;
-    z-index: 4;
+    animation: rotarAnillo3 10s linear infinite;
+    filter: drop-shadow(0 0 10px rgba(237, 137, 54, 0.6));
 }
 
+.anillo-portal-3::before,
 .anillo-portal-3::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 148px;
-    height: 148px;
-    background: transparent;
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-}
-
-/* JETS DE ENERGÍA (rayos que salen del agujero negro) */
-.anillo-portal-1::before {
     content: '✦';
     position: absolute;
-    top: -20px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 28px;
-    color: #6C63FF;
-    text-shadow:
-            0 0 30px rgba(108, 99, 255, 1),
-            0 0 60px rgba(108, 99, 255, 0.8),
-            0 -30px 80px rgba(108, 99, 255, 0.4);
-    animation: pulsarJet 2s ease-in-out infinite, flotarJet 3s ease-in-out infinite;
-    z-index: 20;
-    filter: blur(0px);
-}
-
-.anillo-portal-2::before {
-    content: '◆';
-    position: absolute;
-    top: 50%;
-    right: -18px;
-    transform: translateY(-50%);
-    font-size: 24px;
-    color: #9F7AEA;
-    text-shadow:
-            0 0 30px rgba(159, 122, 234, 1),
-            0 0 60px rgba(159, 122, 234, 0.8),
-            30px 0 80px rgba(159, 122, 234, 0.4);
-    animation: pulsarJet 2.5s ease-in-out infinite, flotarJet 3.5s ease-in-out infinite;
-    z-index: 20;
-    filter: blur(0px);
+    font-size: 14px;
+    color: #ED8936;
+    text-shadow: 0 0 10px rgba(237, 137, 54, 1);
+    animation: brilloRuna 3s ease-in-out infinite;
 }
 
 .anillo-portal-3::before {
-    content: '⬥';
-    position: absolute;
-    bottom: -18px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 22px;
-    color: #ED8936;
-    text-shadow:
-            0 0 30px rgba(237, 137, 54, 1),
-            0 0 60px rgba(237, 137, 54, 0.8),
-            0 30px 80px rgba(237, 137, 54, 0.4);
-    animation: pulsarJet 3s ease-in-out infinite, flotarJet 4s ease-in-out infinite;
-    z-index: 20;
-    filter: blur(0px);
+    top: -6px;
+    right: 30%;
 }
 
-/* PARTÍCULAS DESDE TODOS LOS BORDES (efecto caótico realista) */
+.anillo-portal-3::after {
+    bottom: -6px;
+    left: 30%;
+}
+
+/* PARTÍCULAS ORBITANDO */
 .particula-portal {
     position: absolute;
-    width: 10px;
-    height: 10px;
-    background: radial-gradient(circle, #fff 0%, #6C63FF 40%, rgba(108, 99, 255, 0.5) 70%, transparent 100%);
+    width: 6px;
+    height: 6px;
+    background: radial-gradient(circle, #fff, #6C63FF, transparent);
     border-radius: 50%;
     pointer-events: none;
     opacity: 0;
-    box-shadow:
-            0 0 20px rgba(108, 99, 255, 1),
-            0 0 40px rgba(108, 99, 255, 0.6);
-    z-index: 15;
+    animation: orbitarParticula 4s ease-in-out infinite;
+    box-shadow: 0 0 8px rgba(108, 99, 255, 1);
 }
 
-/* Partículas desde arriba */
-.particula-portal:nth-child(1) { animation: caerDesdeArriba 4s ease-in infinite; animation-delay: 0s; }
-.particula-portal:nth-child(5) { animation: caerDesdeArriba 4.5s ease-in infinite; animation-delay: 1s; }
-.particula-portal:nth-child(9) { animation: caerDesdeArriba 5s ease-in infinite; animation-delay: 2s; }
-.particula-portal:nth-child(13) { animation: caerDesdeArriba 4.2s ease-in infinite; animation-delay: 3s; }
+.particula-portal:nth-child(2) { animation-delay: 0.5s; }
+.particula-portal:nth-child(3) { animation-delay: 1s; }
+.particula-portal:nth-child(4) { animation-delay: 1.5s; }
+.particula-portal:nth-child(5) { animation-delay: 2s; }
+.particula-portal:nth-child(6) { animation-delay: 2.5s; }
+.particula-portal:nth-child(7) { animation-delay: 3s; }
+.particula-portal:nth-child(8) { animation-delay: 3.5s; }
 
-/* Partículas desde derecha */
-.particula-portal:nth-child(2) { animation: caerDesdeDerecha 4.3s ease-in infinite; animation-delay: 0.3s; }
-.particula-portal:nth-child(6) { animation: caerDesdeDerecha 4.8s ease-in infinite; animation-delay: 1.3s; }
-.particula-portal:nth-child(10) { animation: caerDesdeDerecha 4.5s ease-in infinite; animation-delay: 2.3s; }
-.particula-portal:nth-child(14) { animation: caerDesdeDerecha 5s ease-in infinite; animation-delay: 3.3s; }
+/* ANIMACIONES DEL PORTAL */
 
-/* Partículas desde abajo */
-.particula-portal:nth-child(3) { animation: caerDesdeAbajo 4.6s ease-in infinite; animation-delay: 0.6s; }
-.particula-portal:nth-child(7) { animation: caerDesdeAbajo 4.2s ease-in infinite; animation-delay: 1.6s; }
-.particula-portal:nth-child(11) { animation: caerDesdeAbajo 4.9s ease-in infinite; animation-delay: 2.6s; }
-.particula-portal:nth-child(15) { animation: caerDesdeAbajo 4.4s ease-in infinite; animation-delay: 3.6s; }
-
-/* Partículas desde izquierda */
-.particula-portal:nth-child(4) { animation: caerDesdeIzquierda 4.7s ease-in infinite; animation-delay: 0.9s; }
-.particula-portal:nth-child(8) { animation: caerDesdeIzquierda 4.3s ease-in infinite; animation-delay: 1.9s; }
-.particula-portal:nth-child(12) { animation: caerDesdeIzquierda 5.1s ease-in infinite; animation-delay: 2.9s; }
-.particula-portal:nth-child(16) { animation: caerDesdeIzquierda 4.5s ease-in infinite; animation-delay: 3.9s; }
-/* Animaciones desde cada borde */
-@keyframes caerDesdeArriba {
-    0% { opacity: 0; top: -50px; left: 50%; transform: translate(-50%, 0) scale(1); }
-    10% { opacity: 1; top: 20px; left: 55%; transform: translate(-50%, 0) scale(1); }
-    40% { opacity: 1; top: 60px; left: 70%; transform: translate(-50%, 0) scale(0.8); }
-    70% { opacity: 1; top: 90px; left: 60%; transform: translate(-50%, 0) scale(0.5); }
-    90% { opacity: 0.5; top: 105px; left: 52%; transform: translate(-50%, 0) scale(0.2); }
-    100% { opacity: 0; top: 110px; left: 50%; transform: translate(-50%, 0) scale(0); }
-}
-
-@keyframes caerDesdeDerecha {
-    0% { opacity: 0; left: calc(100% + 50px); top: 50%; transform: translate(0, -50%) scale(1); }
-    10% { opacity: 1; left: calc(100% - 20px); top: 55%; transform: translate(0, -50%) scale(1); }
-    40% { opacity: 1; left: calc(100% - 60px); top: 70%; transform: translate(0, -50%) scale(0.8); }
-    70% { opacity: 1; left: calc(100% - 90px); top: 60%; transform: translate(0, -50%) scale(0.5); }
-    90% { opacity: 0.5; left: calc(100% - 105px); top: 52%; transform: translate(0, -50%) scale(0.2); }
-    100% { opacity: 0; left: calc(100% - 110px); top: 50%; transform: translate(0, -50%) scale(0); }
-}
-
-@keyframes caerDesdeAbajo {
-    0% { opacity: 0; top: calc(100% + 50px); left: 50%; transform: translate(-50%, 0) scale(1); }
-    10% { opacity: 1; top: calc(100% - 20px); left: 45%; transform: translate(-50%, 0) scale(1); }
-    40% { opacity: 1; top: calc(100% - 60px); left: 30%; transform: translate(-50%, 0) scale(0.8); }
-    70% { opacity: 1; top: calc(100% - 90px); left: 40%; transform: translate(-50%, 0) scale(0.5); }
-    90% { opacity: 0.5; top: calc(100% - 105px); left: 48%; transform: translate(-50%, 0) scale(0.2); }
-    100% { opacity: 0; top: calc(100% - 110px); left: 50%; transform: translate(-50%, 0) scale(0); }
-}
-
-@keyframes caerDesdeIzquierda {
-    0% { opacity: 0; left: -50px; top: 50%; transform: translate(0, -50%) scale(1); }
-    10% { opacity: 1; left: 20px; top: 45%; transform: translate(0, -50%) scale(1); }
-    40% { opacity: 1; left: 60px; top: 30%; transform: translate(0, -50%) scale(0.8); }
-    70% { opacity: 1; left: 90px; top: 40%; transform: translate(0, -50%) scale(0.5); }
-    90% { opacity: 0.5; left: 105px; top: 48%; transform: translate(0, -50%) scale(0.2); }
-    100% { opacity: 0; left: 110px; top: 50%; transform: translate(0, -50%) scale(0); }
-}
-/* ANIMACIONES DEL AGUJERO NEGRO */
-
-@keyframes rotarDiscoRapido {
+/* Rotación anillos */
+@keyframes rotarAnillo1 {
     from { transform: translate(-50%, -50%) rotate(0deg); }
     to { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
-@keyframes rotarDiscoMedio {
+@keyframes rotarAnillo2 {
     from { transform: translate(-50%, -50%) rotate(360deg); }
     to { transform: translate(-50%, -50%) rotate(0deg); }
 }
 
-@keyframes rotarDiscoLento {
+@keyframes rotarAnillo3 {
     from { transform: translate(-50%, -50%) rotate(0deg); }
     to { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
-@keyframes pulsarJet {
-    0%, 100% {
-        opacity: 0.8;
-        transform: scale(1);
-    }
-    50% {
-        opacity: 1;
-        transform: scale(1.4);
-    }
+/* Brillo de runas */
+@keyframes brilloRuna {
+    0%, 100% { opacity: 0.6; text-shadow: 0 0 10px currentColor; }
+    50% { opacity: 1; text-shadow: 0 0 20px currentColor, 0 0 30px currentColor; }
 }
 
-@keyframes flotarJet {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
-}
-
-/* Animación mejorada - efecto de succión gravitacional intensa */
-@keyframes caerEnAgujeroNegro {
+/* Órbita de partículas */
+@keyframes orbitarParticula {
     0% {
         opacity: 0;
-        transform: rotate(0deg) translateX(120px) scale(1.2);
+        transform: rotate(0deg) translateX(80px) rotate(0deg) scale(0);
     }
-    5% {
+    10% {
         opacity: 1;
-        transform: rotate(18deg) translateX(118px) scale(1.1);
+        transform: rotate(36deg) translateX(85px) rotate(-36deg) scale(1);
     }
-    15% {
+    90% {
         opacity: 1;
-        transform: rotate(54deg) translateX(110px) scale(1);
-    }
-    30% {
-        opacity: 1;
-        transform: rotate(108deg) translateX(95px) scale(0.9);
-    }
-    50% {
-        opacity: 1;
-        transform: rotate(180deg) translateX(75px) scale(0.7);
-    }
-    70% {
-        opacity: 1;
-        transform: rotate(252deg) translateX(55px) scale(0.5);
-    }
-    85% {
-        opacity: 0.8;
-        transform: rotate(306deg) translateX(40px) scale(0.3);
-    }
-    95% {
-        opacity: 0.4;
-        transform: rotate(342deg) translateX(25px) scale(0.15);
+        transform: rotate(324deg) translateX(85px) rotate(-324deg) scale(1);
     }
     100% {
         opacity: 0;
-        transform: rotate(360deg) translateX(10px) scale(0);
+        transform: rotate(360deg) translateX(80px) rotate(-360deg) scale(0);
     }
+}
+
+/* RESPONSIVE PORTAL DIMENSIONAL */
+@media (max-width: 992px) {
+    .imagen-container {
+        width: 180px;
+        height: 180px;
+    }
+
+    .imagen-perfil {
+        width: 120px;
+        height: 120px;
+    }
+
+    .anillo-portal-1 { width: 170px; height: 170px; }
+    .anillo-portal-2 { width: 150px; height: 150px; }
+    .anillo-portal-3 { width: 135px; height: 135px; }
+}
+
+@media (max-width: 768px) {
+    .imagen-container {
+        width: 160px;
+        height: 160px;
+    }
+
+    .imagen-perfil {
+        width: 100px;
+        height: 100px;
+    }
+
+    .anillo-portal-1 { width: 150px; height: 150px; border-width: 2px; }
+    .anillo-portal-2 { width: 130px; height: 130px; }
+    .anillo-portal-3 { width: 115px; height: 115px; }
+
+    .anillo-portal-1::before,
+    .anillo-portal-1::after { font-size: 16px; }
+
+    .anillo-portal-2::before,
+    .anillo-portal-2::after { font-size: 14px; }
+
+    .anillo-portal-3::before,
+    .anillo-portal-3::after { font-size: 12px; }
+}
+
+@media (max-width: 576px) {
+    .imagen-container {
+        width: 140px;
+        height: 140px;
+    }
+
+    .imagen-perfil {
+        width: 90px;
+        height: 90px;
+    }
+
+    .anillo-portal-1 { width: 130px; height: 130px; }
+    .anillo-portal-2 { width: 110px; height: 110px; }
+    .anillo-portal-3 { width: 95px; height: 95px; }
 }
 
 
