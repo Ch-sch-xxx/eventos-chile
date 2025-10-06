@@ -35,11 +35,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // SECCION DE TARJETAS 3D
 function generarTarjetas3D() {
-    const eventos = listarEventos(); // la base
+    const eventos = listarEventos(); // la base de datos local/JS
     const grid = document.getElementById('contenedor-grid-eventos');
     grid.innerHTML = '';
 
     eventos.forEach((evento, i) => {
+        // En vez de solo poner tarjetas, ahora pongo cada una dentro de una col
+        const col = document.createElement('div');
+        // Uso col-md-6 para que sean 2 por fila en tablet y col-lg-4 para 3 por fila en desktop
+        col.className = 'col-md-6 col-lg-4 d-flex justify-content-center align-items-stretch mb-4';
+
+        // Creo la tarjeta 3D como antes
         const tarjeta3D = document.createElement('div');
         tarjeta3D.className = 'tarjeta-evento-3d';
         tarjeta3D.innerHTML = `
@@ -63,18 +69,21 @@ function generarTarjetas3D() {
                         <p>${evento.descripcion}</p>
                         <p><strong>Capacidad:</strong> ${evento.capacidad} personas</p>
                         <p><strong>Precio:</strong> ${evento.precio}</p>
-                        <p><strong>Creado por:</strong> ${evento.creadoPor}</span></p>
+                        <p><strong>Creado por:</strong> ${evento.creadoPor}</p>
                         <p><strong>Fecha creación:</strong> ${evento.fecha}</p>
                     </div>
                     <button class="boton-volver">Volver</button>
                 </div>
             </div>
         `;
-        grid.appendChild(tarjeta3D);
+        // Meto la tarjeta dentro del col
+        col.appendChild(tarjeta3D);
+        grid.appendChild(col); // Así cada tarjeta queda alineada dentro de la grid de Bootstrap
     });
 
     agregarEfectos3D();
 }
+
 
 // EFECTOS 3D MOUSE Y FLIP
 function agregarEfectos3D() {

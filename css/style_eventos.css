@@ -7,7 +7,7 @@
     --acento-suave: #FED7D7;
 }
 
-/* ESTILOS GENERALES */
+/* ESTILO GENERAL */
 body {
     margin: 0;
     font-family: Arial, sans-serif;
@@ -16,7 +16,7 @@ body {
     position: relative;
 }
 
-/* ANIMACIÓN CONFETI EN EL FONDO */
+/* CONFETI DECORATIVO */
 body::before {
     content: "";
     position: fixed;
@@ -42,16 +42,14 @@ body::before {
 header, footer {
     background: linear-gradient(135deg, var(--secundario) 0%, #4A5568 100%);
     color: white;
-    /* NO doy padding aquí, manejo eso con Bootstrap en el HTML */
-    box-shadow: 0 6px 10px rgba(108, 99, 255, 0.2);
+    box-shadow: 0 6px 10px rgba(108,99,255,0.2);
     min-height: 80px;
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
-/* TÍTULO ANIMADO DEL HEADER */
-#h1_titulo{
+#h1_titulo {
     animation: cambioColores 5s ease-in-out infinite;
     background: linear-gradient(45deg, white, #9F7AEA, var(--primario), var(--acento));
     background-size: 400% 400%;
@@ -60,6 +58,7 @@ header, footer {
     color: transparent;
     font-weight: bold;
 }
+
 @keyframes cambioColores {
     0% { background-position: 5% 50%; }
     25% { background-position: 100% 50%; }
@@ -67,12 +66,13 @@ header, footer {
     75% { background-position: 2% 100%; }
     100% { background-position: 1% 50%; }
 }
+
 header h1:hover {
     transform: translateY(12px);
     cursor: default;
 }
 
-/* FOOTER Y ENLACES */
+/* ENLACES EN FOOTER */
 #contacto, #mail, #Ftnosotros {
     margin: 0.3rem 0;
     transition: color 0.3s ease;
@@ -81,7 +81,7 @@ header h1:hover {
 #mail, #Ftnosotros { color: #9F7AEA; }
 #mail:hover, #Ftnosotros:hover { color: var(--acento); }
 
-/* NAVBAR  */
+/* NAVBAR */
 nav ul {
     display: flex;
     justify-content: end;
@@ -98,7 +98,7 @@ nav a {
     transition: all 0.3s ease;
 }
 nav a:hover {
-    background: rgba(108, 99, 255, 0.2);
+    background: rgba(108,99,255,0.2);
     transform: translateY(-2px);
 }
 
@@ -137,7 +137,7 @@ nav a:hover {
     border-radius: 12px;
     text-align: center;
     padding: 1.2rem;
-    box-shadow: 0 8px 24px rgba(31, 48, 239, 0.7);
+    box-shadow: 0 8px 24px rgba(31,48,239,0.7);
     transition: transform 0.4s cubic-bezier(.25, .8, .25, 1), box-shadow 0.3s;
     perspective: 400px;
     transform: rotateY(8deg) scale(1);
@@ -231,160 +231,176 @@ nav a:hover {
     box-shadow: 0 6px 20px rgba(108,99,255,0.3);
 }
 
-/* EVENTOS-TARJETAS-3D */
+/* TARJETAS 3D DE EVENTOS */
 .eventos-tarjetas-3d {
-    padding: 3rem 2rem;
-    max-width: 1200px;
-    margin: 3rem auto;
+    /* Uso utilidades Bootstrap en el HTML, así que elimino el padding/margin aquí */
     background: linear-gradient(135deg, #f9faff 0%, #ffffff 100%);
-    border-radius: 16px;
-    box-shadow: 0 8px 30px rgba(108,99,255,0.1);
+    border-radius: 20px;
+    box-shadow: 0 12px 40px rgba(108,99,255,0.15);
 }
+
+/* Título de eventos 3D */
 .eventos-tarjetas-3d h2 {
     text-align: center;
     color: var(--secundario);
-    font-size: 2.1rem;
+    font-size: 2.3rem;
     font-weight: 700;
-    margin-bottom: 3rem;
+    margin-bottom: 2rem; /* antes era 4rem, lo ajusto para que no haga salto de sección */
     position: relative;
 }
+
 .eventos-tarjetas-3d h2::after {
     content: '';
     position: absolute;
-    bottom: -12px; left: 50%;
+    bottom: -15px;
+    left: 50%;
     transform: translateX(-50%);
-    width: 100px; height: 4px;
+    width: 120px;
+    height: 4px;
     background: linear-gradient(135deg, var(--primario), var(--acento));
     border-radius: 2px;
 }
-/* GRID DE TARJETAS (3 COLUMNAS) */
-.contenedor-grid-eventos {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 3rem 2rem;
-    justify-items: center;
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 2rem 1rem 4rem 1rem;
+
+/* Grid con Bootstrap: cada tarjeta 3D creada por JS va en un col */
+#contenedor-grid-eventos {
+    /* El JS mete las .tarjeta-evento-3d dentro de col-md-6 col-lg-4 d-flex justify-content-center */
 }
 
-/* TARJETA 3D INDIVIDUAL */
 .tarjeta-evento-3d {
-    width: 280px;
-    height: 380px;
-    perspective: 1100px;
-    cursor: pointer;
-    margin: 1rem;
+    width: 100%;
+    max-width: 320px;
+    min-width: 220px;
+    height: 340px;
+    margin: 0;
+    padding: 0;
+    /* Para centrar vertical y horizontal dentro del col */
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
 }
-/* FLIP CARD TRIDIMENSIONAL */
+
 .carta-evento-flip {
-    width: 100%; height: 100%;
+    width: 100%;
+    height: 100%;
     position: relative;
     transform-style: preserve-3d;
-    transition: transform 0.7s ease, box-shadow 0.4s ease;
-    border-radius: 14px;
-    box-shadow:
-            0 20px 35px rgba(108,99,255,0.37),
-            0 15px 25px rgba(108,99,255,0.29),
-            0 6px 18px rgba(0,0,0,0.29);
-
+    transition: transform 0.7s ease-out, box-shadow 0.4s;
+    border-radius: 16px;
+    box-shadow: 0 20px 35px rgba(108,99,255,0.2),
+    0 15px 25px rgba(108,99,255,0.15),
+    0 6px 18px rgba(0,0,0,0.1);
     transform: translateZ(0) rotateX(2deg);
 }
-.carta-evento-flip.volteada { transform: rotateY(180deg) translateZ(40px); }
+
+.carta-evento-flip.volteada {
+    transform: rotateY(180deg) translateZ(40px);
+}
 
 /* Caras de la tarjeta */
 .cara-frontal, .cara-posterior {
     position: absolute;
-    width: 100%; height: 100%;
+    width: 100%;
+    height: 100%;
     backface-visibility: hidden;
-    border-radius: 14px;
+    border-radius: 16px;
     overflow: hidden;
     display: flex;
     flex-direction: column;
     border: 2px solid rgba(108,99,255,0.2);
     transition: all 0.3s ease;
-    padding: 1.8rem 1.5rem;
+    padding: 2rem 1rem;
     box-sizing: border-box;
 }
+
 .cara-frontal {
     background: linear-gradient(145deg, #ffffff 0%, #f4f6ff 100%);
-    justify-content: space-between;
+    text-align: left;
 }
+
 .cara-posterior {
     background: linear-gradient(145deg, var(--primario) 0%, #9F7AEA 50%, var(--acento) 100%);
     color: white;
     transform: rotateY(180deg);
-    justify-content: space-between;
+    text-align: left;
 }
+
 .imagen-evento {
-    width: 100%; height: 100px;
-    object-fit: cover;
-    border-radius: 10px;
-    margin-bottom: 1rem;
-    box-shadow: 0 4px 15px rgba(108,99,255,0.15);
+    width: 100%;
+    height: 160px;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto 1.5rem auto;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(108,99,255,0.2);
     flex-shrink: 0;
-    align-items: center;
 }
+
 .informacion-evento {
     flex: 1;
+    padding: 0.6rem 0.2rem;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-    gap: 0.6rem; /* separación uniforme entre items */
-    padding: 0.5rem 1rem 1rem 1rem;
-    box-sizing: border-box;
+    overflow: hidden;
+    text-align: justify;
 }
+
 .cara-frontal h3,
 .cara-posterior h3 {
     margin: 0;
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     font-weight: 600;
-    line-height: 1.3;
+    line-height: 1.4;
     color: var(--secundario);
 }
-.cara-frontal h3 { color: var(--secundario);}
-.cara-frontal p { color: var(--texto);}
-.cara-posterior p { color: rgba(255,255,255,0.9);}
+
+.cara-frontal h3 { color: var(--secundario); }
+
+.cara-frontal p { color: var(--texto); }
+
+.cara-posterior p { color: rgba(255,255,255,0.95); }
+
 .cara-frontal p,
 .cara-posterior p {
     margin: 0;
-    font-size: 0.85rem;
-    line-height: 1.4;
+    font-size: 0.9rem;
+    line-height: 1.5;
 }
 
 .etiqueta-tipo {
-    align-self: flex-start;
     background: rgba(237,137,54,0.15);
     color: var(--acento);
     border-radius: 12px;
-    padding: 3px 10px;
-    font-size: 0.75rem;
+    padding: 5px 12px;
+    font-size: 0.8rem;
     font-weight: 500;
+    display: inline-block;
+    margin-bottom: 0.5rem;
 }
-/* BOTONES EN TARJETAS 3D*/
+
+/* BOTONES EN TARJETAS 3D */
 .boton-detalle, .boton-volver {
     background: linear-gradient(135deg, var(--primario), #9F7AEA);
     color: white;
     border: none;
-    padding: 0.7rem 1.4rem;
-    border-radius: 20px;
+    padding: 0.8rem 1.6rem;
+    border-radius: 25px;
     cursor: pointer;
     font-weight: 500;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     transition: all 0.3s ease;
     margin-top: auto;
     margin-bottom: 0;
-    flex-shrink: 0;
     white-space: nowrap;
-    align-self: center;
+    text-align: center;
 }
+
 .boton-volver {
     background: rgba(255,255,255,0.25);
     border: 1px solid rgba(255,255,255,0.4);
 }
 .boton-detalle:hover {
     background: linear-gradient(135deg, #5A52D5, #8B7EFF);
-    box-shadow: 0 6px 16px rgba(108,99,255,0.35);
+    box-shadow: 0 8px 20px rgba(108,99,255,0.4);
 }
 .boton-volver:hover {
     background: rgba(255,255,255,0.35);
@@ -413,37 +429,24 @@ nav a:hover {
 .tarjeta-evento-3d:nth-child(4) { animation-delay: 0.4s; }
 .tarjeta-evento-3d:nth-child(5) { animation-delay: 0.5s; }
 .tarjeta-evento-3d:nth-child(6) { animation-delay: 0.6s; }
-/* GRID Y CARRUSEL RESPONSIVE */
+
+/* MEDIA-QUERIES RESPONSIVE */
+/* Bootstrap se encarga de la grid, así que solo ajusto las tarjetas dentro de cada col */
 @media (max-width: 1024px) {
-    .contenedor-grid-eventos {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 2.5rem 1.5rem;
+    .tarjeta-evento-3d {
+        max-width: 260px;
+        height: 320px;
     }
+    .eventos-tarjetas-3d h2 { font-size: 2rem; }
 }
 @media (max-width: 768px) {
-    .contenedor-grid-eventos {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-        padding: 1rem;
-    }
     .tarjeta-evento-3d {
-        width: 100%;
-        max-width: 320px;
-        height: 360px;
-    }
-    .carrusel-eventos {
-        padding: 1rem;
-        margin: 1rem;
-    }
-    .carrusel-lista {
-        gap: 1rem;
-        padding: 0.5rem;
-    }
-    .Tarjetas {
-        min-width: 180px;
         max-width: 200px;
-        min-height: 260px;
+        height: 280px;
+        min-width: 120px;
     }
-    .Tarjetas h3 { font-size: 0.9rem; }
-    .Tarjetas p { font-size: 0.8rem; }
+    .eventos-tarjetas-3d {
+        border-radius: 12px;
+        box-shadow: 0 8px 18px rgba(108,99,255,0.12);
+    }
 }
