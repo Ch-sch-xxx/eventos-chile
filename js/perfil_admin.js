@@ -1,21 +1,17 @@
-// FUNCIONES IMPORTADAS DE CRUD_EVENTOS.JS Y AUTH.JS
+// FUNCIONES DE UTILIDAD
 function contarEventosUsuario(email) {
+    // Cuenta eventos creados por un usuario específico
     const eventos = JSON.parse(localStorage.getItem('eventos-chile') || '[]');
     return eventos.filter(evento => evento.creadoPor === email).length;
 }
 
 function contarTotalUsuarios() {
+    // Cuenta total de usuarios registrados en el sistema
     const usuarios = JSON.parse(localStorage.getItem('usuarios-chile') || '[]');
     return usuarios.length;
 }
 
-function validarRUTCompleto(rut) {
-    if (!rut) return false;
-    const rutLimpio = rut.replace(/[^0-9kK-]/g, '');
-    return /^[0-9]+-[0-9kK]$/i.test(rutLimpio);
-}
-
-// DATOS Y CONFIGURACIÓN
+// DATOS DE REGIONES Y COMUNAS (igual que auth.js)
 const regionesYcomunas = {
     "Región Metropolitana": ["Santiago", "Providencia", "Las Condes", "Puente Alto", "Maipú"],
     "Valparaíso": ["Valparaíso", "Viña del Mar", "Concón", "Quilpué"],
@@ -23,10 +19,12 @@ const regionesYcomunas = {
     "O'Higgins": ["Rancagua", "San Fernando", "Machalí"]
 };
 
-// INICIALIZACIÓN
+// INICIALIZACIÓN - cuando el DOM está listo
 document.addEventListener('DOMContentLoaded', () => {
+    // Verificar acceso antes de cargar cualquier cosa
     if (!verificarAcceso()) return;
 
+    // Cargar todos los componentes del perfil
     cargarDatosUsuario();
     cargarRegiones();
     cargarEventosUsuario();
@@ -39,12 +37,14 @@ function verificarAcceso() {
     const userLogged = localStorage.getItem('user-logged');
     const userEmail = localStorage.getItem('user-email');
 
+    // Sin sesión activa, redirigir a login
     if (!userLogged || !userEmail) {
         alert('Debes iniciar sesión para acceder al perfil');
         window.location.href = 'auth.html';
         return false;
     }
 
+    // Verificar que el rol sea válido (admin o usuario)
     if (userLogged !== 'admin' && userLogged !== 'usuario') {
         alert('Sesión inválida');
         window.location.href = 'auth.html';
@@ -54,12 +54,13 @@ function verificarAcceso() {
     return true;
 }
 
-// CARGAR DATOS DEL USUARIO
+// CARGAR DATOS DEL USUARIO - diferente según rol
 function cargarDatosUsuario() {
     const userLogged = localStorage.getItem('user-logged');
     const userEmail = localStorage.getItem('user-email');
     let userData = {};
 
+    // CASO ADMINISTRADOR - datos hardcodeados
     if (userLogged === 'admin') {
         userData = {
             name: 'Administrador Sistema',
@@ -69,6 +70,7 @@ function cargarDatosUsuario() {
             fotoUrl: 'imagenes/ICONOperfil.png'
         };
 
+        // Personalizar interfaz para admin
         document.getElementById('rol-usuario').textContent = 'Administrador';
         document.getElementById('titulo-eventos').textContent = 'Todos los Eventos del Sistema';
 
@@ -76,7 +78,9 @@ function cargarDatosUsuario() {
         if (enlaceAdmin) {
             enlaceAdmin.textContent = 'Panel Admin';
         }
-    } else {
+    }
+    // CASO USUARIO REGULAR - buscar en localStorage
+    else {
         const usuarios = JSON.parse(localStorage.getItem('usuarios-chile') || '[]');
         const usuario = usuarios.find(u => u.email === userEmail);
 
@@ -86,6 +90,7 @@ function cargarDatosUsuario() {
             fotoUrl: 'imagenes/ICONOperfil.png'
         };
 
+        // Personalizar interfaz para usuario
         document.getElementById('rol-usuario').textContent = 'Usuario';
         document.getElementById('titulo-eventos').textContent = 'Mis Eventos Creados';
 
@@ -95,7 +100,7 @@ function cargarDatosUsuario() {
         }
     }
 
-    // CARGAR EN INTERFAZ - Vista
+    // CARGAR EN INTERFAZ - Vista de solo lectura
     document.getElementById('nombre-usuario').textContent = userData.name || 'Usuario';
     document.getElementById('correo-usuario').textContent = userData.email || userEmail;
     document.getElementById('vista-nombre').textContent = userData.name || 'No registrado';
@@ -104,18 +109,24 @@ function cargarDatosUsuario() {
     document.getElementById('vista-region').textContent = userData.region || 'No registrada';
     document.getElementById('vista-comuna').textContent = userData.comuna || 'No registrada';
 
-    // CARGAR EN FORMULARIO - Edición
+    // CARGAR EN FORMULARIO - Campos editables
     document.getElementById('nombre').value = userData.name || '';
     document.getElementById('correo').value = userData.email || userEmail;
     document.getElementById('foto-url').value = userData.fotoUrl || '';
 
-    // CARGAR FOTO ACTUAL
-    const imagenPerfil = document.querySelector('.imagen-perfil');
-    if (imagenPerfil && userData.fotoUrl) {
-        imagenPerfil.src = userData.fotoUrl;
+    // ACTUALIZAR IMAGEN DE PERFIL - tanto en hero como en navbar si existe
+    const imagenesPerfil = document.querySelectorAll('.imagen-perfil');
+    if (userData.fotoUrl) {
+        imagenesPerfil.forEach(img => {
+            img.src = userData.fotoUrl;
+            // Fallback si la imagen no carga
+            img.onerror = function() {
+                this.src = 'imagenes/ICONOperfil.png';
+            };
+        });
     }
 
-    // CARGAR REGIONES DESPUÉS DE CARGAR DATOS
+    // CARGAR REGIÓN Y COMUNA EN SELECTS
     setTimeout(() => {
         if (userData.region) {
             const selectRegion = document.getElementById('region');
@@ -123,6 +134,7 @@ function cargarDatosUsuario() {
                 selectRegion.value = userData.region;
                 cargarComunasPorRegion(userData.region);
 
+                // Cargar comuna después de que se carguen las opciones
                 setTimeout(() => {
                     if (userData.comuna) {
                         const selectComuna = document.getElementById('comuna');
@@ -136,12 +148,15 @@ function cargarDatosUsuario() {
     }, 200);
 }
 
-// CARGAR REGIONES
+// CARGAR REGIONES EN SELECT - dinámicamente desde objeto
 function cargarRegiones() {
     const regionSelect = document.getElementById('region');
     if (!regionSelect) return;
 
+    // Limpiar y agregar opción por defecto
     regionSelect.innerHTML = '<option value="">Selecciona región</option>';
+
+    // Agregar cada región como opción
     Object.keys(regionesYcomunas).forEach(region => {
         const option = document.createElement('option');
         option.value = region;
@@ -150,13 +165,15 @@ function cargarRegiones() {
     });
 }
 
-// CARGAR COMUNAS
+// CARGAR COMUNAS SEGÚN REGIÓN SELECCIONADA
 function cargarComunasPorRegion(region) {
     const comunaSelect = document.getElementById('comuna');
     if (!comunaSelect) return;
 
+    // Limpiar opciones actuales
     comunaSelect.innerHTML = '<option value="">Selecciona comuna</option>';
 
+    // Cargar comunas de la región seleccionada
     if (region && regionesYcomunas[region]) {
         regionesYcomunas[region].forEach(comuna => {
             const option = document.createElement('option');
@@ -167,7 +184,7 @@ function cargarComunasPorRegion(region) {
     }
 }
 
-// CARGAR EVENTOS DEL USUARIO
+// CARGAR EVENTOS DEL USUARIO - usando Bootstrap grid
 function cargarEventosUsuario() {
     const userLogged = localStorage.getItem('user-logged');
     const userEmail = localStorage.getItem('user-email');
@@ -179,43 +196,57 @@ function cargarEventosUsuario() {
     container.innerHTML = '';
     let eventosUsuario = [];
 
+    // Admin ve todos los eventos, usuario solo los suyos
     if (userLogged === 'admin') {
         eventosUsuario = eventos;
     } else {
         eventosUsuario = eventos.filter(evento => evento.creadoPor === userEmail);
     }
 
+    // Mensaje si no hay eventos
     if (eventosUsuario.length === 0) {
         container.innerHTML = `
-            <p style="text-align: center; color: #666; font-style: italic; padding: 2rem; background: #f9f9f9; border-radius: 8px; grid-column: 1 / -1;">
-                ${userLogged === 'admin' ? 'No hay eventos en el sistema' : 'No has creado eventos aún. ¡Crea tu primer evento!'}
-            </p>`;
+            <div class="col-12">
+                <p style="text-align: center; color: #666; font-style: italic; padding: 2rem; background: #f9f9f9; border-radius: 8px;">
+                    ${userLogged === 'admin' ? 'No hay eventos en el sistema' : 'No has creado eventos aún. ¡Crea tu primer evento desde el panel!'}
+                </p>
+            </div>`;
         return;
     }
 
+    // Generar tarjetas de eventos - con Bootstrap columns
     eventosUsuario.forEach(evento => {
+        const col = document.createElement('div');
+        col.className = 'col-md-6 col-lg-4'; // Responsive grid
+
         const eventoDiv = document.createElement('div');
         eventoDiv.className = 'evento-perfil-item';
-        const fechaCreacion = evento.fechaCreacion ? new Date(evento.fechaCreacion).toLocaleDateString() : 'N/A';
+
+        const fechaCreacion = evento.fechaCreacion
+            ? new Date(evento.fechaCreacion).toLocaleDateString('es-CL')
+            : 'N/A';
         const autor = evento.creadoPor || 'Sistema';
 
         eventoDiv.innerHTML = `
             <div class="evento-titulo">${evento.titulo}</div>
             <div class="evento-fecha">📅 ${evento.fecha}</div>
-            <div class="evento-tipo" style="color: var(--acento); font-size: 0.9rem;">🏷️ ${evento.tipo}</div>
-            <div style="font-size: 0.8rem; color: #888; margin-top: 0.5rem;">📍 ${evento.lugar}</div>
-            ${userLogged === 'admin' ? `<div style="font-size: 0.75rem; color: var(--primario); margin-top: 0.3rem;">👤 Creado por: ${autor}</div>` : ''}
-            <div style="font-size: 0.75rem; color: #999; margin-top: 0.3rem;">📆 Creado: ${fechaCreacion}</div>
+            <div class="evento-tipo">🏷️ ${evento.tipo}</div>
+            <div style="font-size: 0.85rem; color: #666; margin-top: 0.5rem;">📍 ${evento.lugar}</div>
+            ${userLogged === 'admin' ? `<div style="font-size: 0.8rem; color: var(--primario); margin-top: 0.4rem; font-weight: 500;">👤 ${autor}</div>` : ''}
+            <div style="font-size: 0.75rem; color: #999; margin-top: 0.4rem;">📆 ${fechaCreacion}</div>
         `;
-        container.appendChild(eventoDiv);
+
+        col.appendChild(eventoDiv);
+        container.appendChild(col);
     });
 }
 
-// ACTUALIZAR ESTADÍSTICAS
+// ACTUALIZAR ESTADÍSTICAS - según rol del usuario
 function actualizarEstadisticas() {
     const userLogged = localStorage.getItem('user-logged');
     const userEmail = localStorage.getItem('user-email');
 
+    // ADMIN: muestra total de eventos y total de usuarios
     if (userLogged === 'admin') {
         const totalEventos = JSON.parse(localStorage.getItem('eventos-chile') || '[]').length;
         const totalUsuarios = contarTotalUsuarios();
@@ -223,24 +254,28 @@ function actualizarEstadisticas() {
         document.getElementById('eventos-creados').textContent = totalEventos;
         document.getElementById('total-usuarios').textContent = totalUsuarios;
 
+        // Mostrar card de usuarios
         const statUsuarios = document.getElementById('stat-usuarios');
         if (statUsuarios) {
-            statUsuarios.style.display = 'block';
+            statUsuarios.classList.remove('oculto');
         }
-    } else {
+    }
+    // USUARIO: solo muestra sus eventos, oculta card de usuarios
+    else {
         const eventosUsuario = contarEventosUsuario(userEmail);
         document.getElementById('eventos-creados').textContent = eventosUsuario;
 
+        // Ocultar card de usuarios
         const statUsuarios = document.getElementById('stat-usuarios');
         if (statUsuarios) {
-            statUsuarios.style.display = 'none';
+            statUsuarios.classList.add('oculto');
         }
     }
 }
 
-// CONFIGURAR LISTENERS
+// CONFIGURAR EVENT LISTENERS - todos los eventos de la página
 function configurarListeners() {
-    // BOTÓN EDITAR PERFIL
+    // BOTÓN: Editar perfil - muestra formulario, oculta vista
     const btnEditar = document.getElementById('btn-editar-perfil');
     if (btnEditar) {
         btnEditar.addEventListener('click', () => {
@@ -249,17 +284,18 @@ function configurarListeners() {
         });
     }
 
-    // BOTÓN CANCELAR
+    // BOTÓN: Cancelar edición - oculta formulario, muestra vista
     const btnCancelar = document.getElementById('btn-cancelar');
     if (btnCancelar) {
         btnCancelar.addEventListener('click', () => {
             document.getElementById('datos-perfil').classList.add('oculto');
             document.getElementById('datos-actuales').classList.remove('oculto');
+            // Recargar datos originales (cancela cambios)
             cargarDatosUsuario();
         });
     }
 
-    // CAMBIO DE REGIÓN
+    // SELECT: Cambio de región - recarga comunas
     const selectRegion = document.getElementById('region');
     if (selectRegion) {
         selectRegion.addEventListener('change', function() {
@@ -267,45 +303,51 @@ function configurarListeners() {
         });
     }
 
-    // FORMULARIO GUARDAR PERFIL
+    // FORM: Guardar perfil - validaciones y guardado
     const formPerfil = document.getElementById('form-perfil');
     if (formPerfil) {
         formPerfil.addEventListener('submit', guardarPerfil);
     }
 
-    // CERRAR SESIÓN
+    // BOTÓN: Cerrar sesión - confirmación y limpieza
     const btnCerrarSesion = document.getElementById('cerrar-sesion');
     if (btnCerrarSesion) {
         btnCerrarSesion.addEventListener('click', (e) => {
             e.preventDefault();
 
             if (confirm('¿Seguro que deseas cerrar sesión?')) {
+                // Limpiar localStorage
                 localStorage.removeItem('user-logged');
                 localStorage.removeItem('user-email');
                 localStorage.removeItem('user-data');
 
                 alert('Sesión cerrada exitosamente');
+                // Redirigir a login sin historial (replace)
                 window.location.replace('auth.html');
             }
         });
     }
 
-    // PREVIEW FOTO URL
+    // INPUT: Preview foto URL - actualiza imagen en tiempo real
     const fotoUrlInput = document.getElementById('foto-url');
     if (fotoUrlInput) {
-        fotoUrlInput.addEventListener('change', function() {
+        fotoUrlInput.addEventListener('input', function() {
             const url = this.value.trim();
             if (url) {
-                const imagenPerfil = document.querySelector('.imagen-perfil');
-                if (imagenPerfil) {
-                    imagenPerfil.src = url;
-                }
+                const imagenesPerfil = document.querySelectorAll('.imagen-perfil');
+                imagenesPerfil.forEach(img => {
+                    img.src = url;
+                    // Fallback si la URL no es válida
+                    img.onerror = function() {
+                        this.src = 'imagenes/ICONOperfil.png';
+                    };
+                });
             }
         });
     }
 }
 
-// GUARDAR PERFIL
+// GUARDAR PERFIL - validaciones y actualización en localStorage
 function guardarPerfil(e) {
     e.preventDefault();
 
@@ -335,7 +377,7 @@ function guardarPerfil(e) {
         return;
     }
 
-    // CREAR OBJETO CON NUEVOS DATOS
+    // CONSTRUIR OBJETO CON NUEVOS DATOS
     const nuevosDatos = {
         name: nombre,
         email: correo,
@@ -348,13 +390,17 @@ function guardarPerfil(e) {
     try {
         // GUARDAR SEGÚN EL ROL
         if (userLogged === 'admin') {
+            // Admin: solo actualizar user-data
             localStorage.setItem('user-data', JSON.stringify(nuevosDatos));
         } else {
+            // Usuario: actualizar en array de usuarios
             const usuarios = JSON.parse(localStorage.getItem('usuarios-chile') || '[]');
             const indiceUsuario = usuarios.findIndex(u => u.email === userEmail);
 
             if (indiceUsuario !== -1) {
                 const usuarioOriginal = usuarios[indiceUsuario];
+
+                // Mantener datos críticos (RUT, contraseña, fecha registro)
                 usuarios[indiceUsuario] = {
                     ...usuarioOriginal,
                     ...nuevosDatos,
@@ -363,28 +409,32 @@ function guardarPerfil(e) {
                     fechaRegistro: usuarioOriginal.fechaRegistro
                 };
 
+                // Guardar array actualizado
                 localStorage.setItem('usuarios-chile', JSON.stringify(usuarios));
                 localStorage.setItem('user-data', JSON.stringify(usuarios[indiceUsuario]));
             } else {
-                alert('Error: Usuario no encontrado');
+                alert('Error: Usuario no encontrado en el sistema');
                 return;
             }
         }
 
-        // ACTUALIZAR EMAIL SI CAMBIÓ
+        // ACTUALIZAR EMAIL EN SESIÓN SI CAMBIÓ
         if (correo !== userEmail) {
             localStorage.setItem('user-email', correo);
         }
 
-        alert(' Perfil actualizado exitosamente');
+        alert('Perfil actualizado exitosamente');
 
+        // Volver a vista de solo lectura
         document.getElementById('datos-perfil').classList.add('oculto');
         document.getElementById('datos-actuales').classList.remove('oculto');
 
+        // Recargar datos actualizados
         cargarDatosUsuario();
         actualizarEstadisticas();
 
     } catch (error) {
+        console.error('Error al guardar perfil:', error);
         alert('Error al guardar el perfil. Inténtalo de nuevo.');
     }
 }
