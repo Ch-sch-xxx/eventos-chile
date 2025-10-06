@@ -102,30 +102,13 @@ nav a:hover {
     transform: translateY(-2px);
 }
 
-/* Main */
-main {
-    max-width: 1200px;
-    margin: 2rem auto;
-    padding: 0 1rem;
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-}
-
-/* Hero perfil */
-#perfil-hero {
-    text-align: center;
-    padding: 2rem;
-    background: linear-gradient(135deg, white 0%, var(--acento-suave) 100%);
-    border-radius: 15px;
-    box-shadow: 0 8px 25px rgba(108, 99, 255, 0.15);
-    animation: fadeInUp 1s ease-out;
-    border-left: 8px solid var(--primario);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 3rem;
-    flex-wrap: wrap;
+/* CARDS - personalización sobre Bootstrap */
+.card {
+    border: none !important;
+    border-radius: 15px !important;
+    box-shadow: 0 8px 25px rgba(108, 99, 255, 0.15) !important;
+    animation: fadeInUp 0.8s ease-out;
+    background: linear-gradient(135deg, white 0%, #f9faff 100%) !important;
 }
 
 @keyframes fadeInUp {
@@ -133,6 +116,48 @@ main {
     to { opacity: 1; transform: translateY(0); }
 }
 
+/* Card con borde izquierdo decorativo (igual que gestión_admin) */
+#datos-actuales .card,
+#datos-perfil .card,
+#stats-usuario .card {
+    border-left: 8px solid var(--primario) !important;
+}
+
+#mis-eventos .card,
+#acciones-rapidas .card {
+    border-left: 8px solid var(--acento) !important;
+}
+
+/* Hero perfil - personalizado con gradiente */
+#perfil-hero .card {
+    background: linear-gradient(135deg, white 0%, var(--acento-suave) 100%) !important;
+    border-left: 8px solid var(--primario) !important;
+}
+
+/* Títulos de cards */
+.card-title {
+    color: var(--secundario) !important;
+    font-size: 1.6rem !important;
+    font-weight: 700 !important;
+    margin-bottom: 1.5rem !important;
+    position: relative;
+    padding-bottom: 1rem;
+}
+
+/* Línea decorativa bajo título card (igual que referencias) */
+.card-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: var(--primario);
+    border-radius: 2px;
+}
+
+/* IMAGEN DE PERFIL */
 .imagen-container {
     display: flex;
     flex-direction: column;
@@ -146,25 +171,21 @@ main {
     border-radius: 50%;
     object-fit: cover;
     border: 4px solid var(--primario);
-    box-shadow: 0 6px 20px rgba(108, 99, 255, 0.2);
-    transition: transform 0.3s ease;
+    box-shadow: 0 6px 20px rgba(108, 99, 255, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .imagen-perfil:hover {
     transform: scale(1.05);
+    box-shadow: 0 8px 30px rgba(108, 99, 255, 0.4);
 }
 
-
-.info-basica {
-    flex-grow: 1;
-    text-align: left;
-}
-
+/* INFO BÁSICA PERFIL */
 .info-basica h2 {
     margin: 0 0 0.5rem 0;
     color: var(--secundario);
     font-size: 2rem;
-    font-weight: 600;
+    font-weight: 700;
 }
 
 .info-basica p {
@@ -173,227 +194,149 @@ main {
     font-size: 1.1rem;
 }
 
+/* Badge rol (estilo personalizado) */
 .badge-rol {
     display: inline-block;
-    padding: 0.4rem 1rem;
-    background: var(--acento);
+    padding: 0.5rem 1.2rem;
+    background: linear-gradient(135deg, var(--acento), #ff9f66);
     color: white;
     border-radius: 20px;
     font-size: 0.9rem;
-    font-weight: 500;
-    box-shadow: 0 2px 8px rgba(237, 137, 54, 0.2);
+    font-weight: 600;
+    box-shadow: 0 2px 8px rgba(237, 137, 54, 0.3);
 }
 
-/* Secciones principales */
-#datos-actuales,
-#datos-perfil,
-#mis-eventos,
-#stats-usuario,
-#acciones-rapidas {
-    padding: 2rem;
-    background: white;
-    border-radius: 15px;
-    box-shadow: 0 6px 20px rgba(108, 99, 255, 0.1);
-    animation: fadeInUp 1.2s ease-out;
-}
-
-#datos-actuales,
-#datos-perfil {
-    border-left: 8px solid var(--primario);
-}
-
-#mis-eventos {
-    border-left: 8px solid var(--acento);
-}
-
-#stats-usuario {
-    border-left: 8px solid var(--primario);
-}
-
-#acciones-rapidas {
-    border-left: 8px solid var(--acento);
-}
-
-/* Títulos sección */
-section h2 {
-    font-size: 1.6rem;
-    color: var(--secundario);
-    margin-bottom: 1.5rem;
-    position: relative;
-}
-
-section h2::after {
-    content: '';
-    position: absolute;
-    bottom: -8px;
-    left: 0;
-    width: 60px;
-    height: 3px;
-    background: var(--primario);
-    border-radius: 2px;
-}
-
-/* Vista datos */
-.vista-datos {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1rem;
-    margin-bottom: 2rem;
-}
-
-.dato-item {
+/* VISTA DATOS - grid de info actual */
+.vista-datos .dato-item {
     background: linear-gradient(135deg, #f8f9ff 0%, white 100%);
     padding: 1rem;
     border-radius: 8px;
     border-left: 3px solid var(--primario);
-    box-shadow: 0 2px 6px rgba(108, 99, 255, 0.05);
+    box-shadow: 0 2px 6px rgba(108, 99, 255, 0.08);
+    transition: transform 0.2s ease;
 }
 
-.dato-item strong {
+.vista-datos .dato-item:hover {
+    transform: translateX(3px);
+}
+
+.vista-datos .dato-item strong {
     color: var(--secundario);
-    display: block;
-    margin-bottom: 0.3rem;
     font-size: 0.9rem;
-}
-
-.dato-item span {
-    color: var(--texto);
-    font-size: 1.1rem;
-}
-
-.btn-editar {
-    background: linear-gradient(135deg, var(--acento), #ff9f66);
-    color: white;
-    border: none;
-    padding: 0.6rem 1.5rem;
-    border-radius: 20px;
-    cursor: pointer;
-    font-weight: 500;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 8px rgba(237, 137, 54, 0.2);
-}
-
-.btn-editar:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(237, 137, 54, 0.3);
-}
-
-/* Formulario */
-.formulario-perfil {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2rem;
-    align-items: start;
-}
-
-.grupo-campos {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-}
-
-.formulario-perfil label {
     font-weight: 600;
-    color: var(--secundario);
-    font-size: 0.95rem;
-    margin-bottom: 0.3rem;
 }
 
-.formulario-perfil input,
-.formulario-perfil select {
-    padding: 0.8rem;
-    border: 2px solid #ddd;
-    border-radius: 8px;
+.vista-datos .dato-item span {
+    color: var(--texto);
     font-size: 1rem;
-    transition: all 0.3s ease;
-    background: white;
 }
 
-.formulario-perfil input:focus,
-.formulario-perfil select:focus {
-    outline: none;
-    border-color: var(--primario);
-    box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.1);
-    transform: translateY(-1px);
-}
-
-.ayuda-texto {
-    font-size: 0.8rem;
-    color: #666;
-    font-style: italic;
-    margin-top: 0;
-}
-
-.botones-formulario {
-    grid-column: 1 / -1;
-    display: flex;
-    gap: 1rem;
-    justify-content: flex-start;
-    margin-top: 1rem;
-}
-
-.btn-guardar {
-    background: linear-gradient(135deg, var(--primario), #9F7AEA);
+/* BOTONES - estilo coherente con referencias */
+.btn-primary {
+    background: linear-gradient(135deg, var(--primario), #9F7AEA) !important;
     color: white;
     border: none;
     padding: 0.8rem 2rem;
     border-radius: 25px;
     cursor: pointer;
-    font-weight: 500;
-    font-size: 1.1rem;
+    font-weight: bold;
+    font-size: 1rem;
+    box-shadow: 0 4px 15px rgba(108, 99, 255, 0.3);
     transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(108, 99, 255, 0.2);
     position: relative;
     overflow: hidden;
 }
 
-.btn-cancelar {
-    background: linear-gradient(135deg, #6c757d, #8d969f);
-    color: white;
+/* Efecto de brillo hover en botones (igual que referencias) */
+.btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    transition: left 0.6s;
+}
+.btn-primary:hover::before {
+    left: 100%;
+}
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(108, 99, 255, 0.4);
+    background: linear-gradient(135deg, #5A52D5, #8B7EFF) !important;
+}
+
+/* Botón secundario */
+.btn-secondary {
+    background: linear-gradient(135deg, #6c757d, #5a6268) !important;
     border: none;
     padding: 0.8rem 2rem;
     border-radius: 25px;
-    cursor: pointer;
-    font-weight: 500;
-    font-size: 1.1rem;
+    font-weight: 600;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(108, 123, 125, 0.2);
+    box-shadow: 0 4px 15px rgba(108, 117, 125, 0.2);
 }
 
-.btn-guardar:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(108, 99, 255, 0.3);
+.btn-secondary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(108, 117, 125, 0.3);
+    background: linear-gradient(135deg, #5a6268, #4a5258) !important;
 }
 
-.btn-cancelar:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(108, 123, 125, 0.3);
+/* FORMULARIO - personalización sobre Bootstrap */
+#form-perfil .form-label {
+    font-weight: 600;
+    color: var(--secundario);
+    font-size: 0.95rem;
+    margin-bottom: 0.4rem;
 }
 
-/* Eventos usuario */
-.lista-eventos-perfil {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 1rem;
+#form-perfil .form-control,
+#form-perfil .form-select {
+    padding: 0.8rem 1rem !important;
+    border: 2px solid rgba(108,99,255,0.15) !important;
+    border-radius: 8px !important;
+    font-size: 0.95rem !important;
+    transition: all 0.3s ease;
+    background: white !important;
 }
 
-.evento-perfil-item {
+#form-perfil .form-control:focus,
+#form-perfil .form-select:focus {
+    border-color: var(--primario) !important;
+    box-shadow: 0 0 0 0.2rem rgba(108,99,255,0.25) !important;
+    outline: none;
+    transform: translateY(-1px);
+}
+
+/* Texto de ayuda */
+.form-text {
+    color: #6c757d;
+    font-size: 0.85rem;
+    font-style: italic;
+}
+
+/* LISTA DE EVENTOS DEL PERFIL */
+.lista-eventos-perfil .evento-perfil-item {
     background: white;
-    border-radius: 8px;
-    padding: 1rem;
-    box-shadow: 0 2px 8px rgba(108, 99, 255, 0.1);
-    border-left: 3px solid var(--primario);
-    transition: transform 0.2s ease;
+    border-radius: 10px;
+    padding: 1.2rem;
+    box-shadow: 0 4px 12px rgba(108, 99, 255, 0.1);
+    border-left: 4px solid var(--primario);
+    transition: all 0.3s ease;
 }
 
-.evento-perfil-item:hover {
-    transform: translateY(-2px);
+.lista-eventos-perfil .evento-perfil-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(108, 99, 255, 0.2);
 }
 
 .evento-titulo {
     font-weight: 600;
     color: var(--secundario);
     margin-bottom: 0.5rem;
+    font-size: 1.1rem;
 }
 
 .evento-fecha {
@@ -402,26 +345,30 @@ section h2::after {
     margin-bottom: 0.3rem;
 }
 
-/* Estadísticas */
-.contenedor-stats {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 2rem;
+.evento-tipo {
+    display: inline-block;
+    padding: 0.3rem 0.8rem;
+    background: var(--acento-suave);
+    color: var(--acento);
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 500;
 }
 
+/* ESTADÍSTICAS - cards personalizadas */
 .stat-card {
-    background: linear-gradient(135deg, var(--acento-suave) 0%, #f9faff 100%);
-    padding: 2rem;
-    border-radius: 12px;
+    background: linear-gradient(135deg, var(--acento-suave) 0%, #f9faff 100%) !important;
+    border-radius: 12px !important;
     text-align: center;
-    box-shadow: 0 4px 15px rgba(108, 99, 255, 0.1);
-    transition: transform 0.3s ease;
-    border: 2px solid rgba(108, 99, 255, 0.1);
+    box-shadow: 0 4px 15px rgba(108, 99, 255, 0.12) !important;
+    transition: all 0.3s ease;
+    border: 2px solid rgba(108, 99, 255, 0.15) !important;
+    padding: 2rem !important;
 }
 
 .stat-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(108, 99, 255, 0.2);
+    transform: translateY(-8px);
+    box-shadow: 0 12px 30px rgba(108, 99, 255, 0.25) !important;
 }
 
 .numero-stat {
@@ -430,7 +377,7 @@ section h2::after {
     font-weight: bold;
     color: var(--primario);
     margin-bottom: 0.5rem;
-    text-shadow: 0 2px 4px rgba(108, 99, 255, 0.1);
+    text-shadow: 0 2px 4px rgba(108, 99, 255, 0.15);
 }
 
 .label-stat {
@@ -440,97 +387,73 @@ section h2::after {
     line-height: 1.3;
 }
 
-/* Botones acción */
-.botones-accion {
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
+/* Ocultar stat de usuarios si no es admin (controlado por JS) */
+#stat-usuarios.oculto {
+    display: none !important;
 }
 
-.btn-accion {
-    background: linear-gradient(135deg, var(--acento), #ff9f66);
-    color: white;
-    border: none;
-    padding: 0.7rem 1.5rem;
-    border-radius: 20px;
-    cursor: pointer;
-    font-weight: 500;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 8px rgba(237, 137, 54, 0.2);
+/* ACCIONES RÁPIDAS - botones con flex y gap */
+#acciones-rapidas .btn-primary,
+#acciones-rapidas .btn-secondary {
     text-decoration: none;
     display: inline-block;
-    font-size: 0.95rem;
 }
 
-.btn-accion:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(237, 137, 54, 0.3);
-}
-
-/* Utilidades */
+/* CLASE OCULTO */
 .oculto {
     display: none !important;
 }
 
-/* Responsive */
-@media (max-width: 1024px) {
-    .formulario-perfil {
-        grid-template-columns: 1fr;
+/* RESPONSIVE - ajustes adicionales sobre Bootstrap */
+@media (max-width: 992px) {
+    .card-title {
+        font-size: 1.4rem !important;
     }
 
-    .contenedor-stats {
-        grid-template-columns: repeat(2, 1fr);
+    .info-basica h2 {
+        font-size: 1.7rem;
     }
 }
 
 @media (max-width: 768px) {
-    #perfil-hero {
-        flex-direction: column;
-        text-align: center;
-        gap: 2rem;
-    }
-
-    .info-basica {
-        text-align: center;
-    }
-
-    .contenedor-stats {
-        grid-template-columns: 1fr;
-    }
-
-    .botones-accion {
-        flex-direction: column;
-    }
-
-    .btn-accion {
-        width: 100%;
-        text-align: center;
-    }
-
-    .vista-datos {
-        grid-template-columns: 1fr;
-    }
-
-    .botones-formulario {
-        flex-direction: column;
-    }
-}
-
-@media (max-width: 480px) {
-    main {
-        padding: 0 0.5rem;
-        gap: 1rem;
-    }
-
-    section {
-        padding: 1.5rem;
+    .card-title {
+        font-size: 1.3rem !important;
     }
 
     .info-basica h2 {
         font-size: 1.5rem;
     }
 
+    .imagen-perfil {
+        width: 100px;
+        height: 100px;
+    }
+
     .numero-stat {
         font-size: 2.5rem;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+        padding: 0.7rem 1.5rem;
+        font-size: 0.95rem;
+    }
+}
+
+@media (max-width: 576px) {
+    #perfil-hero .card {
+        padding: 2rem 1rem !important;
+    }
+
+    .stat-card {
+        padding: 1.5rem !important;
+    }
+
+    .numero-stat {
+        font-size: 2rem;
+    }
+
+    .card-body {
+        padding: 1.5rem !important;
     }
 }
