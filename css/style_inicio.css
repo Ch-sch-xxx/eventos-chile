@@ -260,6 +260,5 @@ pero le pongo las clases de Bootstrap .btn .btn-primary, .rounded-pill, etc */
     padding: 0 1rem;
 }
 
-/* Cuando uso Bootstrap,
-muchos de estos estilos
+/* Con Bootstrap, muchos de estos estilos
 pueden remplazarse con clases tipo .container, .row, .col, .mb-2, .px-3, .py-4 */
