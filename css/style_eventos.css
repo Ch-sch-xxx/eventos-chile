@@ -1,4 +1,4 @@
-/* Variables globales */
+/* VARIABLES GLOBALES */
 :root {
     --primario: #6C63FF;
     --secundario: #2D3748;
@@ -7,7 +7,7 @@
     --acento-suave: #FED7D7;
 }
 
-/* Estilos generales */
+/* ESTILO GENERAL */
 body {
     margin: 0;
     font-family: Arial, sans-serif;
@@ -16,7 +16,7 @@ body {
     position: relative;
 }
 
-/* confeti */
+/* CONFETI DECORATIVO */
 body::before {
     content: "";
     position: fixed;
@@ -33,26 +33,23 @@ body::before {
     background-size: 200px 200px, 250px 250px, 300px 300px;
     animation: confetiMov 10s linear infinite;
 }
-
 @keyframes confetiMov {
     from { background-position: 0 0, 50px 100px, 100px 200px; }
     to { background-position: 500px 1000px, 550px 1100px, 600px 1200px; }
 }
 
-/* Header */
+/* HEADER Y FOOTER */
 header, footer {
     background: linear-gradient(135deg, var(--secundario) 0%, #4A5568 100%);
     color: white;
-    padding: 1rem;
-    box-shadow: 0 6px 10px rgba(108, 99, 255, 0.2);
+    box-shadow: 0 6px 10px rgba(108,99,255,0.2);
     min-height: 80px;
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
-/* título animado */
-header h1 {
+#h1_titulo {
     animation: cambioColores 5s ease-in-out infinite;
     background: linear-gradient(45deg, white, #9F7AEA, var(--primario), var(--acento));
     background-size: 400% 400%;
@@ -62,59 +59,30 @@ header h1 {
     font-weight: bold;
 }
 
-/* Colores que se mueven */
 @keyframes cambioColores {
-    0% {
-        background-position: 5% 50%;
-    }
-    25% {
-        background-position: 100% 50%;
-    }
-    50% {
-        background-position: 100% 100%;
-    }
-    75% {
-        background-position: 2% 100%;
-    }
-    100% {
-        background-position: 1% 50%;
-    }
+    0% { background-position: 5% 50%; }
+    25% { background-position: 100% 50%; }
+    50% { background-position: 100% 100%; }
+    75% { background-position: 2% 100%; }
+    100% { background-position: 1% 50%; }
 }
 
-/* Efecto hover en el título */
 header h1:hover {
     transform: translateY(12px);
     cursor: default;
 }
 
-#contacto {
+/* ENLACES EN FOOTER */
+#contacto, #mail, #Ftnosotros {
     margin: 0.3rem 0;
-    color: #ffffff;
-    text-decoration: none;
-}
-
-#mail {
-    margin: 0.3rem 0;
-    color: #9F7AEA;
     transition: color 0.3s ease;
 }
+#contacto { color: #fff; text-decoration: none; }
+#mail, #Ftnosotros { color: #9F7AEA; }
+#mail:hover, #Ftnosotros:hover { color: var(--acento); }
 
-#mail:hover {
-    color: var(--acento);
-}
-
-#Ftnosotros {
-    margin: 0.3rem 0;
-    color: #9F7AEA;
-    transition: color 0.3s ease;
-}
-
-#Ftnosotros:hover {
-    color: var(--acento);
-}
-
+/* NAVBAR */
 nav ul {
-    list-style: none;
     display: flex;
     justify-content: end;
     gap: 1rem;
@@ -122,7 +90,6 @@ nav ul {
     padding: 0;
     align-items: center;
 }
-
 nav a {
     color: white;
     text-decoration: none;
@@ -130,353 +97,389 @@ nav a {
     border-radius: 20px;
     transition: all 0.3s ease;
 }
-
-/* Hover en nav */
 nav a:hover {
-    background: rgba(108, 99, 255, 0.2);
+    background: rgba(108,99,255,0.2);
     transform: translateY(-2px);
 }
 
+/* CARRUSEL DE EVENTOS */
 .carrusel-eventos {
-    height: 450px;
-    width: auto;
+    width: 100%;
+    max-width: 1100px;
     margin: 2rem auto;
-    background: linear-gradient(135deg, rgba(108, 99, 255, 0.05) 0%, var(--acento-suave) 100%);
+    background: linear-gradient(135deg, rgba(108,99,255,0.05) 0%, var(--acento-suave) 100%);
     border-radius: 15px;
-    box-shadow: 0 8px 32px rgba(108, 99, 255, 0.15);
-    padding: 3rem 2rem;
+    box-shadow: 0 8px 32px rgba(108,99,255,0.15);
+    padding: 2rem;
     animation: fadeInUp 1s ease-out;
     border: 4px solid #dad8ee;
-    overflow: visible;
+    overflow: hidden;
 }
-
 @keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(30px);}
+    to { opacity: 1; transform: translateY(0);}
 }
-
 .carrusel-lista {
     display: flex;
-    gap: 2rem;
+    gap: 1.5rem;
     flex-wrap: nowrap;
     overflow-x: auto;
-    overflow-y: visible;
-    padding: 3rem 1rem;
-    scroll-behavior: smooth;
-    min-height: 300px;
-    align-items: center;
-}
-
-.Tarjetas {
-    background: white;
-    border-radius: 12px;
-    overflow: visible;
-    text-align: center;
+    overflow-y: hidden;
     padding: 1rem;
-    box-shadow: 0 8px 24px rgba(108, 99, 255, 0.2);
-    transition: transform 0.4s cubic-bezier(.25, .8, .25, 1), box-shadow 0.3s;
-    perspective: 400px;
-    transform: rotateY(8deg) scale(1);
-    margin: 2rem 0;
-    border: 2px solid rgba(108, 99, 255, 0.15);
+    scroll-behavior: smooth;
+    align-items: stretch;
+    min-height: 260px;
+    
+    /*ocultando la barra de scroll, se ve fea xd*/
+    scrollbar-width: none;      /* Firefox */
+    -ms-overflow-style: none;
+}
+.carrusel-lista::-webkit-scrollbar {
+    display: none;              /* Chrome, Safari y Opera */
+}
+/* TARJETAS DEL CARRUSEL */
+.Tarjetas {
+    width: 240px;
+    max-width: 90vw;
+    min-width: 200px;
+    height: 340px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(31,48,239,0.13);
+    /* Centrado y layout igual en todas */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 0.5rem;
+    /* Siempre el mismo padding para las tarjetas */
+    padding: 1.2rem;
+    transition: transform 0.4s cubic-bezier(.25, .6, .25, .9), box-shadow 0.3s;
+    border: 2px solid rgba(108,99,255,0.12);
     position: relative;
-    z-index: 1;
-    height: 300px;
-    width: 80px;
+    flex-shrink: 0;
+    /* Para que todas tengan el mismo alto, incluso si una tiene menos texto */
+    box-sizing: border-box;
 }
-
 .Tarjetas:hover {
-    transform: rotateY(0deg) scale(1.08);
-    box-shadow: 0 25px 80px rgb(108, 99, 255);
+    transform: rotateY(0deg) scale(1.07);
+    box-shadow: 0 25px 80px rgba(108,99,255,0.33);
 }
-
 .Tarjetas img,
 .img-tarjeta-evento {
-    width: 90px;
-    height: 90px;
-    object-fit: cover;
+    width: 100%;
+    height: 80px; /* Reduje altura para dejar más espacio al contenido */
+    object-fit: contain; /* Cambié a cover para mejor aprovechamiento */
     display: block;
     margin: 0 auto 1rem auto;
     border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(108, 99, 255, 0.15);
+    box-shadow: 0 8px 20px rgba(108,99,255,0.2);
+    flex-shrink: 0;
 }
-
 .Tarjetas h3 {
-    margin: 0.5rem 0;
-    font-size: 1.1rem;
+    margin: 0 0 0.8rem 0;
+    font-size: 0.8rem;
     font-weight: 600;
     color: var(--secundario);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
-
-/* descripción */
 .Tarjetas p {
-    margin: 0.6rem 0 1rem 0;
-    font-size: 0.95rem;
-    color: var(--secundario);
-}
+    margin: 0.3rem 0;
+    font-size: 0.7rem;
+    line-height: 1.2; /* Evito que los párrafos se expandan demasiado */
+    max-height: 2.8rem;
+    text-align: justify;
 
+}
 .tipo-evento {
-    background: rgba(237, 137, 54, 0.15);
+    background: rgba(237,137,54,0.15);
     color: var(--acento);
-    border-radius: 4px;
-    padding: 2px 7px;
-    font-size: 0.9rem;
-    margin-left: 6px;
+    border-radius: 12px;
+    padding: 4px 8px;
+    font-size: 0.75rem;
+    margin: 0.5rem 0;
     font-weight: 500;
+    display: inline-block;
+    white-space: nowrap;
+    text-align: center;
 }
 
+/* BOTONES PRINCIPALES DE LAS TARJETAS */
 .btn-asistir {
     background: linear-gradient(135deg, var(--primario), #9F7AEA);
     color: white;
     border: none;
-    padding: 0.5rem 1rem;
+    padding: 0.6rem 1rem;
     border-radius: 6px;
     cursor: pointer;
-    font-size: 1rem;
+    font-size: 0.9rem;
     font-weight: 500;
-    box-shadow: 0 2px 8px rgba(108, 99, 255, 0.25);
+    box-shadow: 0 2px 8px rgba(108,99,255,0.25);
     transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
+    margin-top: auto;
+    white-space: nowrap;
+    text-align: center;
+    align-self: center;
 }
-
-/* efecto brillante al botón */
 .btn-asistir::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
     transition: left 0.5s;
 }
-
-.btn-asistir:hover::before {
-    left: 100%;
-}
-
+.btn-asistir:hover::before { left: 100%; }
 .btn-asistir:hover {
     background: linear-gradient(135deg, #5A52D5, #8B7EFF);
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(108, 99, 255, 0.3);
+    box-shadow: 0 6px 20px rgba(108,99,255,0.3);
 }
 
-
-/* Nueva sección tarjetas 3D, unicas en la pagina  */
-/* Contenedor principal tarjetas 3D */
+/* TARJETAS 3D DE EVENTOS */
 .eventos-tarjetas-3d {
-    padding: 3rem 2rem;
-    max-width: 1200px;
-    margin: 3rem auto;
     background: linear-gradient(135deg, #f9faff 0%, #ffffff 100%);
-    border-radius: 16px;
-    box-shadow: 0 8px 30px rgba(108, 99, 255, 0.1);
+    border-radius: 20px;
+    box-shadow: 0 12px 40px rgba(108,99,255,0.15);
 }
 
-/* Título de la sección */
 .eventos-tarjetas-3d h2 {
     text-align: center;
     color: var(--secundario);
-    font-size: 2.1rem;
+    font-size: 2.3rem;
     font-weight: 700;
-    margin-bottom: 3rem;
+    margin-bottom: 2rem;
     position: relative;
 }
 
 .eventos-tarjetas-3d h2::after {
     content: '';
     position: absolute;
-    bottom: -12px;
+    bottom: -15px;
     left: 50%;
     transform: translateX(-50%);
-    width: 100px;
+    width: 120px;
     height: 4px;
     background: linear-gradient(135deg, var(--primario), var(--acento));
     border-radius: 2px;
 }
 
-/* Grid de 3 */
-.contenedor-grid-eventos {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 4rem 3rem;   /* más espacio */
-    justify-items: center;
-    max-width: 1000px;
-    margin: 0 auto;
-    padding-bottom: 4rem; /* espacio abajo del grid */
-}
-
-/* Tarjeta 3D individual */
+/* TARJETA 3D INDIVIDUAL - FONDO GRANDE Y EFECTO FLOTANTE DESTACADO */
 .tarjeta-evento-3d {
-    width: 280px;
-    height: 350px;
-    perspective: 1000px;
-    cursor: pointer;
+    width: 100%;
+    max-width: 320px;
+    min-width: 220px;
+    height: 380px;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    perspective: 2000px;
 }
 
-/* Tarjeta que hace flip, interconecta el espacio tridimensional al voltear */
+
 .carta-evento-flip {
     width: 100%;
     height: 100%;
     position: relative;
     transform-style: preserve-3d;
-    transition: transform 0.7s ease;
-    border-radius: 14px;
+    transition: transform 0.5s ease-out, box-shadow 0.4s;
+    border-radius: 35px;
+    box-shadow: 0 20px 35px rgba(34, 65, 220, 0.43),
+    0 15px 25px rgba(108, 99, 255, 0.82),
+    0 6px 18px rgba(0, 0, 0, 0.22);
+    transform: translateZ(0) rotateX(25deg);
 }
 
-/* Estado volteado */
 .carta-evento-flip.volteada {
-    transform: rotateY(180deg);
+    transform: rotateY(180deg) translateZ(40px);
 }
 
-/* Caras base */
-.cara-frontal,
-.cara-posterior {
+/* CARAS DE LA TARJETA  */
+.cara-frontal, .cara-posterior {
     position: absolute;
     width: 100%;
     height: 100%;
     backface-visibility: hidden;
-    border-radius: 14px;
+    border-radius: 16px;
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    border: 2px solid rgba(108, 99, 255, 0.2);
-    box-shadow: 0 10px 25px rgba(108, 99, 255, 0.2);
+    border: 2px solid rgba(108,99,255,0.2);
     transition: all 0.3s ease;
+    padding: 0.2rem 1rem;
+    box-sizing: border-box;
+
 }
 
-/* Cara frontal */
 .cara-frontal {
     background: linear-gradient(145deg, #ffffff 0%, #f4f6ff 100%);
-    padding: 1.5rem;
-    justify-content: space-between;
+    text-align: center;
 }
 
-/* Cara trasera */
 .cara-posterior {
     background: linear-gradient(145deg, var(--primario) 0%, #9F7AEA 50%, var(--acento) 100%);
     color: white;
-    padding: 1.5rem;
     transform: rotateY(180deg);
-    justify-content: space-between;
+    text-align: left;
 }
 
-/* Imagen evento */
+/* IMAGEN DEL EVENTO */
 .imagen-evento {
     width: 100%;
-    height: 120px;
-    object-fit: cover;
-    border-radius: 10px;
-    margin-bottom: 1rem;
-    box-shadow: 0 4px 15px rgba(108, 99, 255, 0.15);
+    height: 120px; /* Reduje altura para dejar más espacio al contenido */
+    object-fit: contain; /* Cambié a cover para mejor aprovechamiento */
+    display: block;
+    margin: 0 auto 1rem auto;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(108,99,255,0.2);
+    flex-shrink: 0;
 }
 
-/* Info */
+/* INFORMACIÓN DEL EVENTO */
 .informacion-evento {
-    flex-grow: 1;
+    flex: 1;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    min-height: 140px; /* Alto mínimo garantizado */
+    max-height: 380px; /* Alto máximo para evitar desbordamiento */
+    padding: 0.4rem 0.2rem;
+    text-align: left;
 }
 
-/* Títulos */
-.cara-frontal h3,
-.cara-posterior h3 {
+/* TÍTULOS AJUSTADOS */
+.cara-frontal h3 {
     margin: 0 0 0.8rem 0;
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: 600;
-    line-height: 1.3;
+    line-height: 1.1;
+    color: var(--secundario);
+    /* Limito el título a 2 líneas máximo */
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
+    text-overflow: ellipsis;
 }
-
-.cara-frontal h3 {
+.cara-posterior h3 {
+    margin: 0 0 0.8rem 0;
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.1;
     color: var(--secundario);
+    /* Limito el título a 2 líneas máximo */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
 }
 
-/* Párrafos */
+.cara-frontal h3 { color: var(--secundario); text-align: center; }
+.cara-posterior h3 { color: white; }
+
+/* PÁRRAFOS  */
 .cara-frontal p,
 .cara-posterior p {
     margin: 0.3rem 0;
-    font-size: 0.85rem;
-    line-height: 1.4;
+    font-size: 0.7rem;
+    line-height: 1; /* Evito que los párrafos se expandan demasiado */
+    max-height: 2.8rem; /* Aprox 2 líneas */
+    overflow: hidden;
+    text-overflow: ellipsis;
+
 }
 
-.cara-frontal p {
-    color: var(--texto);
-}
+.cara-frontal p { color: var(--texto); }
+.cara-posterior p { color: rgba(255,255,255,0.95); }
 
-.cara-posterior p {
-    color: rgba(255, 255, 255, 0.9);
-}
-
-/* Etiqueta de tipo */
-.etiqueta-tipo {
-    display: inline-block;
-    background: rgba(237, 137, 54, 0.2);
-    color: var(--acento);
-    border-radius: 15px;
-    padding: 3px 10px;
+/* PÁRRAFOS ESPECÍFICOS - DETALLES TRASEROS */
+.cara-posterior .detalle-completo {
     font-size: 0.8rem;
-    font-weight: 500;
-    margin: 0.5rem 0;
+    line-height: 1.3;
+    max-height: none; /* Para la descripción completa */
+    margin: 0.2rem 0;
 }
 
-/* Botones evento */
-.boton-detalle,
-.boton-volver {
+/* ETIQUETA DE TIPO */
+.etiqueta-tipo {
+    background: rgba(237,137,54,0.15);
+    color: var(--acento);
+    border-radius: 12px;
+    padding: 4px 10px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    display: inline-block;
+    margin: 0.5rem 0;
+    align-self: center;
+}
+
+/* BOTONES EN TARJETAS 3D - SIEMPRE AL FINAL */
+.boton-detalle, .boton-volver {
     background: linear-gradient(135deg, var(--primario), #9F7AEA);
     color: white;
     border: none;
-    padding: 0.6rem 1.2rem;
-    border-radius: 20px;
+    padding: 0.7rem 1.4rem;
+    border-radius: 25px;
     cursor: pointer;
     font-weight: 500;
     font-size: 0.9rem;
     transition: all 0.3s ease;
-    margin-top: 0.8rem;
+    margin-top: auto; /* Siempre al final */
+    margin-bottom: 0;
+    white-space: nowrap;
+    text-align: center;
+    align-self: center;
+    flex-shrink: 0; /* No se achica */
 }
 
 .boton-volver {
-    background: rgba(255, 255, 255, 0.25);
-    border: 1px solid rgba(255, 255, 255, 0.4);
+    background: rgba(255,255,255,0.25);
+    border: 1px solid rgba(255,255,255,0.4);
 }
 
 .boton-detalle:hover {
     background: linear-gradient(135deg, #5A52D5, #8B7EFF);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(108, 99, 255, 0.3);
+    box-shadow: 0 8px 20px rgba(108,99,255,0.4);
 }
 
 .boton-volver:hover {
-    background: rgba(255, 255, 255, 0.35);
+    background: rgba(255,255,255,0.35);
     transform: translateY(-2px);
 }
 
-/* Efectos hover 3D */
-.tarjeta-evento-3d:hover .cara-frontal,
-.tarjeta-evento-3d:hover .cara-posterior {
-    box-shadow: 0 15px 35px rgba(108, 99, 255, 0.3);
-    border-color: rgba(108, 99, 255, 0.4);
+/* EFECTOS HOVER */
+.tarjeta-evento-3d:hover .carta-evento-flip {
+    box-shadow:
+            0 25px 50px rgba(108,99,255,0.4),
+            0 15px 35px rgba(108,99,255,0.25),
+            0 8px 20px rgba(0,0,0,0.15);
+    transform: translateZ(15px) rotateX(1deg) translateY(-5px);
 }
 
-/* Animación de entrada */
+.tarjeta-evento-3d:hover .cara-frontal,
+.tarjeta-evento-3d:hover .cara-posterior {
+    border-color: rgba(108,99,255,0.4);
+}
+
+/* ANIMACIONES DE APARICIÓN */
 @keyframes aparecerTarjeta {
     from { opacity: 0; transform: translateY(30px) scale(0.95);}
     to { opacity: 1; transform: translateY(0) scale(1);}
 }
+
 .tarjeta-evento-3d {
     animation: aparecerTarjeta 0.6s ease-out forwards;
 }
+
 .tarjeta-evento-3d:nth-child(1) { animation-delay: 0.1s; }
 .tarjeta-evento-3d:nth-child(2) { animation-delay: 0.2s; }
 .tarjeta-evento-3d:nth-child(3) { animation-delay: 0.3s; }
@@ -484,14 +487,28 @@ nav a:hover {
 .tarjeta-evento-3d:nth-child(5) { animation-delay: 0.5s; }
 .tarjeta-evento-3d:nth-child(6) { animation-delay: 0.6s; }
 
-/* Responsive: móvil y tablet */
-@media (max-width: 768px) {
-    .contenedor-grid-eventos { grid-template-columns: 1fr; gap: 2rem; }
-    .tarjeta-evento-3d { width: 100%; max-width: 300px; }
-}
+/* RESPONSIVE */
 @media (max-width: 1024px) {
-    .contenedor-grid-eventos { grid-template-columns: repeat(2, 1fr);}
+    .tarjeta-evento-3d {
+        max-width: 260px;
+        height: 350px;
+    }
+    .eventos-tarjetas-3d h2 { font-size: 2rem; }
 }
 
-
-/*Responsividad general en otro css*/
+@media (max-width: 768px) {
+    .tarjeta-evento-3d {
+        max-width: 280px;
+        height: 320px;
+        min-width: 200px;
+    }
+    .cara-frontal, .cara-posterior {
+        padding: 0.8rem 0.6rem;
+        max-height: 320px;
+    }
+    .imagen-evento { height: 100px; }
+    .informacion-evento {
+        min-height: 120px;
+        max-height: 160px;
+    }
+}

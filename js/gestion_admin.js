@@ -1,6 +1,6 @@
-// CONTROL DE ACCESO Y INICIO CARGA - MODIFICADO PARA ADMITIR ADMIN Y USUARIO
+// CONTROL DE ACCESO Y CARGA INICIAL - permite admin y usuario
 document.addEventListener('DOMContentLoaded', () => {
-    // Control de acceso - ahora permite admin Y usuario
+    // Control de acceso - verifica sesión activa
     const userLogged = localStorage.getItem('user-logged');
     if (userLogged !== 'admin' && userLogged !== 'usuario') {
         alert('Debes iniciar sesión para acceder');
@@ -10,76 +10,94 @@ document.addEventListener('DOMContentLoaded', () => {
     // Personalizar interfaz según el rol
     personalizarInterfazSegunRol();
 
+    // Renderizar tabla de eventos
     renderTablaEventos();
+
+    // Configurar event listeners
     configurarListeners();
 });
 
-let editandoIndice = null;
+let editandoIndice = null; // Variable para controlar si estamos editando
 
-//Personalizar la interfaz según el rol del usuario
+// Personalizar la interfaz según el rol del usuario (admin o usuario regular)
 function personalizarInterfazSegunRol() {
     const userLogged = localStorage.getItem('user-logged');
     const userData = JSON.parse(localStorage.getItem('user-data') || '{}');
-    const userEmail = localStorage.getItem('user-email');
 
-    // Cambiar título según el rol
-    const titulo = document.querySelector('header h1');
-    const tituloSeccion = document.querySelector('#listar-eventos h2');
+    // Cambiar título del header según el rol
+    const titulo = document.querySelector('#h1_titulo');
+    const tituloSeccion = document.querySelector('#listar-eventos .card-title');
 
     if (userLogged === 'admin') {
-        titulo.textContent = 'Panel Admin · Eventos Chile';
-        tituloSeccion.textContent = 'Gestión de Eventos (Administrador)';
+        if (titulo) titulo.textContent = 'Panel Admin · Eventos Chile';
+        if (tituloSeccion) tituloSeccion.textContent = 'Gestión de Eventos (Administrador)';
     } else {
-        titulo.textContent = 'Mi Gestor · Eventos Chile';
-        tituloSeccion.textContent = 'Mis Eventos Creados';
+        if (titulo) titulo.textContent = 'Mi Gestor · Eventos Chile';
+        if (tituloSeccion) tituloSeccion.textContent = 'Mis Eventos Creados';
     }
 }
 
-// CONFIG LISTENERS Y MODAL
+// Configurar todos los event listeners
 function configurarListeners() {
-    // Navegación crear evento
-    document.getElementById('nav-crear').addEventListener('click', e => {
-        e.preventDefault();
-        editandoIndice = null;
-        limpiarFormulario();
-        togglearSecciones('crear-evento');
-    });
+    // Navegación: botón crear evento
+    const navCrear = document.getElementById('nav-crear');
+    if (navCrear) {
+        navCrear.addEventListener('click', e => {
+            e.preventDefault();
+            editandoIndice = null;
+            limpiarFormulario();
+            togglearSecciones('crear-evento');
+            // Marcar como activo en sidebar
+            actualizarNavActivo('nav-crear');
+        });
+    }
 
-    // Navegación listar eventos
-    document.getElementById('nav-listar').addEventListener('click', e => {
-        e.preventDefault();
-        togglearSecciones('listar-eventos');
-        renderTablaEventos();
-    });
+    // Navegación: botón listar eventos
+    const navListar = document.getElementById('nav-listar');
+    if (navListar) {
+        navListar.addEventListener('click', e => {
+            e.preventDefault();
+            togglearSecciones('listar-eventos');
+            renderTablaEventos();
+            // Marcar como activo en sidebar
+            actualizarNavActivo('nav-listar');
+        });
+    }
 
     // Envío del formulario (crear o editar)
-    document.getElementById('form-crear').addEventListener('submit', e => {
-        e.preventDefault();
-        procesarFormulario();
-    });
+    const formCrear = document.getElementById('form-crear');
+    if (formCrear) {
+        formCrear.addEventListener('submit', e => {
+            e.preventDefault();
+            procesarFormulario();
+        });
+    }
 
-    // Acciones tabla
-    document.querySelector('#listar-eventos tbody').addEventListener('click', e => {
-        const idx = parseInt(e.target.dataset.idx);
+    // Event delegation para acciones de tabla (ver, editar, eliminar)
+    const tbody = document.querySelector('#listar-eventos tbody');
+    if (tbody) {
+        tbody.addEventListener('click', e => {
+            const idx = parseInt(e.target.dataset.idx);
 
-        if (e.target.classList.contains('btn-ver')) return verEvento(idx);
-        if (e.target.classList.contains('btn-editar')) return iniciarEdicion(idx);
-        if (e.target.classList.contains('btn-eliminar')) return borrarEvento(idx);
-    });
+            if (e.target.classList.contains('btn-ver')) return verEvento(idx);
+            if (e.target.classList.contains('btn-editar')) return iniciarEdicion(idx);
+            if (e.target.classList.contains('btn-eliminar')) return borrarEvento(idx);
+        });
+    }
 
     // Botón perfil - redirige a perfil_admin.html
     const btnPerfil = document.getElementById('enlace-perfil');
     if (btnPerfil) {
-        btnPerfil.addEventListener('click', (e) => {
+        btnPerfil.addEventListener('click', e => {
             e.preventDefault();
             window.location.href = 'perfil_admin.html';
         });
     }
 
-    // Cerrar sesión
+    // Botón cerrar sesión
     const btnCerrarSesion = document.getElementById('cerrar-sesion');
     if (btnCerrarSesion) {
-        btnCerrarSesion.addEventListener('click', (e) => {
+        btnCerrarSesion.addEventListener('click', e => {
             e.preventDefault();
             if (confirm('¿Seguro que deseas cerrar sesión?')) {
                 localStorage.removeItem('user-logged');
@@ -91,36 +109,59 @@ function configurarListeners() {
         });
     }
 
-    // Modal detalles: cerrar
+    // Modal: botón cerrar con Bootstrap
     const cerrarModal = document.getElementById('cerrar-modal');
     if (cerrarModal) {
         cerrarModal.addEventListener('click', () => {
-            document.getElementById('modal-detalle').classList.add('oculto');
+            // Usar API Bootstrap para cerrar modal correctamente
+            const modalElement = document.getElementById('modal-detalle');
+            const modalInstance = bootstrap.Modal.getInstance(modalElement);
+            if (modalInstance) {
+                modalInstance.hide();
+            }
         });
     }
+}
 
-    // Cerrar modal haciendo clic fuera
-    document.getElementById('modal-detalle').addEventListener('click', e => {
-        if (e.target.id === 'modal-detalle') {
-            e.target.classList.add('oculto');
-        }
+// Actualizar botón activo en sidebar
+function actualizarNavActivo(idActivo) {
+    // Remover clase activé de todos
+    document.querySelectorAll('.sidebar .nav-link').forEach(link => {
+        link.classList.remove('active');
     });
+
+    // Agregar clase active al actual
+    const linkActivo = document.getElementById(idActivo);
+    if (linkActivo) {
+        linkActivo.classList.add('active');
+    }
 }
 
-// Mostrar u ocultar secciones
+// Mostrar u ocultar secciones (crear evento o listar eventos)
 function togglearSecciones(seccionVisible) {
-    document.getElementById('crear-evento').classList.toggle('oculto', seccionVisible !== 'crear-evento');
-    document.getElementById('listar-eventos').classList.toggle('oculto', seccionVisible !== 'listar-eventos');
+    const crearEvento = document.getElementById('crear-evento');
+    const listarEventos = document.getElementById('listar-eventos');
+
+    if (crearEvento) {
+        crearEvento.classList.toggle('oculto', seccionVisible !== 'crear-evento');
+    }
+    if (listarEventos) {
+        listarEventos.classList.toggle('oculto', seccionVisible !== 'listar-eventos');
+    }
 }
 
-// Limpia el formulario y botón
+// Limpiar el formulario y resetear botón
 function limpiarFormulario() {
-    document.getElementById('form-crear').reset();
-    document.querySelector('#form-crear button').textContent = 'Crear';
+    const form = document.getElementById('form-crear');
+    const boton = document.querySelector('#form-crear button[type="submit"]');
+
+    if (form) form.reset();
+    if (boton) boton.textContent = 'Crear Evento';
 }
 
-// Proceso de formulario: crear o editar
+// Procesar formulario: crear o editar evento
 function procesarFormulario() {
+    // Obtener valores del formulario
     const titulo = document.getElementById('titulo').value.trim();
     const fecha = document.getElementById('fecha').value;
     const lugar = document.getElementById('lugar').value.trim();
@@ -144,7 +185,7 @@ function procesarFormulario() {
         return alert('Selecciona el tipo de evento');
     }
 
-    // Validar fecha no sea en el pasado
+    // Validar que la fecha no sea en el pasado
     const fechaEvento = new Date(fecha);
     const hoy = new Date();
     hoy.setHours(0, 0, 0, 0);
@@ -153,6 +194,7 @@ function procesarFormulario() {
         return alert('La fecha del evento no puede ser anterior a hoy');
     }
 
+    // Construir objeto evento
     const eventoData = {
         titulo,
         fecha,
@@ -166,6 +208,7 @@ function procesarFormulario() {
 
     try {
         if (editandoIndice !== null) {
+            // Modo edición
             const resultado = editarEvento(editandoIndice, eventoData);
             if (resultado) {
                 alert('Evento editado exitosamente!');
@@ -176,6 +219,7 @@ function procesarFormulario() {
                 alert('No tienes permisos para editar este evento');
             }
         } else {
+            // Modo creación
             const resultado = crearEvento(eventoData);
             if (resultado) {
                 alert('Evento creado exitosamente!');
@@ -186,11 +230,12 @@ function procesarFormulario() {
             }
         }
     } catch (error) {
+        console.error('Error al guardar evento:', error);
         alert('Error al guardar el evento');
     }
 }
 
-// Precarga campos para edición
+// Precargar datos en formulario para edición
 function iniciarEdicion(idx) {
     const eventos = obtenerMisEventos();
     const evento = eventos[idx];
@@ -223,11 +268,15 @@ function iniciarEdicion(idx) {
     const todosLosEventos = listarEventos();
     editandoIndice = todosLosEventos.findIndex(e => e.id === evento.id);
 
-    document.querySelector('#form-crear button').textContent = 'Guardar Cambios';
+    // Cambiar texto del botón y mostrar formulario
+    const boton = document.querySelector('#form-crear button[type="submit"]');
+    if (boton) boton.textContent = 'Guardar Cambios';
+
     togglearSecciones('crear-evento');
+    actualizarNavActivo('nav-crear');
 }
 
-// Elimina evento
+// Eliminar evento con confirmación
 function borrarEvento(idx) {
     const eventos = obtenerMisEventos();
     const evento = eventos[idx];
@@ -260,12 +309,13 @@ function borrarEvento(idx) {
                 alert('Error: No se pudo eliminar el evento');
             }
         } catch (error) {
+            console.error('Error al eliminar evento:', error);
             alert('Error al eliminar el evento');
         }
     }
 }
 
-// Mostrar modal de detalles del evento
+// Mostrar modal con detalles del evento (usando Bootstrap Modal)
 function verEvento(idx) {
     const eventos = obtenerMisEventos();
     const evento = eventos[idx];
@@ -285,46 +335,71 @@ function verEvento(idx) {
     document.getElementById('detalle-capacidad').textContent = evento.capacidad || 'No informada';
     document.getElementById('detalle-precio').textContent = evento.precio || 'Gratis';
 
-    document.getElementById('modal-detalle').classList.remove('oculto');
+    // Mostrar modal usando Bootstrap API
+    const modalElement = document.getElementById('modal-detalle');
+    const modal = new bootstrap.Modal(modalElement);
+    modal.show();
 }
 
-// Renderiza la tabla
+// Renderizar tabla con eventos del usuario (o todos si es admin)
 function renderTablaEventos() {
     const eventos = obtenerMisEventos();
     const tbody = document.querySelector('#listar-eventos tbody');
     const userLogged = localStorage.getItem('user-logged');
     const userEmail = localStorage.getItem('user-email');
 
+    if (!tbody) return;
+
     tbody.innerHTML = '';
 
+    // Mensaje si no hay eventos
     if (eventos.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 2rem; color: #666;">No tienes eventos creados aún. ¡Crea tu primer evento!</td></tr>';
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="7" style="text-align: center; padding: 2rem; color: #666;">
+                    No tienes eventos creados aún. ¡Crea tu primer evento!
+                </td>
+            </tr>
+        `;
         return;
     }
 
+    // Generar fila por cada evento
     eventos.forEach((evento, i) => {
-        const fechaCreacion = evento.fechaCreacion ? new Date(evento.fechaCreacion).toLocaleDateString() : 'N/A';
         const autor = evento.creadoPor || 'Sistema';
         const esMiEvento = evento.creadoPor === userEmail;
         const puedeEditar = userLogged === 'admin' || esMiEvento;
 
         const tr = document.createElement('tr');
         tr.innerHTML = `
-          <td>${i+1}</td>
-          <td><img src="${evento.imagen}" style="width:48px;height:48px;object-fit:cover;border-radius:4px;" alt="Evento" onerror="this.src='imagenes/eventosIMG.png'"></td>
-          <td>
-            <strong>${evento.titulo}</strong><br>
-            <small style="color: #666;">Por: ${autor}</small>
-            ${esMiEvento ? '<br><span style="color: var(--primario); font-size: 0.75rem;">● Tu evento</span>' : ''}
-          </td>
-          <td>${evento.fecha}</td>
-          <td style="max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${evento.lugar}</td>
-          <td><span style="background: var(--acento); color: white; padding: 2px 6px; border-radius: 4px; font-size: 0.8rem;">${evento.tipo}</span></td>
-          <td>
-            <button class="btn-ver" data-idx="${i}" title="Ver detalles">Ver</button>
-            ${puedeEditar ? `<button class="btn-editar" data-idx="${i}" title="Editar evento">Editar</button>` : ''}
-            ${puedeEditar ? `<button class="btn-eliminar" data-idx="${i}" title="Eliminar evento">Eliminar</button>` : ''}
-          </td>`;
+            <td>${i+1}</td>
+            <td>
+                <img src="${evento.imagen}" 
+                     alt="Evento" 
+                     class="img-fluid rounded" 
+                     style="width:60px; height:50px; object-fit:cover;"
+                     onerror="this.src='imagenes/eventosIMG.png'">
+            </td>
+            <td>
+                <strong>${evento.titulo}</strong><br>
+                <small style="color: #666;">Por: ${autor}</small>
+                ${esMiEvento ? '<br><span style="color: var(--primario); font-size: 0.75rem; font-weight: 600;">● Tu evento</span>' : ''}
+            </td>
+            <td>${evento.fecha}</td>
+            <td style="max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                ${evento.lugar}
+            </td>
+            <td>
+                <span class="badge" style="background: var(--acento); color: white; font-size: 0.8rem;">
+                    ${evento.tipo}
+                </span>
+            </td>
+            <td>
+                <button class="btn-ver" data-idx="${i}" title="Ver detalles">Ver</button>
+                ${puedeEditar ? `<button class="btn-editar" data-idx="${i}" title="Editar evento">Editar</button>` : ''}
+                ${puedeEditar ? `<button class="btn-eliminar" data-idx="${i}" title="Eliminar evento">Eliminar</button>` : ''}
+            </td>
+        `;
         tbody.appendChild(tr);
     });
 }

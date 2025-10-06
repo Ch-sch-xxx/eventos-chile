@@ -1,4 +1,4 @@
-/* Variables globales */
+/* VARIABLES GLOBALES */
 :root {
     --primario: #6C63FF;
     --secundario: #2D3748;
@@ -7,7 +7,7 @@
     --acento-suave: #FED7D7;
 }
 
-/* Estilos generales */
+/* ESTILO GENERAL */
 body {
     margin: 0;
     font-family: Arial, sans-serif;
@@ -16,7 +16,7 @@ body {
     position: relative;
 }
 
-/*animaciones de confeti, estilo celebracion, mas atractivo */
+/* CONFETI DECORATIVO */
 body::before {
     content: "";
     position: fixed;
@@ -33,30 +33,23 @@ body::before {
     background-size: 200px 200px, 250px 250px, 300px 300px;
     animation: confetiMov 10s linear infinite;
 }
-
 @keyframes confetiMov {
     from { background-position: 0 0, 50px 100px, 100px 200px; }
     to { background-position: 500px 1000px, 550px 1100px, 600px 1200px; }
 }
 
-
-
-
-/* Header  */
+/* HEADER Y FOOTER */
 header, footer {
     background: linear-gradient(135deg, var(--secundario) 0%, #4A5568 100%);
     color: white;
-    padding: 1rem;
-    box-shadow: 0 6px 10px rgba(108, 99, 255, 0.2);
+    box-shadow: 0 6px 10px rgba(108,99,255,0.2);
     min-height: 80px;
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
-
-/* título */
-header h1 {
+#h1_titulo {
     animation: cambioColores 5s ease-in-out infinite;
     background: linear-gradient(45deg, white, #9F7AEA, var(--primario), var(--acento));
     background-size: 400% 400%;
@@ -66,64 +59,37 @@ header h1 {
     font-weight: bold;
 }
 
-/* Colores que se mueven */
 @keyframes cambioColores {
-    0% {
-        background-position: 5% 50%;
-    }
-    25% {
-        background-position: 100% 50%;
-    }
-    50% {
-        background-position: 100% 100%;
-    }
-    75% {
-        background-position: 2% 100%;
-    }
-    100% {
-        background-position: 1% 50%;
-    }
+    0% { background-position: 5% 50%; }
+    25% { background-position: 100% 50%; }
+    50% { background-position: 100% 100%; }
+    75% { background-position: 2% 100%; }
+    100% { background-position: 1% 50%; }
 }
 
-/* Efecto hover en el título */
 header h1:hover {
     transform: translateY(12px);
     cursor: default;
 }
 
-#contacto {
+/* ENLACES EN FOOTER */
+#contacto, #mail, #Ftnosotros {
     margin: 0.3rem 0;
-    color: #ffffff;
-    text-decoration: none;
-}
-
-#mail {
-    margin: 0.3rem 0;
-    color: #9F7AEA;
     transition: color 0.3s ease;
 }
+#contacto { color: #fff; text-decoration: none; }
+#mail, #Ftnosotros { color: #9F7AEA; }
+#mail:hover, #Ftnosotros:hover { color: var(--acento); }
 
-#mail:hover {
-    color: var(--acento);
-}
-
-#Ftnosotros {
-    margin: 0.3rem 0;
-    color: #9F7AEA;
-    transition: color 0.3s ease;
-}
-
-#Ftnosotros:hover {
-    color: var(--acento);
-}
-
+/* NAVBAR */
 nav ul {
-    list-style: none;
     display: flex;
     justify-content: end;
     gap: 1rem;
+    margin: 0;
+    padding: 0;
+    align-items: center;
 }
-
 nav a {
     color: white;
     text-decoration: none;
@@ -131,14 +97,14 @@ nav a {
     border-radius: 20px;
     transition: all 0.3s ease;
 }
-
-/* Hover en nav */
 nav a:hover {
-    background: rgba(108, 99, 255, 0.2);
+    background: rgba(108,99,255,0.2);
     transform: translateY(-2px);
 }
 
-/* Sección destacado */
+/* SECCIÓN DESTACADO */
+/* Esta card queda con el look propio,
+pero la estructura la hago con Bootstrap .card .border-0 .shadow-lg, etc. */
 #destacado {
     text-align: center;
     padding: 2rem;
@@ -167,39 +133,19 @@ nav a:hover {
     animation: brilloEventoContenido 6s ease-in-out infinite;
     pointer-events: none;
 }
-
 @keyframes brilloEventoContenido {
-    0%, 100% {
-        opacity: 0.2;
-        transform: scale(1.03) rotate(0deg);
-    }
-    25% {
-        opacity: 0.5;
-        transform: scale(1.05) rotate(90deg);
-    }
-    50% {
-        opacity: 0.3;
-        transform: scale(0.95) rotate(180deg);
-    }
-    75% {
-        opacity: 0.6;
-        transform: scale(1.02) rotate(270deg);
-    }
+    0%, 100% { opacity: 0.2; transform: scale(1.03) rotate(0deg); }
+    25% { opacity: 0.5; transform: scale(1.05) rotate(90deg); }
+    50% { opacity: 0.3; transform: scale(0.95) rotate(180deg); }
+    75% { opacity: 0.6; transform: scale(1.02) rotate(270deg); }
 }
 
-/* Animación de entrada */
 @keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(170px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(170px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
-/* Título destacado*/
+/* Título de la sección destacado */
 #destacado h2 {
     font-size: 2.2rem;
     margin-bottom: 1rem;
@@ -208,12 +154,11 @@ nav a:hover {
     z-index: 1;
 }
 
-/* CSS que hace la magia en section DESTACADO  */
+/* TEXTO ANIMADO DESTACADO  */
 .destacado-opcion {
     position: relative;
     color: transparent;
 }
-
 .destacado-opcion::after {
     position: absolute;
     left: 0;
@@ -226,44 +171,34 @@ nav a:hover {
     background-clip: text;
     color: transparent;
     animation: cambiarTexto 6s infinite, cambioColores 4s ease-in-out infinite;
-    width: auto; /* Ocupa todo el ancho  */
-    text-align: center; /* Centrado */
-
+    width: auto;
+    text-align: center;
 }
 
-
-/* Cambia el contenido del texto */
 @keyframes cambiarTexto {
-    0%, 32% {
-        content: "PRESENCIALES";
-    }
-    33%, 65% {
-        content: "STREAMING";
-    }
-    66%, 100% {
-        content: "QR";
-    }
+    0%, 32% { content: "PRESENCIALES"; }
+    33%, 65% { content: "STREAMING"; }
+    66%, 100% { content: "QR"; }
 }
 
-/* Botón principal */
+/* BOTONES PRINCIPALES */
+/* Adapto los estilos visuales
+pero le pongo las clases de Bootstrap .btn .btn-primary, .rounded-pill, etc */
 #destacado a {
     display: inline-block;
     background: linear-gradient(135deg, var(--primario), #9F7AEA);
     color: white;
-    padding: 0.5rem 1rem;
+    padding: 0.8rem 2rem; /* Prefiero usar clases Bootstrap pero dejo por si acaso */
     text-decoration: none;
-    border-radius: 4px;
+    border-radius: 25px;
     font-weight: bold;
     font-size: 1.1rem;
-    padding: 0.8rem 2rem;
-    border-radius: 25px;
     box-shadow: 0 4px 15px rgba(108, 99, 255, 0.3);
     transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
 }
 
-/* Efecto brillante en el botón */
 #destacado a::before {
     content: '';
     position: absolute;
@@ -274,18 +209,16 @@ nav a:hover {
     background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
     transition: left 0.6s;
 }
-
 #destacado a:hover::before {
     left: 100%;
 }
-
 #destacado a:hover {
     transform: translateY(-3px);
     box-shadow: 0 8px 20px rgba(108, 99, 255, 0.4);
     background: linear-gradient(135deg, #5A52D5, #8B7EFF);
 }
 
-/* Sección nosotros */
+/* SECCIÓN NOSOTROS */
 #nosotros {
     padding: 1.5rem;
     background: white;
@@ -296,16 +229,12 @@ nav a:hover {
     border-left: 8px solid var(--acento);
     animation: fadeInUp 3.2s ease-out ;
 }
-
-/* Título de nosotros */
 #nosotros h2 {
     font-size: 1.8rem;
     color: var(--secundario);
     margin-bottom: 1rem;
     position: relative;
 }
-
-/* Línea decorativa */
 #nosotros h2::after {
     content: '';
     position: absolute;
@@ -316,15 +245,13 @@ nav a:hover {
     background: var(--primario);
     border-radius: 2px;
 }
-
-/* Texto */
 #nosotros p {
     font-size: 1.1rem;
     line-height: 1.7;
     color: var(--texto);
 }
 
-/* Contenedor header con altura fija */
+/* CONTENIDO DEL HEADER con altura fija */
 .header-content {
     display: flex;
     align-items: center;
@@ -333,7 +260,5 @@ nav a:hover {
     padding: 0 1rem;
 }
 
-
-
-
-/*el responsive esta en el css GENERAL*/
+/* Con Bootstrap, muchos de estos estilos
+pueden remplazarse con clases tipo .container, .row, .col, .mb-2, .px-3, .py-4 */

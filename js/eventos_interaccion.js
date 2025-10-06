@@ -1,56 +1,100 @@
-// Genera tarjetas de eventos de forma pública al abrir la página
-function generarTarjetasEventos() {
-    const eventos = listarEventos(); // lee todos los eventos públicos
-    const carruselLista = document.querySelector('.carrusel-lista');
-    carruselLista.innerHTML = ''; // limpia el contenido anterior
+// interacción visual y lógica en la página de eventos
+// Este script se conecta con 'crud_eventos.js' y usa sus funciones para mostrar los eventos
 
-    eventos.forEach(evento => {
+// Función para recortar textos largos en las tarjetas (por visual, si no se pierde la respo)
+function truncarTexto(texto, maxCaracteres) {
+    // Evito textos demasiado extensos en las tarjetas, que podrían romper el diseño
+    if (typeof texto !== "string") return "";
+    return texto.length > maxCaracteres ? texto.substring(0, maxCaracteres) + '...' : texto;
+}
+
+//Carrusel infinito
+// listarEventos() del crud_eventos.js
+function generarTarjetasCarruselInfinito() {
+    const eventos = listarEventos();
+    const carruselLista = document.getElementById('carrusel-lista');
+    carruselLista.innerHTML = '';
+
+    // Duplicar el array para dar efecto de loop infinito
+    const eventosDobles = [...eventos, ...eventos];
+    eventosDobles.forEach(evento => {
         let tarjeta = document.createElement('article');
         tarjeta.className = "Tarjetas";
         tarjeta.innerHTML = `
             <img class="img-tarjeta-evento" src="${evento.imagen}" alt="Imagen evento">
-            <h3>${evento.titulo}</h3>
-            <p>Fecha: ${evento.fecha}<br>Lugar: ${evento.lugar}</p>
+            <h3>${truncarTexto(evento.titulo, 40)}</h3>
+            <p>📅 Fecha: ${evento.fecha}<br>📍 Lugar: ${truncarTexto(evento.lugar, 50)}</p>
             <p><b class="tipo-evento">${evento.tipo}</b></p>
-            
             <button class="btn-asistir">Asistir al Evento</button>
         `;
         carruselLista.appendChild(tarjeta);
-        //creamos la tarjeta bajo la clase carrusel-lista
     });
+
+    // Logica básica de scroll infinito; si llego al final, vuelvo al inicio y viceversa
+    carruselLista.addEventListener('scroll', function () {
+        // Fin derecho, salto adelante un pixel para no quedar pegado
+        if (carruselLista.scrollLeft + carruselLista.clientWidth >= carruselLista.scrollWidth - 1) {
+            carruselLista.scrollLeft = 1;
+        }
+        // Inicio, salto a mitad del scroll
+        if (carruselLista.scrollLeft === 0) {
+            carruselLista.scrollLeft = carruselLista.scrollWidth / 2;
+        }
+    });
+
+    // auto-scroll (opcional, para que el carrusel se mueva solo)
+    setInterval(() => {
+        carruselLista.scrollLeft += 1.2;
+    }, 18);
+
 }
 
-// Botón "Asistir al Evento", debe autenticarse
+// autenticacion al "Asistir al Evento" sin login
 document.addEventListener('click', function (e) {
     if (e.target.classList.contains('btn-asistir')) {
         alert('Por favor inicia sesión para confirmar asistencia.');
-        location.href = 'auth.html';
+        location.href = 'auth.html'; // Redirige al login
     }
 });
 
-// generar las tarjetas al cargar página
-document.addEventListener('DOMContentLoaded', function () {
-    generarTarjetasEventos();
-});
+// Función para formatear fecha ISO a formato legible chileno
+function formatearFechaLegible(fechaISO) {
+    if (!fechaISO) return 'No disponible';
 
-// SECCION DE TARJETAS 3D
+    const fecha = new Date(fechaISO);
+    const opciones = {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+    };
+
+    return fecha.toLocaleDateString('es-CL', opciones);
+}
+
+//SECCIÓN tarjetas 3D para todos los eventos
 function generarTarjetas3D() {
-    const eventos = listarEventos(); // la base
+    const eventos = listarEventos();
     const grid = document.getElementById('contenedor-grid-eventos');
     grid.innerHTML = '';
 
     eventos.forEach((evento, i) => {
+        // Card responsive usando Bootstrap
+        const col = document.createElement('div');
+        col.className = 'col-md-6 col-lg-4 d-flex justify-content-center align-items-stretch mb-4';
+
         const tarjeta3D = document.createElement('div');
         tarjeta3D.className = 'tarjeta-evento-3d';
         tarjeta3D.innerHTML = `
             <div class="carta-evento-flip" data-indice="${i}">
                 <!-- Cara frontal -->
                 <div class="cara-frontal">
-                    <img class="imagen-evento" src="${evento.imagen}" alt="${evento.titulo}">
+                    <img class="imagen-evento" src="${evento.imagen}" alt="${truncarTexto(evento.titulo, 30)}">
                     <div class="informacion-evento">
-                        <h3>${evento.titulo}</h3>
-                        <p><strong>Fecha:</strong> ${evento.fecha}</p>
-                        <p><strong>Lugar:</strong> ${evento.lugar}</p>
+                        <h3>${truncarTexto(evento.titulo, 50)}</h3>
+                        <p><strong>📅 Fecha:</strong> ${evento.fecha}</p>
+                        <p><strong>📍 Lugar:</strong> ${truncarTexto(evento.lugar, 50)}</p>
                         <span class="etiqueta-tipo">${evento.tipo}</span>
                     </div>
                     <button class="boton-detalle">Ver Detalle</button>
@@ -58,31 +102,32 @@ function generarTarjetas3D() {
                 <!-- Cara posterior -->
                 <div class="cara-posterior">
                     <div class="informacion-evento">
-                        <h3>${evento.titulo}</h3>
-                        <p><strong>Descripción:</strong></p>
-                        <p>${evento.descripcion}</p>
-                        <p><strong>Capacidad:</strong> ${evento.capacidad} personas</p>
-                        <p><strong>Precio:</strong> ${evento.precio}</p>
-                        <p><strong>Creado por:</strong> ${evento.creadoPor}</span></p>
-                        <p><strong>Fecha creación:</strong> ${evento.fecha}</p>
+                        <h3>${truncarTexto(evento.titulo, 40)}</h3>
+                        <p><strong>📋 Descripción:</strong></p>
+                        <p class="detalle-completo">${truncarTexto(evento.descripcion, 200)}</p>
+                        <p><strong>👥 Capacidad:</strong> ${evento.capacidad} personas</p>
+                        <p><strong>💰 Precio:</strong> ${evento.precio}</p>
+                        <p><strong>👤 Organizador:</strong> ${truncarTexto(evento.creadoPor, 30)}</p>
+                        <p><strong>📆 Creado:</strong> ${formatearFechaLegible(evento.fechaCreacion) || evento.fecha}</p>
                     </div>
-                    <button class="boton-volver">Volver</button>
+                    <button class="boton-volver">← Volver</button>
                 </div>
             </div>
         `;
-        grid.appendChild(tarjeta3D);
+        col.appendChild(tarjeta3D);
+        grid.appendChild(col);
     });
 
     agregarEfectos3D();
 }
 
-// EFECTOS 3D MOUSE Y FLIP
+// Efectos 3D y flip en tarjetas
 function agregarEfectos3D() {
     const tarjetas3D = document.querySelectorAll('.tarjeta-evento-3d');
-
     tarjetas3D.forEach(tarjeta => {
         const flip = tarjeta.querySelector('.carta-evento-flip');
-        // Mouse movimiento - ángulo más fuerte y realista en el 3D
+
+        // Movimiento mouse para efecto 3D
         tarjeta.addEventListener('mousemove', (e) => {
             if (flip.classList.contains('volteada')) return;
             const rect = tarjeta.getBoundingClientRect();
@@ -90,36 +135,36 @@ function agregarEfectos3D() {
             const y = e.clientY - rect.top;
             const centerX = rect.width / 2;
             const centerY = rect.height / 2;
-            // Más intenso el efecto al dividir por menos: (más cerca del borde, más ángulo, menor número)
             const rotateX = (y - centerY) / 8;
-            const rotateY = (centerX - x) / 0.6;
+            const rotateY = (centerX - x) / 0.8;
             flip.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
         });
 
-        // Mouse sale - regresa a posición original
+        // Al salir del mouse, regreso a posición inicial
         tarjeta.addEventListener('mouseleave', () => {
             if (!flip.classList.contains('volteada')) {
                 flip.style.transform = 'rotateX(0deg) rotateY(0deg)';
             }
         });
 
-        // Voltear tarjeta (detalle)
+        // Botón ver detalle (voltea tarjeta)
         const btnDetalle = tarjeta.querySelector('.boton-detalle');
         const btnVolver = tarjeta.querySelector('.boton-volver');
-        btnDetalle.addEventListener('click', () => {
+        btnDetalle.addEventListener('click', (e) => {
+            e.preventDefault();
             flip.classList.add('volteada');
             flip.style.transform = 'rotateY(180deg)';
         });
-        btnVolver.addEventListener('click', () => {
+        btnVolver.addEventListener('click', (e) => {
+            e.preventDefault();
             flip.classList.remove('volteada');
             flip.style.transform = 'rotateX(0deg) rotateY(0deg)';
         });
     });
 }
 
-// Cargar ambas vistas
-
+// Al cargar la página, ejecuto ambos
 document.addEventListener('DOMContentLoaded', function () {
-    generarTarjetasEventos(); // Carrusel
-    generarTarjetas3D();      // Grid 3D
+    generarTarjetasCarruselInfinito(); // Carrusel horizontal infinito
+    generarTarjetas3D();               // Grid de tarjetas 3D
 });

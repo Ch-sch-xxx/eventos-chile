@@ -1,4 +1,4 @@
-/* Variables globales */
+/* VARIABLES GLOBALES */
 :root {
     --primario: #6C63FF;
     --secundario: #2D3748;
@@ -7,6 +7,7 @@
     --acento-suave: #FED7D7;
 }
 
+/* ESTILO GENERAL */
 body {
     margin: 0;
     font-family: Arial, sans-serif;
@@ -15,7 +16,7 @@ body {
     position: relative;
 }
 
-/* Confeti */
+/* CONFETI DECORATIVO */
 body::before {
     content: "";
     position: fixed;
@@ -25,32 +26,30 @@ body::before {
     height: 100%;
     pointer-events: none;
     background-image:
-            radial-gradient(circle, #f10a0a 2px, transparent 4px),
-            radial-gradient(circle, #0ab0c0 2px, transparent 6px),
-            radial-gradient(circle, #6018f1 2px, transparent 8px);
-    background-size: 300px 300px, 400px 400px;
-    animation: confetiMov 15s linear infinite;
-    opacity: 0.2;
+            radial-gradient(circle, #f10a0a 2px, transparent 2px),
+            radial-gradient(circle, #0ab0c0 2px, transparent 2px),
+            radial-gradient(circle, #6018f1 2px, transparent 2px),
+            radial-gradient(circle, #ff0080 2px, transparent 2px);
+    background-size: 200px 200px, 250px 250px, 300px 300px;
+    animation: confetiMov 10s linear infinite;
 }
-
 @keyframes confetiMov {
-    from { background-position: 0 0, 50px 100px; }
-    to { background-position: 600px 1200px, 650px 1250px; }
+    from { background-position: 0 0, 50px 100px, 100px 200px; }
+    to { background-position: 500px 1000px, 550px 1100px, 600px 1200px; }
 }
 
-/* Header */
+/* HEADER Y FOOTER */
 header, footer {
     background: linear-gradient(135deg, var(--secundario) 0%, #4A5568 100%);
     color: white;
-    padding: 1rem;
-    box-shadow: 0 6px 10px rgba(108, 99, 255, 0.2);
+    box-shadow: 0 6px 10px rgba(108,99,255,0.2);
     min-height: 80px;
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
-header h1 {
+#h1_titulo {
     animation: cambioColores 5s ease-in-out infinite;
     background: linear-gradient(45deg, white, #9F7AEA, var(--primario), var(--acento));
     background-size: 400% 400%;
@@ -73,36 +72,17 @@ header h1:hover {
     cursor: default;
 }
 
-/* Footer */
-#contacto {
+/* ENLACES EN FOOTER */
+#contacto, #mail, #Ftnosotros {
     margin: 0.3rem 0;
-    color: #ffffff;
-    text-decoration: none;
-}
-
-#mail {
-    margin: 0.3rem 0;
-    color: #9F7AEA;
     transition: color 0.3s ease;
 }
+#contacto { color: #fff; text-decoration: none; }
+#mail, #Ftnosotros { color: #9F7AEA; }
+#mail:hover, #Ftnosotros:hover { color: var(--acento); }
 
-#mail:hover {
-    color: var(--acento);
-}
-
-#Ftnosotros {
-    margin: 0.3rem 0;
-    color: #9F7AEA;
-    transition: color 0.3s ease;
-}
-
-#Ftnosotros:hover {
-    color: var(--acento);
-}
-
-/* Nav */
+/* NAVBAR */
 nav ul {
-    list-style: none;
     display: flex;
     justify-content: end;
     gap: 1rem;
@@ -110,7 +90,6 @@ nav ul {
     padding: 0;
     align-items: center;
 }
-
 nav a {
     color: white;
     text-decoration: none;
@@ -118,9 +97,8 @@ nav a {
     border-radius: 20px;
     transition: all 0.3s ease;
 }
-
 nav a:hover {
-    background: rgba(108, 99, 255, 0.2);
+    background: rgba(108,99,255,0.2);
     transform: translateY(-2px);
 }
 

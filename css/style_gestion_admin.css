@@ -1,4 +1,4 @@
-/* Variables globales */
+/* VARIABLES GLOBALES */
 :root {
     --primario: #6C63FF;
     --secundario: #2D3748;
@@ -7,7 +7,7 @@
     --acento-suave: #FED7D7;
 }
 
-/* Estilos generales */
+/* ESTILO GENERAL */
 body {
     margin: 0;
     font-family: Arial, sans-serif;
@@ -16,7 +16,7 @@ body {
     position: relative;
 }
 
-/* Confeti */
+/* CONFETI DECORATIVO */
 body::before {
     content: "";
     position: fixed;
@@ -28,31 +28,28 @@ body::before {
     background-image:
             radial-gradient(circle, #f10a0a 2px, transparent 2px),
             radial-gradient(circle, #0ab0c0 2px, transparent 2px),
-            radial-gradient(circle, #6018f1 2px, transparent 2px);
-    background-size: 300px 300px, 400px 400px;
-    animation: confetiMov 15s linear infinite;
-    opacity: 0.1;
+            radial-gradient(circle, #6018f1 2px, transparent 2px),
+            radial-gradient(circle, #ff0080 2px, transparent 2px);
+    background-size: 200px 200px, 250px 250px, 300px 300px;
+    animation: confetiMov 10s linear infinite;
 }
-
 @keyframes confetiMov {
-    from { background-position: 0 0, 50px 100px; }
-    to { background-position: 600px 1200px, 650px 1250px; }
+    from { background-position: 0 0, 50px 100px, 100px 200px; }
+    to { background-position: 500px 1000px, 550px 1100px, 600px 1200px; }
 }
 
-/* Header */
+/* HEADER Y FOOTER */
 header, footer {
     background: linear-gradient(135deg, var(--secundario) 0%, #4A5568 100%);
     color: white;
-    padding: 1rem;
-    box-shadow: 0 6px 10px rgba(108, 99, 255, 0.2);
+    box-shadow: 0 6px 10px rgba(108,99,255,0.2);
     min-height: 80px;
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
-/* Título animado */
-header h1 {
+#h1_titulo {
     animation: cambioColores 5s ease-in-out infinite;
     background: linear-gradient(45deg, white, #9F7AEA, var(--primario), var(--acento));
     background-size: 400% 400%;
@@ -75,36 +72,17 @@ header h1:hover {
     cursor: default;
 }
 
-/* Footer */
-#contacto {
+/* ENLACES EN FOOTER */
+#contacto, #mail, #Ftnosotros {
     margin: 0.3rem 0;
-    color: #ffffff;
-    text-decoration: none;
-}
-
-#mail {
-    margin: 0.3rem 0;
-    color: #9F7AEA;
     transition: color 0.3s ease;
 }
+#contacto { color: #fff; text-decoration: none; }
+#mail, #Ftnosotros { color: #9F7AEA; }
+#mail:hover, #Ftnosotros:hover { color: var(--acento); }
 
-#mail:hover {
-    color: var(--acento);
-}
-
-#Ftnosotros {
-    margin: 0.3rem 0;
-    color: #9F7AEA;
-    transition: color 0.3s ease;
-}
-
-#Ftnosotros:hover {
-    color: var(--acento);
-}
-
-/* Nav */
+/* NAVBAR */
 nav ul {
-    list-style: none;
     display: flex;
     justify-content: end;
     gap: 1rem;
@@ -112,7 +90,6 @@ nav ul {
     padding: 0;
     align-items: center;
 }
-
 nav a {
     color: white;
     text-decoration: none;
@@ -120,82 +97,80 @@ nav a {
     border-radius: 20px;
     transition: all 0.3s ease;
 }
-
 nav a:hover {
-    background: rgba(108, 99, 255, 0.2);
+    background: rgba(108,99,255,0.2);
     transform: translateY(-2px);
 }
 
 
-.layout {
-    display: flex;
-    margin-top: 1rem;
-}
-
-
+/* SIDEBAR - estilo personalizado sobre Bootstrap */
 .sidebar {
-    width: 200px;
-    background: white;
-    padding: 1rem;
-    border-right: 1px solid #ccc;
-    box-shadow: 2px 0 5px rgba(108, 99, 255, 0.1);
+    background: linear-gradient(135deg, #f9faff 0%, #ffffff 100%) !important;
+    border-right: 3px solid rgba(108,99,255,0.15) !important;
+    box-shadow: 2px 0 15px rgba(108, 99, 255, 0.08);
+    min-height: calc(100vh - 160px); /* altura completa menos header/footer */
 }
 
 .sidebar h2 {
-    margin-bottom: 1rem;
     color: var(--secundario);
-    font-size: 1.3rem;
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    position: relative;
+    padding-bottom: 0.5rem;
 }
 
-.sidebar ul {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    margin: 0;
-    padding: 0;
+/* Línea decorativa bajo título sidebar */
+.sidebar h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 40px;
+    height: 3px;
+    background: var(--primario);
+    border-radius: 2px;
 }
 
-.sidebar li {
-    padding: 0;
-}
-
-.sidebar a {
-    color: var(--texto);
+/* Enlaces sidebar - mejorar estilos Bootstrap */
+.sidebar .nav-link {
+    color: var(--texto) !important;
     text-decoration: none;
-    padding: 0.8rem 1rem;
-    border-radius: 8px;
-    display: block;
+    padding: 0.8rem 1rem !important;
+    border-radius: 8px !important;
     transition: all 0.3s ease;
     border-left: 3px solid transparent;
+    font-weight: 500;
 }
 
-.sidebar a:hover {
-    color: var(--primario);
-    background: rgba(108, 99, 255, 0.1);
+.sidebar .nav-link:hover {
+    color: var(--primario) !important;
+    background: rgba(108, 99, 255, 0.1) !important;
     border-left-color: var(--primario);
+    transform: translateX(3px);
 }
 
-.sidebar a[aria-current="page"] {
-    background: rgba(108, 99, 255, 0.15);
-    color: var(--primario);
+.sidebar .nav-link.active {
+    background: rgba(108, 99, 255, 0.15) !important;
+    color: var(--primario) !important;
     border-left-color: var(--primario);
     font-weight: 600;
 }
 
-/* Contenido principal */
+/* CONTENIDO PRINCIPAL */
 .admin-content {
-    flex: 1;
-    padding: 1rem;
+    background: white;
+    min-height: calc(100vh - 160px);
 }
 
-section {
-    background: white;
-    padding: 2rem;
-    border-radius: 15px;
-    box-shadow: 0 6px 20px rgba(108, 99, 255, 0.1);
-    border-left: 8px solid var(--primario);
-    animation: fadeInUp 1s ease-out;
+/* CARDS - personalización sobre Bootstrap */
+.card {
+    border: none !important;
+    border-radius: 15px !important;
+    box-shadow: 0 8px 25px rgba(108, 99, 255, 0.15) !important;
+    border-left: 8px solid var(--primario) !important;
+    animation: fadeInUp 0.8s ease-out;
+    background: linear-gradient(135deg, white 0%, #f9faff 100%) !important;
 }
 
 @keyframes fadeInUp {
@@ -203,244 +178,286 @@ section {
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* Títulos sección */
-section h2 {
-    font-size: 1.6rem;
-    color: var(--secundario);
-    margin-bottom: 1.5rem;
+/* Títulos de cards */
+.card-title {
+    color: var(--secundario) !important;
+    font-size: 1.6rem !important;
+    font-weight: 700 !important;
+    margin-bottom: 1.5rem !important;
     position: relative;
+    padding-bottom: 1rem;
 }
 
-section h2::after {
+/* Línea decorativa bajo título card */
+.card-title::after {
     content: '';
     position: absolute;
-    bottom: -8px;
-    left: 0;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
     width: 60px;
     height: 3px;
     background: var(--primario);
     border-radius: 2px;
 }
 
-/* Formulario */
-.form-dos-columnas {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5rem 2rem;
-    margin-bottom: 2rem;
-}
-
-.form-dos-columnas .col {
-    display: flex;
-    flex-direction: column;
-    gap: 0.8rem;
-}
-
-.form-dos-columnas label {
+/* FORMULARIO - personalización sobre Bootstrap */
+#form-crear .form-label {
     font-weight: 600;
     color: var(--secundario);
     font-size: 0.95rem;
-    margin-bottom: 0.3rem;
+    margin-bottom: 0.4rem;
 }
 
-.form-dos-columnas input,
-.form-dos-columnas select,
-.form-dos-columnas textarea {
-    padding: 0.8rem;
-    border: 2px solid #ddd;
-    border-radius: 8px;
-    font-size: 1rem;
+#form-crear .form-control,
+#form-crear .form-select {
+    padding: 0.8rem 1rem !important;
+    border: 2px solid rgba(108,99,255,0.15) !important;
+    border-radius: 8px !important;
+    font-size: 0.95rem !important;
     transition: all 0.3s ease;
-    background: white;
-    box-sizing: border-box;
+    background: white !important;
 }
 
-.form-dos-columnas input:focus,
-.form-dos-columnas select:focus,
-.form-dos-columnas textarea:focus {
+#form-crear .form-control:focus,
+#form-crear .form-select:focus {
+    border-color: var(--primario) !important;
+    box-shadow: 0 0 0 0.2rem rgba(108,99,255,0.25) !important;
     outline: none;
-    border-color: var(--primario);
-    box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.1);
     transform: translateY(-1px);
 }
 
-/* Botón formulario */
-#form-crear button {
-    grid-column: 1 / -1;
-    padding: 0.8rem 2rem;
-    font-size: 1.1rem;
-    background: linear-gradient(135deg, var(--primario), #9F7AEA);
+/* Botón formulario - estilo coherente con referencias */
+#form-crear button.btn-primary {
+    background: linear-gradient(135deg, var(--primario), #9F7AEA) !important;
     color: white;
-    border-radius: 25px;
     border: none;
+    padding: 0.8rem 2rem;
+    border-radius: 25px;
     cursor: pointer;
-    font-weight: 500;
+    font-weight: bold;
+    font-size: 1rem;
+    box-shadow: 0 4px 15px rgba(108, 99, 255, 0.3);
     transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(108, 99, 255, 0.2);
-    margin-top: 1rem;
+    position: relative;
+    overflow: hidden;
 }
 
-#form-crear button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(108, 99, 255, 0.3);
-}
-
-/* Tabla */
-table {
+/* Efecto de brillo hover en botones (igual que referencias) */
+#form-crear button.btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
     width: 100%;
-    border-collapse: collapse;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    transition: left 0.6s;
+}
+#form-crear button.btn-primary:hover::before {
+    left: 100%;
+}
+#form-crear button.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(108, 99, 255, 0.4);
+    background: linear-gradient(135deg, #5A52D5, #8B7EFF) !important;
+}
+
+/* TABLA - personalización sobre Bootstrap */
+.table {
     margin-top: 1rem;
 }
 
-th, td {
-    padding: 1rem 0.75rem;
-    border: 1px solid #e2e8f0;
-    text-align: left;
+.table thead.table-dark {
+    background: linear-gradient(135deg, var(--primario), #9F7AEA) !important;
+    color: white;
 }
 
-th {
-    background: linear-gradient(135deg, var(--primario), #9F7AEA);
-    color: white;
+.table thead th {
     font-weight: 600;
     font-size: 0.9rem;
+    border: none !important;
+    padding: 1rem 0.75rem;
 }
 
-tbody tr:nth-child(even) {
-    background: #f8faff;
+.table tbody tr {
+    transition: all 0.2s ease;
 }
 
-tbody tr:hover {
-    background: rgba(108, 99, 255, 0.05);
+.table tbody tr:hover {
+    background: rgba(108, 99, 255, 0.08) !important;
+    transform: scale(1.01);
 }
 
-/* Botones tabla */
+.table td {
+    padding: 1rem 0.75rem;
+    vertical-align: middle;
+}
+
+/* Imágenes en tabla */
+.table img {
+    max-width: 60px;
+    max-height: 50px;
+    object-fit: cover;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* BOTONES DE ACCIÓN EN TABLA */
 .btn-ver, .btn-editar, .btn-eliminar {
     border: none;
-    padding: 0.4rem 0.8rem;
+    padding: 0.45rem 0.9rem;
     border-radius: 6px;
     cursor: pointer;
     font-size: 0.85rem;
     font-weight: 500;
     margin: 2px;
     transition: all 0.2s ease;
+    color: white;
 }
 
 .btn-ver {
     background: linear-gradient(135deg, var(--primario), #9F7AEA);
-    color: white;
 }
 
 .btn-editar {
     background: linear-gradient(135deg, #28a745, #34ce57);
-    color: white;
 }
 
 .btn-eliminar {
     background: linear-gradient(135deg, #dc3545, #e74c3c);
-    color: white;
 }
 
 .btn-ver:hover, .btn-editar:hover, .btn-eliminar:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
 }
 
-/* Modal */
+/* MODAL - Bootstrap personalizado */
 .modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.7);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
+    background: rgba(0, 0, 0, 0.75) !important;
 }
 
-.modal-contenido {
-    background: white;
-    padding: 2rem;
-    border-radius: 15px;
-    max-width: 500px;
-    width: 90%;
-    max-height: 80vh;
-    overflow-y: auto;
-    position: relative;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+.modal-content {
+    border-radius: 15px !important;
+    border: none !important;
+    box-shadow: 0 20px 50px rgba(108, 99, 255, 0.3) !important;
 }
 
-.cerrar {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    background: #ff4757;
+.modal-header {
+    background: linear-gradient(135deg, var(--primario), #9F7AEA);
     color: white;
+    border-top-left-radius: 15px !important;
+    border-top-right-radius: 15px !important;
+    padding: 1.5rem;
+}
+
+.modal-title {
+    color: white !important;
+    font-weight: 700;
+}
+
+.modal-header .btn-close {
+    background: white;
+    opacity: 1;
+    border-radius: 50%;
     width: 2rem;
     height: 2rem;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    font-size: 1.2rem;
     transition: all 0.2s ease;
-    box-shadow: 0 4px 12px rgba(255, 71, 87, 0.3);
 }
 
-.cerrar:hover {
-    transform: scale(1.1);
-    background: #ff3838;
+.modal-header .btn-close:hover {
+    transform: scale(1.1) rotate(90deg);
+    background: #ff4757;
 }
 
-/* Ocultar sección */
+.modal-body {
+    padding: 2rem;
+}
+
+.modal-body p {
+    margin-bottom: 0.8rem;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.modal-body strong {
+    color: var(--secundario);
+    font-weight: 600;
+}
+
+.modal-footer {
+    padding: 1rem 1.5rem;
+}
+
+.modal-footer .btn-secondary {
+    background: linear-gradient(135deg, #6c757d, #5a6268);
+    border: none;
+    padding: 0.6rem 1.5rem;
+    border-radius: 20px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.modal-footer .btn-secondary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+/* CLASE OCULTO */
 .oculto {
     display: none !important;
 }
 
-/* Footer */
-footer {
-    margin-top: 2rem;
-    text-align: center;
+/* RESPONSIVE - ajustes adicionales sobre Bootstrap */
+@media (max-width: 992px) {
+    .sidebar {
+        min-height: auto;
+        border-right: none !important;
+        border-bottom: 3px solid rgba(108,99,255,0.15) !important;
+    }
 }
 
-/* Responsive */
 @media (max-width: 768px) {
-    .layout {
-        flex-direction: column;
+    .card-title {
+        font-size: 1.3rem !important;
     }
 
-    .sidebar {
-        width: 100%;
-        border-right: none;
-        border-bottom: 1px solid #ccc;
+    #form-crear button.btn-primary {
+        padding: 0.7rem 1.5rem;
+        font-size: 0.95rem;
     }
 
-    .form-dos-columnas {
-        grid-template-columns: 1fr;
-    }
-
-    nav ul {
-        gap: 0.5rem;
-    }
-
-    nav a {
-        padding: 0.4rem 0.8rem;
-        font-size: 0.9rem;
-    }
-}
-
-@media (max-width: 600px) {
-    .sidebar {
-        display: none;
-    }
-
-    table {
+    .table {
         font-size: 0.85rem;
     }
 
-    th, td {
-        padding: 0.5rem;
+    .table thead th,
+    .table td {
+        padding: 0.6rem 0.4rem;
+    }
+
+    .btn-ver, .btn-editar, .btn-eliminar {
+        padding: 0.35rem 0.6rem;
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .sidebar h2 {
+        font-size: 1rem;
+    }
+
+    .modal-dialog {
+        margin: 0.5rem;
+    }
+
+    .modal-body {
+        padding: 1rem;
+    }
+
+    .table img {
+        max-width: 40px;
+        max-height: 35px;
     }
 }
