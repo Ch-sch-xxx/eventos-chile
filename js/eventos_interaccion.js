@@ -57,6 +57,22 @@ document.addEventListener('click', function (e) {
     }
 });
 
+// Función para formatear fecha ISO a formato legible chileno
+function formatearFechaLegible(fechaISO) {
+    if (!fechaISO) return 'No disponible';
+
+    const fecha = new Date(fechaISO);
+    const opciones = {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+    };
+
+    return fecha.toLocaleDateString('es-CL', opciones);
+}
+
 //SECCIÓN tarjetas 3D para todos los eventos
 function generarTarjetas3D() {
     const eventos = listarEventos();
@@ -92,7 +108,7 @@ function generarTarjetas3D() {
                         <p><strong>👥 Capacidad:</strong> ${evento.capacidad} personas</p>
                         <p><strong>💰 Precio:</strong> ${evento.precio}</p>
                         <p><strong>👤 Organizador:</strong> ${truncarTexto(evento.creadoPor, 30)}</p>
-                        <p><strong>📆 Creado:</strong> ${evento.fechaCreacion || evento.fecha}</p>
+                        <p><strong>📆 Creado:</strong> ${formatearFechaLegible(evento.fechaCreacion) || evento.fecha}</p>
                     </div>
                     <button class="boton-volver">← Volver</button>
                 </div>
@@ -117,9 +133,9 @@ function agregarEfectos3D() {
             const rect = tarjeta.getBoundingClientRect();
             const x = e.clientX - rect.left;
             const y = e.clientY - rect.top;
-            const centerX = rect.width / 4;
-            const centerY = rect.height / 4;
-            const rotateX = (y - centerY) / 6;
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            const rotateX = (y - centerY) / 8;
             const rotateY = (centerX - x) / 0.8;
             flip.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
         });
