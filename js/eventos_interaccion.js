@@ -49,13 +49,23 @@ function generarTarjetasCarruselInfinito() {
 
 }
 
-// autenticacion al "Asistir al Evento" sin login
+// Autenticación al "Asistir al Evento" - ahora redirige o muestra mensaje según sesión
 document.addEventListener('click', function (e) {
     if (e.target.classList.contains('btn-asistir')) {
-        alert('Por favor inicia sesión para confirmar asistencia.');
-        location.href = 'auth.html'; // Redirige al login
+        const userLogged = localStorage.getItem('user-logged');
+
+        if (userLogged === 'admin' || userLogged === 'usuario') {
+            // Sí hay sesión, mostrar confirmación de asistencia
+            alert('¡Asistencia confirmada! Verás este evento en tu perfil.');
+            // Aquí podrías agregar lógica para guardar asistencia en localStorage
+        } else {
+            // Si NO hay sesión, redirigir a login
+            alert('Por favor inicia sesión para confirmar asistencia.');
+            location.href = 'auth.html';
+        }
     }
 });
+
 
 // Función para formatear fecha ISO a formato legible chileno
 function formatearFechaLegible(fechaISO) {
