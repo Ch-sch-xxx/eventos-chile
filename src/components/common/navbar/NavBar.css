@@ -1,0 +1,40 @@
+/* src/components/common/NavBar.css */
+.navbar-custom {
+    background: linear-gradient(135deg, #2D3748 0%, #4A5568 100%);
+    min-height: 80px;
+    box-shadow: 0 6px 10px rgba(108,99,255,0.2);
+    
+}
+
+/* Título animado */
+#h1_titulo {
+    animation: cambioColores 5s ease-in-out infinite;
+    background: linear-gradient(45deg, white, #9F7AEA, #6C63FF, #ED8936);
+    background-size: 400% 400%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-weight: bold;
+}
+
+@keyframes cambioColores {
+    0% { background-position: 5% 50%; }
+    25% { background-position: 100% 50%; }
+    50% { background-position: 100% 100%; }
+    75% { background-position: 2% 100%; }
+    100% { background-position: 1% 50%; }
+}
+
+/* Enlaces del navbar */
+.navbar-nav .nav-link {
+    color: white;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover {
+    background: rgba(108,99,255,0.2);
+    transform: translateY(-2px);
+}
