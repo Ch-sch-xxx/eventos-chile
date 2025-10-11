@@ -1,5 +1,4 @@
-import React from "react";
-
+import {Link} from "react-router-dom";
 function Header() {
   return (
     <header
@@ -29,17 +28,17 @@ function Header() {
         >
           <ul className="navbar-nav gap-2">
             <li className="nav-item">
-              <a className="nav-link px-3 py-2 rounded-pill" href="#">
+              <Link to="/main" className="nav-link px-3 py-2 rounded-pill" >
                 Inicio
-              </a>
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link to ="/eventos" className="nav-link px-3 py-2 rounded-pill">
+                Eventos
+              </Link>
             </li>
             <li className="nav-item">
               <a className="nav-link px-3 py-2 rounded-pill" href="#">
-                Eventos
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link px-3 py-2 rounded-pill" href="Eventos.jsx">
                 Iniciar sesión
               </a>
             </li>

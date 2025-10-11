@@ -1,4 +1,4 @@
-
+import {Link} from "react-router-dom";
 function Main() {
   return (
     <main className="container my-5">
@@ -14,12 +14,12 @@ function Main() {
                 Descubre, crea y gestiona tus eventos{" "}
                 <span className="destacado-opcion">.</span>
               </p>
-              <a
-                href="Eventos.jsx"
-                className="btn btn-primary btn-lg px-4 py-3 rounded-pill shadow-sm"
-              >
-                Ver eventos
-              </a>
+             <Link
+              to="/eventos" 
+              className="btn btn-primary btn-lg px-4 py-3 rounded-pill shadow-sm"
+            >
+              Ver eventos
+            </Link>
             </div>
           </div>
         </div>
