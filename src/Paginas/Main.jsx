@@ -1,4 +1,3 @@
-import React from "react";
 
 function Main() {
   return (
@@ -16,7 +15,7 @@ function Main() {
                 <span className="destacado-opcion">.</span>
               </p>
               <a
-                href="#"
+                href="Eventos.jsx"
                 className="btn btn-primary btn-lg px-4 py-3 rounded-pill shadow-sm"
               >
                 Ver eventos

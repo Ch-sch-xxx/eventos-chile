@@ -39,7 +39,7 @@ function Header() {
               </a>
             </li>
             <li className="nav-item">
-              <a className="nav-link px-3 py-2 rounded-pill" href="#">
+              <a className="nav-link px-3 py-2 rounded-pill" href="Eventos.jsx">
                 Iniciar sesión
               </a>
             </li>
