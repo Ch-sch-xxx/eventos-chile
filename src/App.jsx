@@ -1,13 +1,16 @@
 import React from "react";
-import "./App.css"; // si quieres mantener estilos globales
-import Inicio from "./Paginas/inicio/Inicio";
-
-
+import Header from "./components/common/header/Header";
+import Main from "./Paginas/main/Main";
+import Footer from "./components/common/footer/Footer";
+import "./App.css";
+import "bootstrap/dist/css/bootstrap.min.css"; 
 
 function App() {
   return (
     <>
-      <Inicio /> {/* Aquí se renderiza tu página completa de inicio */}
+      <Header/>
+      <Main/>
+      <Footer/>
     </>
   );
 }
