@@ -1,7 +1,7 @@
 import React from "react";
-import Header from "./components/common/header/Header";
-import Main from "./Paginas/main/Main";
-import Footer from "./components/common/footer/Footer";
+import Header from "./components/Header";
+import Main from "./Paginas/Main";
+import Footer from "./components/Footer";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css"; 
 
