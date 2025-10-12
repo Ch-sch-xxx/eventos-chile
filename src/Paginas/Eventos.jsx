@@ -1,11 +1,23 @@
-import React from "react";
+// Paginas/Eventos.jsx
+import { useState, useEffect } from 'react';
+import CarruselEventos from '../components/CarruselEventos';
+import TarjetasEventos3D from '../components/TarjetasEventos3D';
+import { obtenerEventos } from '../util/localStorage';
+import '../css/EventosStyle.css';
 
 function Eventos() {
+  const [eventos, setEventos] = useState([]);
+
+  useEffect(() => {
+    const eventosData = obtenerEventos();
+    setEventos(eventosData);
+  }, []);
+
   return (
-    <div className="container text-center mt-5">
-      <h1>🎉 Página de eventos</h1>
-      <p>Pronto habrán eventos épicos por aquí 😎</p>
-    </div>
+    <main className="container my-5">
+      <CarruselEventos eventos={eventos.slice(0, 5)} />
+      <TarjetasEventos3D eventos={eventos} />
+    </main>
   );
 }
 
