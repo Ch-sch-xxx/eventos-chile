@@ -38,9 +38,9 @@ function Header() {
               </Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link px-3 py-2 rounded-pill" href="#">
+              <Link to ="/auth"className="nav-link px-3 py-2 rounded-pill" >
                 Iniciar sesión
-              </a>
+              </Link>
             </li>
           </ul>
         </nav>
