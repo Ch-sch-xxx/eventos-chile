@@ -1,5 +1,6 @@
-// utils/eventosStorage.js
-
+export const getToken = () => localStorage.getItem("token");
+export const setToken = (token) => localStorage.setItem("token", token);
+export const clearToken = () => localStorage.removeItem("token");
 export function obtenerEventos() {
     const eventos = localStorage.getItem('eventos-chile');
     if (eventos) {
