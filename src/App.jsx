@@ -10,13 +10,14 @@ import Admin from "./Paginas/GestionAdmin";
 
 function AppContent() {
   const location = useLocation();
-  // Ocultar header/footer en rutas privadas s
+  // Ocultar header/footer en rutas privadas 
   const hideShell = location.pathname.startsWith("/admin") || location.pathname.startsWith("/admin");
 
   return (
     <>
       {!hideShell && <Header />}
       <Routes>
+        <Route path="/" element={<Main />} /> {/* Mostrar Main en la raíz */}
         <Route path="main" element={<Main />} /> {/* Página principal */}
         <Route path="eventos" element={<Eventos />} /> {/* Página de eventos */}
         <Route path="auth" element={<Auth />} /> {/* Página de autenticación */}
