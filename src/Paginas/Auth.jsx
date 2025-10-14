@@ -70,7 +70,8 @@ export default function Auth() {
         JSON.stringify({ name: 'Administrador', email, role: 'admin' })
       );
       alert('¡Bienvenido Administrador!');
-      navigate('/gestion_admin');
+-      navigate('/gestion_admin');
++      navigate('/admin');
       return;
     }
 
@@ -81,6 +82,7 @@ export default function Auth() {
       localStorage.setItem('user-data', JSON.stringify(usuario));
       alert('¡Bienvenido ' + usuario.name + '!');
       navigate('/gestion_admin');
+      navigate('/admin');
     } else {
       alert('Credenciales incorrectas');
     }
