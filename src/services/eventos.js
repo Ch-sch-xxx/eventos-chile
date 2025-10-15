@@ -1,4 +1,3 @@
-// src/services/eventos.js
 // Manejo de eventos usando localStorage como base de datos local
 // Incluye operaciones CRUD completas (crear, leer, editar, eliminar)
 
@@ -156,21 +155,24 @@ export function guardarEventos(eventos) {
 }
 
 // Creo un nuevo evento y lo asocio al usuario que lo creó
-export function crearEvento(nuevoEvento) {
-    const userEmail = localStorage.getItem('user-email');
+export function crearEvento(nuevoEvento, userEmail) {
     const eventos = obtenerEventos();
 
+    // Validar que haya email (el componente debe enviarlo)
     if (!userEmail) {
         console.error('No hay usuario logueado');
         return false;
     }
 
     // Agrego metadatos al evento
-    nuevoEvento.creadoPor = userEmail;
-    nuevoEvento.fechaCreacion = new Date().toISOString();
-    nuevoEvento.id = 'evt_' + Date.now();
+    const eventoConMetadatos = {
+        ...nuevoEvento,
+        creadoPor: userEmail,
+        fechaCreacion: new Date().toISOString(),
+        id: 'evt_' + Date.now()
+    };
 
-    eventos.push(nuevoEvento);
+    eventos.push(eventoConMetadatos);
     guardarEventos(eventos);
     console.log('Evento creado por:', userEmail, '| Título:', nuevoEvento.titulo);
     return true;
@@ -181,52 +183,63 @@ export function listarEventos() {
     return obtenerEventos();
 }
 
+export function listarEventosPublicos() {
+    return obtenerEventos();
+}
+
 // Alias para listar eventos (lo usamos en la vista pública)
 export function listarEventosPublicos() {
     return obtenerEventos();
 }
 
-// Edito un evento si tengo permisos (creador o admin)
-export function editarEvento(indice, eventoEditado) {
-    const userEmail = localStorage.getItem('user-email');
-    const userLogged = localStorage.getItem('user-logged');
+/**
+* Edito un evento si tengo permisos (creador o admin)
+* @param {number} indice - Posición del evento en el array
+* @param {Object} eventoEditado - Nuevos datos del evento
+* @param {string} userEmail - Email del usuario que edita
+* @param {boolean} isAdmin - Si el usuario es admin
+* @returns {boolean} - true si se editó, false si no hay permisos
+*/
+export function editarEvento(indice, eventoEditado, userEmail, isAdmin) {
     const eventos = obtenerEventos();
 
     if (indice >= 0 && indice < eventos.length) {
         const eventoOriginal = eventos[indice];
 
         // Solo el creador o admin pueden editar
-        if (userLogged !== 'admin' && eventoOriginal.creadoPor !== userEmail) {
+        if (!isAdmin && eventoOriginal.creadoPor !== userEmail) {
             console.error('Sin permisos para editar este evento');
             return false;
         }
 
         // Conservo datos originales y agrego registro de actualización
-        eventoEditado.creadoPor = eventoOriginal.creadoPor;
-        eventoEditado.fechaCreacion = eventoOriginal.fechaCreacion;
-        eventoEditado.id = eventoOriginal.id;
-        eventoEditado.fechaActualizacion = new Date().toISOString();
-        eventoEditado.actualizadoPor = userEmail;
+        const eventoActualizado = {
+            ...eventoEditado,
+            creadoPor: eventoOriginal.creadoPor,
+            fechaCreacion: eventoOriginal.fechaCreacion,
+            id: eventoOriginal.id,
+            fechaActualizacion: new Date().toISOString(),
+            actualizadoPor: userEmail
+        };
 
-        eventos[indice] = eventoEditado;
+        eventos[indice] = eventoActualizado;
         guardarEventos(eventos);
-        console.log('Evento editado:', eventoEditado.titulo);
+        console.log('Evento editado:', eventoActualizado.titulo);
         return true;
     }
     return false;
 }
 
+
 // Elimino un evento si tengo permisos (creador o admin)
-export function eliminarEvento(indice) {
-    const userEmail = localStorage.getItem('user-email');
-    const userLogged = localStorage.getItem('user-logged');
+export function eliminarEvento(indice, userEmail, isAdmin) {
     const eventos = obtenerEventos();
 
     if (indice >= 0 && indice < eventos.length) {
         const evento = eventos[indice];
 
         // Solo el creador o admin pueden eliminar
-        if (userLogged !== 'admin' && evento.creadoPor !== userEmail) {
+        if (!isAdmin && evento.creadoPor !== userEmail) {
             console.error('Sin permisos para eliminar este evento');
             return false;
         }
@@ -245,6 +258,13 @@ export function obtenerEventosPorUsuario(email) {
     return eventos.filter(evento => evento.creadoPor === email);
 }
 
+/**
+ * Cuento cuántos eventos tiene un usuario
+ */
+export function contarEventosUsuario(email) {
+    return obtenerEventosPorUsuario(email).length;
+}
+
 // Cuento cuántos eventos tiene un usuario
 export function contarEventosUsuario(email) {
     return obtenerEventosPorUsuario(email).length;
@@ -256,12 +276,10 @@ export function contarTotalUsuarios() {
     return usuarios.length;
 }
 
-// Traigo eventos según el tipo de usuario: admin ve todo, usuario normal solo los suyos
-export function obtenerMisEventos() {
-    const userEmail = localStorage.getItem('user-email');
-    const userLogged = localStorage.getItem('user-logged');
 
-    if (userLogged === 'admin') {
+// Traigo eventos según el tipo de usuario: admin ve todo, usuario normal solo los suyos
+export function obtenerMisEventos(userEmail, isAdmin) {
+    if (isAdmin) {
         return obtenerEventos();
     } else {
         return obtenerEventosPorUsuario(userEmail);

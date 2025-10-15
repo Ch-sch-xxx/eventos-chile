@@ -1,4 +1,3 @@
-
 // Manejo global de autenticación:
 // guardo y verifico la sesión del usuario en toda la app
 import { createContext, useContext, useState, useEffect } from 'react';
