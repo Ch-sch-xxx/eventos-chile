@@ -1,3 +1,4 @@
+// ...existing code...
 export function obtenerUsuarios() {
   const usuarios = localStorage.getItem('usuarios-chile');
   return usuarios ? JSON.parse(usuarios) : [];
