@@ -3,6 +3,7 @@ import Header from "./components/Header";
 import Main from "./Paginas/Main";
 import Eventos from "./Paginas/Eventos"; // <-- importa tu página Eventos.jsx
 import Footer from "./components/Footer";
+import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {

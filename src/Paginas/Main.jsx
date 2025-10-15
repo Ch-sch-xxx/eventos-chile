@@ -1,5 +1,4 @@
 import {Link} from "react-router-dom";
-import "../css/EventosStyle.css"
 function Main() {
   return (
     <main className="container my-5">
