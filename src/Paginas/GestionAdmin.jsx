@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { obtenerEventos, guardarEventos } from "../util/localStorage"; // <- usa las utilidades correctas
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../css/AdminStyle.css";
 
@@ -26,65 +25,71 @@ function Admin() {
   const [detalle, setDetalle] = useState(null);
   const [showModal, setShowModal] = useState(false);
 
-  // Storage helpers (usan la clave 'eventos-chile')
-  const loadEventos = () => obtenerEventos();
-  const saveEventos = (arr) => guardarEventos(arr);
+  // Storage helpers (simulan tus funciones CRUD originales)
+  const loadEventos = () => JSON.parse(localStorage.getItem("eventos") || "[]");
+  const saveEventos = (arr) => {
+    localStorage.setItem("eventos", JSON.stringify(arr));
+    setEventos(arr);
+  };
 
   const listarEventos = () => loadEventos();
-
   const obtenerMisEventos = () => {
-    const all = loadEventos();
+    const all = listarEventos();
     if (userLogged === "admin") return all;
     return all.filter((e) => e.creadoPor === userEmail);
   };
 
   const crearEvento = (data) => {
-    const all = loadEventos();
-    const nuevo = {
-      ...data,
-      creadoPor: userEmail,
-      fechaCreacion: new Date().toISOString(),
-      id: "evt_" + Date.now(),
-    };
-    const next = [...all, nuevo];
-    saveEventos(next);
-    setEventos(next);
+    const all = listarEventos();
+    const nuevo = { ...data, id: Date.now(), creadoPor: userEmail || "anon" };
+    all.push(nuevo);
+    saveEventos(all);
+    return true;
   };
 
   const editarEvento = (idxGlobal, data) => {
-    const all = loadEventos();
-    if (idxGlobal < 0 || idxGlobal >= all.length) return;
-    const original = all[idxGlobal];
-    all[idxGlobal] = {
-      ...original,
-      ...data,
-      id: original.id,
-      creadoPor: original.creadoPor,
-      fechaCreacion: original.fechaCreacion,
-      fechaActualizacion: new Date().toISOString(),
-      actualizadoPor: userEmail,
-    };
+    const all = listarEventos();
+    if (idxGlobal < 0 || idxGlobal >= all.length) return false;
+    // permiso: admin o creador
+    const user = localStorage.getItem("user-logged");
+    const email = localStorage.getItem("user-email");
+    if (user !== "admin" && all[idxGlobal].creadoPor !== email) return false;
+    all[idxGlobal] = { ...all[idxGlobal], ...data };
     saveEventos(all);
-    setEventos(all);
+    return true;
   };
 
   const eliminarEvento = (idxGlobal) => {
-    const all = loadEventos();
-    if (idxGlobal < 0 || idxGlobal >= all.length) return;
+    const all = listarEventos();
+    if (idxGlobal < 0 || idxGlobal >= all.length) return false;
+    const user = localStorage.getItem("user-logged");
+    const email = localStorage.getItem("user-email");
+    if (user !== "admin" && all[idxGlobal].creadoPor !== email) return false;
     all.splice(idxGlobal, 1);
     saveEventos(all);
-    setEventos(all);
+    return true;
   };
 
   // Session & carga inicial
   useEffect(() => {
-    const role = localStorage.getItem("user-logged");
+    const u = localStorage.getItem("user-logged");
     const email = localStorage.getItem("user-email");
-    setUserLogged(role);
+    if (u !== "admin" && u !== "usuario") {
+      alert("Debes iniciar sesión para acceder");
+      navigate("/auth", { replace: true });
+      return;
+    }
+    setUserLogged(u);
     setUserEmail(email);
-    // Semilla + carga
-    const seeded = loadEventos(); // obtenerEventos() siembra si no existe
-    setEventos(seeded);
+    setEventos(listarEventos());
+    // evitar volver atrás desde cache: (comportamiento original simplificado)
+    window.addEventListener("pageshow", (e) => {
+      if (e.persisted) {
+        const uu = localStorage.getItem("user-logged");
+        if (uu !== "admin" && uu !== "usuario") navigate("/auth", { replace: true });
+      }
+    });
+    // eslint-disable-next-line
   }, []);
 
   // helpers UI

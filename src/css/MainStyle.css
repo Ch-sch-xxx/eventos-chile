@@ -160,17 +160,15 @@ nav a:hover {
   box-shadow: 0 8px 25px rgba(74, 66, 217, 0.28);
   animation: fadeInUp 3.2s ease-out;
   border-right: 8px solid var(--primario);
-  position: relative;           
-  z-index: 1;                    
+  position: relative;
   overflow: visible;
+  z-index: 0;
 }
 
 /*  */
 #destacado::before {
-  position: absolute;            
-  inset: 0;                      
   content: "";
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
@@ -191,8 +189,8 @@ nav a:hover {
       transparent 50%
     );
   animation: brilloEventoContenido 6s ease-in-out infinite;
-  z-index: -1;                   /* <- detrás del contenido */
-  pointer-events: none;          /* evita bloquear clicks */
+  pointer-events: none;
+  z-index: 0;
 }
 
 @keyframes brilloEventoContenido {
