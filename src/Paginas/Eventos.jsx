@@ -1,3 +1,4 @@
+// Paginas/Eventos.jsx
 import { useState, useEffect } from 'react';
 import CarruselEventos from '../components/CarruselEventos';
 import TarjetasEventos3D from '../components/TarjetasEventos3D';

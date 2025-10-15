@@ -1,3 +1,4 @@
+// ...existing code...
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import Header from "./components/Header";
 import Main from "./Paginas/Main";
@@ -6,24 +7,21 @@ import Auth from "./Paginas/Auth";
 import Footer from "./components/Footer";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Admin from "./Paginas/GestionAdmin"; 
-import ProteccionPaginas from "./components/ProteccionPaginas";
-
 
 function AppContent() {
   const location = useLocation();
   // Ocultar header/footer en rutas privadas 
-  const hideShell = location.pathname.startsWith("/admin") 
+  const hideShell = location.pathname.startsWith("/admin") || location.pathname.startsWith("/admin");
+
   return (
     <>
       {!hideShell && <Header />}
       <Routes>
-        <Route path="/" element={<Main />} /> {/*Mostrar pagina incial*/}
+        <Route path="/" element={<Main />} /> {/* Mostrar Main en la raíz */}
         <Route path="main" element={<Main />} /> {/* Página principal */}
         <Route path="eventos" element={<Eventos />} /> {/* Página de eventos */}
         <Route path="auth" element={<Auth />} /> {/* Página de autenticación */}
-        <Route element={<ProteccionPaginas />}> {/* Rutas protegidas */}
-          <Route path="admin" element={<Admin />} /> {/* Página de administración */}
-        </Route>
+        <Route path="admin" element={<Admin />} /> {/* Página admin añadida */}
       </Routes>
       {!hideShell && <Footer />}
     </>
@@ -39,3 +37,4 @@ function App() {
 }
 
 export default App;
+// ...existing code...
