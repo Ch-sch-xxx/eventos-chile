@@ -6,6 +6,10 @@ import Auth from "./Paginas/Auth";
 import Footer from "./components/Footer";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Admin from "./Paginas/GestionAdmin"; 
+import "./css/MainStyle.css";
+import "./css/EventosStyle.css";
+import "./css/StyleAuth.css";
+import "./css/AdminStyle.css";
 import ProteccionPaginas from "./components/ProteccionPaginas";
 
 
