@@ -163,6 +163,11 @@ nav a:hover {
     min-height: calc(100vh - 160px);
 }
 
+/* Layout Admin: página a alto completo y footer al fondo sin fixed */
+.admin-wrapper { min-height: 100vh; display: flex; flex-direction: column; }
+.admin-content { flex: 1 0 auto; }
+.admin-footer { margin-top: auto; position: static !important; }
+
 /* CARDS - personalización sobre Bootstrap */
 .card {
     border: none !important;
@@ -461,7 +466,3 @@ nav a:hover {
         max-height: 35px;
     }
 }
-
-/* Aplica footer fijo solo dentro de /admin */
-body.is-admin footer { position: fixed !important; bottom: 0; left: 0; right: 0; }
-body:not(.is-admin) footer { position: static !important; }

@@ -254,7 +254,7 @@ function Admin() {
   const listado = obtenerMisEventos();
 
   return (
-    <div>
+    <div className="admin-wrapper d-flex flex-column min-vh-100">
       <header className="navbar navbar-expand-lg navbar-dark" style={{ background: "linear-gradient(135deg, #2D3748 0%, #4A5568 100%)", minHeight: 80 }}>
         <div className="container-fluid px-4 d-flex align-items-center">
           <h1 id="h1_titulo" className="navbar-brand mb-0 fw-bold">
@@ -266,7 +266,7 @@ function Admin() {
           <nav className="collapse navbar-collapse justify-content-end" id="navegacionPrincipal">
             <ul className="navbar-nav gap-2">
               <li className="nav-item">
-                <a className="nav-link px-3 py-2 rounded-pill" href="/eventos">Eventos</a>
+                <Link to="/eventos" className="nav-link px-3 py-2 rounded-pill">Eventos</Link>
               </li>
               <li className="nav-item">
                 <Link to="/perfil" className="nav-link">Mi Perfil</Link>
@@ -279,7 +279,7 @@ function Admin() {
         </div>
       </header>
 
-      <div className="container-fluid">
+      <div className="container-fluid flex-grow-1">
         <div className="row">
           <aside className="col-lg-2 col-md-3 sidebar bg-light border-end p-4">
             <h2 className="h5 mb-3 fw-bold text-dark">Eventos</h2>
@@ -445,7 +445,7 @@ function Admin() {
         </>
       )}
 
-      <footer className="mt-5 py-4 text-white" style={{ background: "linear-gradient(135deg, #2D3748 0%, #4A5568 100%)" }}>
+      <footer className="mt-5 py-4 text-white admin-footer" style={{ background: "linear-gradient(135deg, #2D3748 0%, #4A5568 100%)" }}>
         <div className="container text-center">
           <p className="mb-2" id="contacto">
             Contacto:
