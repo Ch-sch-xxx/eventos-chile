@@ -1,5 +1,4 @@
-// src/main.jsx
-// Punto de entrada principal: aquí arranca la aplicación React
+// Punto de entrada principal
 
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
