@@ -1,5 +1,5 @@
 // Tarjeta 3D con flip para mostrar detalles de un evento
-// Portado desde eventos_interaccion.js SIN react
+// Portado desde eventos_interaccion.js SIN REACT
 // - mantiene efectos de mouse y flip
 
 import { useState, useRef } from 'react';
