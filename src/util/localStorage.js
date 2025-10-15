@@ -1,10 +1,12 @@
 // utils/eventosStorage.js
 
+// Todas tus funciones JS existentes van aquí
 export function obtenerEventos() {
     const eventos = localStorage.getItem('eventos-chile');
     if (eventos) {
         return JSON.parse(eventos);
     } else {
+        // Tus eventos iniciales...
         const eventosIniciales = [
  {
                 titulo: "Festival de Música Urbana",
