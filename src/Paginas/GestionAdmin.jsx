@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../css/AdminStyle.css";
 
@@ -269,7 +269,7 @@ function Admin() {
                 <a className="nav-link px-3 py-2 rounded-pill" href="/eventos">Eventos</a>
               </li>
               <li className="nav-item">
-                <Link to="/perfil" className="nav-link">Mi Perfil</Link>
+                <a onClick={(e)=>{e.preventDefault(); navigate("/perfil_admin");}} className="nav-link px-3 py-2 rounded-pill" href="#" id="enlace-perfil">Mi Perfil</a>
               </li>
               <li className="nav-item">
                 <a onClick={cerrarSesion} className="nav-link px-3 py-2 rounded-pill" href="#" id="cerrar-sesion">Cerrar sesión</a>
