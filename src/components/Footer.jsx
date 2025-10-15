@@ -7,9 +7,8 @@ function Footer() {
         <footer
             className="mt-5 py-4 text-white"
             style={{
-                background: 'linear-gradient(135deg, #2D3748 0%, #4A5568 100%)'
-            }}
-        >
+                background: 'linear-gradient(135deg, #2D3748 0%, #4A5568 100%)'}}>
+            
             <div className="container text-center">
                 {/* Email de contacto - IDs preservados para estilos CSS */}
                 <p className="mb-2" id="contacto">

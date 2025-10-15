@@ -25,6 +25,7 @@ body::before {
     width: 100%;
     height: 100%;
     pointer-events: none;
+    z-index: -1;                    /* ✅ IMPORTANTE: detrás de todo */
     background-image:
             radial-gradient(circle, #f10a0a 2px, transparent 2px),
             radial-gradient(circle, #0ab0c0 2px, transparent 2px),
@@ -487,28 +488,230 @@ nav a:hover {
 .tarjeta-evento-3d:nth-child(5) { animation-delay: 0.5s; }
 .tarjeta-evento-3d:nth-child(6) { animation-delay: 0.6s; }
 
-/* RESPONSIVE */
-@media (max-width: 1024px) {
+/* ========================================
+   RESPONSIVE MEJORADO
+   ======================================== */
+
+/* Desktop grande (1200px+) */
+@media (min-width: 1200px) {
     .tarjeta-evento-3d {
-        max-width: 260px;
-        height: 350px;
+        max-width: 320px;
+        height: 400px;
     }
-    .eventos-tarjetas-3d h2 { font-size: 2rem; }
+
+    .Tarjetas {
+        width: 260px;
+        height: 360px;
+    }
 }
 
-@media (max-width: 768px) {
+/* Tablet/Desktop pequeño (768px - 1199px) */
+@media (min-width: 768px) and (max-width: 1199px) {
     .tarjeta-evento-3d {
         max-width: 280px;
-        height: 320px;
-        min-width: 200px;
+        height: 380px;
+        min-width: 240px;
     }
+
+    .Tarjetas {
+        width: 240px;
+        height: 340px;
+    }
+
+    .eventos-tarjetas-3d h2 {
+        font-size: 2rem;
+    }
+
+    .carrusel-eventos {
+        padding: 1.5rem;
+    }
+}
+
+/* Tablet vertical (577px - 767px) */
+@media (min-width: 577px) and (max-width: 767px) {
+    .tarjeta-evento-3d {
+        max-width: 320px;
+        height: 380px;
+        min-width: 260px;
+        margin: 0 auto; /* Centra las tarjetas */
+    }
+
+    .Tarjetas {
+        width: 220px;
+        height: 340px;
+    }
+
+    .cara-frontal, .cara-posterior {
+        padding: 1rem 0.8rem;
+    }
+
+    .imagen-evento {
+        height: 110px;
+    }
+
+    .informacion-evento {
+        min-height: 130px;
+        max-height: 180px;
+    }
+
+    /* Grid: 1 columna en tablet vertical */
+    #contenedor-grid-eventos > div {
+        max-width: 100% !important;
+        flex: 0 0 100%;
+    }
+}
+
+/* Móvil (hasta 576px) */
+@media (max-width: 576px) {
+    /* Ajustes generales móvil */
+    .container-fluid {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    /* Títulos de secciones */
+    .display-5 {
+        font-size: 1.5rem !important;
+    }
+
+    .lead {
+        font-size: 0.95rem !important;
+    }
+
+    /* Carrusel móvil */
+    .carrusel-eventos {
+        padding: 1rem;
+        margin: 1rem 0;
+    }
+
+    .Tarjetas {
+        width: 200px;
+        min-width: 180px;
+        height: 320px;
+        padding: 0.8rem;
+        margin: 0 0.3rem;
+    }
+
+    .Tarjetas img,
+    .img-tarjeta-evento {
+        height: 70px;
+        margin-bottom: 0.6rem;
+    }
+
+    .Tarjetas h3 {
+        font-size: 0.85rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .Tarjetas p {
+        font-size: 0.7rem;
+        margin: 0.2rem 0;
+    }
+
+    .btn-asistir {
+        padding: 0.5rem 0.8rem;
+        font-size: 0.8rem;
+    }
+
+    /* Grid de tarjetas 3D móvil */
+    .tarjeta-evento-3d {
+        max-width: 100%;
+        width: 100%;
+        height: 360px;
+        min-width: auto;
+        margin: 0 auto 1rem auto;
+    }
+
+    .carta-evento-flip {
+        max-width: 320px;
+        margin: 0 auto;
+    }
+
     .cara-frontal, .cara-posterior {
         padding: 0.8rem 0.6rem;
-        max-height: 320px;
+        max-height: 360px;
     }
-    .imagen-evento { height: 100px; }
+
+    .imagen-evento {
+        height: 100px;
+        margin-bottom: 0.8rem;
+    }
+
     .informacion-evento {
         min-height: 120px;
         max-height: 160px;
+        padding: 0.3rem 0.2rem;
+    }
+
+    .cara-frontal h3,
+    .cara-posterior h3 {
+        font-size: 0.95rem;
+        margin-bottom: 0.6rem;
+    }
+
+    .cara-frontal p,
+    .cara-posterior p {
+        font-size: 0.75rem;
+        line-height: 1.2;
+    }
+
+    .boton-detalle,
+    .boton-volver {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.85rem;
+    }
+
+    /* Grid: 1 tarjeta por fila en móvil */
+    #contenedor-grid-eventos {
+        padding: 0 0.5rem;
+    }
+
+    #contenedor-grid-eventos > div {
+        max-width: 100% !important;
+        flex: 0 0 100%;
+        padding: 0;
+    }
+
+    /* Navbar móvil */
+    header {
+        min-height: 60px;
+        padding: 0.5rem 1rem;
+    }
+
+    #h1_titulo {
+        font-size: 1.2rem !important;
+    }
+
+    /* Footer móvil */
+    footer {
+        padding: 1.5rem 1rem;
+        font-size: 0.85rem;
+    }
+
+    /* Espaciado entre secciones */
+    main.container-fluid {
+        padding-top: 2rem;
+        padding-bottom: 2rem;
+    }
+
+    section.mb-5 {
+        margin-bottom: 2rem !important;
+    }
+}
+
+/* Móvil muy pequeño (hasta 375px) */
+@media (max-width: 375px) {
+    .Tarjetas {
+        width: 170px;
+        min-width: 160px;
+        height: 300px;
+    }
+
+    .tarjeta-evento-3d {
+        height: 340px;
+    }
+
+    .carta-evento-flip {
+        max-width: 280px;
     }
 }

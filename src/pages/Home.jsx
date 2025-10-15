@@ -10,7 +10,7 @@ function Home() {
         <>
             <Navbar />
 
-            <main className="container my-5">
+            <main className="container-fluid px-4 my-5" style={{ maxWidth: '1400px', margin: '0 auto' }}>
                 {/* Sección de bienvenida con llamado a la acción */}
                 <section className="row justify-content-center mb-5">
                     <div className="col-lg-8 col-xl-7">
