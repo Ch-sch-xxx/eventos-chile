@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { useEffect } from "react";
 import Header from "./components/Header";
 import Main from "./Paginas/Main";
 import Eventos from "./Paginas/Eventos";
@@ -18,6 +19,17 @@ function AppContent() {
   const location = useLocation();
   // Ocultar header/footer en rutas privadas 
   const hideShell = location.pathname.startsWith("/admin"); 
+
+  // Aplica clase al <body> si estas  en /admin
+  useEffect(() => {
+    document.body.classList.toggle("is-admin", hideShell);
+  }, [hideShell]);
+
+  // Evita “pantallazo blanco” al cambiar de ruta
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
+
   return (
     <>
       {!hideShell && <Header />}
@@ -30,6 +42,7 @@ function AppContent() {
           <Route path="admin" element={<Admin />} /> {/* Página de administración */}
           <Route path="perfil" element={<Perfil />} /> {/* Mi Perfil */}
         </Route>
+        <Route path="*" element={<Main />} /> {/* fallback para rutas raras */}
       </Routes>
       {!hideShell && <Footer />}
     </>

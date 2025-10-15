@@ -1,5 +1,5 @@
 import "bootstrap/dist/css/bootstrap.min.css"; // primero
-import "bootstrap/dist/js/bootstrap.bundle.min.js"; // habilita collapse/accordion
+import "bootstrap/dist/js/bootstrap.bundle.min.js"; // necesario para accordion/toggler
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";

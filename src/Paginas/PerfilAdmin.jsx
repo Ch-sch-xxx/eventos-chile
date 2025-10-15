@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
-import "./../css/PerfilStyle.css";
+import "../css/PerfilStyle.css"; // ✅ mover el import aquí
 
 const REGIONES_Y_COMUNAS = {
   "Región Metropolitana": ["Santiago", "Providencia", "Las Condes", "Puente Alto", "Maipú"],
@@ -20,7 +20,7 @@ function contarTotalUsuarios() {
   return usuarios.length;
 }
 
-export default function Perfil() {
+export default function PerfilAdmin() {
   const role = localStorage.getItem("user-logged"); // 'admin' | 'usuario'
   const emailSesion = localStorage.getItem("user-email") || "";
 

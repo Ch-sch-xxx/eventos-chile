@@ -461,3 +461,7 @@ nav a:hover {
         max-height: 35px;
     }
 }
+
+/* Aplica footer fijo solo dentro de /admin */
+body.is-admin footer { position: fixed !important; bottom: 0; left: 0; right: 0; }
+body:not(.is-admin) footer { position: static !important; }
