@@ -6,6 +6,7 @@ import Auth from "./Paginas/Auth";
 import Footer from "./components/Footer";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Admin from "./Paginas/GestionAdmin"; 
+import Perfil from "./Paginas/PerfilAdmin";
 import "./css/MainStyle.css";
 import "./css/EventosStyle.css";
 import "./css/StyleAuth.css";
@@ -27,6 +28,7 @@ function AppContent() {
         <Route path="auth" element={<Auth />} /> {/* Página de autenticación */}
         <Route element={<ProteccionPaginas />}> {/* Rutas protegidas */}
           <Route path="admin" element={<Admin />} /> {/* Página de administración */}
+          <Route path="perfil" element={<Perfil />} /> {/* Mi Perfil */}
         </Route>
       </Routes>
       {!hideShell && <Footer />}

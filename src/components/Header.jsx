@@ -15,6 +15,7 @@ export default function Header() {
   const navigate = useNavigate();
   const location = useLocation(); 
   const isAdmin = location.pathname.startsWith("/admin"); 
+  const isPerfil = location.pathname.startsWith("/perfil"); // <- nuevo
   const [user, setUser] = useState(() => getUserFromStorage());
 
   // Sincroniza si cambia localStorage (p.ej. en otra pestaña)
@@ -44,7 +45,11 @@ export default function Header() {
     >
       <div className="container-fluid px-4">
         <h1 className="navbar-brand mb-0 fw-bold" id="h1_titulo">
-          {isAdmin ? "Panel Admin · Eventos Chile" : "Inicio · Eventos Chile"}
+          {isAdmin
+            ? "Panel Admin · Eventos Chile"
+            : isPerfil
+            ? "Mi Perfil · Eventos Chile"
+            : "Inicio · Eventos Chile"}
         </h1>
 
         <button
@@ -75,18 +80,15 @@ export default function Header() {
             {user ? (
               <>
                 <li className="nav-item">
-                  <Link
-                    to="/admin"
-                    className="nav-link px-3 py-2 rounded-pill"
-                  >
+                  <Link to="/admin" className="nav-link px-3 py-2 rounded-pill">
                     Mi Gestión
                   </Link>
                 </li>
-                {/* descomentar cuando se cree la pagina de perfil:
                 <li className="nav-item">
-                  <Link className="nav-link px-3 py-2 rounded-pill" to="/perfil">Mi Perfil</Link>
+                  <Link to="/perfil" className="nav-link px-3 py-2 rounded-pill">
+                    Mi Perfil
+                  </Link>
                 </li>
-                */}
                 <li className="nav-item">
                   <button
                     className="nav-link px-3 py-2 rounded-pill btn btn-link"
