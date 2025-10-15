@@ -1,0 +1,463 @@
+/* VARIABLES GLOBALES */
+:root {
+    --primario: #6C63FF;
+    --secundario: #2D3748;
+    --texto: #2D3748;
+    --acento: #ED8936;
+    --acento-suave: #FED7D7;
+}
+
+/* ESTILO GENERAL */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: white;
+    color: var(--texto);
+    position: relative;
+}
+
+/* CONFETI DECORATIVO */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    background-image:
+            radial-gradient(circle, #f10a0a 2px, transparent 2px),
+            radial-gradient(circle, #0ab0c0 2px, transparent 2px),
+            radial-gradient(circle, #6018f1 2px, transparent 2px),
+            radial-gradient(circle, #ff0080 2px, transparent 2px);
+    background-size: 200px 200px, 250px 250px, 300px 300px;
+    animation: confetiMov 10s linear infinite;
+}
+@keyframes confetiMov {
+    from { background-position: 0 0, 50px 100px, 100px 200px; }
+    to { background-position: 500px 1000px, 550px 1100px, 600px 1200px; }
+}
+
+/* HEADER Y FOOTER */
+header, footer {
+    background: linear-gradient(135deg, var(--secundario) 0%, #4A5568 100%);
+    color: white;
+    box-shadow: 0 6px 10px rgba(108,99,255,0.2);
+    min-height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#h1_titulo {
+    animation: cambioColores 5s ease-in-out infinite;
+    background: linear-gradient(45deg, white, #9F7AEA, var(--primario), var(--acento));
+    background-size: 400% 400%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-weight: bold;
+}
+
+@keyframes cambioColores {
+    0% { background-position: 5% 50%; }
+    25% { background-position: 100% 50%; }
+    50% { background-position: 100% 100%; }
+    75% { background-position: 2% 100%; }
+    100% { background-position: 1% 50%; }
+}
+
+header h1:hover {
+    transform: translateY(12px);
+    cursor: default;
+}
+
+/* ENLACES EN FOOTER */
+#contacto, #mail, #Ftnosotros {
+    margin: 0.3rem 0;
+    transition: color 0.3s ease;
+}
+#contacto { color: #fff; text-decoration: none; }
+#mail, #Ftnosotros { color: #9F7AEA; }
+#mail:hover, #Ftnosotros:hover { color: var(--acento); }
+
+/* NAVBAR */
+nav ul {
+    display: flex;
+    justify-content: end;
+    gap: 1rem;
+    margin: 0;
+    padding: 0;
+    align-items: center;
+}
+nav a {
+    color: white;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+}
+nav a:hover {
+    background: rgba(108,99,255,0.2);
+    transform: translateY(-2px);
+}
+
+
+/* SIDEBAR - estilo personalizado sobre Bootstrap */
+.sidebar {
+    background: linear-gradient(135deg, #f9faff 0%, #ffffff 100%) !important;
+    border-right: 3px solid rgba(108,99,255,0.15) !important;
+    box-shadow: 2px 0 15px rgba(108, 99, 255, 0.08);
+    min-height: calc(100vh - 160px); /* altura completa menos header/footer */
+}
+
+.sidebar h2 {
+    color: var(--secundario);
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    position: relative;
+    padding-bottom: 0.5rem;
+}
+
+/* Línea decorativa bajo título sidebar */
+.sidebar h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 40px;
+    height: 3px;
+    background: var(--primario);
+    border-radius: 2px;
+}
+
+/* Enlaces sidebar - mejorar estilos Bootstrap */
+.sidebar .nav-link {
+    color: var(--texto) !important;
+    text-decoration: none;
+    padding: 0.8rem 1rem !important;
+    border-radius: 8px !important;
+    transition: all 0.3s ease;
+    border-left: 3px solid transparent;
+    font-weight: 500;
+}
+
+.sidebar .nav-link:hover {
+    color: var(--primario) !important;
+    background: rgba(108, 99, 255, 0.1) !important;
+    border-left-color: var(--primario);
+    transform: translateX(3px);
+}
+
+.sidebar .nav-link.active {
+    background: rgba(108, 99, 255, 0.15) !important;
+    color: var(--primario) !important;
+    border-left-color: var(--primario);
+    font-weight: 600;
+}
+
+/* CONTENIDO PRINCIPAL */
+.admin-content {
+    background: white;
+    min-height: calc(100vh - 160px);
+}
+
+/* CARDS - personalización sobre Bootstrap */
+.card {
+    border: none !important;
+    border-radius: 15px !important;
+    box-shadow: 0 8px 25px rgba(108, 99, 255, 0.15) !important;
+    border-left: 8px solid var(--primario) !important;
+    animation: fadeInUp 0.8s ease-out;
+    background: linear-gradient(135deg, white 0%, #f9faff 100%) !important;
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Títulos de cards */
+.card-title {
+    color: var(--secundario) !important;
+    font-size: 1.6rem !important;
+    font-weight: 700 !important;
+    margin-bottom: 1.5rem !important;
+    position: relative;
+    padding-bottom: 1rem;
+}
+
+/* Línea decorativa bajo título card */
+.card-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: var(--primario);
+    border-radius: 2px;
+}
+
+/* FORMULARIO - personalización sobre Bootstrap */
+#form-crear .form-label {
+    font-weight: 600;
+    color: var(--secundario);
+    font-size: 0.95rem;
+    margin-bottom: 0.4rem;
+}
+
+#form-crear .form-control,
+#form-crear .form-select {
+    padding: 0.8rem 1rem !important;
+    border: 2px solid rgba(108,99,255,0.15) !important;
+    border-radius: 8px !important;
+    font-size: 0.95rem !important;
+    transition: all 0.3s ease;
+    background: white !important;
+}
+
+#form-crear .form-control:focus,
+#form-crear .form-select:focus {
+    border-color: var(--primario) !important;
+    box-shadow: 0 0 0 0.2rem rgba(108,99,255,0.25) !important;
+    outline: none;
+    transform: translateY(-1px);
+}
+
+/* Botón formulario - estilo coherente con referencias */
+#form-crear button.btn-primary {
+    background: linear-gradient(135deg, var(--primario), #9F7AEA) !important;
+    color: white;
+    border: none;
+    padding: 0.8rem 2rem;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1rem;
+    box-shadow: 0 4px 15px rgba(108, 99, 255, 0.3);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Efecto de brillo hover en botones (igual que referencias) */
+#form-crear button.btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    transition: left 0.6s;
+}
+#form-crear button.btn-primary:hover::before {
+    left: 100%;
+}
+#form-crear button.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(108, 99, 255, 0.4);
+    background: linear-gradient(135deg, #5A52D5, #8B7EFF) !important;
+}
+
+/* TABLA - personalización sobre Bootstrap */
+.table {
+    margin-top: 1rem;
+}
+
+.table thead.table-dark {
+    background: linear-gradient(135deg, var(--primario), #9F7AEA) !important;
+    color: white;
+}
+
+.table thead th {
+    font-weight: 600;
+    font-size: 0.9rem;
+    border: none !important;
+    padding: 1rem 0.75rem;
+}
+
+.table tbody tr {
+    transition: all 0.2s ease;
+}
+
+.table tbody tr:hover {
+    background: rgba(108, 99, 255, 0.08) !important;
+    transform: scale(1.01);
+}
+
+.table td {
+    padding: 1rem 0.75rem;
+    vertical-align: middle;
+}
+
+/* Imágenes en tabla */
+.table img {
+    max-width: 60px;
+    max-height: 50px;
+    object-fit: cover;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* BOTONES DE ACCIÓN EN TABLA */
+.btn-ver, .btn-editar, .btn-eliminar {
+    border: none;
+    padding: 0.45rem 0.9rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin: 2px;
+    transition: all 0.2s ease;
+    color: white;
+}
+
+.btn-ver {
+    background: linear-gradient(135deg, var(--primario), #9F7AEA);
+}
+
+.btn-editar {
+    background: linear-gradient(135deg, #28a745, #34ce57);
+}
+
+.btn-eliminar {
+    background: linear-gradient(135deg, #dc3545, #e74c3c);
+}
+
+.btn-ver:hover, .btn-editar:hover, .btn-eliminar:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+/* MODAL - Bootstrap personalizado */
+.modal {
+    background: rgba(0, 0, 0, 0.75) !important;
+}
+
+.modal-content {
+    border-radius: 15px !important;
+    border: none !important;
+    box-shadow: 0 20px 50px rgba(108, 99, 255, 0.3) !important;
+}
+
+.modal-header {
+    background: linear-gradient(135deg, var(--primario), #9F7AEA);
+    color: white;
+    border-top-left-radius: 15px !important;
+    border-top-right-radius: 15px !important;
+    padding: 1.5rem;
+}
+
+.modal-title {
+    color: white !important;
+    font-weight: 700;
+}
+
+.modal-header .btn-close {
+    background: white;
+    opacity: 1;
+    border-radius: 50%;
+    width: 2rem;
+    height: 2rem;
+    transition: all 0.2s ease;
+}
+
+.modal-header .btn-close:hover {
+    transform: scale(1.1) rotate(90deg);
+    background: #ff4757;
+}
+
+.modal-body {
+    padding: 2rem;
+}
+
+.modal-body p {
+    margin-bottom: 0.8rem;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.modal-body strong {
+    color: var(--secundario);
+    font-weight: 600;
+}
+
+.modal-footer {
+    padding: 1rem 1.5rem;
+}
+
+.modal-footer .btn-secondary {
+    background: linear-gradient(135deg, #6c757d, #5a6268);
+    border: none;
+    padding: 0.6rem 1.5rem;
+    border-radius: 20px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.modal-footer .btn-secondary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+/* CLASE OCULTO */
+.oculto {
+    display: none !important;
+}
+
+/* RESPONSIVE - ajustes adicionales sobre Bootstrap */
+@media (max-width: 992px) {
+    .sidebar {
+        min-height: auto;
+        border-right: none !important;
+        border-bottom: 3px solid rgba(108,99,255,0.15) !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .card-title {
+        font-size: 1.3rem !important;
+    }
+
+    #form-crear button.btn-primary {
+        padding: 0.7rem 1.5rem;
+        font-size: 0.95rem;
+    }
+
+    .table {
+        font-size: 0.85rem;
+    }
+
+    .table thead th,
+    .table td {
+        padding: 0.6rem 0.4rem;
+    }
+
+    .btn-ver, .btn-editar, .btn-eliminar {
+        padding: 0.35rem 0.6rem;
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .sidebar h2 {
+        font-size: 1rem;
+    }
+
+    .modal-dialog {
+        margin: 0.5rem;
+    }
+
+    .modal-body {
+        padding: 1rem;
+    }
+
+    .table img {
+        max-width: 40px;
+        max-height: 35px;
+    }
+}
