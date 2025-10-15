@@ -182,6 +182,7 @@ nav a:hover {
     font-weight: 600;
     color: var(--secundario);
     display: -webkit-box;
+    -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -362,6 +363,7 @@ nav a:hover {
     color: var(--secundario);
     /* Limito el título a 2 líneas máximo */
     display: -webkit-box;
+    -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -374,6 +376,7 @@ nav a:hover {
     color: var(--secundario);
     /* Limito el título a 2 líneas máximo */
     display: -webkit-box;
+    -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
