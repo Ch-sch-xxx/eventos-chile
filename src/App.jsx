@@ -16,7 +16,7 @@ import ProteccionPaginas from "./components/ProteccionPaginas";
 function AppContent() {
   const location = useLocation();
   // Ocultar header/footer en rutas privadas 
-  const hideShell = location.pathname.startsWith("/admin") 
+  const hideShell = location.pathname.startsWith("/admin"); 
   return (
     <>
       {!hideShell && <Header />}

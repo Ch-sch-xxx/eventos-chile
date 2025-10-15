@@ -25,6 +25,23 @@ body {
   z-index: 1;
 }
 
+/* === CONFETI DECORATIVO === */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  background-image: radial-gradient(circle, #f10a0a 2px, transparent 2px),
+    radial-gradient(circle, #0ab0c0 2px, transparent 2px),
+    radial-gradient(circle, #6018f1 2px, transparent 2px),
+    radial-gradient(circle, #ff0080 2px, transparent 2px);
+  background-size: 200px 200px, 250px 250px, 300px 300px;
+  animation: confetiMov 10s linear infinite;
+  z-index: 0; /* Importante para que no tape los componentes */
+}
 
 @keyframes confetiMov {
   from {
