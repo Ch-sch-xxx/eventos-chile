@@ -4,6 +4,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import Eventos from './pages/Eventos';
+import Auth from "./pages/Auth.jsx";
 
 function App() {
     return (
@@ -14,9 +15,9 @@ function App() {
 
                 {/* Ruta de eventos - ACTIVADA */}
                 <Route path="/eventos" element={<Eventos />} />
+                <Route path="/auth" element={<Auth />} />
 
                 {/* Rutas futuras (descomentar cuando estén listas) */}
-                {/* <Route path="/auth" element={<Auth />} /> */}
                 {/* <Route path="/admin" element={<Admin />} /> */}
                 {/* <Route path="/perfil" element={<Perfil />} /> */}
             </Routes>
