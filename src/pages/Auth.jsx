@@ -125,7 +125,17 @@ function validarUsuario(email, password) {
 // COMPONENTE AUTH
 function Auth() {
     const navigate = useNavigate();
-    const { login } = useAuth();
+    const { login, isLoggedIn } = useAuth();
+
+    useEffect(() => {
+        if (isLoggedIn()) {
+            navigate('/admin', { replace: true });
+        }
+    }, [isLoggedIn, navigate]);
+
+    if (isLoggedIn()) {
+        return null; // No renderiza nada mientras redirige
+    }
 
     // Estado para toggle entre login/registro
     const [mostrarRegistro, setMostrarRegistro] = useState(false);
@@ -186,7 +196,7 @@ function Auth() {
                 role: 'admin'
             }));
             alert('¡Bienvenido Administrador!');
-            navigate('/admin');
+            navigate('/admin', { replace: true });
             return;
         }
 
@@ -196,7 +206,7 @@ function Auth() {
             login(email, 'user');
             localStorage.setItem('user-data', JSON.stringify(usuario));
             alert('¡Bienvenido ' + usuario.name + '!');
-            navigate('/admin'); // Usuario normal también va a admin
+            navigate('/admin', { replace: true });
         } else {
             alert('Credenciales incorrectas');
         }
