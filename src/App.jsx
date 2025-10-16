@@ -7,6 +7,7 @@ import Eventos from './pages/Eventos';
 import Auth from "./pages/Auth.jsx";
 import Admin from "./pages/Admin.jsx";
 import ProtectedRoute from './context/ProtectedRoute';
+import Perfil from "./pages/Perfil.jsx";
 
 function App() {
     return (
@@ -19,7 +20,7 @@ function App() {
                 <Route path="/eventos" element={<Eventos />} />
                 <Route path="/auth" element={<Auth />} />
                 <Route path="/admin" element={<ProtectedRoute><Admin /></ProtectedRoute>}/>
-                {/*<Route path="/perfil" element={<Perfil />} />*/}
+                <Route path="/perfil" element={<ProtectedRoute><Perfil /></ProtectedRoute>}/>
             </Routes>
         </BrowserRouter>
     );
