@@ -65,6 +65,8 @@ function EventCarousel({ eventos }) {
     const eventosDobles = [...eventos, ...eventos];
 
     return (
+
+
         <div id="carrusel-lista" className="carrusel-lista" ref={carruselRef}>
             {eventosDobles.map((evento, index) => (
                 <article className="Tarjetas" key={`${evento.id}-${index}`}>

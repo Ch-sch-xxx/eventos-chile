@@ -10,7 +10,7 @@ function Home() {
         <>
             <Navbar />
 
-            <main className="container-fluid px-4 my-5" style={{ maxWidth: '1400px', margin: '0 auto' }}>
+            <main className="container my-5">
                 {/* Sección de bienvenida con llamado a la acción */}
                 <section className="row justify-content-center mb-5">
                     <div className="col-lg-8 col-xl-7">
@@ -39,7 +39,7 @@ function Home() {
                     </div>
                 </section>
 
-                {/* Sección informativa sobre la plataforma */}
+                {/* Quiénes somos? */}
                 <section className="row justify-content-center">
                     <div className="col-lg-8 col-xl-7">
                         {/* ID preservado para navegación desde footer */}

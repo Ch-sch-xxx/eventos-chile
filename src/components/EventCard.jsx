@@ -78,7 +78,7 @@ function EventCard({ evento, onAsistir }) {
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
         >
-            <div className={`carta-evento-flip ${volteada ? 'volteada' : ''}`} ref={flipRef}>
+            <div className={`carta-evento-flip  ${volteada ? 'volteada' : ''}`} ref={flipRef}>
                 {/* Cara frontal */}
                 <div className="cara-frontal">
                     <img

@@ -35,8 +35,12 @@ function Eventos() {
                         <h2 className="mb-4 text-center fw-bold">Eventos Destacados</h2>
                         <p className="mb-4 text-center fw-bold">Descubre las tendencias</p>
                     </div>
+
+                    <div className="carrusel-eventos">
                     <EventCarousel eventos={eventos} />
-                </section>
+                    </div>
+
+            </section>
 
                 {/* Sección Grid de Tarjetas 3D - CON CONTAINER LIMITADO */}
                 <section className="eventos-tarjetas-3d container rounded shadow-lg py-4 my-4">
@@ -53,7 +57,7 @@ function Eventos() {
                         {eventos.map((evento) => (
                             <div
                                 key={evento.id}
-                                className="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 d-flex justify-content-center"
+                                className="col-md-6 col-lg-4 d-flex justify-content-center align-items-stretch mb-4"
                             >
                                 <EventCard
                                     evento={evento}
