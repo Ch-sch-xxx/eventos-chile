@@ -25,7 +25,6 @@ body::before {
     width: 100%;
     height: 100%;
     pointer-events: none;
-    z-index: -1;                    /* ✅ IMPORTANTE: detrás de todo */
     background-image:
             radial-gradient(circle, #f10a0a 2px, transparent 2px),
             radial-gradient(circle, #0ab0c0 2px, transparent 2px),
@@ -130,7 +129,7 @@ nav a:hover {
     scroll-behavior: smooth;
     align-items: stretch;
     min-height: 260px;
-    
+
     /*ocultando la barra de scroll, se ve fea xd*/
     scrollbar-width: none;      /* Firefox */
     -ms-overflow-style: none;
@@ -323,9 +322,6 @@ nav a:hover {
 .cara-frontal {
     background: linear-gradient(145deg, #ffffff 0%, #f4f6ff 100%);
     text-align: center;
-    padding: clamp(0.8rem, 3vw, 1.2rem); /* Padding adaptativo */
-    display: flex;
-    flex-direction: column;
 }
 
 .cara-posterior {
@@ -333,17 +329,15 @@ nav a:hover {
     color: white;
     transform: rotateY(180deg);
     text-align: left;
-    padding: clamp(0.8rem, 3vw, 1.2rem); /* Padding adaptativo */
-    overflow-y: auto; /* Permite scroll si el contenido es mucho */
 }
 
 /* IMAGEN DEL EVENTO */
 .imagen-evento {
     width: 100%;
-    height: clamp(100px, 25vw, 120px); /* Se adapta de 100px a 120px */
-    object-fit: contain;
+    height: 120px; /* Reduje altura para dejar más espacio al contenido */
+    object-fit: contain; /* Cambié a cover para mejor aprovechamiento */
     display: block;
-    margin: 0 auto clamp(0.8rem, 2vw, 1rem) auto;
+    margin: 0 auto 1rem auto;
     border-radius: 12px;
     box-shadow: 0 8px 20px rgba(108,99,255,0.2);
     flex-shrink: 0;
@@ -359,28 +353,15 @@ nav a:hover {
     padding: 0.4rem 0.2rem;
     text-align: left;
 }
-.cara-frontal .informacion-evento {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: clamp(0.3rem, 1vw, 0.5rem); /* Espaciado adaptativo */
-    padding: 0;
-}
-.cara-posterior .informacion-evento {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: clamp(0.3rem, 1vw, 0.5rem); /* Espaciado adaptativo */
-    padding: 0;
-}
+
 /* TÍTULOS AJUSTADOS */
 .cara-frontal h3 {
-    margin: 0 0 clamp(0.5rem, 2vw, 0.8rem) 0;
-    font-size: clamp(0.95rem, 3vw, 1.1rem); /* Se adapta de 0.95rem a 1.1rem */
+    margin: 0 0 0.8rem 0;
+    font-size: 1rem;
     font-weight: 600;
-    line-height: 1.2;
+    line-height: 1.1;
     color: var(--secundario);
-    text-align: center;
+    /* Limito el título a 2 líneas máximo */
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
@@ -388,53 +369,38 @@ nav a:hover {
     text-overflow: ellipsis;
 }
 .cara-posterior h3 {
-    margin: 0 0 clamp(0.5rem, 2vw, 0.8rem) 0;
-    font-size: clamp(0.95rem, 3vw, 1.2rem); /* Se adapta de 0.95rem a 1.2rem */
+    margin: 0 0 0.8rem 0;
+    font-size: 1rem;
     font-weight: 600;
-    line-height: 1.2;
-    color: white;
-    text-align: center;
+    line-height: 1.1;
+    color: var(--secundario);
+    /* Limito el título a 2 líneas máximo */
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
+    text-align: center;
 }
 
 .cara-frontal h3 { color: var(--secundario); text-align: center; }
 .cara-posterior h3 { color: white; }
 
 /* PÁRRAFOS  */
-.cara-frontal p {
-    margin: clamp(0.2rem, 1vw, 0.3rem) 0;
-    font-size: clamp(0.75rem, 2vw, 0.85rem); /* Mínimo 0.75rem, máximo 0.85rem */
-    line-height: 1.3;
-    color: var(--texto);
-    text-align: left;
-}
+.cara-frontal p,
 .cara-posterior p {
-    margin: clamp(0.2rem, 1vw, 0.3rem) 0;
-    font-size: clamp(0.75rem, 2vw, 0.9rem); /* Mínimo 0.75rem, máximo 0.9rem */
-    line-height: 1.4; /* Mejor legibilidad */
-    color: rgba(255,255,255,0.95);
+    margin: 0.3rem 0;
+    font-size: 0.7rem;
+    line-height: 1; /* Evito que los párrafos se expandan demasiado */
+    max-height: 2.8rem; /* Aprox 2 líneas */
+    overflow: hidden;
+    text-overflow: ellipsis;
+
 }
 
 .cara-frontal p { color: var(--texto); }
-.cara-posterior p {
-    margin: clamp(0.2rem, 1vw, 0.3rem) 0;
-    font-size: clamp(0.75rem, 2vw, 0.9rem); /* Mínimo 0.75rem, máximo 0.9rem */
-    line-height: 1.4; /* Mejor legibilidad */
-    color: rgba(255,255,255,0.95);
-}
 .cara-posterior p { color: rgba(255,255,255,0.95); }
-.cara-frontal p strong {
-    font-size: clamp(0.8rem, 2.2vw, 0.9rem);
-    font-weight: 600;
-}
-.cara-posterior p strong {
-    font-size: clamp(0.8rem, 2.2vw, 0.95rem);
-    font-weight: 600;
-}
+
 /* PÁRRAFOS ESPECÍFICOS - DETALLES TRASEROS */
 .cara-posterior .detalle-completo {
     font-size: 0.8rem;
@@ -457,25 +423,7 @@ nav a:hover {
 }
 
 /* BOTONES EN TARJETAS 3D - SIEMPRE AL FINAL */
-.boton-detalle {
-    background: linear-gradient(135deg, var(--primario), #9F7AEA);
-    color: white;
-    border: none;
-    padding: clamp(0.5rem, 2vw, 0.7rem) clamp(1rem, 4vw, 1.4rem);
-    border-radius: 25px;
-    cursor: pointer;
-    font-weight: 500;
-    font-size: clamp(0.8rem, 2.5vw, 0.95rem);
-    transition: all 0.3s ease;
-    margin-top: auto;
-    margin-bottom: 0;
-    white-space: nowrap;
-    text-align: center;
-    align-self: center;
-    flex-shrink: 0;
-}
-
-.boton-volver {
+.boton-detalle, .boton-volver {
     background: linear-gradient(135deg, var(--primario), #9F7AEA);
     color: white;
     border: none;
@@ -486,7 +434,7 @@ nav a:hover {
     font-size: 0.9rem;
     transition: all 0.3s ease;
     margin-top: auto; /* Siempre al final */
-    margin-bottom: auto;
+    margin-bottom: 0;
     white-space: nowrap;
     text-align: center;
     align-self: center;
@@ -496,19 +444,6 @@ nav a:hover {
 .boton-volver {
     background: rgba(255,255,255,0.25);
     border: 1px solid rgba(255,255,255,0.4);
-    color: white;
-    padding: clamp(0.5rem, 2vw, 0.7rem) clamp(1rem, 4vw, 1.4rem);
-    border-radius: 25px;
-    cursor: pointer;
-    font-weight: 500;
-    font-size: clamp(0.8rem, 2.5vw, 0.95rem);
-    margin-top: auto;
-    margin-bottom: auto;
-    white-space: nowrap;
-    text-align: center;
-    align-self: center;
-    flex-shrink: 0;
-    transition: all 0.3s ease;
 }
 
 .boton-detalle:hover {
@@ -552,137 +487,28 @@ nav a:hover {
 .tarjeta-evento-3d:nth-child(5) { animation-delay: 0.5s; }
 .tarjeta-evento-3d:nth-child(6) { animation-delay: 0.6s; }
 
-/* ========================================
-   RESPONSIVE MEJORADO
-   ======================================== */
-
-/* Desktop grande (1200px+) */
-@media (min-width: 1200px) {
+/* RESPONSIVE */
+@media (max-width: 1024px) {
     .tarjeta-evento-3d {
-        max-width: 320px;
-        height: 400px;
+        max-width: 260px;
+        height: 350px;
     }
-
-    .Tarjetas {
-        width: 260px;
-        height: 360px;
-    }
+    .eventos-tarjetas-3d h2 { font-size: 2rem; }
 }
 
-/* Tablet/Desktop pequeño (768px - 1199px) */
-@media (min-width: 768px) and (max-width: 1199px) {
+@media (max-width: 768px) {
     .tarjeta-evento-3d {
         max-width: 280px;
-        height: 380px;
-        min-width: 240px;
+        height: 320px;
+        min-width: 200px;
     }
-
-    .Tarjetas {
-        width: 240px;
-        height: 340px;
-    }
-
-    .eventos-tarjetas-3d h2 {
-        font-size: 2rem;
-    }
-
-    .carrusel-eventos {
-        padding: 1.5rem;
-    }
-}
-
-/* Tablet vertical (577px - 767px) */
-@media (min-width: 577px) and (max-width: 767px) {
-    .tarjeta-evento-3d {
-        max-width: 320px;
-        height: 380px;
-        min-width: 260px;
-        margin: 0 auto; /* Centra las tarjetas */
-    }
-
-    .Tarjetas {
-        width: 220px;
-        height: 340px;
-    }
-
     .cara-frontal, .cara-posterior {
-        padding: 1rem 0.8rem;
+        padding: 0.8rem 0.6rem;
+        max-height: 320px;
     }
-
-    .imagen-evento {
-        height: 110px;
-    }
-
+    .imagen-evento { height: 100px; }
     .informacion-evento {
-        min-height: 130px;
-        max-height: 180px;
-    }
-
-    /* Grid: 1 columna en tablet vertical */
-    #contenedor-grid-eventos > div {
-        max-width: 100% !important;
-        flex: 0 0 100%;
-    }
-}
-
-/* Móvil (hasta 576px) */
-@media (max-width: 576px) {
-    /* Cara posterior móvil optimizada */
-    .cara-posterior {
-        padding: 1rem 0.8rem;
-        max-height: 360px;
-        overflow-y: auto;
-    }
-
-    .cara-posterior .informacion-evento {
-        gap: 0.4rem;
-        min-height: auto;
-        max-height: none;
-    }
-
-    .cara-posterior h3 {
-        font-size: 1rem; /* Tamaño fijo legible en móvil */
-        margin-bottom: 0.6rem;
-    }
-
-    .cara-posterior p {
-        font-size: 0.8rem; /* Tamaño mínimo legible */
-        line-height: 1.5;
-        margin: 0.25rem 0;
-    }
-
-    .cara-posterior p strong {
-        font-size: 0.85rem;
-    }
-
-    .cara-posterior .detalle-completo {
-        font-size: 0.75rem;
-        line-height: 1.4;
-        max-height: 4rem;
-    }
-
-    .boton-volver {
-        padding: 0.6rem 1.2rem;
-        font-size: 0.85rem;
-        margin-top: 0.8rem;
-    }
-
-}
-
-
-/* Móvil muy pequeño (hasta 375px) */
-@media (max-width: 375px) {
-    .Tarjetas {
-        width: 170px;
-        min-width: 160px;
-        height: 300px;
-    }
-
-    .tarjeta-evento-3d {
-        height: 340px;
-    }
-
-    .carta-evento-flip {
-        max-width: 280px;
+        min-height: 120px;
+        max-height: 160px;
     }
 }

@@ -40,8 +40,8 @@ function EventCard({ evento, onAsistir }) {
         const y = e.clientY - rect.top;
         const centerX = rect.width / 2;
         const centerY = rect.height / 2;
-        const rotateX = (y - centerY) / 8;
-        const rotateY = (centerX - x) / 0.8;
+        const rotateX = (y - centerY) / 7.80;
+        const rotateY = (centerX - x) / 0.65;
 
         flipRef.current.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
     };
