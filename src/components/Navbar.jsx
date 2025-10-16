@@ -1,18 +1,32 @@
 // Barra de navegación responsive que cambia según el estado de sesión
 
 import { useAuth } from '../context/AuthContext';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 
 function Navbar() {
     const { user, logout, isLoggedIn } = useAuth();
-    const navigate = useNavigate(); // Hook para navegación
+    const navigate = useNavigate();
+    const location = useLocation(); // Detecto la ruta actual
 
     const handleLogout = () => {
         if (window.confirm('¿Seguro que deseas cerrar sesión?')) {
             logout();
-            navigate('/'); // Navegación sin recargar página
+            navigate('/');
         }
     };
+
+    // Diccionario de títulos según la ruta
+    const titulos = {
+        '/': 'Inicio',
+        '/eventos': 'Eventos',
+        '/auth': 'Autenticacion',
+        '/perfil': 'Mi Perfil',
+        '/admin': 'Gestión Admin'
+    };
+
+    // Obtengo el título según la página actual
+    const paginaActual = titulos[location.pathname] || 'Eventos Chile';
+    const tituloCompleto = `${paginaActual} · Eventos Chile`;
 
     return (
         <header
@@ -23,9 +37,9 @@ function Navbar() {
             }}
         >
             <div className="container-fluid px-4">
-                {/* Título con ID específico para animaciones CSS */}
+                {/* Título dinámico que cambia según la página actual */}
                 <h1 className="navbar-brand mb-0 fw-bold" id="h1_titulo">
-                    Inicio · Eventos Chile
+                    {tituloCompleto}
                 </h1>
 
                 {/* Botón de menú para pantallas móviles */}
