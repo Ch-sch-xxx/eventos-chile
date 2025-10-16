@@ -323,6 +323,9 @@ nav a:hover {
 .cara-frontal {
     background: linear-gradient(145deg, #ffffff 0%, #f4f6ff 100%);
     text-align: center;
+    padding: clamp(0.8rem, 3vw, 1.2rem); /* Padding adaptativo */
+    display: flex;
+    flex-direction: column;
 }
 
 .cara-posterior {
@@ -330,15 +333,17 @@ nav a:hover {
     color: white;
     transform: rotateY(180deg);
     text-align: left;
+    padding: clamp(0.8rem, 3vw, 1.2rem); /* Padding adaptativo */
+    overflow-y: auto; /* Permite scroll si el contenido es mucho */
 }
 
 /* IMAGEN DEL EVENTO */
 .imagen-evento {
     width: 100%;
-    height: 120px; /* Reduje altura para dejar más espacio al contenido */
-    object-fit: contain; /* Cambié a cover para mejor aprovechamiento */
+    height: clamp(100px, 25vw, 120px); /* Se adapta de 100px a 120px */
+    object-fit: contain;
     display: block;
-    margin: 0 auto 1rem auto;
+    margin: 0 auto clamp(0.8rem, 2vw, 1rem) auto;
     border-radius: 12px;
     box-shadow: 0 8px 20px rgba(108,99,255,0.2);
     flex-shrink: 0;
@@ -354,15 +359,28 @@ nav a:hover {
     padding: 0.4rem 0.2rem;
     text-align: left;
 }
-
+.cara-frontal .informacion-evento {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(0.3rem, 1vw, 0.5rem); /* Espaciado adaptativo */
+    padding: 0;
+}
+.cara-posterior .informacion-evento {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(0.3rem, 1vw, 0.5rem); /* Espaciado adaptativo */
+    padding: 0;
+}
 /* TÍTULOS AJUSTADOS */
 .cara-frontal h3 {
-    margin: 0 0 0.8rem 0;
-    font-size: 1rem;
+    margin: 0 0 clamp(0.5rem, 2vw, 0.8rem) 0;
+    font-size: clamp(0.95rem, 3vw, 1.1rem); /* Se adapta de 0.95rem a 1.1rem */
     font-weight: 600;
-    line-height: 1.1;
+    line-height: 1.2;
     color: var(--secundario);
-    /* Limito el título a 2 líneas máximo */
+    text-align: center;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
@@ -370,38 +388,53 @@ nav a:hover {
     text-overflow: ellipsis;
 }
 .cara-posterior h3 {
-    margin: 0 0 0.8rem 0;
-    font-size: 1rem;
+    margin: 0 0 clamp(0.5rem, 2vw, 0.8rem) 0;
+    font-size: clamp(0.95rem, 3vw, 1.2rem); /* Se adapta de 0.95rem a 1.2rem */
     font-weight: 600;
-    line-height: 1.1;
-    color: var(--secundario);
-    /* Limito el título a 2 líneas máximo */
+    line-height: 1.2;
+    color: white;
+    text-align: center;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
-    text-align: center;
 }
 
 .cara-frontal h3 { color: var(--secundario); text-align: center; }
 .cara-posterior h3 { color: white; }
 
 /* PÁRRAFOS  */
-.cara-frontal p,
+.cara-frontal p {
+    margin: clamp(0.2rem, 1vw, 0.3rem) 0;
+    font-size: clamp(0.75rem, 2vw, 0.85rem); /* Mínimo 0.75rem, máximo 0.85rem */
+    line-height: 1.3;
+    color: var(--texto);
+    text-align: left;
+}
 .cara-posterior p {
-    margin: 0.3rem 0;
-    font-size: 0.7rem;
-    line-height: 1; /* Evito que los párrafos se expandan demasiado */
-    max-height: 2.8rem; /* Aprox 2 líneas */
-    overflow: hidden;
-    text-overflow: ellipsis;
-
+    margin: clamp(0.2rem, 1vw, 0.3rem) 0;
+    font-size: clamp(0.75rem, 2vw, 0.9rem); /* Mínimo 0.75rem, máximo 0.9rem */
+    line-height: 1.4; /* Mejor legibilidad */
+    color: rgba(255,255,255,0.95);
 }
 
 .cara-frontal p { color: var(--texto); }
+.cara-posterior p {
+    margin: clamp(0.2rem, 1vw, 0.3rem) 0;
+    font-size: clamp(0.75rem, 2vw, 0.9rem); /* Mínimo 0.75rem, máximo 0.9rem */
+    line-height: 1.4; /* Mejor legibilidad */
+    color: rgba(255,255,255,0.95);
+}
 .cara-posterior p { color: rgba(255,255,255,0.95); }
-
+.cara-frontal p strong {
+    font-size: clamp(0.8rem, 2.2vw, 0.9rem);
+    font-weight: 600;
+}
+.cara-posterior p strong {
+    font-size: clamp(0.8rem, 2.2vw, 0.95rem);
+    font-weight: 600;
+}
 /* PÁRRAFOS ESPECÍFICOS - DETALLES TRASEROS */
 .cara-posterior .detalle-completo {
     font-size: 0.8rem;
@@ -424,7 +457,25 @@ nav a:hover {
 }
 
 /* BOTONES EN TARJETAS 3D - SIEMPRE AL FINAL */
-.boton-detalle, .boton-volver {
+.boton-detalle {
+    background: linear-gradient(135deg, var(--primario), #9F7AEA);
+    color: white;
+    border: none;
+    padding: clamp(0.5rem, 2vw, 0.7rem) clamp(1rem, 4vw, 1.4rem);
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: clamp(0.8rem, 2.5vw, 0.95rem);
+    transition: all 0.3s ease;
+    margin-top: auto;
+    margin-bottom: 0;
+    white-space: nowrap;
+    text-align: center;
+    align-self: center;
+    flex-shrink: 0;
+}
+
+.boton-volver {
     background: linear-gradient(135deg, var(--primario), #9F7AEA);
     color: white;
     border: none;
@@ -435,7 +486,7 @@ nav a:hover {
     font-size: 0.9rem;
     transition: all 0.3s ease;
     margin-top: auto; /* Siempre al final */
-    margin-bottom: 0;
+    margin-bottom: auto;
     white-space: nowrap;
     text-align: center;
     align-self: center;
@@ -445,6 +496,19 @@ nav a:hover {
 .boton-volver {
     background: rgba(255,255,255,0.25);
     border: 1px solid rgba(255,255,255,0.4);
+    color: white;
+    padding: clamp(0.5rem, 2vw, 0.7rem) clamp(1rem, 4vw, 1.4rem);
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: clamp(0.8rem, 2.5vw, 0.95rem);
+    margin-top: auto;
+    margin-bottom: auto;
+    white-space: nowrap;
+    text-align: center;
+    align-self: center;
+    flex-shrink: 0;
+    transition: all 0.3s ease;
 }
 
 .boton-detalle:hover {
@@ -563,141 +627,48 @@ nav a:hover {
 
 /* Móvil (hasta 576px) */
 @media (max-width: 576px) {
-    /* Ajustes generales móvil */
-    .container-fluid {
-        padding-left: 1rem;
-        padding-right: 1rem;
-    }
-
-    /* Títulos de secciones */
-    .display-5 {
-        font-size: 1.5rem !important;
-    }
-
-    .lead {
-        font-size: 0.95rem !important;
-    }
-
-    /* Carrusel móvil */
-    .carrusel-eventos {
-        padding: 1rem;
-        margin: 1rem 0;
-    }
-
-    .Tarjetas {
-        width: 200px;
-        min-width: 180px;
-        height: 320px;
-        padding: 0.8rem;
-        margin: 0 0.3rem;
-    }
-
-    .Tarjetas img,
-    .img-tarjeta-evento {
-        height: 70px;
-        margin-bottom: 0.6rem;
-    }
-
-    .Tarjetas h3 {
-        font-size: 0.85rem;
-        margin-bottom: 0.5rem;
-    }
-
-    .Tarjetas p {
-        font-size: 0.7rem;
-        margin: 0.2rem 0;
-    }
-
-    .btn-asistir {
-        padding: 0.5rem 0.8rem;
-        font-size: 0.8rem;
-    }
-
-    /* Grid de tarjetas 3D móvil */
-    .tarjeta-evento-3d {
-        max-width: 100%;
-        width: 100%;
-        height: 360px;
-        min-width: auto;
-        margin: 0 auto 1rem auto;
-    }
-
-    .carta-evento-flip {
-        max-width: 320px;
-        margin: 0 auto;
-    }
-
-    .cara-frontal, .cara-posterior {
-        padding: 0.8rem 0.6rem;
+    /* Cara posterior móvil optimizada */
+    .cara-posterior {
+        padding: 1rem 0.8rem;
         max-height: 360px;
+        overflow-y: auto;
     }
 
-    .imagen-evento {
-        height: 100px;
-        margin-bottom: 0.8rem;
+    .cara-posterior .informacion-evento {
+        gap: 0.4rem;
+        min-height: auto;
+        max-height: none;
     }
 
-    .informacion-evento {
-        min-height: 120px;
-        max-height: 160px;
-        padding: 0.3rem 0.2rem;
-    }
-
-    .cara-frontal h3,
     .cara-posterior h3 {
-        font-size: 0.95rem;
+        font-size: 1rem; /* Tamaño fijo legible en móvil */
         margin-bottom: 0.6rem;
     }
 
-    .cara-frontal p,
     .cara-posterior p {
-        font-size: 0.75rem;
-        line-height: 1.2;
+        font-size: 0.8rem; /* Tamaño mínimo legible */
+        line-height: 1.5;
+        margin: 0.25rem 0;
     }
 
-    .boton-detalle,
+    .cara-posterior p strong {
+        font-size: 0.85rem;
+    }
+
+    .cara-posterior .detalle-completo {
+        font-size: 0.75rem;
+        line-height: 1.4;
+        max-height: 4rem;
+    }
+
     .boton-volver {
         padding: 0.6rem 1.2rem;
         font-size: 0.85rem;
+        margin-top: 0.8rem;
     }
 
-    /* Grid: 1 tarjeta por fila en móvil */
-    #contenedor-grid-eventos {
-        padding: 0 0.5rem;
-    }
-
-    #contenedor-grid-eventos > div {
-        max-width: 100% !important;
-        flex: 0 0 100%;
-        padding: 0;
-    }
-
-    /* Navbar móvil */
-    header {
-        min-height: 60px;
-        padding: 0.5rem 1rem;
-    }
-
-    #h1_titulo {
-        font-size: 1.2rem !important;
-    }
-
-    /* Footer móvil */
-    footer {
-        padding: 1.5rem 1rem;
-        font-size: 0.85rem;
-    }
-
-    /* Espaciado entre secciones */
-    main.container-fluid {
-        padding-top: 2rem;
-        padding-bottom: 2rem;
-    }
-
-    section.mb-5 {
-        margin-bottom: 2rem !important;
-    }
 }
+
 
 /* Móvil muy pequeño (hasta 375px) */
 @media (max-width: 375px) {
