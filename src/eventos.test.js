@@ -14,15 +14,16 @@ import {
 } from "./services/eventos";
 
 describe("eventos.test.js", () => {
-  // Configuración antes de cada prueba
+  
   beforeEach(() => {
-    // Simulación de eventos
+    
     const eventosIniciales = [
       { id: "1", titulo: "Charla de ciberseguridad", creadoPor: "admin@gmail.cl" },
       { id: "2", titulo: "Evento", creadoPor: "usuario@gmail.cl" },
     ];
 
-    // Simulación de usuarios
+    
+    
     const usuariosIniciales = [
       { email: "admin@gmail.cl" },
       { email: "usuario@gmail.cl" }
