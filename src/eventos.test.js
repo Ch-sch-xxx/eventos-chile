@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
-import {obtenerEventos,guardarEventos,crearEvento,editarEvento,eliminarEvento,obtenerEventosPorUsuario,contarEventosUsuario,contarTotalUsuarios,obtenerMisEventos} from "../eventosStorage";
+import {obtenerEventos,guardarEventos,crearEvento,editarEvento,eliminarEvento,obtenerEventosPorUsuario,contarEventosUsuario,contarTotalUsuarios,obtenerMisEventos} from "src/services/eventos";
 
 //Simulacion de eventos
   const eventosIniciales = [
