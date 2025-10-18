@@ -15,4 +15,11 @@ import {obtenerEventos,guardarEventos,crearEvento,editarEvento,eliminarEvento,ob
 
   global.STORAGE_KEY = "eventos-chile";
   global.eventosIniciales = eventosIniciales;
-});
+
+   it("debería guardar nuevos eventos", () => {
+    const nuevos = [{ titulo: "Nuevo evento chile" }];
+    guardarEventos(nuevos);
+    const guardado = JSON.parse(localStorage.getItem("eventos-chile"));
+    expect(guardado[0].titulo).toBe("Nuevo evento chile");
+  })
+
