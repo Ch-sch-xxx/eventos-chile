@@ -18,22 +18,22 @@ describe("eventos.test.js", () => {
   beforeEach(() => {
     
     const eventosIniciales = [
-      { id: "1", titulo: "Charla de ciberseguridad", creadoPor: "admin@gmail.cl" },
-      { id: "2", titulo: "Evento", creadoPor: "usuario@gmail.cl" },
+      { id: "1", titulo: "Charla de ciberseguridad", creadoPor: "admin@gmail.com" },
+      { id: "2", titulo: "Evento", creadoPor: "usuario@gmail.com" },
     ];
 
     
     
     const usuariosIniciales = [
-      { email: "admin@gmail.cl" },
-      { email: "usuario@gmail.cl" }
+      { email: "admin@gmail.com" },
+      { email: "usuario@gmail.com" }
     ];
 
     localStorage.setItem("eventos-chile", JSON.stringify(eventosIniciales));
     localStorage.setItem("usuarios-chile", JSON.stringify(usuariosIniciales));
   });
 
-  // Limpiar después de cada prueba
+  
   afterEach(() => {
     localStorage.clear();
     vi.clearAllMocks();
@@ -47,7 +47,16 @@ describe("eventos.test.js", () => {
   });
 
   it("debería contar los eventos de un usuario", () => {
-    const total = contarEventosUsuario("usuario@gmail.cl"); 
+    const total = contarEventosUsuario("usuario@gmail.com"); 
     expect(total).toBe(1); 
+  });
+
+  it("devolver todos los eventos si es admin", () => {
+    const todos = obtenerMisEventos("admin@gmail.com", true);
+    expect(todos.length).toBeGreaterThan(1);
+  });
+  it("contar el total de usuarios registrados", () => {
+    const totalUsuarios = contarTotalUsuarios();
+    expect(totalUsuarios).toBe(2);
   });
 });
