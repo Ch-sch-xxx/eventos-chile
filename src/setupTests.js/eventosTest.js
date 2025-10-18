@@ -21,5 +21,10 @@ import {obtenerEventos,guardarEventos,crearEvento,editarEvento,eliminarEvento,ob
     guardarEventos(nuevos);
     const guardado = JSON.parse(localStorage.getItem("eventos-chile"));
     expect(guardado[0].titulo).toBe("Nuevo evento chile");
+
+
+    it("debería contar los eventos de un usuario", () => {
+         const total = contarEventosUsuario("usuario@gmail.cl"); 
+         expect(total).toBe(1); });
   })
 
