@@ -1,9 +1,11 @@
 // Tarjeta 3D con flip para mostrar detalles de un evento
 // Portado desde eventos_interaccion.js SIN REACT
 // - mantiene efectos de mouse y flip
+// - ahora incluye sistema de asistencia con modal
 
 import { useRef, useState } from 'react';
 import Eventos from '../assets/eventosIMG.png';
+import ModalAsistencia from './ModalAsistencia';
 
 // Función auxiliar para recortar textos largos (por visual, si no se pierde la respo)
 function truncarTexto(texto, maxCaracteres) {
@@ -29,6 +31,7 @@ function formatearFechaLegible(fechaISO) {
 
 function EventCard({ evento }) {
     const [volteada, setVolteada] = useState(false);
+    const [mostrarModal, setMostrarModal] = useState(false);
     const cardRef = useRef(null);
     const flipRef = useRef(null);
 
@@ -72,6 +75,12 @@ function EventCard({ evento }) {
         }
     };
 
+    // Abrir modal de asistencia
+    const handleAsistir = (e) => {
+        e.preventDefault();
+        setMostrarModal(true);
+    };
+
     return (
         <div
             className="tarjeta-evento-3d"
@@ -109,11 +118,30 @@ function EventCard({ evento }) {
                         <p><strong>👤 Organizador:</strong> {truncarTexto(evento.creadoPor, 30)}</p>
                         <p><strong>📆 Creado:</strong> {formatearFechaLegible(evento.fechaCreacion)}</p>
                     </div>
-                    <button className="boton-volver" onClick={handleVolver}>
-                        ← Volver
-                    </button>
+
+                    {/* Botones de acción */}
+                    <div style={{ display: 'flex', gap: '10px', marginTop: 'auto' }}>
+                        <button className="boton-asistir" onClick={handleAsistir} style={{ flex: 1 }}>
+                            ✓ Confirmar Asistencia
+                        </button>
+                        <button className="boton-volver" onClick={handleVolver} style={{ flex: 1 }}>
+                            ← Volver
+                        </button>
+                    </div>
                 </div>
             </div>
+
+            {/* Modal de asistencia */}
+            {mostrarModal && (
+                <ModalAsistencia
+                    evento={evento}
+                    onClose={() => setMostrarModal(false)}
+                    onSuccess={() => {
+                        // Opcional: recargar o mostrar mensaje
+                        console.log('Asistencia confirmada exitosamente');
+                    }}
+                />
+            )}
         </div>
     );
 }

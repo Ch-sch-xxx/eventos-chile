@@ -271,6 +271,7 @@ nav a:hover {
 }
 
 /* TARJETA 3D INDIVIDUAL - FONDO GRANDE Y EFECTO FLOTANTE DESTACADO */
+/* TEMA CYBERPUNK: Neón, gradientes, sombras vibrantes */
 .tarjeta-evento-3d {
     width: 100%;
     max-width: 320px;
@@ -292,17 +293,20 @@ nav a:hover {
     transform-style: preserve-3d;
     transition: transform 0.5s ease-out, box-shadow 0.4s;
     border-radius: 35px;
-    box-shadow: 0 20px 35px rgba(34, 65, 220, 0.43),
-    0 15px 25px rgba(108, 99, 255, 0.82),
-    0 6px 18px rgba(0, 0, 0, 0.22);
+    /* Efecto cyberpunk con sombras neón */
+    box-shadow: 0 20px 35px rgba(0, 255, 157, 0.3),
+    0 15px 25px rgba(0, 212, 255, 0.35),
+    0 6px 18px rgba(0, 0, 0, 0.4);
     transform: translateZ(0) rotateX(25deg);
+    /* Borde neón sutil */
+    border: 1px solid rgba(0, 255, 157, 0.3);
 }
 
 .carta-evento-flip.volteada {
     transform: rotateY(180deg) translateZ(40px);
 }
 
-/* CARAS DE LA TARJETA  */
+/* CARAS DE LA TARJETA - CYBERPUNK */
 .cara-frontal, .cara-posterior {
     position: absolute;
     width: 100%;
@@ -312,7 +316,8 @@ nav a:hover {
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    border: 2px solid rgba(108,99,255,0.2);
+    /* Borde neón cyberpunk */
+    border: 2px solid rgba(0, 255, 157, 0.4);
     transition: all 0.3s ease;
     padding: 0.2rem 1rem;
     box-sizing: border-box;
@@ -320,15 +325,22 @@ nav a:hover {
 }
 
 .cara-frontal {
-    background: linear-gradient(145deg, #ffffff 0%, #f4f6ff 100%);
+    /* Fondo oscuro con gradiente sutil */
+    background: linear-gradient(145deg, #1a1a2e 0%, #16213e 100%);
     text-align: center;
+    /* Resplandor interno neón */
+    box-shadow: inset 0 0 30px rgba(0, 255, 157, 0.1);
 }
 
 .cara-posterior {
-    background: linear-gradient(145deg, var(--primario) 0%, #9F7AEA 50%, var(--acento) 100%);
+    /* Fondo oscuro con acento azul */
+    background: linear-gradient(145deg, #0f3460 0%, #16213e 50%, #1a1a2e 100%);
     color: white;
     transform: rotateY(180deg);
     text-align: left;
+    /* Borde azul neón en cara posterior */
+    border-color: rgba(0, 212, 255, 0.5);
+    box-shadow: inset 0 0 30px rgba(0, 212, 255, 0.1);
 }
 
 /* IMAGEN DEL EVENTO */
@@ -354,13 +366,16 @@ nav a:hover {
     text-align: left;
 }
 
-/* TÍTULOS AJUSTADOS */
+/* TÍTULOS AJUSTADOS - CYBERPUNK */
 .cara-frontal h3 {
     margin: 0 0 0.8rem 0;
     font-size: 1rem;
     font-weight: 600;
     line-height: 1.1;
-    color: var(--secundario);
+    /* Color neón verde */
+    color: #00ff9d;
+    text-shadow: 2px 2px 8px rgba(0, 255, 157, 0.6),
+                 0 0 15px rgba(0, 255, 157, 0.4);
     /* Limito el título a 2 líneas máximo */
     display: -webkit-box;
     -webkit-line-clamp: 2;
@@ -373,7 +388,10 @@ nav a:hover {
     font-size: 1rem;
     font-weight: 600;
     line-height: 1.1;
-    color: var(--secundario);
+    /* Color neón azul para la cara posterior */
+    color: #00d4ff;
+    text-shadow: 2px 2px 8px rgba(0, 212, 255, 0.6),
+                 0 0 15px rgba(0, 212, 255, 0.4);
     /* Limito el título a 2 líneas máximo */
     display: -webkit-box;
     -webkit-line-clamp: 2;
@@ -383,10 +401,10 @@ nav a:hover {
     text-align: center;
 }
 
-.cara-frontal h3 { color: var(--secundario); text-align: center; }
-.cara-posterior h3 { color: white; }
+.cara-frontal h3 { text-align: center; }
+.cara-posterior h3 { color: #00d4ff; }
 
-/* PÁRRAFOS  */
+/* PÁRRAFOS - CYBERPUNK */
 .cara-frontal p,
 .cara-posterior p {
     margin: 0.3rem 0;
@@ -398,8 +416,13 @@ nav a:hover {
 
 }
 
-.cara-frontal p { color: var(--texto); }
-.cara-posterior p { color: rgba(255,255,255,0.95); }
+/* Texto claro en fondo oscuro */
+.cara-frontal p {
+    color: rgba(255, 255, 255, 0.85);
+}
+.cara-posterior p {
+    color: rgba(255,255,255,0.95);
+}
 
 /* PÁRRAFOS ESPECÍFICOS - DETALLES TRASEROS */
 .cara-posterior .detalle-completo {
@@ -409,29 +432,38 @@ nav a:hover {
     margin: 0.2rem 0;
 }
 
-/* ETIQUETA DE TIPO */
+/* ETIQUETA DE TIPO - CYBERPUNK */
 .etiqueta-tipo {
-    background: rgba(237,137,54,0.15);
-    color: var(--acento);
+    /* Gradiente neón de verde a azul */
+    background: linear-gradient(90deg, rgba(0, 255, 157, 0.25), rgba(0, 212, 255, 0.25));
+    color: #00ff9d;
+    border: 1px solid rgba(0, 255, 157, 0.5);
     border-radius: 12px;
     padding: 4px 10px;
     font-size: 0.75rem;
-    font-weight: 500;
+    font-weight: 600;
     display: inline-block;
     margin: 0.5rem 0;
     align-self: center;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    /* Resplandor suave */
+    box-shadow: 0 0 10px rgba(0, 255, 157, 0.3);
 }
 
-/* BOTONES EN TARJETAS 3D - SIEMPRE AL FINAL */
-.boton-detalle, .boton-volver {
-    background: linear-gradient(135deg, var(--primario), #9F7AEA);
-    color: white;
+/* BOTONES EN TARJETAS 3D - SIEMPRE AL FINAL - CYBERPUNK */
+.boton-detalle, .boton-volver, .boton-asistir {
+    /* Gradiente neón de verde a azul */
+    background: linear-gradient(90deg, #00ff9d, #00d4ff);
+    color: #000;
     border: none;
     padding: 0.7rem 1.4rem;
     border-radius: 25px;
     cursor: pointer;
-    font-weight: 500;
+    font-weight: 700;
     font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
     transition: all 0.3s ease;
     margin-top: auto; /* Siempre al final */
     margin-bottom: 0;
@@ -439,35 +471,45 @@ nav a:hover {
     text-align: center;
     align-self: center;
     flex-shrink: 0; /* No se achica */
+    /* Sombra neón */
+    box-shadow: 0 4px 15px rgba(0, 255, 157, 0.4);
 }
 
 .boton-volver {
-    background: rgba(255,255,255,0.25);
-    border: 1px solid rgba(255,255,255,0.4);
+    /* Botón volver con tema azul */
+    background: linear-gradient(90deg, #00d4ff, #00ff9d);
+    color: #000;
+    border: none;
 }
 
 .boton-detalle:hover {
-    background: linear-gradient(135deg, #5A52D5, #8B7EFF);
-    box-shadow: 0 8px 20px rgba(108,99,255,0.4);
+    transform: scale(1.05);
+    box-shadow: 0 6px 25px rgba(0, 255, 157, 0.7),
+                0 0 30px rgba(0, 255, 157, 0.5);
 }
 
-.boton-volver:hover {
-    background: rgba(255,255,255,0.35);
-    transform: translateY(-2px);
+.boton-volver:hover, .boton-asistir:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 25px rgba(0, 212, 255, 0.7),
+                0 0 30px rgba(0, 212, 255, 0.5);
 }
 
-/* EFECTOS HOVER */
+/* EFECTOS HOVER - CYBERPUNK */
 .tarjeta-evento-3d:hover .carta-evento-flip {
+    /* Sombra neón más intensa al hacer hover */
     box-shadow:
-            0 25px 50px rgba(108,99,255,0.4),
-            0 15px 35px rgba(108,99,255,0.25),
-            0 8px 20px rgba(0,0,0,0.15);
+            0 25px 50px rgba(0, 255, 157, 0.5),
+            0 15px 35px rgba(0, 212, 255, 0.4),
+            0 8px 20px rgba(0, 0, 0, 0.3);
     transform: translateZ(15px) rotateX(1deg) translateY(-5px);
 }
 
-.tarjeta-evento-3d:hover .cara-frontal,
+.tarjeta-evento-3d:hover .cara-frontal {
+    border-color: rgba(0, 255, 157, 0.7);
+}
+
 .tarjeta-evento-3d:hover .cara-posterior {
-    border-color: rgba(108,99,255,0.4);
+    border-color: rgba(0, 212, 255, 0.7);
 }
 
 /* ANIMACIONES DE APARICIÓN */

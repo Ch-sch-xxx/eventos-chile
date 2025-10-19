@@ -11,6 +11,7 @@ import { generateEventId } from './eventosValidation';
 const STORAGE_KEY = 'eventos-chile';
 
 // Lista de eventos de ejemplo que carga cuando no hay nada guardado
+// NUEVO: Ahora incluyen campo asistentes para sistema de confirmación
 const eventosIniciales = [
     {
         titulo: "Festival de Música Urbana",
@@ -23,7 +24,9 @@ const eventosIniciales = [
         precio: 25000,
         creadoPor: "admin@eventos.cl",
         fechaCreacion: "2025-09-01T12:00:00.000Z",
-        id: "evt_inicial_1"
+        id: "evt_inicial_1",
+        asistentes: [], // Array para guardar asistentes confirmados
+        totalAsistentes: 0
     },
     {
         titulo: "Conferencia de IA",
@@ -36,7 +39,9 @@ const eventosIniciales = [
         precio: 0,
         creadoPor: "admin@eventos.cl",
         fechaCreacion: "2025-09-01T12:00:00.000Z",
-        id: "evt_inicial_2"
+        id: "evt_inicial_2",
+        asistentes: [],
+        totalAsistentes: 0
     },
     {
         titulo: "Feria del Libro",
@@ -49,7 +54,9 @@ const eventosIniciales = [
         precio: 3000,
         creadoPor: "admin@eventos.cl",
         fechaCreacion: "2025-09-01T12:00:00.000Z",
-        id: "evt_inicial_3"
+        id: "evt_inicial_3",
+        asistentes: [],
+        totalAsistentes: 0
     },
     {
         titulo: "Taller de Fotografía",
@@ -62,7 +69,9 @@ const eventosIniciales = [
         precio: 10000,
         creadoPor: "admin@eventos.cl",
         fechaCreacion: "2025-09-01T12:00:00.000Z",
-        id: "evt_inicial_4"
+        id: "evt_inicial_4",
+        asistentes: [],
+        totalAsistentes: 0
     },
     {
         titulo: "Seminario de Emprendimiento",
@@ -75,7 +84,9 @@ const eventosIniciales = [
         precio: 0,
         creadoPor: "admin@eventos.cl",
         fechaCreacion: "2025-09-01T12:00:00.000Z",
-        id: "evt_inicial_5"
+        id: "evt_inicial_5",
+        asistentes: [],
+        totalAsistentes: 0
     },
     {
         titulo: "Concierto Sinfónico",
@@ -88,7 +99,9 @@ const eventosIniciales = [
         precio: 15000,
         creadoPor: "admin@eventos.cl",
         fechaCreacion: "2025-09-01T12:00:00.000Z",
-        id: "evt_inicial_6"
+        id: "evt_inicial_6",
+        asistentes: [],
+        totalAsistentes: 0
     },
     {
         titulo: "Hackathon Tech",
@@ -101,7 +114,9 @@ const eventosIniciales = [
         precio: 5000,
         creadoPor: "admin@eventos.cl",
         fechaCreacion: "2025-09-01T12:00:00.000Z",
-        id: "evt_inicial_7"
+        id: "evt_inicial_7",
+        asistentes: [],
+        totalAsistentes: 0
     },
     {
         titulo: "Webinar de Finanzas",
@@ -114,7 +129,9 @@ const eventosIniciales = [
         precio: 0,
         creadoPor: "admin@eventos.cl",
         fechaCreacion: "2025-09-01T12:00:00.000Z",
-        id: "evt_inicial_8"
+        id: "evt_inicial_8",
+        asistentes: [],
+        totalAsistentes: 0
     },
     {
         titulo: "Festival de Cine",
@@ -127,7 +144,9 @@ const eventosIniciales = [
         precio: 7000,
         creadoPor: "admin@eventos.cl",
         fechaCreacion: "2025-09-01T12:00:00.000Z",
-        id: "evt_inicial_9"
+        id: "evt_inicial_9",
+        asistentes: [],
+        totalAsistentes: 0
     },
     {
         titulo: "Clase Magistral de Cocina",
@@ -140,7 +159,9 @@ const eventosIniciales = [
         precio: 8000,
         creadoPor: "admin@eventos.cl",
         fechaCreacion: "2025-09-01T12:00:00.000Z",
-        id: "evt_inicial_10"
+        id: "evt_inicial_10",
+        asistentes: [],
+        totalAsistentes: 0
     }
 ];
 
@@ -183,7 +204,9 @@ export function crearEvento(nuevoEvento, userEmail) {
         ...nuevoEvento,
         creadoPor: userEmail,
         fechaCreacion: new Date().toISOString(),
-        id: generateEventId() // Uso la función importada en vez de duplicar el código
+        id: generateEventId(), // Uso la función importada en vez de duplicar el código
+        asistentes: [], // Inicializar array de asistentes vacío
+        totalAsistentes: 0 // Contador de asistentes
     };
 
     try {
