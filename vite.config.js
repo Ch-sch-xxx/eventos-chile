@@ -1,7 +1,18 @@
+// vite.config.js
+// Configuración básica de Vite para React + GitHub Pages
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-// https://vite.dev/config/
 export default defineConfig({
-  plugins: [react()],
+    // Plugin de React para habilitar Fast Refresh
+    plugins: [react()],
+
+    // Importante: debe coincidir con el nombre del repo en GitHub
+    // En mi caso: github.com/usuario/eventos-chile → base: '/eventos-chile/'
+    base: '/eventos-chile/',
+
+    // Carpeta donde se genera el build para desplegar
+    build: {
+        outDir: 'dist'
+    }
 })
