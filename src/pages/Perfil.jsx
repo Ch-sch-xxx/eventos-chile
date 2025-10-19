@@ -8,6 +8,7 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { obtenerEventosPorUsuario, listarEventos } from '../services/eventos';
 import '../styles/perfil.css';
+import iconoPerfil from '../assets/ICONOperfil.png';
 
 // DATOS DE REGIONES Y COMUNAS
 const regionesYcomunas = {
@@ -76,7 +77,7 @@ function Perfil() {
                         email: user.email,
                         region: 'Región Metropolitana',
                         comuna: 'Santiago',
-                        fotoUrl: '/images/ICONOperfil.png'
+                        fotoUrl: iconoPerfil
                     };
                 }
             } else {
@@ -85,7 +86,7 @@ function Perfil() {
                     email: user.email,
                     region: 'Región Metropolitana',
                     comuna: 'Santiago',
-                    fotoUrl: '/images/ICONOperfil.png'
+                    fotoUrl: iconoPerfil
                 };
             }
         }
@@ -102,7 +103,7 @@ function Perfil() {
                     data = usuario || {
                         name: 'Usuario Sin Nombre',
                         email: user.email,
-                        fotoUrl: '/images/ICONOperfil.png'
+                        fotoUrl: iconoPerfil
                     };
                 }
             } else {
@@ -111,7 +112,7 @@ function Perfil() {
                 data = usuario || {
                     name: 'Usuario Sin Nombre',
                     email: user.email,
-                    fotoUrl: '/images/ICONOperfil.png'
+                    fotoUrl: iconoPerfil
                 };
             }
         }
@@ -194,7 +195,7 @@ function Perfil() {
             email: email.trim(),
             region,
             comuna,
-            fotoUrl: fotoUrl.trim() || '/images/ICONOperfil.png',
+            fotoUrl: fotoUrl.trim() || iconoPerfil,
             fechaActualizacion: new Date().toISOString()
         };
 
@@ -277,10 +278,10 @@ function Perfil() {
 
                                 {/* Imagen de perfil */}
                                 <img
-                                    src={formData.fotoUrl || '/images/ICONOperfil.png'}
+                                    src={formData.fotoUrl || iconoPerfil}
                                     alt="Foto de perfil"
                                     className="imagen-perfil"
-                                    onError={(e) => { e.target.src = '/images/ICONOperfil.png'; }}
+                                    onError={(e) => { e.target.src = iconoPerfil; }}
                                 />
                             </div>
                             <div className="info-basica">

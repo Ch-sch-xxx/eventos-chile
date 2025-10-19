@@ -1,6 +1,9 @@
 // Manejo de eventos usando localStorage como base de datos local
 // Incluye operaciones CRUD completas (crear, leer, editar, eliminar)
 
+// Importo la imagen desde assets para que Vite resuelva la URL final en build y preview
+import eventoIMG from '../assets/eventosIMG.png';
+
 // Clave para guardar los eventos en el navegador
 const STORAGE_KEY = 'eventos-chile';
 
@@ -11,7 +14,7 @@ const eventosIniciales = [
         fecha: "2025-09-30",
         lugar: "Estadio Nacional, Santiago",
         tipo: "Presencial",
-        imagen: "/images/eventosIMG.png",
+        imagen: eventoIMG,
         descripcion: "Un festival con los mejores exponentes de la música urbana nacional e internacional.",
         capacidad: 45000,
         precio: 25000,
@@ -24,7 +27,7 @@ const eventosIniciales = [
         fecha: "2025-10-05",
         lugar: "Online",
         tipo: "Streaming",
-        imagen: "/images/eventosIMG.png",
+        imagen: eventoIMG,
         descripcion: "Expertos en inteligencia artificial presentan las últimas tendencias y avances.",
         capacidad: 5000,
         precio: 0,
@@ -37,7 +40,7 @@ const eventosIniciales = [
         fecha: "2025-10-12",
         lugar: "Centro Cultural La Moneda, Santiago",
         tipo: "Presencial",
-        imagen: "/images/eventosIMG.png",
+        imagen: eventoIMG,
         descripcion: "Encuentro cultural con editoriales, escritores y actividades literarias para toda la familia.",
         capacidad: 8000,
         precio: 3000,
@@ -50,7 +53,7 @@ const eventosIniciales = [
         fecha: "2025-10-18",
         lugar: "Museo de Arte Contemporáneo, Santiago",
         tipo: "Presencial",
-        imagen: "/images/eventosIMG.png",
+        imagen: eventoIMG,
         descripcion: "Taller práctico sobre técnicas de fotografía artística y uso de cámara.",
         capacidad: 150,
         precio: 10000,
@@ -63,7 +66,7 @@ const eventosIniciales = [
         fecha: "2025-10-22",
         lugar: "Online",
         tipo: "Streaming",
-        imagen: "/images/eventosIMG.png",
+        imagen: eventoIMG,
         descripcion: "Conferencias sobre innovación, startups y oportunidades de negocio.",
         capacidad: 3000,
         precio: 0,
@@ -76,7 +79,7 @@ const eventosIniciales = [
         fecha: "2025-10-25",
         lugar: "Teatro Municipal, Santiago",
         tipo: "Presencial",
-        imagen: "/images/eventosIMG.png",
+        imagen: eventoIMG,
         descripcion: "Una presentación especial de la Orquesta Filarmónica con repertorio clásico.",
         capacidad: 1800,
         precio: 15000,
@@ -89,7 +92,7 @@ const eventosIniciales = [
         fecha: "2025-11-02",
         lugar: "Universidad de Chile, Santiago",
         tipo: "Presencial",
-        imagen: "/images/eventosIMG.png",
+        imagen: eventoIMG,
         descripcion: "Competencia intensiva de programación y desarrollo de proyectos tecnológicos.",
         capacidad: 600,
         precio: 5000,
@@ -102,7 +105,7 @@ const eventosIniciales = [
         fecha: "2025-11-08",
         lugar: "Online",
         tipo: "Streaming",
-        imagen: "/images/eventosIMG.png",
+        imagen: eventoIMG,
         descripcion: "Charla en línea sobre inversión, ahorro y estrategias financieras personales.",
         capacidad: 2000,
         precio: 0,
@@ -115,7 +118,7 @@ const eventosIniciales = [
         fecha: "2025-11-15",
         lugar: "Centro Cultural Gabriela Mistral, Santiago",
         tipo: "Presencial",
-        imagen: "/images/eventosIMG.png",
+        imagen: eventoIMG,
         descripcion: "Proyecciones de películas nacionales e internacionales con paneles de discusión.",
         capacidad: 2500,
         precio: 7000,
@@ -128,7 +131,7 @@ const eventosIniciales = [
         fecha: "2025-11-20",
         lugar: "Online",
         tipo: "Streaming",
-        imagen: "/images/eventosIMG.png",
+        imagen: eventoIMG,
         descripcion: "Un chef reconocido enseña técnicas y recetas exclusivas paso a paso.",
         capacidad: 1000,
         precio: 8000,
