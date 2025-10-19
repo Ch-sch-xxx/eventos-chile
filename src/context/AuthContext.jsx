@@ -26,10 +26,13 @@ export function AuthProvider({ children }) {
                 const now = new Date().getTime();
                 const expiryTime = parseInt(expiry);
 
-                // Si la sesión expiró, hago logout automático
+                // Si la sesión expiró, limpio todo manualmente (sin llamar a logout que aún no existe)
                 if (now >= expiryTime) {
                     console.log('⚠️ Sesión expirada, cerrando sesión automáticamente');
-                    logout();
+                    localStorage.removeItem(USER_LOGGED_KEY);
+                    localStorage.removeItem(USER_EMAIL_KEY);
+                    localStorage.removeItem('session-expiry');
+                    setUser(null);
                     return;
                 }
             }
@@ -41,7 +44,7 @@ export function AuthProvider({ children }) {
                 isAdmin: logged === 'admin'
             });
         }
-    }, []);
+    }, []); // Sin dependencias porque solo se ejecuta al montar
 
     // Inicio sesión guardando email y rol del usuario
     const login = (email, role = 'user') => {

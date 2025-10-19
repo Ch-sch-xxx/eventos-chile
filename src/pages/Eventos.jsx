@@ -1,16 +1,18 @@
 // Página principal de eventos con carrusel infinito y grilla de tarjetas 3D
 
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
-import EventCarousel from '../components/EventCarousel';
 import EventCard from '../components/EventCard';
+import EventCarousel from '../components/EventCarousel';
+import Footer from '../components/Footer';
+import Navbar from '../components/Navbar';
 import { obtenerEventos } from '../services/eventos';
-import { useAuth } from '../context/AuthContext';
-import { useNavigate } from 'react-router-dom';
 import '../styles/eventos.css';
 
 function Eventos() {
     const eventos = obtenerEventos();
+
+    // Nota: handleAsistir removido porque no se usa actualmente
+    // Si en el futuro se quiere agregar funcionalidad de asistencia, descomentar:
+    /*
     const { isLoggedIn } = useAuth();
     const navigate = useNavigate();
 
@@ -22,6 +24,7 @@ function Eventos() {
             navigate('/auth');
         }
     };
+    */
 
     return (
         <>
@@ -58,10 +61,7 @@ function Eventos() {
                                 key={evento.id}
                                 className="col-md-6 col-lg-4 d-flex justify-content-center align-items-stretch mb-4"
                             >
-                                <EventCard
-                                    evento={evento}
-                                    onAsistir={handleAsistir}
-                                />
+                                <EventCard evento={evento} />
                             </div>
                         ))}
                     </div>

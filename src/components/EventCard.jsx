@@ -2,7 +2,7 @@
 // Portado desde eventos_interaccion.js SIN REACT
 // - mantiene efectos de mouse y flip
 
-import { useState, useRef } from 'react';
+import { useRef, useState } from 'react';
 import Eventos from '../assets/eventosIMG.png';
 
 // Función auxiliar para recortar textos largos (por visual, si no se pierde la respo)
@@ -27,7 +27,7 @@ function formatearFechaLegible(fechaISO) {
     return fecha.toLocaleDateString('es-CL', opciones);
 }
 
-function EventCard({ evento, onAsistir }) {
+function EventCard({ evento }) {
     const [volteada, setVolteada] = useState(false);
     const cardRef = useRef(null);
     const flipRef = useRef(null);
@@ -105,7 +105,7 @@ function EventCard({ evento, onAsistir }) {
                         <p><strong>📋 Descripción:</strong></p>
                         <p className="detalle-completo">{truncarTexto(evento.descripcion, 200)}</p>
                         <p><strong>👥 Capacidad:</strong> {evento.capacidad} personas</p>
-                        <p><strong>💰 Precio:</strong> ${evento.precio.toLocaleString('es-CL')}</p>
+                        <p><strong>💰 Precio:</strong> {evento.precio === 0 ? 'Gratis' : `$${evento.precio.toLocaleString('es-CL')}`}</p>
                         <p><strong>👤 Organizador:</strong> {truncarTexto(evento.creadoPor, 30)}</p>
                         <p><strong>📆 Creado:</strong> {formatearFechaLegible(evento.fechaCreacion)}</p>
                     </div>

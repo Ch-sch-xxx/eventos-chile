@@ -125,11 +125,11 @@ function Admin() {
                 // Modo edición
                 const resultado = editarEvento(editandoIndice, eventoData, user.email, isAdmin());
                 if (resultado) {
-                    alert('Evento editado exitosamente!');
                     limpiarFormulario();
                     setEditandoIndice(null);
-                    cargarEventos();
                     cambiarVista('listar');
+                    cargarEventos(); // Recargar después de cambiar vista
+                    alert('✅ Evento editado exitosamente!');
                 } else {
                     alert('No tienes permisos para editar este evento');
                 }
@@ -137,10 +137,13 @@ function Admin() {
                 // Modo creación
                 const resultado = crearEvento(eventoData, user.email);
                 if (resultado) {
-                    alert('Evento creado exitosamente!');
+                    // Primero limpio y cambio vista
                     limpiarFormulario();
-                    cargarEventos();
                     cambiarVista('listar');
+                    // Luego recargo eventos (para asegurar que se muestren)
+                    cargarEventos();
+                    // Mensaje final
+                    alert('✅ Evento creado exitosamente! Ya puedes verlo en la lista.');
                 } else {
                     alert('Error al crear el evento');
                 }
