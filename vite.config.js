@@ -1,18 +1,14 @@
-import { defineConfig } from 'vite'
+// vite.config.js
+// Configuración básica de Vite para React + GitHub Pages
 import react from '@vitejs/plugin-react'
+import { defineConfig } from 'vite'
 
-// https://vite.dev/config/
 export default defineConfig({
-  plugins: [react()],
-  base: '/eventos-chile/',
-  build: {
-    outDir: 'dist',
-    assetsDir: 'assets',
-    sourcemap: true,
-    rollupOptions: {
-      output: {
-        manualChunks: undefined
-      }
+    plugins: [react()],
+    base: '/eventos-chile/',
+    build: {
+        outDir: 'dist',
+        emptyOutDir: true,
+        sourcemap: true
     }
-  }
 })

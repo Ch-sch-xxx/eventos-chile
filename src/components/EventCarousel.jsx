@@ -5,6 +5,8 @@
 import { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import Eventos from '../assets/eventosIMG.png';
+
 
 // Función auxiliar para recortar textos largos
 function truncarTexto(texto, maxCaracteres) {
@@ -71,9 +73,9 @@ function EventCarousel({ eventos }) {
             {eventosDobles.map((evento, index) => (
                 <article className="Tarjetas" key={`${evento.id}-${index}`}>
                     <img
-                        className="img-tarjeta-evento"
-                        src={evento.imagen}
-                        alt="Imagen evento"
+                        className="imagen-evento"
+                        src={Eventos}
+                        alt={truncarTexto(evento.titulo, 30)}
                     />
                     <h3>{truncarTexto(evento.titulo, 40)}</h3>
                     <p>

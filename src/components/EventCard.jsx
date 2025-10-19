@@ -3,6 +3,7 @@
 // - mantiene efectos de mouse y flip
 
 import { useState, useRef } from 'react';
+import Eventos from '../assets/eventosIMG.png';
 
 // Función auxiliar para recortar textos largos (por visual, si no se pierde la respo)
 function truncarTexto(texto, maxCaracteres) {
@@ -83,7 +84,7 @@ function EventCard({ evento, onAsistir }) {
                 <div className="cara-frontal">
                     <img
                         className="imagen-evento"
-                        src={evento.imagen}
+                        src={Eventos}
                         alt={truncarTexto(evento.titulo, 30)}
                     />
                     <div className="informacion-evento">
