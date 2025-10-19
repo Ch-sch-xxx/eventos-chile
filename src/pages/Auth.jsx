@@ -12,122 +12,19 @@ import {
 } from '../services/usuarios';
 import '../styles/auth.css';
 import {
-    formatearRUT
+    formatearRUT,
+    validarEmail,
+    validarNombre,
+    validarPassword,
+    validarRUT
 } from '../utils/validation';
 
 // DATOS DE REGIONES Y COMUNAS
-const regionesYcomunas = {
-    "Región Metropolitana": [
-        "Santiago", "Providencia", "Las Condes", "Puente Alto", "Maipú"
-    ],
-    "Valparaíso": [
-        "Valparaíso", "Viña del Mar", "Concón", "Quilpué"
-    ],
-    "Biobío": [
-        "Concepción", "Talcahuano", "Los Ángeles"
-    ],
-    "O'Higgins": [
-        "Rancagua", "San Fernando", "Machalí"
-    ]
-};
+import { regionesYcomunas } from '../data/ubicaciones';
 
-// FUNCIONES DE VALIDACIÓN RUT (Módulo 11)
-/**
- * Calcula el dígito verificador de un RUT usando algoritmo Módulo 11
- */
-function calcularDV(rutSinDV) {
-    let suma = 0;
-    let multiplicador = 2;
+// Las funciones de validación de RUT se han movido a utils/validation.js
 
-    // Recorrer de DERECHA a IZQUIERDA
-    for (let i = rutSinDV.length - 1; i >= 0; i--) {
-        const digito = parseInt(rutSinDV.charAt(i));
-        suma += digito * multiplicador;
-
-        multiplicador++;
-        if (multiplicador > 7) {
-            multiplicador = 2;
-        }
-    }
-
-    const resto = suma % 11;
-    const dv = 11 - resto;
-
-    if (dv === 11) return '0';
-    if (dv === 10) return 'k';
-    return dv.toString();
-}
-
-/**
- * Válida RUT completo con formato y dígito verificador
- */
-function validarRUTCompleto(rut) {
-    // Limpiar y validar formato básico
-    const rutLimpio = rut.replace(/[^0-9kK-]/g, '');
-
-    if (!/^[0-9]+-[0-9kK]$/i.test(rutLimpio)) {
-        return false;
-    }
-
-    const partes = rutLimpio.split('-');
-    const cuerpo = partes[0];
-    const dv = partes[1].toLowerCase();
-
-    // Validar que el cuerpo tenga entre 7 y 8 dígitos
-    if (cuerpo.length < 7 || cuerpo.length > 8) {
-        return false;
-    }
-
-    const dvCalculado = calcularDV(cuerpo);
-    return dv === dvCalculado;
-}
-
-/**
- * Formatea RUT automáticamente: 12345678-9
- */
-function formatearRUT(rut) {
-    // Limpiar completamente
-    let rutLimpio = rut.replace(/[^0-9kK]/g, '').toUpperCase();
-
-    if (rutLimpio.length < 2) return rutLimpio;
-
-    // Separar cuerpo y DV
-    const dv = rutLimpio.slice(-1);
-    const cuerpo = rutLimpio.slice(0, -1);
-
-    if (cuerpo.length === 0) return rutLimpio;
-
-    // Formatear con puntos
-    const cuerpoFormateado = cuerpo.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-
-    return `${cuerpoFormateado}-${dv}`;
-}
-
-// FUNCIONES DE USUARIOS (localStorage)
-function obtenerUsuarios() {
-    const usuarios = localStorage.getItem('usuarios-chile');
-    return usuarios ? JSON.parse(usuarios) : [];
-}
-
-function guardarUsuarios(usuarios) {
-    localStorage.setItem('usuarios-chile', JSON.stringify(usuarios));
-}
-
-function crearUsuario(userData) {
-    const usuarios = obtenerUsuarios();
-    // Verificar si el email ya existe
-    if (usuarios.find(user => user.email === userData.email)) {
-        return false;
-    }
-    usuarios.push(userData);
-    guardarUsuarios(usuarios);
-    return true;
-}
-
-function validarUsuario(email, password) {
-    const usuarios = obtenerUsuarios();
-    return usuarios.find(user => user.email === email && user.password === password);
-}
+// Las funciones de validación han sido movidas a utils/validation.js y services/usuarios.js
 
 // COMPONENTE AUTH
 function Auth() {
@@ -147,9 +44,10 @@ function Auth() {
     // Estado para toggle entre login/registro
     const [mostrarRegistro, setMostrarRegistro] = useState(false);
 
-    // Estados para errores
+    // Estados para manejo de errores
     const [errors, setErrors] = useState({});
     const [loginError, setLoginError] = useState('');
+    const [formSubmitting, setFormSubmitting] = useState(false);
 
     // Estados formulario LOGIN
     const [loginEmail, setLoginEmail] = useState('');
@@ -184,119 +82,141 @@ function Auth() {
     const handleLogin = async (e) => {
         e.preventDefault();
         setLoginError('');
+        setErrors({});
 
-        const email = loginEmail.trim();
-        const pass = loginPassword.trim();
+        try {
+            const email = loginEmail.trim();
+            const pass = loginPassword.trim();
 
-        // Validar email
-        if (!validarEmail(email)) {
-            setLoginError('Por favor, ingresa un email válido');
-            return;
-        }
+            // Admin hardcodeado
+            if (email === 'ad@ad.com' && pass === 'admin') {
+                login(email, 'admin');
+                localStorage.setItem('user-data', JSON.stringify({
+                    name: 'Administrador',
+                    email: email,
+                    role: 'admin'
+                }));
+                navigate('/admin', { replace: true });
+                return;
+            }
 
-        // Admin hardcodeado
-        if (email === 'ad@ad.com' && pass === 'admin') {
-            login(email, 'admin');
-            localStorage.setItem('user-data', JSON.stringify({
-                name: 'Administrador',
-                email: email,
-                role: 'admin'
-            }));
-            navigate('/admin', { replace: true });
-            return;
-        }
+            // Validar usuario registrado
+            const resultado = validarUsuario(email, pass);
 
-        // Validar usuario registrado
-        const resultado = validarUsuario(email, pass);
-
-        if (resultado.success) {
-            login(email, 'user');
-            localStorage.setItem('user-data', JSON.stringify(resultado.user));
-            navigate('/eventos', { replace: true });
-        } else {
-            setLoginError(resultado.error || 'Credenciales incorrectas');
+            if (resultado.success) {
+                setLoginError('');
+                login(email, 'user');
+                localStorage.setItem('user-data', JSON.stringify(resultado.user));
+                navigate('/eventos', { replace: true });
+            } else {
+                setLoginError('El email o la contraseña son incorrectos');
+                setLoginPassword(''); // Limpiar solo la contraseña para facilitar reintentos
+            }
+        } catch (error) {
+            console.error('Error al iniciar sesión:', error);
+            setLoginError('Error al iniciar sesión. Por favor, intenta nuevamente.');
         }
     };
 
     // MANEJO REGISTRO
     const handleRegister = async (e) => {
         e.preventDefault();
-        setErrors({});
+        setFormSubmitting(true);
 
-        const name = registerName.trim();
-        const email = registerEmail.trim();
-        const rut = registerRut.trim();
-        const pass = registerPassword.trim();
-        const region = registerRegion;
-        const comuna = registerComuna;
+        try {
+            // Obtener y limpiar valores
+            const name = registerName.trim();
+            const email = registerEmail.trim();
+            const rut = registerRut.trim();
+            const pass = registerPassword.trim();
 
-        // Validar nombre
-        if (!validarNombre(name)) {
+            // Validaciones
+            const newErrors = {};
+
+            // Validar nombre
+            if (!validarNombre(name)) {
+                newErrors.name = 'El nombre debe contener solo letras y tener al menos 2 caracteres';
+            }
+
+            // Validar email
+            if (!validarEmail(email)) {
+                newErrors.email = 'Por favor, ingresa un email válido';
+            }
+
+            // Validar RUT
+            if (!validarRUT(rut)) {
+                newErrors.rut = 'Por favor, ingresa un RUT chileno válido';
+            }
+
+            // Validar contraseña
+            const validacionPass = validarPassword(pass);
+            if (!validacionPass.isValid) {
+                newErrors.password = 'La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número y un carácter especial';
+            }
+
+            // Validar ubicación
+            if (!registerRegion || !registerComuna) {
+                newErrors.ubicacion = 'Por favor, selecciona región y comuna';
+            }
+
+            // Si hay errores, actualizamos el estado y detenemos el proceso
+            if (Object.keys(newErrors).length > 0) {
+                setErrors(newErrors);
+                setFormSubmitting(false);
+                // Hacer scroll al primer error
+                const firstErrorField = document.querySelector('.is-invalid');
+                if (firstErrorField) {
+                    firstErrorField.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    firstErrorField.focus();
+                }
+                return;
+            }
+
+            // Limpiar errores si todo está bien
+            setErrors({});
+
+            // Crear nuevo usuario
+            const nuevoUsuario = {
+                name,
+                email,
+                rut: formatearRUT(rut),
+                password: pass,
+                region: registerRegion,
+                comuna: registerComuna,
+                fechaRegistro: new Date().toISOString()
+            };
+
+            const resultado = await crearUsuario(nuevoUsuario);
+
+            if (resultado.success) {
+                setErrors({});
+                setLoginError('');
+                alert('¡Registro exitoso! Ahora puedes iniciar sesión.');
+
+                // Limpiar formulario
+                setRegisterName('');
+                setRegisterEmail('');
+                setRegisterRut('');
+                setRegisterPassword('');
+                setRegisterRegion('');
+                setRegisterComuna('');
+
+                // Volver al login
+                setMostrarRegistro(false);
+            } else {
+                setErrors(prev => ({
+                    ...prev,
+                    submit: resultado.error || 'Error al crear el usuario'
+                }));
+            }
+        } catch (error) {
+            console.error('Error en el registro:', error);
             setErrors(prev => ({
                 ...prev,
-                nombre: 'El nombre debe contener solo letras y tener al menos 2 caracteres'
+                submit: 'Error del servidor. Por favor, intenta más tarde.'
             }));
-            return;
-        }
-
-        // Validar email
-        if (!validarEmail(email)) {
-            setErrors(prev => ({
-                ...prev,
-                email: 'Por favor, ingresa un email válido'
-            }));
-            return;
-        }
-
-        // Validar RUT
-        if (!validarRUT(rut)) {
-            setErrors(prev => ({
-                ...prev,
-                rut: 'RUT inválido. Debe ser un RUT chileno válido'
-            }));
-            return;
-        }
-
-        if (pass.length < 4 || pass.length > 20) {
-            alert('La contraseña debe tener entre 4 y 20 caracteres');
-            return;
-        }
-
-        if (!region || !comuna) {
-            alert('Selecciona región y comuna');
-            return;
-        }
-
-        // Verificar si RUT ya existe
-        const usuarios = obtenerUsuarios();
-        if (usuarios.find(user => user.rut === formatearRUT(rut))) {
-            alert('Este RUT ya está registrado');
-            return;
-        }
-
-        // Crear usuario
-        const nuevoUsuario = {
-            name: name,
-            email: email,
-            rut: formatearRUT(rut),
-            password: pass,
-            region: region,
-            comuna: comuna,
-            fechaRegistro: new Date().toISOString()
-        };
-
-        if (crearUsuario(nuevoUsuario)) {
-            alert('Registro exitoso. Ahora puedes iniciar sesión.');
-            // Limpiar formulario y volver a login
-            setRegisterName('');
-            setRegisterEmail('');
-            setRegisterRut('');
-            setRegisterPassword('');
-            setRegisterRegion('');
-            setRegisterComuna('');
-            setMostrarRegistro(false);
-        } else {
-            alert('Este email ya está registrado');
+        } finally {
+            setFormSubmitting(false);
         }
     };
 
@@ -366,72 +286,142 @@ function Auth() {
 
                             {/* FORMULARIO REGISTRO */}
                             {mostrarRegistro && (
-                                <form onSubmit={handleRegister} className="auth-form">
-                                    <h2 className="text-center mb-4">Registro</h2>
+                                <form
+                                    onSubmit={handleRegister}
+                                    className="auth-form needs-validation"
+                                    noValidate
+                                >
+                                    <h2 className="text-center mb-4">Crear cuenta nueva</h2>
+                                    {errors.submit && (
+                                        <div className="alert alert-danger" role="alert">
+                                            <i className="bi bi-exclamation-triangle-fill me-2"></i>
+                                            {errors.submit}
+                                        </div>
+                                    )}
 
                                     <div className="mb-3">
                                         <label htmlFor="register-name" className="form-label">Nombre completo</label>
                                         <input
                                             type="text"
-                                            className="form-control"
+                                            className={`form-control ${errors.name ? 'is-invalid' : ''}`}
                                             id="register-name"
                                             value={registerName}
-                                            onChange={(e) => setRegisterName(e.target.value)}
+                                            onChange={(e) => {
+                                                setRegisterName(e.target.value);
+                                                if (errors.name) {
+                                                    setErrors(prev => ({ ...prev, name: null }));
+                                                }
+                                            }}
+                                            aria-describedby="nameHelp"
                                             required
                                             placeholder="Tu nombre completo"
                                         />
+                                        {errors.name && (
+                                            <div className="invalid-feedback">
+                                                {errors.name}
+                                            </div>
+                                        )}
+                                        <div id="nameHelp" className="form-text">
+                                            Ingresa tu nombre y apellido
+                                        </div>
                                     </div>
 
                                     <div className="mb-3">
                                         <label htmlFor="register-email" className="form-label">Email</label>
                                         <input
                                             type="email"
-                                            className="form-control"
+                                            className={`form-control ${errors.email ? 'is-invalid' : ''}`}
                                             id="register-email"
                                             value={registerEmail}
                                             onChange={(e) => setRegisterEmail(e.target.value)}
                                             required
                                             placeholder="ejemplo-correo@dominio.cl"
                                         />
+                                        {errors.email && (
+                                            <div className="invalid-feedback">
+                                                {errors.email}
+                                            </div>
+                                        )}
                                     </div>
 
                                     <div className="mb-3">
                                         <label htmlFor="register-rut" className="form-label">RUT chileno</label>
                                         <input
                                             type="text"
-                                            className="form-control"
+                                            className={`form-control ${errors.rut ? 'is-invalid' : ''}`}
                                             id="register-rut"
                                             value={registerRut}
-                                            onChange={handleRutChange}
+                                            onChange={(e) => {
+                                                handleRutChange(e);
+                                                if (errors.rut) {
+                                                    setErrors(prev => ({ ...prev, rut: null }));
+                                                }
+                                            }}
                                             required
                                             placeholder="12345678-9"
                                             maxLength="12"
                                         />
-                                        <small className="form-text text-muted">Formato: 12345678-9</small>
+                                        {errors.rut ? (
+                                            <div className="invalid-feedback">
+                                                {errors.rut}
+                                            </div>
+                                        ) : (
+                                            <small className="form-text text-muted">Formato: 12345678-9</small>
+                                        )}
                                     </div>
 
                                     <div className="mb-3">
                                         <label htmlFor="register-password" className="form-label">Contraseña</label>
-                                        <input
-                                            type="password"
-                                            className="form-control"
-                                            id="register-password"
-                                            value={registerPassword}
-                                            onChange={(e) => setRegisterPassword(e.target.value)}
-                                            required
-                                            minLength="4"
-                                            maxLength="20"
-                                            placeholder="Contraseña"
-                                        />
+                                        <div className="input-group">
+                                            <input
+                                                type="password"
+                                                className={`form-control ${errors.password ? 'is-invalid' : ''}`}
+                                                id="register-password"
+                                                value={registerPassword}
+                                                onChange={(e) => {
+                                                    setRegisterPassword(e.target.value);
+                                                    if (errors.password) {
+                                                        setErrors(prev => ({ ...prev, password: null }));
+                                                    }
+                                                }}
+                                                required
+                                                placeholder="Contraseña"
+                                                autoComplete="new-password"
+                                                aria-describedby="passwordHelp"
+                                            />
+                                            <button
+                                                className="btn btn-outline-secondary"
+                                                type="button"
+                                                onClick={() => {
+                                                    const input = document.getElementById('register-password');
+                                                    input.type = input.type === 'password' ? 'text' : 'password';
+                                                }}
+                                            >
+                                                👁️
+                                            </button>
+                                        </div>
+                                        {errors.password && (
+                                            <div className="invalid-feedback d-block">
+                                                {errors.password}
+                                            </div>
+                                        )}
+                                        <div id="passwordHelp" className="form-text">
+                                            La contraseña debe tener al menos 8 caracteres, incluyendo mayúsculas, minúsculas, números y caracteres especiales
+                                        </div>
                                     </div>
 
                                     <div className="mb-3">
                                         <label htmlFor="register-region" className="form-label">Región</label>
                                         <select
-                                            className="form-select"
+                                            className={`form-select ${errors.ubicacion ? 'is-invalid' : ''}`}
                                             id="register-region"
                                             value={registerRegion}
-                                            onChange={(e) => setRegisterRegion(e.target.value)}
+                                            onChange={(e) => {
+                                                setRegisterRegion(e.target.value);
+                                                if (errors.ubicacion) {
+                                                    setErrors(prev => ({ ...prev, ubicacion: null }));
+                                                }
+                                            }}
                                             required
                                         >
                                             <option value="">Selecciona región</option>
@@ -444,10 +434,15 @@ function Auth() {
                                     <div className="mb-3">
                                         <label htmlFor="register-comuna" className="form-label">Comuna</label>
                                         <select
-                                            className="form-select"
+                                            className={`form-select ${errors.ubicacion ? 'is-invalid' : ''}`}
                                             id="register-comuna"
                                             value={registerComuna}
-                                            onChange={(e) => setRegisterComuna(e.target.value)}
+                                            onChange={(e) => {
+                                                setRegisterComuna(e.target.value);
+                                                if (errors.ubicacion) {
+                                                    setErrors(prev => ({ ...prev, ubicacion: null }));
+                                                }
+                                            }}
                                             required
                                             disabled={!registerRegion}
                                         >
@@ -456,24 +451,47 @@ function Auth() {
                                                 <option key={comuna} value={comuna}>{comuna}</option>
                                             ))}
                                         </select>
+                                        {errors.ubicacion && (
+                                            <div className="invalid-feedback">
+                                                {errors.ubicacion}
+                                            </div>
+                                        )}
                                     </div>
 
-                                    <button type="submit" className="btn btn-primary w-100 py-2 fw-bold">
-                                        Registrar
+                                    <button
+                                        type="submit"
+                                        className="btn btn-primary w-100 py-2 fw-bold"
+                                        disabled={formSubmitting}
+                                    >
+                                        {formSubmitting ? (
+                                            <span>
+                                                <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                                                Procesando...
+                                            </span>
+                                        ) : 'Registrar'}
                                     </button>
+                                    {errors.submit && (
+                                        <div className="alert alert-danger mt-3" role="alert">
+                                            {errors.submit}
+                                        </div>
+                                    )}                                    <div className="d-grid gap-2">
 
-                                    <p className="text-center mt-3 mb-0">
+                                    </div>
+
+                                    <hr className="my-4" />
+
+                                    <p className="text-center mb-0">
                                         ¿Ya tienes cuenta?{' '}
-                                        <a
-                                            href="#"
-                                            onClick={(e) => {
-                                                e.preventDefault();
+                                        <button
+                                            type="button"
+                                            className="btn btn-link p-0 border-0 align-baseline"
+                                            onClick={() => {
                                                 setMostrarRegistro(false);
+                                                setErrors({});
                                             }}
-                                            className="text-decoration-none"
                                         >
-                                            Inicia sesión
-                                        </a>
+                                            Inicia sesión aquí
+                                        </button>
                                     </p>
                                 </form>
                             )}

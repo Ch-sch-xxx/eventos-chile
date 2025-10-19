@@ -1,22 +1,17 @@
 // Página de perfil con información del usuario, eventos y estadísticas
 // Incluye formulario de edición con regiones/comunas dinámicas
 
-import { useState, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
-import { obtenerEventosPorUsuario, listarEventos } from '../services/eventos';
-import '../styles/perfil.css';
+import { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import iconoPerfil from '../assets/ICONOperfil.png';
+import Footer from '../components/Footer';
+import Navbar from '../components/Navbar';
+import { useAuth } from '../context/AuthContext';
+import { listarEventos, obtenerEventosPorUsuario } from '../services/eventos';
+import '../styles/perfil.css';
 
-// DATOS DE REGIONES Y COMUNAS
-const regionesYcomunas = {
-    "Región Metropolitana": ["Santiago", "Providencia", "Las Condes", "Puente Alto", "Maipú"],
-    "Valparaíso": ["Valparaíso", "Viña del Mar", "Concón", "Quilpué"],
-    "Biobío": ["Concepción", "Talcahuano", "Los Ángeles"],
-    "O'Higgins": ["Rancagua", "San Fernando", "Machalí"]
-};
+// Importo las regiones desde el archivo centralizado
+import { regionesYcomunas } from '../data/ubicaciones';
 
 // FUNCIONES AUXILIARES
 function contarTotalUsuarios() {
@@ -27,7 +22,7 @@ function contarTotalUsuarios() {
 function Perfil() {
     const { user, isAdmin } = useAuth();
     const navigate = useNavigate();
-    
+
     // ESTADOS
     const [modoEdicion, setModoEdicion] = useState(false);
     const [userData, setUserData] = useState(null);
@@ -60,7 +55,7 @@ function Perfil() {
             setComunasDisponibles([]);
         }
     }, [formData.region]);
-    
+
     // FUNCIÓN: Cargar datos del usuario
     const cargarDatosUsuario = () => {
         let data = {};

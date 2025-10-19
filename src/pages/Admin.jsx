@@ -1,17 +1,17 @@
 // Panel de gestión CRUD de eventos con permisos
 // Admin ve todos los eventos, usuario normal solo los suyos
 
-import { useState, useEffect } from 'react';
-import { useAuth } from '../context/AuthContext';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import Navbar from '../components/Navbar';
+import { useAuth } from '../context/AuthContext';
 import {
-    obtenerMisEventos,
     crearEvento,
     editarEvento,
     eliminarEvento,
-    listarEventos
+    listarEventos,
+    obtenerMisEventos
 } from '../services/eventos';
 import '../styles/admin.css';
 
@@ -116,8 +116,8 @@ function Admin() {
             tipo,
             imagen: imagen.trim() || '/imagenes/eventosIMG.png',
             descripcion: descripcion.trim() || 'Sin descripción',
-            capacidad: parseInt(capacidad) || 100,
-            precio: precio.trim() || 'Gratis'
+            capacidad: parseInt(capacidad, 10) || 100, // Siempre como número
+            precio: parseInt(precio, 10) || 0 // Siempre como número, 0 si es gratis
         };
 
         try {

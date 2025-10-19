@@ -5,6 +5,9 @@
     --texto: #2D3748;
     --acento: #ED8936;
     --acento-suave: #FED7D7;
+    --error: #E53E3E;
+    --error-bg: #FED7D7;
+    --exito: #38A169;
 }
 
 /* ESTILO GENERAL */

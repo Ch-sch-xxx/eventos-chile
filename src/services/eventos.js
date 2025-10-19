@@ -4,6 +4,9 @@
 // Importo la imagen desde assets para que Vite resuelva la URL final en build y preview
 import eventoIMG from '../assets/eventosIMG.png';
 
+// Importo la función para generar IDs desde el archivo de validaciones
+import { generateEventId } from './eventosValidation';
+
 // Clave para guardar los eventos en el navegador
 const STORAGE_KEY = 'eventos-chile';
 
@@ -180,7 +183,7 @@ export function crearEvento(nuevoEvento, userEmail) {
         ...nuevoEvento,
         creadoPor: userEmail,
         fechaCreacion: new Date().toISOString(),
-        id: 'evt_' + Math.floor(Date.now() / 1000)
+        id: generateEventId() // Uso la función importada en vez de duplicar el código
     };
 
     try {

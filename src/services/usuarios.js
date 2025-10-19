@@ -2,7 +2,8 @@
 
 import { hashPassword } from '../utils/validation';
 
-const USERS_KEY = 'usuarios-eventos-chile';
+// Clave para guardar usuarios en localStorage (debe coincidir con otros archivos)
+const USERS_KEY = 'usuarios-chile';
 
 /**
  * Obtiene todos los usuarios almacenados
