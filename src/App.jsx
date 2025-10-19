@@ -1,4 +1,3 @@
-// src/App.jsx
 // Configuración de rutas principales con React Router
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
@@ -11,12 +10,10 @@ import Perfil from "./pages/Perfil.jsx";
 
 function App() {
     return (
-        <BrowserRouter>
+        // basename para GitHub Pages
+        <BrowserRouter basename="/eventos-chile">
             <Routes>
-                {/* Ruta principal - Home */}
                 <Route path="/" element={<Home />} />
-
-                {/* Ruta de eventos - ACTIVADA */}
                 <Route path="/eventos" element={<Eventos />} />
                 <Route path="/auth" element={<Auth />} />
                 <Route path="/admin" element={<ProtectedRoute><Admin /></ProtectedRoute>}/>
@@ -25,5 +22,6 @@ function App() {
         </BrowserRouter>
     );
 }
+
 
 export default App;
