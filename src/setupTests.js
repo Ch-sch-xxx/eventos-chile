@@ -1,10 +1,37 @@
-import '@testing-library/jest-dom';
+import '@testing-library/jest-dom'
+import { vi } from 'vitest'
 
-// Mock de localStorage
+// Mock del localStorage
 const localStorageMock = {
-    getItem: vi.fn(),
-    setItem: vi.fn(),
-    clear: vi.fn()
-};
+    store: {},
+    getItem(key) {
+        return this.store[key] || null
+    },
+    setItem(key, value) {
+        this.store[key] = value.toString()
+    },
+    removeItem(key) {
+        delete this.store[key]
+    },
+    clear() {
+        this.store = {}
+    }
+}
 
-global.localStorage = localStorageMock;
+// Configurar el mock del localStorage
+Object.defineProperty(window, 'localStorage', {
+    value: localStorageMock
+})
+
+// Limpiar localStorage antes de cada prueba
+beforeEach(() => {
+    window.localStorage.clear()
+})
+
+// Mock de fetch para pruebas
+global.fetch = vi.fn()
+
+// Restaurar todos los mocks después de cada prueba
+afterEach(() => {
+    vi.clearAllMocks()
+})
