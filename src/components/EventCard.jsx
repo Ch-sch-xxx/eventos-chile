@@ -2,10 +2,14 @@
 // Portado desde eventos_interaccion.js SIN REACT
 // - mantiene efectos de mouse y flip
 // - ahora incluye sistema de asistencia con modal
+// - modal se renderiza fuera de la tarjeta usando Portal
 
 import { useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import Eventos from '../assets/eventosIMG.png';
+import { useAuth } from '../context/AuthContext';
 import ModalAsistencia from './ModalAsistencia';
+import ModalDecisionAsistencia from './ModalDecisionAsistencia';
 
 // Función auxiliar para recortar textos largos (por visual, si no se pierde la respo)
 function truncarTexto(texto, maxCaracteres) {
@@ -30,8 +34,10 @@ function formatearFechaLegible(fechaISO) {
 }
 
 function EventCard({ evento }) {
+    const { isLoggedIn } = useAuth();
     const [volteada, setVolteada] = useState(false);
-    const [mostrarModal, setMostrarModal] = useState(false);
+    const [mostrarModalDecision, setMostrarModalDecision] = useState(false);
+    const [mostrarModalAsistencia, setMostrarModalAsistencia] = useState(false);
     const cardRef = useRef(null);
     const flipRef = useRef(null);
 
@@ -78,7 +84,20 @@ function EventCard({ evento }) {
     // Abrir modal de asistencia
     const handleAsistir = (e) => {
         e.preventDefault();
-        setMostrarModal(true);
+
+        // Si está logueado, va directo al modal de asistencia
+        if (isLoggedIn()) {
+            setMostrarModalAsistencia(true);
+        } else {
+            // Si NO está logueado, primero mostrar modal de decisión
+            setMostrarModalDecision(true);
+        }
+    };
+
+    // Handler cuando selecciona "Asistir como Invitado"
+    const handleSeleccionarInvitado = () => {
+        setMostrarModalDecision(false);
+        setMostrarModalAsistencia(true);
     };
 
     return (
@@ -113,34 +132,48 @@ function EventCard({ evento }) {
                         <h3>{truncarTexto(evento.titulo, 40)}</h3>
                         <p><strong>📋 Descripción:</strong></p>
                         <p className="detalle-completo">{truncarTexto(evento.descripcion, 200)}</p>
-                        <p><strong>👥 Capacidad:</strong> {evento.capacidad} personas</p>
+
+                        {/* Contador de asistentes en cara posterior */}
+                        <p><strong>👥 Asistentes:</strong> {evento.asistentes?.length || 0}/{evento.capacidad}</p>
+
                         <p><strong>💰 Precio:</strong> {evento.precio === 0 ? 'Gratis' : `$${evento.precio.toLocaleString('es-CL')}`}</p>
                         <p><strong>👤 Organizador:</strong> {truncarTexto(evento.creadoPor, 30)}</p>
                         <p><strong>📆 Creado:</strong> {formatearFechaLegible(evento.fechaCreacion)}</p>
                     </div>
 
-                    {/* Botones de acción */}
-                    <div style={{ display: 'flex', gap: '10px', marginTop: 'auto' }}>
-                        <button className="boton-asistir" onClick={handleAsistir} style={{ flex: 1 }}>
-                            ✓ Confirmar Asistencia
+                    {/* Botones de acción - mejor responsive */}
+                    <div style={{ display: 'flex', gap: '8px', marginTop: 'auto', width: '100%' }}>
+                        <button className="boton-asistir" onClick={handleAsistir} style={{ flex: 1, padding: '0.6rem 0.8rem', fontSize: '0.85rem' }}>
+                            ✓ Asistir
                         </button>
-                        <button className="boton-volver" onClick={handleVolver} style={{ flex: 1 }}>
+                        <button className="boton-volver" onClick={handleVolver} style={{ flex: 1, padding: '0.6rem 0.8rem', fontSize: '0.85rem' }}>
                             ← Volver
                         </button>
                     </div>
                 </div>
             </div>
 
-            {/* Modal de asistencia */}
-            {mostrarModal && (
+            {/* Modal de decisión (NO logueados) - Renderizado fuera de la tarjeta usando Portal */}
+            {mostrarModalDecision && createPortal(
+                <ModalDecisionAsistencia
+                    evento={evento}
+                    onClose={() => setMostrarModalDecision(false)}
+                    onSeleccionarInvitado={handleSeleccionarInvitado}
+                />,
+                document.body
+            )}
+
+            {/* Modal de asistencia - Renderizado fuera de la tarjeta usando Portal */}
+            {mostrarModalAsistencia && createPortal(
                 <ModalAsistencia
                     evento={evento}
-                    onClose={() => setMostrarModal(false)}
+                    onClose={() => setMostrarModalAsistencia(false)}
                     onSuccess={() => {
                         // Opcional: recargar o mostrar mensaje
                         console.log('Asistencia confirmada exitosamente');
                     }}
-                />
+                />,
+                document.body
             )}
         </div>
     );

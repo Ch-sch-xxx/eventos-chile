@@ -6,6 +6,54 @@ const EVENTOS_KEY = 'eventos-chile';
 const USUARIOS_KEY = 'usuarios-chile';
 
 /**
+ * Función simulada para enviar correo de confirmación a invitados
+ * En producción real, llamaría a una API de email (SendGrid, Mailgun, etc.)
+ */
+export function enviarCorreoConfirmacion(datosAsistente, datosEvento) {
+    // Simula envío de correo (en producción sería una API)
+    console.log('📧 Enviando correo de confirmación...');
+    console.log('Destinatario:', datosAsistente.email);
+    console.log('Evento:', datosEvento.titulo);
+
+    // Crear contenido del "correo"
+    const mensajeCorreo = `
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    📧 CONFIRMACIÓN DE ASISTENCIA
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+    Hola ${datosAsistente.nombre},
+
+    ✅ Tu asistencia ha sido confirmada exitosamente.
+
+    📋 DETALLES DEL EVENTO:
+    • Título: ${datosEvento.titulo}
+    • Fecha: ${datosEvento.fecha}
+    • Lugar: ${datosEvento.lugar}
+    • Categoría: ${datosEvento.categoria}
+
+    👤 TUS DATOS:
+    • Nombre: ${datosAsistente.nombre}
+    • Email: ${datosAsistente.email}
+    • RUT: ${datosAsistente.rut}
+
+    🎫 Guarda este correo como comprobante de tu asistencia.
+
+    Nos vemos pronto,
+    Equipo Eventos Chile 🇨🇱
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    `;
+
+    // Mostrar el "correo" en consola (en producción sería enviado por email)
+    console.log(mensajeCorreo);
+
+    // Retornar éxito
+    return {
+        success: true,
+        mensaje: 'Correo de confirmación enviado exitosamente'
+    };
+}
+
+/**
  * Registrar asistencia de usuario logueado
  * Guarda en el evento Y en el perfil del usuario
  */
@@ -128,6 +176,9 @@ export function registrarAsistenciaInvitado(eventoId, invitadoData) {
         eventos[eventoIndex] = evento;
 
         localStorage.setItem(EVENTOS_KEY, JSON.stringify(eventos));
+
+        // Enviar correo de confirmación al invitado
+        enviarCorreoConfirmacion(nuevoInvitado, evento);
 
         return {
             success: true,

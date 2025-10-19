@@ -7,6 +7,7 @@ import { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { registrarAsistenciaInvitado, registrarAsistenciaLogueado } from '../services/asistencia';
 import '../styles/modalAsistencia.css';
+import '../styles/modalDecision.css';
 import { validarEmail, validarNombre, validarRUT } from '../utils/validation';
 
 function ModalAsistencia({ evento, onClose, onSuccess }) {

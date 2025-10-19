@@ -1,0 +1,172 @@
+/* Estilos adicionales para la página Home mejorada */
+
+/* Texto con gradiente */
+.text-gradient {
+    background: linear-gradient(135deg, var(--primario) 0%, #5848d4 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Tarjetas de Categorías */
+.categoria-card {
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border-radius: 15px;
+}
+
+.categoria-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 35px rgba(108, 99, 255, 0.2);
+}
+
+.icono-categoria {
+    font-size: 3.5rem;
+    line-height: 1;
+}
+
+.categoria-card .card-title {
+    color: var(--primario);
+    font-weight: 600;
+    font-size: 1.3rem;
+}
+
+.categoria-card .card-text {
+    font-size: 0.95rem;
+}
+
+/* Característica Cards */
+.caracteristica-card {
+    padding: 1.5rem;
+    background: #f8f9fa;
+    border-radius: 15px;
+    height: 100%;
+    transition: all 0.3s ease;
+}
+
+.caracteristica-card:hover {
+    background: #f0f1f5;
+    transform: translateY(-5px);
+}
+
+.caracteristica-card h5 {
+    color: var(--primario);
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+/* CTA Final con gradiente */
+.cta-final {
+    background: linear-gradient(135deg, var(--primario) 0%, #5848d4 100%) !important;
+    border-radius: 25px;
+    position: relative;
+    overflow: hidden;
+}
+
+.cta-final::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+}
+
+.cta-final .card-body {
+    position: relative;
+    z-index: 1;
+}
+
+.cta-final .btn-light {
+    background: white;
+    color: var(--primario);
+    border: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.cta-final .btn-light:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    background: rgba(255, 255, 255, 0.95);
+}
+
+/* Efecto hover mejorado para botones */
+.shadow-hover {
+    transition: all 0.3s ease;
+}
+
+.shadow-hover:hover {
+    box-shadow: 0 10px 30px rgba(108, 99, 255, 0.3) !important;
+}
+
+/* Botones outline */
+#destacado .btn-outline-primary {
+    background: transparent;
+    color: white;
+    border: 2px solid white;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+#destacado .btn-outline-primary:hover {
+    background: white;
+    color: var(--primario);
+    border-color: white;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* Responsive adicionales */
+@media (max-width: 992px) {
+    .icono-categoria {
+        font-size: 3rem;
+    }
+
+    .categoria-card .card-title {
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .icono-categoria {
+        font-size: 2.5rem;
+    }
+
+    .categoria-card .card-title {
+        font-size: 1rem;
+    }
+
+    .categoria-card .card-text {
+        font-size: 0.85rem;
+    }
+
+    .caracteristica-card {
+        padding: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .cta-final .card-body {
+        padding: 2rem !important;
+    }
+
+    .cta-final h3 {
+        font-size: 1.5rem;
+    }
+
+    .cta-final p {
+        font-size: 1rem !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .d-flex.gap-3 {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .d-flex.gap-3 .btn {
+        width: 100%;
+    }
+}
