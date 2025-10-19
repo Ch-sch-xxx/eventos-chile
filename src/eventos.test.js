@@ -59,4 +59,9 @@ describe("eventos.test.js", () => {
     const totalUsuarios = contarTotalUsuarios();
     expect(totalUsuarios).toBe(2);
   });
+
+    it("no permitir crear evento sin usuario", () => {
+    const res = crearEvento({ titulo: "Evento sin usuario" }, null);
+    expect(res).toBe(false);
+  });
 });
