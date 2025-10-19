@@ -1,4 +1,3 @@
-// src/pages/Eventos.jsx
 // Página principal de eventos con carrusel infinito y grilla de tarjetas 3D
 
 import Navbar from '../components/Navbar';
