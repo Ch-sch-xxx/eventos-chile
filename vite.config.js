@@ -10,5 +10,14 @@ export default defineConfig({
         outDir: 'dist',
         emptyOutDir: true,
         sourcemap: true
+    },
+    test: {
+        globals: true,
+        environment: 'jsdom',
+        setupFiles: './src/setupTests.js',
+        css: true,
+        coverage: {
+            reporter: ['text', 'json', 'html'],
+        },
     }
 })
