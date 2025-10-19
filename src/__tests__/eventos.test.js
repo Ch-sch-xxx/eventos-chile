@@ -1,13 +1,13 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import {
-  contarEventosUsuario,
-  contarTotalUsuarios,
-  crearEvento,
-  guardarEventos,
-  obtenerEventos,
-  obtenerMisEventos
-} from "../../services/eventos";
-import { generateEventId, validateEvento } from "../../services/eventosValidation";
+    contarEventosUsuario,
+    contarTotalUsuarios,
+    crearEvento,
+    guardarEventos,
+    obtenerEventos,
+    obtenerMisEventos
+} from "../services/eventos";
+import { generateEventId, validateEvento } from "../services/eventosValidation";
 
 describe("Servicios de Eventos - Core", () => {
   // Setup inicial con datos de prueba

@@ -141,176 +141,120 @@ const eventosIniciales = [
     }
 ];
 
-// Obtener eventos desde localStorage o cargar datos iniciales
+// Traigo los eventos guardados en localStorage o cargo los iniciales si no hay nada
 export function obtenerEventos() {
-    try {
-        const eventosGuardados = localStorage.getItem(STORAGE_KEY);
-        if (eventosGuardados) {
-            return JSON.parse(eventosGuardados);
-        }
-        // Si no hay eventos, inicializar con datos de ejemplo
-        guardarEventos(eventosIniciales);
+    const eventos = localStorage.getItem(STORAGE_KEY);
+    if (eventos) {
+        return JSON.parse(eventos);
+    } else {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(eventosIniciales));
         return eventosIniciales;
-    } catch (error) {
-        console.error('Error al obtener eventos:', error);
-        return [];
     }
 }
 
-// Guardar eventos en localStorage de forma segura
+// Guardo los eventos en localStorage
 export function guardarEventos(eventos) {
-    try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(eventos));
-        return true;
-    } catch (error) {
-        console.error('Error al guardar eventos:', error);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(eventos));
+}
+
+// Creo un nuevo evento y lo asocio al usuario que lo creó
+export function crearEvento(nuevoEvento, userEmail) {
+    const eventos = obtenerEventos();
+
+    // Validar que haya email (el componente debe enviarlo)
+    if (!userEmail) {
+        console.error('No hay usuario logueado');
         return false;
     }
-}
 
-// Crear nuevo evento con validación de usuario
-export function crearEvento(nuevoEvento, userEmail) {
-    if (!userEmail?.trim()) {
-        console.error('Error: Se requiere un usuario válido para crear eventos');
-        return null;
-    }
-
-    // Generar metadatos del evento
+    // Agrego metadatos al evento
     const eventoConMetadatos = {
         ...nuevoEvento,
         creadoPor: userEmail,
         fechaCreacion: new Date().toISOString(),
-        id: 'evt_' + Math.floor(Date.now() / 1000)
+        id: 'evt_' + Date.now()
     };
 
-    try {
-        const eventos = obtenerEventos();
-        eventos.push(eventoConMetadatos);
-
-        if (guardarEventos(eventos)) {
-            console.log(`✅ Evento "${nuevoEvento.titulo}" creado por ${userEmail}`);
-            return eventoConMetadatos;
-        }
-        return null;
-    } catch (error) {
-        console.error('Error al crear evento:', error);
-        return null;
-    }
+    eventos.push(eventoConMetadatos);
+    guardarEventos(eventos);
+    console.log('Evento creado por:', userEmail, '| Título:', nuevoEvento.titulo);
+    return true;
 }
 
-// Obtener lista completa de eventos
+// Listo todos los eventos guardados
 export function listarEventos() {
-    return obtenerEventos() || [];
+    return obtenerEventos();
 }
 
-// Obtener eventos públicos (igual que listarEventos por ahora)
+// Alias para listar eventos (lo usamos en la vista pública)
 export function listarEventosPublicos() {
-    return listarEventos();
+    return obtenerEventos();
 }
 
 /**
- * Editar un evento con validación de permisos
- * @param {number} indice - Índice del evento en el array
- * @param {Object} eventoEditado - Nuevos datos del evento
- * @param {string} userEmail - Email del usuario que edita
- * @param {boolean} isAdmin - Si el usuario es administrador
- * @returns {boolean} - true si se editó correctamente
- */
+* Edito un evento si tengo permisos (creador o admin)
+* @param {number} indice - Posición del evento en el array
+* @param {Object} eventoEditado - Nuevos datos del evento
+* @param {string} userEmail - Email del usuario que edita
+* @param {boolean} isAdmin - Si el usuario es admin
+* @returns {boolean} - true si se editó, false si no hay permisos
+*/
 export function editarEvento(indice, eventoEditado, userEmail, isAdmin) {
-    try {
-        const eventos = obtenerEventos();
+    const eventos = obtenerEventos();
 
-        // Validar índice y obtener evento original
-        if (indice < 0 || indice >= eventos.length) {
-            console.error('Error: Índice de evento inválido');
-            return false;
-        }
-
+    if (indice >= 0 && indice < eventos.length) {
         const eventoOriginal = eventos[indice];
 
-        // Validar permisos
+        // Solo el creador o admin pueden editar
         if (!isAdmin && eventoOriginal.creadoPor !== userEmail) {
-            console.error('Error: Sin permisos para editar este evento');
+            console.error('Sin permisos para editar este evento');
             return false;
         }
 
-        // Conservar metadatos originales
+        // Conservo datos originales y agrego registro de actualización
         const eventoActualizado = {
             ...eventoEditado,
-            id: eventoOriginal.id,
             creadoPor: eventoOriginal.creadoPor,
             fechaCreacion: eventoOriginal.fechaCreacion,
+            id: eventoOriginal.id,
             fechaActualizacion: new Date().toISOString(),
             actualizadoPor: userEmail
         };
 
         eventos[indice] = eventoActualizado;
-        const resultado = guardarEventos(eventos);
-        if (resultado) {
-            console.log(`✅ Evento "${eventoActualizado.titulo}" actualizado correctamente`);
-        }
-        return resultado;
-    } catch (error) {
-        console.error('Error al editar evento:', error);
-        return false;
+        guardarEventos(eventos);
+        console.log('Evento editado:', eventoActualizado.titulo);
+        return true;
     }
+    return false;
 }
 
 
-/**
- * Eliminar un evento con validación de permisos
- * @param {number} indice - Índice del evento a eliminar
- * @param {string} userEmail - Email del usuario que elimina
- * @param {boolean} isAdmin - Si el usuario es administrador
- * @returns {boolean} - true si se eliminó correctamente
- */
+// Elimino un evento si tengo permisos (creador o admin)
 export function eliminarEvento(indice, userEmail, isAdmin) {
-    try {
-        const eventos = obtenerEventos();
+    const eventos = obtenerEventos();
 
-        // Validar índice
-        if (indice < 0 || indice >= eventos.length) {
-            console.error('Error: Índice de evento inválido');
-            return false;
-        }
-
+    if (indice >= 0 && indice < eventos.length) {
         const evento = eventos[indice];
 
-        // Validar permisos
+        // Solo el creador o admin pueden eliminar
         if (!isAdmin && evento.creadoPor !== userEmail) {
-            console.error('Error: Sin permisos para eliminar este evento');
+            console.error('Sin permisos para eliminar este evento');
             return false;
         }
 
-        // Eliminar y guardar
-        eventos.splice(indice, 1);
-        const resultado = guardarEventos(eventos);
-
-        if (resultado) {
-            console.log(`✅ Evento "${evento.titulo}" eliminado correctamente`);
-        }
-        return resultado;
-    } catch (error) {
-        console.error('Error al eliminar evento:', error);
-        return false;
+        const eventoEliminado = eventos.splice(indice, 1)[0];
+        guardarEventos(eventos);
+        console.log('Evento eliminado:', eventoEliminado.titulo);
+        return true;
     }
+    return false;
 }
 
-/**
- * Obtener eventos de un usuario específico
- * @param {string} email - Email del usuario
- * @returns {Array} - Lista de eventos del usuario
- */
+// Filtro eventos de un usuario específico
 export function obtenerEventosPorUsuario(email) {
-    if (!email?.trim()) return [];
-
-    try {
-        const eventos = obtenerEventos();
-        return eventos.filter(evento => evento.creadoPor === email);
-    } catch (error) {
-        console.error('Error al obtener eventos del usuario:', error);
-        return [];
-    }
+    const eventos = obtenerEventos();
+    return eventos.filter(evento => evento.creadoPor === email);
 }
 
 /**
@@ -320,18 +264,10 @@ export function contarEventosUsuario(email) {
     return obtenerEventosPorUsuario(email).length;
 }
 
-/**
- * Contar el total de usuarios registrados en el sistema
- * @returns {number} - Número total de usuarios
- */
+// Cuento el total de usuarios registrados en el sistema
 export function contarTotalUsuarios() {
-    try {
-        const usuarios = JSON.parse(localStorage.getItem('usuarios-chile') || '[]');
-        return Array.isArray(usuarios) ? usuarios.length : 0;
-    } catch (error) {
-        console.error('Error al contar usuarios:', error);
-        return 0;
-    }
+    const usuarios = JSON.parse(localStorage.getItem('usuarios-chile') || '[]');
+    return usuarios.length;
 }
 
 
