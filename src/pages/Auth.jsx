@@ -1,12 +1,19 @@
 // Página de autenticación con login y registro
-// Incluye validación RUT chileno (Módulo 11), regiones/comunas y formateo automático
+// Sistema mejorado de validación y seguridad
 
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
-import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import Navbar from '../components/Navbar';
+import { useAuth } from '../context/AuthContext';
+import {
+    crearUsuario,
+    validarUsuario
+} from '../services/usuarios';
 import '../styles/auth.css';
+import {
+    formatearRUT
+} from '../utils/validation';
 
 // DATOS DE REGIONES Y COMUNAS
 const regionesYcomunas = {
@@ -140,6 +147,10 @@ function Auth() {
     // Estado para toggle entre login/registro
     const [mostrarRegistro, setMostrarRegistro] = useState(false);
 
+    // Estados para errores
+    const [errors, setErrors] = useState({});
+    const [loginError, setLoginError] = useState('');
+
     // Estados formulario LOGIN
     const [loginEmail, setLoginEmail] = useState('');
     const [loginPassword, setLoginPassword] = useState('');
@@ -170,20 +181,16 @@ function Auth() {
     };
 
     // MANEJO LOGIN
-    const handleLogin = (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault();
+        setLoginError('');
 
         const email = loginEmail.trim();
         const pass = loginPassword.trim();
 
-        // Validaciones básicas
-        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-            alert('Email inválido');
-            return;
-        }
-
-        if (pass.length < 4 || pass.length > 20) {
-            alert('La contraseña debe tener entre 4 y 20 caracteres');
+        // Validar email
+        if (!validarEmail(email)) {
+            setLoginError('Por favor, ingresa un email válido');
             return;
         }
 
@@ -195,26 +202,26 @@ function Auth() {
                 email: email,
                 role: 'admin'
             }));
-            alert('¡Bienvenido Administrador!');
             navigate('/admin', { replace: true });
             return;
         }
 
         // Validar usuario registrado
-        const usuario = validarUsuario(email, pass);
-        if (usuario) {
+        const resultado = validarUsuario(email, pass);
+
+        if (resultado.success) {
             login(email, 'user');
-            localStorage.setItem('user-data', JSON.stringify(usuario));
-            alert('¡Bienvenido ' + usuario.name + '!');
-            navigate('/admin', { replace: true });
+            localStorage.setItem('user-data', JSON.stringify(resultado.user));
+            navigate('/eventos', { replace: true });
         } else {
-            alert('Credenciales incorrectas');
+            setLoginError(resultado.error || 'Credenciales incorrectas');
         }
     };
 
     // MANEJO REGISTRO
-    const handleRegister = (e) => {
+    const handleRegister = async (e) => {
         e.preventDefault();
+        setErrors({});
 
         const name = registerName.trim();
         const email = registerEmail.trim();
@@ -223,19 +230,30 @@ function Auth() {
         const region = registerRegion;
         const comuna = registerComuna;
 
-        // Validaciones
-        if (name === '' || name.length < 3) {
-            alert('El nombre debe tener al menos 3 caracteres');
+        // Validar nombre
+        if (!validarNombre(name)) {
+            setErrors(prev => ({
+                ...prev,
+                nombre: 'El nombre debe contener solo letras y tener al menos 2 caracteres'
+            }));
             return;
         }
 
-        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-            alert('Email inválido');
+        // Validar email
+        if (!validarEmail(email)) {
+            setErrors(prev => ({
+                ...prev,
+                email: 'Por favor, ingresa un email válido'
+            }));
             return;
         }
 
-        if (!rut || !validarRUTCompleto(rut)) {
-            alert('RUT inválido. Usar formato: 12345678-9');
+        // Validar RUT
+        if (!validarRUT(rut)) {
+            setErrors(prev => ({
+                ...prev,
+                rut: 'RUT inválido. Debe ser un RUT chileno válido'
+            }));
             return;
         }
 
@@ -300,13 +318,14 @@ function Auth() {
                                         <label htmlFor="login-email" className="form-label">Email</label>
                                         <input
                                             type="email"
-                                            className="form-control"
+                                            className={`form-control ${loginError ? 'is-invalid' : ''}`}
                                             id="login-email"
                                             value={loginEmail}
                                             onChange={(e) => setLoginEmail(e.target.value)}
                                             required
-                                            placeholder="ejemplo-correo@dominio.cl"
+                                            placeholder="ejemplo@correo.com"
                                         />
+                                        {loginError && <div className="error-message">{loginError}</div>}
                                     </div>
 
                                     <div className="mb-3">
