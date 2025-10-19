@@ -17,14 +17,13 @@ function App() {
         <Router>
             <Routes>
                 {/* Ruta principal - Home */}
-                <Route index element={<Home />} />
-                <Route path="" element={<Home />} />
+                <Route path="/" element={<Home />} />
 
-                {/* Rutas secundarias */}
-                <Route path="eventos" element={<Eventos />} />
-                <Route path="auth" element={<Auth />} />
-                <Route path="admin" element={<ProtectedRoute><Admin /></ProtectedRoute>}/>
-                <Route path="perfil" element={<ProtectedRoute><Perfil /></ProtectedRoute>}/>
+                {/* Ruta de eventos - ACTIVADA */}
+                <Route path="/eventos" element={<Eventos />} />
+                <Route path="/auth" element={<Auth />} />
+                <Route path="/admin" element={<ProtectedRoute><Admin /></ProtectedRoute>}/>
+                <Route path="/perfil" element={<ProtectedRoute><Perfil /></ProtectedRoute>}/>
             </Routes>
         </Router>
     );
