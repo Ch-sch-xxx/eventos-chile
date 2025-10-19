@@ -1,0 +1,30 @@
+<!-- Solución para que React Router funcione en GitHub Pages -->
+<!-- Cuando alguien entra directo a una ruta (ej: /eventos), GitHub devuelve 404 -->
+<!-- Este archivo redirige todo a index.html manteniendo la ruta original -->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Eventos Chile</title>
+    <script>
+        // Script de redirección para SPA en GitHub Pages
+        // Toma la URL actual y la convierte en parámetros que index.html puede leer
+        var pathSegmentsToKeep = 1; // Mantiene el nombre del repo en la URL
+        var l = window.location;
+
+        // Construyo la nueva URL redirigiendo a index.html pero guardando la ruta
+        l.replace(
+            l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
+            l.pathname.split('/').slice(0, 1 + pathSegmentsToKeep).join('/') +
+            '/?/' +  // El truco: agrego /? para que GitHub Pages no lo trate como ruta real
+            l.pathname.slice(1).split('/').slice(pathSegmentsToKeep).join('/').replace(/&/g, '~and~') +
+            (l.search ? '&' + l.search.slice(1).replace(/&/g, '~and~') : '') +
+            l.hash
+        );
+    </script>
+</head>
+<body>
+<h1>Eventos Chile</h1>
+<p>Cargando aplicación...</p>
+</body>
+</html>
