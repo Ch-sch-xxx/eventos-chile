@@ -2,7 +2,7 @@ import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { BrowserRouter } from 'react-router-dom'
 import { beforeEach, describe, expect, test } from 'vitest'
-import { AuthProvider, useAuth } from '../context/AuthContext'
+import { AuthProvider, useAuth } from '../../context/AuthContext'
 
 // Componente de prueba que usa el contexto de autenticación
 const TestComponent = () => {

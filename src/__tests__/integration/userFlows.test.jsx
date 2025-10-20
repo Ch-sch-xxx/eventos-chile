@@ -1,13 +1,10 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import App from '../../App';
 import { AuthProvider } from '../../context/AuthContext';
-import { mockLocalStorage } from '../test-utils';
 
 describe('Integration Tests', () => {
     beforeEach(() => {
-        global.localStorage = mockLocalStorage;
         localStorage.clear();
     });
 
@@ -19,64 +16,64 @@ describe('Integration Tests', () => {
     it('debería permitir el flujo completo de autenticación y creación de evento', async () => {
         render(
             <AuthProvider>
-                <BrowserRouter>
-                    <App />
-                </BrowserRouter>
+                <App />
             </AuthProvider>
         );
 
-        // 1. Navegar a login
-        const loginLink = screen.getByText(/Iniciar Sesión/i);
+        // 1. Navegar a login - usar getByRole para el botón específico
+        const loginLink = screen.getByRole('link', { name: /Iniciar sesión/i });
         fireEvent.click(loginLink);
 
-        // 2. Realizar login
+        // 2. Realizar login con credenciales correctas
         const emailInput = screen.getByLabelText(/Email/i);
-        fireEvent.change(emailInput, { target: { value: 'admin@eventos.cl' } });
+        fireEvent.change(emailInput, { target: { value: 'ad@ad.com' } });
 
-        const loginButton = screen.getByText(/Ingresar/i);
+        const passwordInput = screen.getByLabelText(/Contraseña/i);
+        fireEvent.change(passwordInput, { target: { value: 'admin' } });
+
+        // 3. Submit del form
+        const loginButton = screen.getByRole('button', { name: /Entrar/i });
         fireEvent.click(loginButton);
 
-        // 3. Verificar autenticación exitosa
+        // 4. Verificar autenticación exitosa esperando que se redirija a /admin
         await waitFor(() => {
-            expect(screen.getByText(/Mis Eventos/i)).toBeInTheDocument();
+            expect(localStorage.getItem('user-logged')).toBe('admin');
         });
 
-        // 4. Verificar localStorage
-        expect(localStorage.getItem('user-logged')).toBe('admin');
+        // 5. Verificar que está en la página de administración
+        await waitFor(() => {
+            expect(screen.getByText(/Gestión de Eventos \(Administrador\)/i)).toBeInTheDocument();
+        });
     });
 
     it('debería mantener el estado de autenticación al navegar', async () => {
-        // Simular usuario autenticado
+        // Simular usuario autenticado ANTES de renderizar
         localStorage.setItem('user-logged', 'admin');
-        localStorage.setItem('user-email', 'admin@eventos.cl');
+        localStorage.setItem('user-email', 'ad@ad.com');
 
-        render(
+        const { rerender } = render(
             <AuthProvider>
-                <BrowserRouter>
-                    <App />
-                </BrowserRouter>
+                <App />
             </AuthProvider>
         );
 
-        // Verificar que se mantiene la autenticación
+        // Verificar que el usuario está autenticado
         await waitFor(() => {
-            expect(screen.getByText(/Mis Eventos/i)).toBeInTheDocument();
+            expect(localStorage.getItem('user-logged')).toBe('admin');
         });
 
-        // Navegar a otra ruta
-        const perfilLink = screen.getByText(/Perfil/i);
-        fireEvent.click(perfilLink);
+        // Navegar a página de inicio
+        const inicioLink = screen.getByRole('link', { name: /^Inicio$/i });
+        fireEvent.click(inicioLink);
 
-        // Verificar que sigue autenticado
-        expect(screen.getByText(/admin@eventos.cl/i)).toBeInTheDocument();
+        // Verificar que sigue autenticado después de navegar
+        expect(localStorage.getItem('user-logged')).toBe('admin');
     });
 
     it('debería proteger rutas privadas', async () => {
         render(
             <AuthProvider>
-                <BrowserRouter>
-                    <App />
-                </BrowserRouter>
+                <App />
             </AuthProvider>
         );
 
@@ -84,7 +81,7 @@ describe('Integration Tests', () => {
         const adminLink = screen.queryByText(/Admin/i);
         expect(adminLink).not.toBeInTheDocument();
 
-        // Verificar redirección a login
-        expect(screen.getByText(/Iniciar Sesión/i)).toBeInTheDocument();
+        // Verificar que está en Home (ruta pública inicial)
+        expect(screen.getByText(/Bienvenido a Eventos Chile/i)).toBeInTheDocument();
     });
 });

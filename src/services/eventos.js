@@ -243,7 +243,7 @@ export function guardarEventos(eventos) {
 export function crearEvento(nuevoEvento, userEmail) {
     if (!userEmail?.trim()) {
         console.error('Error: Se requiere un usuario válido para crear eventos');
-        return null;
+        return false;
     }
 
     // Generar metadatos del evento
@@ -264,10 +264,10 @@ export function crearEvento(nuevoEvento, userEmail) {
             console.log(`✅ Evento "${nuevoEvento.titulo}" creado por ${userEmail}`);
             return eventoConMetadatos;
         }
-        return null;
+        return false;
     } catch (error) {
         console.error('Error al crear evento:', error);
-        return null;
+        return false;
     }
 }
 
