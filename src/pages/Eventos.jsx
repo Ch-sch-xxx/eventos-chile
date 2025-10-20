@@ -6,6 +6,7 @@ import EventCard from '../components/EventCard';
 import EventCarousel from '../components/EventCarousel';
 import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
+import { contarAsistentes } from '../services/asistencia';
 import { obtenerEventos } from '../services/eventos';
 import '../styles/eventos-filtros.css';
 import '../styles/eventos.css';
