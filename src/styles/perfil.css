@@ -822,3 +822,21 @@ nav a:hover {
         padding: 1.5rem !important;
     }
 }
+
+/* MEJORAS PARA UPLOAD DE FOTO */
+.form-control[type="file"] {
+    padding: 0.75rem;
+    border: 2px dashed #dee2e6;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.form-control[type="file"]:hover {
+    border-color: var(--primario);
+    background-color: rgba(108, 99, 255, 0.05);
+}
+
+.form-control[type="file"]:focus {
+    border-color: var(--primario);
+    box-shadow: 0 0 0 0.2rem rgba(108, 99, 255, 0.15);
+}

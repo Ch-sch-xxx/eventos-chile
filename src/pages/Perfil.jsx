@@ -161,6 +161,34 @@ function Perfil() {
         }));
     };
 
+    // FUNCIÓN: Manejar upload de foto
+    const handleFotoUpload = (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        // Validar tipo de archivo
+        if (!file.type.startsWith('image/')) {
+            alert('Por favor selecciona una imagen válida');
+            return;
+        }
+
+        // Validar tamaño (máx 2MB)
+        if (file.size > 2 * 1024 * 1024) {
+            alert('La imagen no debe pesar más de 2MB');
+            return;
+        }
+
+        // Convertir a base64
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            setFormData(prev => ({
+                ...prev,
+                fotoUrl: reader.result
+            }));
+        };
+        reader.readAsDataURL(file);
+    };
+
 
     // FUNCIÓN: Guardar perfil
     const handleGuardarPerfil = (e) => {
@@ -384,7 +412,43 @@ function Perfil() {
                                                         </div>
 
                                                         <div className="col-12">
-                                                            <label htmlFor="fotoUrl" className="form-label">URL Foto de perfil</label>
+                                                            <label htmlFor="fotoUrl" className="form-label">Foto de perfil</label>
+
+                                                            {/* Vista previa de la foto */}
+                                                            {formData.fotoUrl && (
+                                                                <div className="mb-3 text-center">
+                                                                    <img
+                                                                        src={formData.fotoUrl}
+                                                                        alt="Vista previa"
+                                                                        style={{
+                                                                            width: '120px',
+                                                                            height: '120px',
+                                                                            objectFit: 'cover',
+                                                                            borderRadius: '50%',
+                                                                            border: '3px solid #0d6efd'
+                                                                        }}
+                                                                        onError={(e) => { e.target.src = iconoPerfil; }}
+                                                                    />
+                                                                </div>
+                                                            )}
+
+                                                            {/* Botón para subir foto */}
+                                                            <div className="mb-2">
+                                                                <input
+                                                                    type="file"
+                                                                    className="form-control"
+                                                                    id="fotoFile"
+                                                                    accept="image/*"
+                                                                    onChange={handleFotoUpload}
+                                                                />
+                                                                <small className="form-text text-muted">Sube una imagen (máx. 2MB)</small>
+                                                            </div>
+
+                                                            {/* O pegar URL */}
+                                                            <div className="text-center my-2">
+                                                                <small className="text-muted">- o pega una URL -</small>
+                                                            </div>
+
                                                             <input
                                                                 type="text"
                                                                 className="form-control"
@@ -393,7 +457,6 @@ function Perfil() {
                                                                 onChange={handleInputChange}
                                                                 placeholder="https://ejemplo.com/foto.jpg"
                                                             />
-                                                            <small className="form-text text-muted">Pega la URL de tu imagen de perfil</small>
                                                         </div>
 
                                                         <div className="col-md-6">

@@ -158,13 +158,13 @@ function Admin() {
                 break;
 
             case 'precio':
-                if (valor && valor.trim().length > 50) {
+                if (valor && String(valor).trim().length > 50) {
                     error = 'El precio no puede superar 50 caracteres';
                 }
                 break;
 
             case 'descripcion':
-                if (valor && valor.trim().length > 500) {
+                if (valor && String(valor).trim().length > 500) {
                     error = 'La descripción no puede superar 500 caracteres';
                 }
                 break;

@@ -1,7 +1,7 @@
 // Barra de navegación responsive que cambia según el estado de sesión
 
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
 
 function Navbar() {
     const { user, logout, isLoggedIn } = useAuth();
