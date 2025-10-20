@@ -7,6 +7,7 @@ import iconoPerfil from '../assets/ICONOperfil.png';
 import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
 import { useAuth } from '../context/AuthContext';
+import { contarAsistentes, obtenerAsistentesPorEvento } from '../services/asistencia';
 import { listarEventos, obtenerEventosPorUsuario } from '../services/eventos';
 import '../styles/perfil.css';
 
@@ -39,6 +40,13 @@ function Perfil() {
         eventosCreados: 0,
         totalUsuarios: 0
     });
+    const [modalAsistentes, setModalAsistentes] = useState({
+        mostrar: false,
+        eventoId: null,
+        eventoTitulo: '',
+        asistentes: []
+    });
+    const [mostrarTodosEventos, setMostrarTodosEventos] = useState(false);
 
     // CARGAR DATOS AL MONTAR
     useEffect(() => {
@@ -189,6 +197,27 @@ function Perfil() {
         reader.readAsDataURL(file);
     };
 
+    // FUNCIÓN: Ver asistentes de un evento
+    const handleVerAsistentes = (evento) => {
+        const asistentes = obtenerAsistentesPorEvento(evento.id);
+        setModalAsistentes({
+            mostrar: true,
+            eventoId: evento.id,
+            eventoTitulo: evento.titulo,
+            asistentes: asistentes
+        });
+    };
+
+    // FUNCIÓN: Cerrar modal de asistentes
+    const cerrarModalAsistentes = () => {
+        setModalAsistentes({
+            mostrar: false,
+            eventoId: null,
+            eventoTitulo: '',
+            asistentes: []
+        });
+    };
+
 
     // FUNCIÓN: Guardar perfil
     const handleGuardarPerfil = (e) => {
@@ -285,34 +314,51 @@ function Perfil() {
             <main className="container my-5">
 
                 {/* HERO CON FOTO DE PERFIL */}
-                <section className="row justify-content-center mb-5">
-                    <div className="col-lg-8 col-xl-7">
-                        <div className="card border-0 shadow-lg text-center p-4">
-                            <div className="imagen-container mx-auto mb-3">
-                                {/* Anillos del portal con runas */}
-                                <div className="anillo-portal-1"></div>
-                                <div className="anillo-portal-2"></div>
-                                <div className="anillo-portal-3"></div>
-
-                                {/* Partículas orbitando */}
-                                {[...Array(8)].map((_, i) => (
-                                    <span key={i} className="particula-portal"></span>
-                                ))}
-
-                                {/* Imagen de perfil */}
-                                <img
-                                    src={formData.fotoUrl || iconoPerfil}
-                                    alt="Foto de perfil"
-                                    className="imagen-perfil"
-                                    onError={(e) => { e.target.src = iconoPerfil; }}
-                                />
+                <section className="row justify-content-center mb-4">
+                    <div className="col-12 col-lg-10 col-xl-9">
+                        <div className="perfil-hero-card">
+                            <div className="perfil-hero-background">
+                                <div className="hero-pattern"></div>
                             </div>
-                            <div className="info-basica">
-                                <h2 className="fw-bold mb-2">{userData.name || 'Usuario'}</h2>
-                                <p className="text-muted mb-3">{userData.email || user.email}</p>
-                                <span className="badge badge-rol">
-                                    {isAdmin() ? 'Administrador' : 'Usuario'}
-                                </span>
+
+                            <div className="perfil-hero-content">
+                                <div className="imagen-container-mejorado">
+                                    {/* Anillos del portal con runas */}
+                                    <div className="anillo-portal-1"></div>
+                                    <div className="anillo-portal-2"></div>
+                                    <div className="anillo-portal-3"></div>
+
+                                    {/* Partículas orbitando */}
+                                    {[...Array(8)].map((_, i) => (
+                                        <span key={i} className="particula-portal"></span>
+                                    ))}
+
+                                    {/* Imagen de perfil */}
+                                    <img
+                                        src={formData.fotoUrl || iconoPerfil}
+                                        alt="Foto de perfil"
+                                        className="imagen-perfil-mejorado"
+                                        onError={(e) => { e.target.src = iconoPerfil; }}
+                                    />
+                                </div>
+
+                                <div className="info-basica-mejorada">
+                                    <h2 className="perfil-nombre">{userData.name || 'Usuario'}</h2>
+                                    <p className="perfil-email">{userData.email || user.email}</p>
+                                    {userData.region && userData.comuna && (
+                                        <p className="perfil-ubicacion">
+                                            📍 {userData.comuna}, {userData.region}
+                                        </p>
+                                    )}
+                                    <div className="perfil-badges">
+                                        <span className={`badge-rol-mejorado ${isAdmin() ? 'admin' : 'user'}`}>
+                                            {isAdmin() ? '👑 Administrador' : '👤 Usuario'}
+                                        </span>
+                                        <span className="badge-eventos">
+                                            🎉 {estadisticas.eventosCreados} {estadisticas.eventosCreados === 1 ? 'evento' : 'eventos'}
+                                        </span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -531,37 +577,76 @@ function Perfil() {
                                     </button>
                                 </h2>
                                 <div id="collapseEventos" className="accordion-collapse collapse" data-bs-parent="#accordionPerfil">
-                                    <div className="accordion-body">
-                                        <div className="row gy-4 justify-content-center">
-                                            {eventos.length === 0 ? (
-                                                <div className="col-12">
-                                                    <p style={{ textAlign: 'center', color: '#666', fontStyle: 'italic', padding: '2rem', background: '#f9f9f9', borderRadius: '8px' }}>
-                                                        {isAdmin() ? 'No hay eventos en el sistema' : 'No has creado eventos aún. ¡Crea tu primer evento desde el panel!'}
-                                                    </p>
-                                                </div>
-                                            ) : (
-                                                eventos.map((evento) => (
-                                                    <div key={evento.id} className="col-md-6 col-lg-4">
-                                                        <div className="evento-perfil-item">
-                                                            <div className="evento-titulo">{evento.titulo}</div>
-                                                            <div className="evento-fecha">📅 {evento.fecha}</div>
-                                                            <div className="evento-tipo">🏷️ {evento.tipo}</div>
-                                                            <div style={{ fontSize: '0.85rem', color: '#666', marginTop: '0.5rem' }}>
-                                                                📍 {evento.lugar}
+                                    <div className="accordion-body p-4">
+                                        {eventos.length === 0 ? (
+                                            <div className="sin-eventos-mensaje">
+                                                <div className="sin-eventos-icon">📅</div>
+                                                <p>{isAdmin() ? 'No hay eventos en el sistema' : 'No has creado eventos aún'}</p>
+                                                <Link to={isAdmin() ? "/admin" : "/eventos"} className="btn btn-primary btn-sm mt-2">
+                                                    {isAdmin() ? 'Ir al Panel Admin' : 'Explorar Eventos'}
+                                                </Link>
+                                            </div>
+                                        ) : (
+                                            <>
+                                                <div className="eventos-grid-compacto">
+                                                    {(mostrarTodosEventos ? eventos : eventos.slice(0, 6)).map((evento) => (
+                                                        <div key={evento.id} className="evento-card-compacto">
+                                                            <div className="evento-compacto-header">
+                                                                <span className="evento-compacto-tipo">{evento.tipo}</span>
+                                                                {isAdmin() && evento.creadoPor && (
+                                                                    <span className="evento-compacto-autor" title={`Creado por ${evento.creadoPor}`}>
+                                                                        👤
+                                                                    </span>
+                                                                )}
                                                             </div>
-                                                            {isAdmin() && (
-                                                                <div style={{ fontSize: '0.8rem', color: 'var(--primario)', marginTop: '0.4rem', fontWeight: '500' }}>
-                                                                    👤 {evento.creadoPor || 'Sistema'}
+
+                                                            <h5 className="evento-compacto-titulo">{evento.titulo}</h5>
+
+                                                            <div className="evento-compacto-info">
+                                                                <div className="info-compacto-item">
+                                                                    <span className="icon">📅</span>
+                                                                    <span className="text">{evento.fecha}</span>
                                                                 </div>
-                                                            )}
-                                                            <div style={{ fontSize: '0.75rem', color: '#999', marginTop: '0.4rem' }}>
-                                                                📆 {evento.fechaCreacion ? new Date(evento.fechaCreacion).toLocaleDateString('es-CL') : 'N/A'}
+                                                                <div className="info-compacto-item">
+                                                                    <span className="icon">⏰</span>
+                                                                    <span className="text">{evento.hora || 'Por definir'}</span>
+                                                                </div>
+                                                                <div className="info-compacto-item">
+                                                                    <span className="icon">📍</span>
+                                                                    <span className="text">{evento.lugar}</span>
+                                                                </div>
+                                                            </div>
+
+                                                            <div className="evento-compacto-footer">
+                                                                <div className="asistentes-count">
+                                                                    <span className="icon">👥</span>
+                                                                    <span className="count">{contarAsistentes(evento)}</span>
+                                                                    <span className="total">/ {evento.capacidad || '∞'}</span>
+                                                                </div>
+                                                                <button
+                                                                    className="btn-ver-asistentes-compacto"
+                                                                    onClick={() => handleVerAsistentes(evento)}
+                                                                    title="Ver lista de asistentes"
+                                                                >
+                                                                    👁️
+                                                                </button>
                                                             </div>
                                                         </div>
+                                                    ))}
+                                                </div>
+
+                                                {eventos.length > 6 && (
+                                                    <div className="text-center mt-4">
+                                                        <button
+                                                            className="btn btn-outline-primary"
+                                                            onClick={() => setMostrarTodosEventos(!mostrarTodosEventos)}
+                                                        >
+                                                            {mostrarTodosEventos ? '👆 Ver menos' : `👇 Ver todos (${eventos.length})`}
+                                                        </button>
                                                     </div>
-                                                ))
-                                            )}
-                                        </div>
+                                                )}
+                                            </>
+                                        )}
                                     </div>
                                 </div>
                             </div>
@@ -633,6 +718,79 @@ function Perfil() {
                 </section>
 
             </main>
+
+            {/* MODAL DE ASISTENTES */}
+            {modalAsistentes.mostrar && (
+                <div className="modal-overlay-asistentes" onClick={cerrarModalAsistentes}>
+                    <div className="modal-content-asistentes" onClick={(e) => e.stopPropagation()}>
+                        <div className="modal-header-asistentes">
+                            <h3>👥 Asistentes de: {modalAsistentes.eventoTitulo}</h3>
+                            <button className="btn-cerrar-modal" onClick={cerrarModalAsistentes}>✕</button>
+                        </div>
+
+                        <div className="modal-body-asistentes">
+                            {modalAsistentes.asistentes.length === 0 ? (
+                                <div className="sin-asistentes">
+                                    <p>😔 Aún no hay asistentes confirmados para este evento</p>
+                                </div>
+                            ) : (
+                                <>
+                                    <div className="asistentes-stats">
+                                        <div className="stat-badge">
+                                            <span className="stat-numero">{modalAsistentes.asistentes.length}</span>
+                                            <span className="stat-label">Total</span>
+                                        </div>
+                                        <div className="stat-badge">
+                                            <span className="stat-numero">
+                                                {modalAsistentes.asistentes.filter(a => a.tipoAsistente === 'registrado').length}
+                                            </span>
+                                            <span className="stat-label">Registrados</span>
+                                        </div>
+                                        <div className="stat-badge">
+                                            <span className="stat-numero">
+                                                {modalAsistentes.asistentes.filter(a => a.tipoAsistente === 'invitado').length}
+                                            </span>
+                                            <span className="stat-label">Invitados</span>
+                                        </div>
+                                    </div>
+
+                                    <div className="lista-asistentes">
+                                        {modalAsistentes.asistentes.map((asistente, index) => (
+                                            <div key={index} className="asistente-item">
+                                                <div className="asistente-avatar">
+                                                    {asistente.nombre.charAt(0).toUpperCase()}
+                                                </div>
+                                                <div className="asistente-info">
+                                                    <div className="asistente-nombre">{asistente.nombre}</div>
+                                                    <div className="asistente-email">{asistente.email}</div>
+                                                    <div className="asistente-detalles">
+                                                        <span className="asistente-rut">RUT: {asistente.rut}</span>
+                                                        <span className={`asistente-tipo tipo-${asistente.tipoAsistente}`}>
+                                                            {asistente.tipoAsistente === 'registrado' ? '✓ Registrado' :
+                                                             asistente.tipoAsistente === 'invitado' ? '✉ Invitado' : '➕ Manual'}
+                                                        </span>
+                                                    </div>
+                                                    {asistente.fechaConfirmacion && (
+                                                        <div className="asistente-fecha">
+                                                            Confirmado: {new Date(asistente.fechaConfirmacion).toLocaleString('es-CL')}
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </>
+                            )}
+                        </div>
+
+                        <div className="modal-footer-asistentes">
+                            <button className="btn btn-secondary" onClick={cerrarModalAsistentes}>
+                                Cerrar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
 
             <Footer />
         </>

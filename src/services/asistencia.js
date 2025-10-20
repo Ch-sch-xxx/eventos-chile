@@ -419,6 +419,26 @@ export function agregarAsistenteManual(eventoId, datosAsistente) {
 }
 
 /**
+ * Obtener lista de asistentes de un evento
+ * @param {string} eventoId - ID del evento
+ * @returns {Array} - Lista de asistentes con sus datos
+ */
+export function obtenerAsistentesPorEvento(eventoId) {
+    try {
+        const eventos = JSON.parse(localStorage.getItem(EVENTOS_KEY) || '[]');
+        const evento = eventos.find(e => e.id === eventoId);
+
+        if (!evento) return [];
+
+        return evento.asistentes || [];
+
+    } catch (error) {
+        console.error('Error al obtener asistentes:', error);
+        return [];
+    }
+}
+
+/**
  * Obtener estadísticas de asistencia de un evento
  */
 export function obtenerEstadisticasEvento(eventoId) {

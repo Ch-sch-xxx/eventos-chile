@@ -827,3 +827,83 @@ input[type="file"].form-control::file-selector-button:hover {
         padding: 0.5rem 0.3rem !important;
     }
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   MEJORAS ADICIONALES - RESPONSIVE OPTIMIZADO
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Tablets */
+@media (max-width: 992px) {
+    .container-fluid {
+        padding: 0 1rem;
+    }
+
+    .card {
+        margin-bottom: 1.5rem;
+    }
+
+    .table-responsive {
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+}
+
+/* Mobile landscape y portrait */
+@media (max-width: 768px) {
+    /* Ocultar columnas menos importantes en mobile */
+    .table th:nth-child(4),
+    .table td:nth-child(4),
+    .table th:nth-child(5),
+    .table td:nth-child(5) {
+        display: none;
+    }
+
+    /* Ajustar padding del main */
+    main.container-fluid {
+        padding-top: 100px !important;
+    }
+
+    /* Cards más compactas */
+    .card-body {
+        padding: 1rem !important;
+    }
+
+    /* Botones responsivos */
+    .btn-sm {
+        font-size: 0.8rem;
+        padding: 0.35rem 0.7rem;
+    }
+
+    /* Formulario más compacto */
+    .row.mb-3 {
+        margin-bottom: 1rem !important;
+    }
+
+    label {
+        margin-bottom: 0.3rem;
+        font-size: 0.9rem;
+    }
+}
+
+/* Desktop grande - mejoras visuales */
+@media (min-width: 1200px) {
+    .container-fluid {
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+
+    .card {
+        border-radius: 16px;
+    }
+
+    .table {
+        font-size: 0.95rem;
+    }
+}
+
+/* Ultra wide */
+@media (min-width: 1400px) {
+    .container-fluid {
+        max-width: 1600px;
+    }
+}
