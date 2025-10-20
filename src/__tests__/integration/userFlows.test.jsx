@@ -3,7 +3,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import App from '../../App';
 import { AuthProvider } from '../../context/AuthContext';
-import { mockLocalStorage } from '../test-utils';
+import { mockLocalStorage } from '../test-utils.jsx';
 
 describe('Integration Tests', () => {
     beforeEach(() => {
