@@ -1,34 +1,41 @@
 // Validaciones para el servicio de eventos
 
 export const validateEvento = (evento) => {
+    // Objeto para almacenar errores de validación
     const errors = {};
 
-    if (!evento.titulo?.trim()) {
-        errors.titulo = 'El título es requerido';
-    }
+    // Validación básica: campos requeridos
+    const camposRequeridos = ['titulo', 'fecha', 'lugar', 'tipo', 'descripcion'];
+    camposRequeridos.forEach(campo => {
+        if (!evento[campo]?.trim()) {
+            errors[campo] = `El ${campo} es requerido`;
+        }
+    });
 
-    if (!evento.fecha) {
-        errors.fecha = 'La fecha es requerida';
-    }
-
-    if (!evento.lugar?.trim()) {
-        errors.lugar = 'El lugar es requerido';
-    }
-
-    if (!evento.tipo || !['Presencial', 'Streaming'].includes(evento.tipo)) {
+    // Validación específica: tipo de evento
+    if (!['Presencial', 'Streaming'].includes(evento.tipo)) {
         errors.tipo = 'El tipo debe ser Presencial o Streaming';
     }
 
-    if (!evento.descripcion?.trim()) {
-        errors.descripcion = 'La descripción es requerida';
+    // Validación de números: capacidad y precio
+    if (!Number.isInteger(evento.capacidad) || evento.capacidad < 0) {
+        errors.capacidad = 'La capacidad debe ser un número entero positivo';
     }
 
-    if (typeof evento.capacidad !== 'number' || evento.capacidad < 0) {
-        errors.capacidad = 'La capacidad debe ser un número positivo';
-    }
-
-    if (typeof evento.precio !== 'number' || evento.precio < 0) {
+    if (!Number.isFinite(evento.precio) || evento.precio < 0) {
         errors.precio = 'El precio debe ser un número positivo';
+    }
+
+    // Validación de fecha futura
+    if (evento.fecha) {
+        const fechaEvento = new Date(evento.fecha);
+        const hoy = new Date();
+
+        if (isNaN(fechaEvento.getTime())) {
+            errors.fecha = 'La fecha debe tener un formato válido (YYYY-MM-DD)';
+        } else if (fechaEvento.setHours(0,0,0,0) < hoy.setHours(0,0,0,0)) {
+            errors.fecha = 'La fecha del evento debe ser futura';
+        }
     }
 
     return {
@@ -38,5 +45,5 @@ export const validateEvento = (evento) => {
 };
 
 export const generateEventId = () => {
-    return `evt_${Date.now()}`;
+    return `evt_${Math.floor(Date.now() / 1000)}`;
 };

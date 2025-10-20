@@ -271,52 +271,51 @@ nav a:hover {
 }
 
 /* TARJETA 3D INDIVIDUAL - FONDO GRANDE Y EFECTO FLOTANTE DESTACADO */
+/* TARJETA 3D - CON EFECTO MOUSE MEJORADO */
 .tarjeta-evento-3d {
-    width: 100%;
-    max-width: 320px;
-    min-width: 220px;
+    width: 320px;
     height: 380px;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    align-items: stretch;
-    justify-content: center;
-    perspective: 2000px;
+    perspective: 1000px;
+    --rotate-x: 0deg;
+    --rotate-y: 0deg;
 }
-
 
 .carta-evento-flip {
     width: 100%;
     height: 100%;
     position: relative;
     transform-style: preserve-3d;
-    transition: transform 0.5s ease-out, box-shadow 0.4s;
-    border-radius: 35px;
-    box-shadow: 0 20px 35px rgba(34, 65, 220, 0.43),
-    0 15px 25px rgba(108, 99, 255, 0.82),
-    0 6px 18px rgba(0, 0, 0, 0.22);
-    transform: translateZ(0) rotateX(25deg);
+    transition: transform 0.6s ease-out;
+    border-radius: 18px;
+    box-shadow: 0 10px 30px rgba(108, 99, 255, 0.2);
 }
 
+/* Efecto 3D con mouse - SOLO cuando NO está volteada */
+.carta-evento-flip:not(.volteada) {
+    transform: perspective(1000px) rotateX(var(--rotate-x)) rotateY(var(--rotate-y));
+    transition: transform 0.1s ease-out;
+}
+
+/* Flip completo - tiene prioridad sobre el efecto mouse */
 .carta-evento-flip.volteada {
-    transform: rotateY(180deg) translateZ(40px);
+    transform: rotateY(180deg) !important;
+    transition: transform 0.6s ease-out;
 }
 
-/* CARAS DE LA TARJETA  */
-.cara-frontal, .cara-posterior {
+.cara-frontal,
+.cara-posterior {
     position: absolute;
     width: 100%;
     height: 100%;
     backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
     border-radius: 16px;
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    border: 2px solid rgba(108,99,255,0.2);
-    transition: all 0.3s ease;
-    padding: 0.2rem 1rem;
+    border: 2px solid rgba(108, 99, 255, 0.15);
+    padding: 0.5rem 1rem;
     box-sizing: border-box;
-
 }
 
 .cara-frontal {
@@ -325,7 +324,7 @@ nav a:hover {
 }
 
 .cara-posterior {
-    background: linear-gradient(145deg, var(--primario) 0%, #9F7AEA 50%, var(--acento) 100%);
+    background: linear-gradient(145deg, #6C63FF 0%, #9F7AEA 50%, #ED8936 100%);
     color: white;
     transform: rotateY(180deg);
     text-align: left;
@@ -348,33 +347,24 @@ nav a:hover {
     flex: 1;
     display: flex;
     flex-direction: column;
-    min-height: 140px; /* Alto mínimo garantizado */
-    max-height: 380px; /* Alto máximo para evitar desbordamiento */
-    padding: 0.4rem 0.2rem;
+    min-height: 120px;
+    max-height: 100%;
+    padding: 0.3rem 0.2rem;
     text-align: left;
+    overflow: hidden;
+}
+
+.cara-posterior .informacion-evento {
+    color: white;
 }
 
 /* TÍTULOS AJUSTADOS */
-.cara-frontal h3 {
-    margin: 0 0 0.8rem 0;
-    font-size: 1rem;
-    font-weight: 600;
-    line-height: 1.1;
-    color: var(--secundario);
-    /* Limito el título a 2 líneas máximo */
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
+.cara-frontal h3,
 .cara-posterior h3 {
     margin: 0 0 0.8rem 0;
     font-size: 1rem;
     font-weight: 600;
     line-height: 1.1;
-    color: var(--secundario);
-    /* Limito el título a 2 líneas máximo */
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
@@ -383,30 +373,49 @@ nav a:hover {
     text-align: center;
 }
 
-.cara-frontal h3 { color: var(--secundario); text-align: center; }
-.cara-posterior h3 { color: white; }
+.cara-frontal h3 {
+    color: var(--secundario);
+}
+
+.cara-posterior h3 {
+    color: white;
+}
 
 /* PÁRRAFOS  */
 .cara-frontal p,
 .cara-posterior p {
-    margin: 0.3rem 0;
+    margin: 0.25rem 0;
     font-size: 0.7rem;
-    line-height: 1; /* Evito que los párrafos se expandan demasiado */
-    max-height: 2.8rem; /* Aprox 2 líneas */
+    line-height: 1.3;
+    max-height: none;
     overflow: hidden;
     text-overflow: ellipsis;
-
 }
 
-.cara-frontal p { color: var(--texto); }
-.cara-posterior p { color: rgba(255,255,255,0.95); }
+.cara-frontal p {
+    color: var(--texto);
+}
+
+.cara-posterior p {
+    color: rgba(255,255,255,0.95);
+    font-size: 0.7rem;
+}
+
+.cara-posterior p strong {
+    color: white;
+    font-weight: 600;
+}
 
 /* PÁRRAFOS ESPECÍFICOS - DETALLES TRASEROS */
 .cara-posterior .detalle-completo {
-    font-size: 0.8rem;
-    line-height: 1.3;
-    max-height: none; /* Para la descripción completa */
+    font-size: 0.68rem;
+    line-height: 1.2;
+    max-height: 4rem; /* Limitar altura de descripción */
     margin: 0.2rem 0;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* Máximo 3 líneas */
+    -webkit-box-orient: vertical;
 }
 
 /* ETIQUETA DE TIPO */
@@ -423,22 +432,22 @@ nav a:hover {
 }
 
 /* BOTONES EN TARJETAS 3D - SIEMPRE AL FINAL */
-.boton-detalle, .boton-volver {
+.boton-detalle, .boton-volver, .boton-asistir {
     background: linear-gradient(135deg, var(--primario), #9F7AEA);
     color: white;
     border: none;
-    padding: 0.7rem 1.4rem;
-    border-radius: 25px;
+    padding: 0.6rem 1rem;
+    border-radius: 20px;
     cursor: pointer;
     font-weight: 500;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     transition: all 0.3s ease;
-    margin-top: auto; /* Siempre al final */
+    margin-top: auto;
     margin-bottom: 0;
     white-space: nowrap;
     text-align: center;
     align-self: center;
-    flex-shrink: 0; /* No se achica */
+    flex-shrink: 0;
 }
 
 .boton-volver {
@@ -446,28 +455,43 @@ nav a:hover {
     border: 1px solid rgba(255,255,255,0.4);
 }
 
+.boton-asistir {
+    background: linear-gradient(135deg, var(--primario), #9F7AEA);
+}
+
+/* Contenedor de botones en cara posterior */
+.botones-cara-posterior {
+    display: flex;
+    gap: 8px;
+    margin-top: auto;
+    width: 100%;
+}
+
+.botones-cara-posterior .boton-asistir,
+.botones-cara-posterior .boton-volver {
+    flex: 1;
+    padding: 0.6rem 0.8rem;
+    font-size: 0.85rem;
+}
+
 .boton-detalle:hover {
     background: linear-gradient(135deg, #5A52D5, #8B7EFF);
     box-shadow: 0 8px 20px rgba(108,99,255,0.4);
 }
 
-.boton-volver:hover {
+.boton-volver:hover, .boton-asistir:hover {
     background: rgba(255,255,255,0.35);
     transform: translateY(-2px);
 }
 
-/* EFECTOS HOVER */
+/* EFECTOS HOVER - Mejorados con elevación */
 .tarjeta-evento-3d:hover .carta-evento-flip {
-    box-shadow:
-            0 25px 50px rgba(108,99,255,0.4),
-            0 15px 35px rgba(108,99,255,0.25),
-            0 8px 20px rgba(0,0,0,0.15);
-    transform: translateZ(15px) rotateX(1deg) translateY(-5px);
+    box-shadow: 0 20px 50px rgba(108, 99, 255, 0.35);
 }
 
 .tarjeta-evento-3d:hover .cara-frontal,
 .tarjeta-evento-3d:hover .cara-posterior {
-    border-color: rgba(108,99,255,0.4);
+    border-color: rgba(108,99,255,0.3);
 }
 
 /* ANIMACIONES DE APARICIÓN */
@@ -487,28 +511,486 @@ nav a:hover {
 .tarjeta-evento-3d:nth-child(5) { animation-delay: 0.5s; }
 .tarjeta-evento-3d:nth-child(6) { animation-delay: 0.6s; }
 
-/* RESPONSIVE */
+/* RESPONSIVE - MEJORADO */
+@media (max-width: 1200px) {
+    .tarjeta-evento-3d {
+        max-width: 300px;
+        height: 380px;
+    }
+}
+
 @media (max-width: 1024px) {
     .tarjeta-evento-3d {
-        max-width: 260px;
-        height: 350px;
+        max-width: 280px;
+        height: 370px;
     }
     .eventos-tarjetas-3d h2 { font-size: 2rem; }
+
+    .boton-detalle, .boton-volver, .boton-asistir {
+        padding: 0.55rem 0.9rem;
+        font-size: 0.8rem;
+    }
+
+    .botones-cara-posterior .boton-asistir,
+    .botones-cara-posterior .boton-volver {
+        padding: 0.55rem 0.7rem;
+        font-size: 0.8rem;
+    }
 }
 
 @media (max-width: 768px) {
     .tarjeta-evento-3d {
-        max-width: 280px;
-        height: 320px;
-        min-width: 200px;
+        max-width: 300px;
+        height: 390px; /* Un poco más alto para contenido */
+        min-width: 240px;
     }
+
     .cara-frontal, .cara-posterior {
-        padding: 0.8rem 0.6rem;
-        max-height: 320px;
+        padding: 0.6rem 0.8rem;
     }
-    .imagen-evento { height: 100px; }
+
+    .imagen-evento {
+        height: 110px;
+        margin-bottom: 0.8rem;
+    }
+
     .informacion-evento {
-        min-height: 120px;
-        max-height: 160px;
+        min-height: 140px;
+        max-height: 100%;
+        padding: 0.2rem 0.1rem;
+    }
+
+    /* Títulos más pequeños en móvil */
+    .cara-frontal h3,
+    .cara-posterior h3 {
+        font-size: 0.9rem;
+        margin-bottom: 0.6rem;
+    }
+
+    /* Párrafos más compactos */
+    .cara-frontal p,
+    .cara-posterior p {
+        font-size: 0.65rem;
+        margin: 0.2rem 0;
+    }
+
+    .cara-posterior .detalle-completo {
+        font-size: 0.62rem;
+        line-height: 1.1;
+        max-height: 3.5rem;
+        -webkit-line-clamp: 2; /* Solo 2 líneas en móvil */
+    }
+
+    /* Botones más pequeños */
+    .boton-detalle, .boton-volver, .boton-asistir {
+        padding: 0.5rem 0.7rem;
+        font-size: 0.75rem;
+        border-radius: 15px;
+    }
+
+    .botones-cara-posterior {
+        gap: 6px;
+    }
+
+    .botones-cara-posterior .boton-asistir,
+    .botones-cara-posterior .boton-volver {
+        padding: 0.5rem 0.6rem;
+        font-size: 0.75rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .tarjeta-evento-3d {
+        max-width: 280px;
+        height: 380px;
+        min-width: 260px;
+    }
+
+    /* Reducir perspective en móvil pequeño para mejor efecto */
+    .tarjeta-evento-3d {
+        perspective: 1500px;
+    }
+
+    .imagen-evento {
+        height: 100px;
+        margin-bottom: 0.6rem;
+    }
+
+    .cara-frontal h3,
+    .cara-posterior h3 {
+        font-size: 0.85rem;
+    }
+
+    .cara-frontal p,
+    .cara-posterior p {
+        font-size: 0.6rem;
+    }
+}
+
+/* ========================================
+   MEDIA QUERIES ADICIONALES
+   ======================================== */
+
+/* Tablets grandes (1024px - 1200px) */
+@media (max-width: 1200px) {
+    /* Carrusel de eventos */
+    .carrusel-eventos {
+        max-width: 950px;
+        padding: 1.75rem;
+    }
+
+    .Tarjetas {
+        width: 220px;
+        min-width: 180px;
+        height: 330px;
+    }
+
+    .Tarjetas h3 {
+        font-size: 0.75rem;
+    }
+
+    .Tarjetas p {
+        font-size: 0.65rem;
+    }
+
+    .tipo-evento {
+        font-size: 0.7rem;
+        padding: 3px 7px;
+    }
+
+    .btn-asistir {
+        padding: 0.55rem 0.9rem;
+        font-size: 0.85rem;
+    }
+
+    /* Sección de tarjetas 3D */
+    .eventos-tarjetas-3d h2 {
+        font-size: 2rem;
+        margin-bottom: 1.75rem;
+    }
+}
+
+/* Tablets (768px - 1024px) */
+@media (max-width: 1024px) {
+    /* Efecto confeti menos intenso */
+    body::before {
+        background-size: 150px 150px, 180px 180px, 220px 220px;
+        animation: confetiMov 15s linear infinite;
+    }
+
+    /* Header y footer */
+    header, footer {
+        min-height: 65px;
+        padding: 0.75rem;
+    }
+
+    /* Navbar */
+    nav ul {
+        gap: 0.5rem;
+    }
+
+    nav a {
+        padding: 0.4rem 0.7rem;
+        font-size: 0.85rem;
+    }
+
+    /* Carrusel de eventos */
+    .carrusel-eventos {
+        max-width: 800px;
+        padding: 1.5rem;
+        margin: 1.5rem auto;
+    }
+
+    .carrusel-lista {
+        gap: 1.25rem;
+        padding: 0.75rem;
+        min-height: 240px;
+    }
+
+    .Tarjetas {
+        width: 210px;
+        min-width: 170px;
+        height: 320px;
+        padding: 1rem;
+    }
+
+    .Tarjetas img,
+    .img-tarjeta-evento {
+        height: 70px;
+        margin-bottom: 0.85rem;
+    }
+
+    .Tarjetas h3 {
+        font-size: 0.7rem;
+        margin-bottom: 0.7rem;
+    }
+
+    .Tarjetas p {
+        font-size: 0.6rem;
+        margin: 0.25rem 0;
+    }
+
+    .tipo-evento {
+        font-size: 0.68rem;
+        padding: 3px 6px;
+    }
+
+    .btn-asistir {
+        padding: 0.5rem 0.85rem;
+        font-size: 0.8rem;
+    }
+
+    /* Tarjetas 3D */
+    .eventos-tarjetas-3d h2 {
+        font-size: 1.8rem;
+        margin-bottom: 1.5rem;
+    }
+}
+
+/* Móviles grandes y tablets pequeñas (576px - 768px) */
+@media (max-width: 768px) {
+    /* Confeti más sutil */
+    body::before {
+        background-size: 120px 120px, 150px 150px, 180px 180px;
+        opacity: 0.5;
+    }
+
+    /* Header y footer */
+    header, footer {
+        min-height: 60px;
+        padding: 0.5rem;
+    }
+
+    /* Navbar vertical */
+    nav ul {
+        flex-direction: column;
+        gap: 0.5rem;
+        align-items: stretch;
+    }
+
+    nav a {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+        text-align: center;
+        display: block;
+    }
+
+    /* Carrusel de eventos */
+    .carrusel-eventos {
+        max-width: 95%;
+        padding: 1.25rem;
+        margin: 1rem auto;
+        border-width: 3px;
+    }
+
+    .carrusel-lista {
+        gap: 1rem;
+        padding: 0.5rem;
+        min-height: 220px;
+    }
+
+    .Tarjetas {
+        width: 200px;
+        min-width: 160px;
+        height: 310px;
+        padding: 0.9rem;
+        margin: 0 0.3rem;
+    }
+
+    .Tarjetas img,
+    .img-tarjeta-evento {
+        height: 65px;
+        margin-bottom: 0.75rem;
+    }
+
+    .Tarjetas h3 {
+        font-size: 0.68rem;
+        margin-bottom: 0.6rem;
+        -webkit-line-clamp: 2;
+    }
+
+    .Tarjetas p {
+        font-size: 0.58rem;
+        margin: 0.2rem 0;
+        line-height: 1.15;
+    }
+
+    .tipo-evento {
+        font-size: 0.65rem;
+        padding: 2px 6px;
+        margin: 0.4rem 0;
+    }
+
+    .btn-asistir {
+        padding: 0.45rem 0.75rem;
+        font-size: 0.75rem;
+    }
+
+    /* Tarjetas 3D */
+    .eventos-tarjetas-3d {
+        padding: 1.5rem 0.75rem;
+    }
+
+    .eventos-tarjetas-3d h2 {
+        font-size: 1.6rem;
+        margin-bottom: 1.25rem;
+    }
+
+    .eventos-tarjetas-3d h2::after {
+        width: 100px;
+        height: 3px;
+        bottom: -12px;
+    }
+}
+
+/* Móviles pequeños (hasta 576px) */
+@media (max-width: 576px) {
+    /* Header y footer */
+    header, footer {
+        min-height: 55px;
+        padding: 0.4rem;
+    }
+
+    nav a {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.85rem;
+        border-radius: 15px;
+    }
+
+    /* Carrusel de eventos */
+    .carrusel-eventos {
+        padding: 1rem;
+        margin: 0.75rem auto;
+        border-radius: 12px;
+        border-width: 2px;
+    }
+
+    .carrusel-lista {
+        gap: 0.85rem;
+        padding: 0.4rem;
+        min-height: 200px;
+    }
+
+    .Tarjetas {
+        width: 180px;
+        min-width: 150px;
+        height: 290px;
+        padding: 0.8rem;
+        border-radius: 10px;
+    }
+
+    .Tarjetas img,
+    .img-tarjeta-evento {
+        height: 60px;
+        margin-bottom: 0.6rem;
+        border-radius: 10px;
+    }
+
+    .Tarjetas h3 {
+        font-size: 0.65rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .Tarjetas p {
+        font-size: 0.55rem;
+        margin: 0.15rem 0;
+    }
+
+    .tipo-evento {
+        font-size: 0.6rem;
+        padding: 2px 5px;
+        margin: 0.3rem 0;
+        border-radius: 8px;
+    }
+
+    .btn-asistir {
+        padding: 0.4rem 0.65rem;
+        font-size: 0.7rem;
+        border-radius: 5px;
+    }
+
+    /* Tarjetas 3D */
+    .eventos-tarjetas-3d {
+        padding: 1.25rem 0.5rem;
+    }
+
+    .eventos-tarjetas-3d h2 {
+        font-size: 1.4rem;
+        margin-bottom: 1rem;
+    }
+
+    .eventos-tarjetas-3d h2::after {
+        width: 80px;
+        height: 2px;
+        bottom: -10px;
+    }
+
+    .etiqueta-tipo {
+        font-size: 0.7rem;
+        padding: 3px 8px;
+        margin: 0.4rem 0;
+    }
+}
+
+/* Pantallas muy pequeñas (hasta 400px) */
+@media (max-width: 400px) {
+    /* Carrusel de eventos */
+    .carrusel-eventos {
+        padding: 0.75rem;
+    }
+
+    .carrusel-lista {
+        gap: 0.7rem;
+        padding: 0.3rem;
+    }
+
+    .Tarjetas {
+        width: 160px;
+        min-width: 140px;
+        height: 275px;
+        padding: 0.7rem;
+    }
+
+    .Tarjetas img,
+    .img-tarjeta-evento {
+        height: 55px;
+        margin-bottom: 0.5rem;
+    }
+
+    .Tarjetas h3 {
+        font-size: 0.6rem;
+    }
+
+    .Tarjetas p {
+        font-size: 0.52rem;
+    }
+
+    .tipo-evento {
+        font-size: 0.58rem;
+        padding: 2px 4px;
+    }
+
+    .btn-asistir {
+        padding: 0.35rem 0.55rem;
+        font-size: 0.65rem;
+    }
+
+    /* Tarjetas 3D */
+    .eventos-tarjetas-3d h2 {
+        font-size: 1.25rem;
+    }
+
+    .eventos-tarjetas-3d h2::after {
+        width: 70px;
+    }
+
+    .boton-detalle, .boton-volver, .boton-asistir {
+        font-size: 0.7rem;
+        padding: 0.45rem 0.6rem;
+    }
+
+    .etiqueta-tipo {
+        font-size: 0.65rem;
+        padding: 2px 6px;
     }
 }

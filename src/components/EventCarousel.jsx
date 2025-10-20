@@ -1,11 +1,16 @@
 // Carrusel infinito de eventos con auto-scroll
 // Portado desde eventos_interaccion.js SIN REACT -
 // mantiene lógica de loop infinito
+// Ahora integra ModalAsistencia para confirmar asistencia
+// Modal se renderiza fuera del carrusel usando Portal
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
 import Eventos from '../assets/eventosIMG.png';
+import { useAuth } from '../context/AuthContext';
+import ModalAsistencia from './ModalAsistencia';
+import ModalDecisionAsistencia from './ModalDecisionAsistencia';
 
 
 // Función auxiliar para recortar textos largos
@@ -18,6 +23,9 @@ function EventCarousel({ eventos }) {
     const carruselRef = useRef(null);
     const navigate = useNavigate();
     const { isLoggedIn } = useAuth();
+    const [eventoSeleccionado, setEventoSeleccionado] = useState(null);
+    const [mostrarModalDecision, setMostrarModalDecision] = useState(false);
+    const [mostrarModalAsistencia, setMostrarModalAsistencia] = useState(false);
 
     // Auto-scroll y lógica de loop infinito
     useEffect(() => {
@@ -50,48 +58,83 @@ function EventCarousel({ eventos }) {
         };
     }, [eventos]);
 
-    // Autenticación al "Asistir al Evento" - redirige o muestra mensaje según sesión
+    // Abrir modal según estado de login
     const handleAsistir = (evento) => {
-        if (isLoggedIn()) {
-            // Sí hay sesión, mostrar confirmación de asistencia
-            alert(`¡Asistencia confirmada! Verás "${evento.titulo}" en tu perfil.`);
-            // Aquí podrías agregar lógica para guardar asistencia en localStorage
+        setEventoSeleccionado(evento);
+        if (!isLoggedIn()) {
+            setMostrarModalDecision(true);
         } else {
-            // Si NO hay sesión, redirigir a login
-            alert('Por favor inicia sesión para confirmar asistencia.');
-            navigate('/auth');
+            setMostrarModalAsistencia(true);
         }
+    };
+
+    // Handler para cuando el usuario elige asistir como invitado
+    const handleSeleccionarInvitado = () => {
+        setMostrarModalDecision(false);
+        setMostrarModalAsistencia(true);
     };
 
     // Duplicar el array para dar efecto de loop infinito
     const eventosDobles = [...eventos, ...eventos];
 
     return (
+        <>
+            <div id="carrusel-lista" className="carrusel-lista" ref={carruselRef}>
+                {eventosDobles.map((evento, index) => (
+                    <article className="Tarjetas" key={`${evento.id}-${index}`}>
+                        <img
+                            className="imagen-evento"
+                            src={evento.imagen || Eventos}
+                            alt={truncarTexto(evento.titulo, 30)}
+                            onError={(e) => {
+                                e.target.onerror = null;
+                                e.target.src = Eventos;
+                            }}
+                        />
+                        <h3>{truncarTexto(evento.titulo, 40)}</h3>
+                        <p>
+                            📅 Fecha: {evento.fecha}<br />
+                            📍 Lugar: {truncarTexto(evento.lugar, 50)}
+                        </p>
+                        <p><b className="tipo-evento">{evento.tipo}</b></p>
+                        <button
+                            className="btn-asistir"
+                            onClick={() => handleAsistir(evento)}
+                        >
+                            Asistir al Evento
+                        </button>
+                    </article>
+                ))}
+            </div>
 
+            {/* Modal de decisión (NO logueados) - Renderizado fuera del carrusel usando Portal */}
+            {mostrarModalDecision && eventoSeleccionado && createPortal(
+                <ModalDecisionAsistencia
+                    evento={eventoSeleccionado}
+                    onClose={() => {
+                        setMostrarModalDecision(false);
+                        setEventoSeleccionado(null);
+                    }}
+                    onSeleccionarInvitado={handleSeleccionarInvitado}
+                />,
+                document.body
+            )}
 
-        <div id="carrusel-lista" className="carrusel-lista" ref={carruselRef}>
-            {eventosDobles.map((evento, index) => (
-                <article className="Tarjetas" key={`${evento.id}-${index}`}>
-                    <img
-                        className="imagen-evento"
-                        src={Eventos}
-                        alt={truncarTexto(evento.titulo, 30)}
-                    />
-                    <h3>{truncarTexto(evento.titulo, 40)}</h3>
-                    <p>
-                        📅 Fecha: {evento.fecha}<br />
-                        📍 Lugar: {truncarTexto(evento.lugar, 50)}
-                    </p>
-                    <p><b className="tipo-evento">{evento.tipo}</b></p>
-                    <button
-                        className="btn-asistir"
-                        onClick={() => handleAsistir(evento)}
-                    >
-                        Asistir al Evento
-                    </button>
-                </article>
-            ))}
-        </div>
+            {/* Modal de asistencia - Renderizado fuera del carrusel usando Portal */}
+            {mostrarModalAsistencia && eventoSeleccionado && createPortal(
+                <ModalAsistencia
+                    evento={eventoSeleccionado}
+                    onClose={() => {
+                        setMostrarModalAsistencia(false);
+                        setEventoSeleccionado(null);
+                    }}
+                    onSuccess={() => {
+                        console.log('Asistencia confirmada desde carrusel');
+                    }}
+                />,
+                document.body
+            )}
+        </>
     );
 }
 
