@@ -5,6 +5,9 @@
     --texto: #2D3748;
     --acento: #ED8936;
     --acento-suave: #FED7D7;
+    --error: #E53E3E;
+    --error-bg: #FED7D7;
+    --exito: #38A169;
 }
 
 /* ESTILO GENERAL */
@@ -204,6 +207,22 @@ nav a:hover {
     font-size: 0.85rem;
 }
 
+/* Mensajes de error */
+.auth-form .error-message {
+    color: #dc3545;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}
+
+.auth-form .form-control.is-invalid {
+    border-color: #dc3545;
+    padding-right: calc(1.5em + 0.75rem);
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right calc(0.375em + 0.1875rem) center;
+    background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+}
+
 /* Botones - estilo coherente con Index/Eventos */
 .auth-form button.btn-primary {
     background: linear-gradient(135deg, var(--primario), #9F7AEA);
@@ -263,20 +282,274 @@ nav a:hover {
     text-decoration: underline;
 }
 
-/* RESPONSIVE - ajustes para móviles */
+/* ========================================
+   RESPONSIVE - MEDIA QUERIES MEJORADAS
+   ======================================== */
+
+/* Tablets grandes (1024px - 1200px) */
+@media (max-width: 1200px) {
+    .auth-contenedor {
+        max-width: 450px;
+        padding: 2.25rem;
+        margin: 1.75rem auto;
+    }
+
+    .auth-form h2 {
+        font-size: 1.7rem;
+        margin-bottom: 1.3rem;
+    }
+}
+
+/* Tablets (768px - 1024px) */
+@media (max-width: 1024px) {
+    /* Efecto confeti menos intenso */
+    body::before {
+        background-size: 150px 150px, 180px 180px, 220px 220px;
+        animation: confetiMov 15s linear infinite;
+    }
+
+    /* Header y footer */
+    header, footer {
+        min-height: 65px;
+        padding: 0.75rem;
+    }
+
+    /* Navbar */
+    nav ul {
+        gap: 0.5rem;
+    }
+
+    nav a {
+        padding: 0.4rem 0.7rem;
+        font-size: 0.85rem;
+    }
+
+    /* Contenedor de formularios */
+    .auth-contenedor {
+        max-width: 420px;
+        padding: 2rem;
+        margin: 1.5rem auto;
+    }
+
+    .auth-form h2 {
+        font-size: 1.6rem;
+        margin-bottom: 1.25rem;
+    }
+
+    .auth-form label {
+        font-size: 0.9rem;
+    }
+
+    .auth-form input.form-control,
+    .auth-form select.form-select {
+        padding: 0.65rem 0.95rem;
+        font-size: 0.9rem;
+    }
+
+    .auth-form button.btn-primary {
+        padding: 0.75rem 1.3rem;
+        font-size: 0.95rem;
+    }
+}
+
+/* Móviles grandes y tablets pequeñas (576px - 768px) */
 @media (max-width: 768px) {
+    /* Confeti más sutil */
+    body::before {
+        background-size: 120px 120px, 150px 150px, 180px 180px;
+        opacity: 0.5;
+    }
+
+    /* Header y footer */
+    header, footer {
+        min-height: 60px;
+        padding: 0.5rem;
+    }
+
+    /* Navbar vertical */
+    nav ul {
+        flex-direction: column;
+        gap: 0.5rem;
+        align-items: stretch;
+    }
+
+    nav a {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+        text-align: center;
+        display: block;
+    }
+
+    /* Contenedor de formularios */
     .auth-contenedor {
         padding: 1.5rem;
         margin: 1rem auto;
         max-width: 90%;
+        border-radius: 12px;
     }
+
+    .auth-contenedor::before {
+        width: 100%;
+        height: 100%;
+    }
+
+    .auth-form {
+        gap: 0.85rem;
+    }
+
     .auth-form h2 {
         font-size: 1.5rem;
+        margin-bottom: 1.15rem;
     }
+
+    .auth-form h2::after {
+        width: 50px;
+        height: 2px;
+        bottom: -7px;
+    }
+
+    .auth-form label {
+        font-size: 0.85rem;
+    }
+
     .auth-form input.form-control,
     .auth-form select.form-select {
         padding: 0.6rem 0.8rem;
         font-size: 0.9rem;
+        border-radius: 7px;
+    }
+
+    .auth-form small.form-text {
+        font-size: 0.8rem;
+    }
+
+    .auth-form button.btn-primary {
+        padding: 0.7rem 1.2rem;
+        font-size: 0.9rem;
+        border-radius: 20px;
+    }
+
+    .auth-form p {
+        font-size: 0.85rem;
+    }
+}
+
+/* Móviles pequeños (hasta 576px) */
+@media (max-width: 576px) {
+    /* Header y footer */
+    header, footer {
+        min-height: 55px;
+        padding: 0.4rem;
+    }
+
+    nav a {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.85rem;
+        border-radius: 15px;
+    }
+
+    /* Contenedor de formularios */
+    .auth-contenedor {
+        padding: 1.25rem;
+        margin: 0.75rem auto;
+        max-width: 95%;
+        border-radius: 10px;
+    }
+
+    .auth-form {
+        gap: 0.75rem;
+    }
+
+    .auth-form h2 {
+        font-size: 1.3rem;
+        margin-bottom: 1rem;
+    }
+
+    .auth-form h2::after {
+        width: 45px;
+        bottom: -6px;
+    }
+
+    .auth-form label {
+        font-size: 0.8rem;
+    }
+
+    .auth-form input.form-control,
+    .auth-form select.form-select {
+        padding: 0.55rem 0.75rem;
+        font-size: 0.85rem;
+        border-width: 1.5px;
+        border-radius: 6px;
+    }
+
+    .auth-form small.form-text {
+        font-size: 0.75rem;
+    }
+
+    .auth-form .error-message {
+        font-size: 0.8rem;
+    }
+
+    .auth-form button.btn-primary {
+        padding: 0.6rem 1rem;
+        font-size: 0.85rem;
+        border-radius: 18px;
+    }
+
+    .auth-form p {
+        font-size: 0.8rem;
+        margin-top: 0.4rem;
+    }
+}
+
+/* Pantallas muy pequeñas (hasta 400px) */
+@media (max-width: 400px) {
+    /* Contenedor de formularios */
+    .auth-contenedor {
+        padding: 1rem;
+        margin: 0.5rem auto;
+    }
+
+    .auth-form {
+        gap: 0.6rem;
+    }
+
+    .auth-form h2 {
+        font-size: 1.15rem;
+        margin-bottom: 0.85rem;
+    }
+
+    .auth-form h2::after {
+        width: 40px;
+        height: 2px;
+    }
+
+    .auth-form label {
+        font-size: 0.75rem;
+    }
+
+    .auth-form input.form-control,
+    .auth-form select.form-select {
+        padding: 0.5rem 0.65rem;
+        font-size: 0.8rem;
+    }
+
+    .auth-form small.form-text {
+        font-size: 0.7rem;
+    }
+
+    .auth-form .error-message {
+        font-size: 0.75rem;
+    }
+
+    .auth-form button.btn-primary {
+        padding: 0.55rem 0.9rem;
+        font-size: 0.8rem;
+        border-radius: 15px;
+    }
+
+    .auth-form p {
+        font-size: 0.75rem;
     }
 }
 

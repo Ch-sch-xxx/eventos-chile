@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Tarjeta 3D</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            padding: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .tarjeta-evento-3d {
+            width: 320px;
+            height: 380px;
+            perspective: 2000px;
+        }
+
+        .carta-evento-flip {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s ease-out;
+            border-radius: 18px;
+        }
+
+        .carta-evento-flip.volteada {
+            transform: rotateY(180deg);
+        }
+
+        .cara-frontal, .cara-posterior {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            border-radius: 16px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            border: 2px solid rgba(108,99,255,0.15);
+            padding: 2rem;
+            box-sizing: border-box;
+        }
+
+        .cara-frontal {
+            background: linear-gradient(145deg, #ffffff 0%, #f4f6ff 100%);
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .cara-posterior {
+            background: linear-gradient(145deg, #6C63FF 0%, #9F7AEA 50%, #ED8936 100%);
+            color: white;
+            transform: rotateY(180deg);
+            text-align: left;
+            justify-content: space-between;
+        }
+
+        button {
+            background: #6C63FF;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 1rem;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background: #5A52D5;
+        }
+
+        .cara-posterior button {
+            background: rgba(255,255,255,0.25);
+            border: 1px solid rgba(255,255,255,0.4);
+        }
+
+        h2 {
+            margin-bottom: 1rem;
+        }
+
+        p {
+            margin: 0.5rem 0;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+    <div class="tarjeta-evento-3d">
+        <div class="carta-evento-flip" id="tarjeta">
+            <!-- Cara frontal -->
+            <div class="cara-frontal">
+                <h2>Cara Frontal</h2>
+                <p>Esta es la parte frontal de la tarjeta</p>
+                <button onclick="voltear()">Ver Detalle</button>
+            </div>
+
+            <!-- Cara posterior -->
+            <div class="cara-posterior">
+                <div>
+                    <h2>Cara Posterior</h2>
+                    <p><strong>Descripción:</strong> Este es el contenido de la cara posterior con gradiente morado</p>
+                    <p><strong>Precio:</strong> $10.000</p>
+                    <p><strong>Organizador:</strong> Chris</p>
+                    <p><strong>Asistentes:</strong> 5/100</p>
+                </div>
+                <button onclick="volver()">← Volver</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function voltear() {
+            const tarjeta = document.getElementById('tarjeta');
+            tarjeta.classList.add('volteada');
+            console.log('✅ Tarjeta volteada');
+            console.log('Clases:', tarjeta.className);
+            console.log('Transform:', window.getComputedStyle(tarjeta).transform);
+        }
+
+        function volver() {
+            const tarjeta = document.getElementById('tarjeta');
+            tarjeta.classList.remove('volteada');
+            console.log('✅ Tarjeta vuelta al frente');
+        }
+    </script>
+</body>
+</html>
