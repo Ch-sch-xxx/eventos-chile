@@ -45,5 +45,5 @@ export const validateEvento = (evento) => {
 };
 
 export const generateEventId = () => {
-    return `evt_${Math.floor(Date.now() / 1000)}`;
+    return `evt_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
 };

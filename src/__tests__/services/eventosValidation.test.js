@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { generateEventId, validateEvento } from '../services/eventosValidation';
+import { generateEventId, validateEvento } from '../../services/eventosValidation';
 
 describe('Validación de Eventos', () => {
     const eventoValido = {
@@ -50,6 +50,6 @@ describe('Generación de ID de Eventos', () => {
         const id1 = generateEventId();
         const id2 = generateEventId();
         expect(id1).not.toBe(id2);
-        expect(id1).toMatch(/^evt_\d+$/);
+        expect(id1).toMatch(/^evt_\d+_[a-z0-9]+$/);
     });
 });

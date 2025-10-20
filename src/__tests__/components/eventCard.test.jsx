@@ -28,10 +28,15 @@ describe('EventCard Component', () => {
             </BrowserRouter>
         )
 
+        // Usar getAllByText ya que el título aparece en ambas caras
         expect(screen.getAllByText(mockEvento.titulo)[0]).toBeInTheDocument()
-        expect(screen.getByText((content, element) => {
+
+        // Usar getAllByText para elementos que aparecen múltiples veces
+        const lugarElements = screen.getAllByText((content, element) => {
             return element.textContent.includes('Santiago')
-        })).toBeInTheDocument()
+        })
+        expect(lugarElements.length).toBeGreaterThan(0)
+
         expect(screen.getByText('Presencial')).toBeInTheDocument()
     })
 

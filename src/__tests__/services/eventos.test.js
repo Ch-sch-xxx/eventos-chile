@@ -1,11 +1,11 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import {
-  contarEventosUsuario,
-  contarTotalUsuarios,
-  crearEvento,
-  guardarEventos,
-  obtenerEventos,
-  obtenerMisEventos
+    contarEventosUsuario,
+    contarTotalUsuarios,
+    crearEvento,
+    guardarEventos,
+    obtenerEventos,
+    obtenerMisEventos
 } from "../../services/eventos";
 import { generateEventId, validateEvento } from "../../services/eventosValidation";
 
@@ -133,7 +133,7 @@ describe("Servicios de Eventos - Core", () => {
       const id1 = generateEventId();
       const id2 = generateEventId();
       expect(id1).not.toBe(id2);
-      expect(id1).toMatch(/^evt_\d+$/);
+      expect(id1).toMatch(/^evt_\d+_[a-z0-9]+$/);
     });
 
     it("debería contar el total de usuarios registrados", () => {
