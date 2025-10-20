@@ -624,11 +624,10 @@ function Perfil() {
                                                                     <span className="total">/ {evento.capacidad || '∞'}</span>
                                                                 </div>
                                                                 <button
-                                                                    className="btn-ver-asistentes-compacto"
+                                                                    className="btn-ver-participantes"
                                                                     onClick={() => handleVerAsistentes(evento)}
-                                                                    title="Ver lista de asistentes"
                                                                 >
-                                                                    👁️
+                                                                    Ver participantes
                                                                 </button>
                                                             </div>
                                                         </div>
@@ -719,72 +718,119 @@ function Perfil() {
 
             </main>
 
-            {/* MODAL DE ASISTENTES */}
+            {/* MODAL DE PARTICIPANTES */}
             {modalAsistentes.mostrar && (
-                <div className="modal-overlay-asistentes" onClick={cerrarModalAsistentes}>
-                    <div className="modal-content-asistentes" onClick={(e) => e.stopPropagation()}>
-                        <div className="modal-header-asistentes">
-                            <h3>👥 Asistentes de: {modalAsistentes.eventoTitulo}</h3>
-                            <button className="btn-cerrar-modal" onClick={cerrarModalAsistentes}>✕</button>
+                <div className="modal-overlay-participantes" onClick={cerrarModalAsistentes}>
+                    <div className="modal-content-participantes" onClick={(e) => e.stopPropagation()}>
+
+                        {/* Header mejorado */}
+                        <div className="modal-header-participantes">
+                            <div className="header-titulo-section">
+                                <div className="header-icon">👥</div>
+                                <div>
+                                    <h3 className="header-titulo">Participantes</h3>
+                                    <p className="header-subtitulo">{modalAsistentes.eventoTitulo}</p>
+                                </div>
+                            </div>
+                            <button className="btn-cerrar-modal-nuevo" onClick={cerrarModalAsistentes}>
+                                <span>✕</span>
+                            </button>
                         </div>
 
-                        <div className="modal-body-asistentes">
+                        <div className="modal-body-participantes">
                             {modalAsistentes.asistentes.length === 0 ? (
-                                <div className="sin-asistentes">
-                                    <p>😔 Aún no hay asistentes confirmados para este evento</p>
+                                <div className="sin-participantes-estado">
+                                    <div className="estado-icono">😔</div>
+                                    <h4>Sin confirmaciones aún</h4>
+                                    <p>Este evento todavía no tiene participantes confirmados</p>
                                 </div>
                             ) : (
                                 <>
-                                    <div className="asistentes-stats">
-                                        <div className="stat-badge">
-                                            <span className="stat-numero">{modalAsistentes.asistentes.length}</span>
-                                            <span className="stat-label">Total</span>
+                                    {/* Stats mejoradas */}
+                                    <div className="participantes-stats-mejorado">
+                                        <div className="stat-card-modal total">
+                                            <div className="stat-icono">👥</div>
+                                            <div className="stat-info">
+                                                <span className="stat-numero-grande">{modalAsistentes.asistentes.length}</span>
+                                                <span className="stat-texto">Total Participantes</span>
+                                            </div>
                                         </div>
-                                        <div className="stat-badge">
-                                            <span className="stat-numero">
-                                                {modalAsistentes.asistentes.filter(a => a.tipoAsistente === 'registrado').length}
-                                            </span>
-                                            <span className="stat-label">Registrados</span>
+                                        <div className="stat-card-modal registrados">
+                                            <div className="stat-icono">✓</div>
+                                            <div className="stat-info">
+                                                <span className="stat-numero-grande">
+                                                    {modalAsistentes.asistentes.filter(a => a.tipoAsistente === 'registrado').length}
+                                                </span>
+                                                <span className="stat-texto">Registrados</span>
+                                            </div>
                                         </div>
-                                        <div className="stat-badge">
-                                            <span className="stat-numero">
-                                                {modalAsistentes.asistentes.filter(a => a.tipoAsistente === 'invitado').length}
-                                            </span>
-                                            <span className="stat-label">Invitados</span>
+                                        <div className="stat-card-modal invitados">
+                                            <div className="stat-icono">✉</div>
+                                            <div className="stat-info">
+                                                <span className="stat-numero-grande">
+                                                    {modalAsistentes.asistentes.filter(a => a.tipoAsistente === 'invitado').length}
+                                                </span>
+                                                <span className="stat-texto">Invitados</span>
+                                            </div>
                                         </div>
                                     </div>
 
-                                    <div className="lista-asistentes">
-                                        {modalAsistentes.asistentes.map((asistente, index) => (
-                                            <div key={index} className="asistente-item">
-                                                <div className="asistente-avatar">
-                                                    {asistente.nombre.charAt(0).toUpperCase()}
-                                                </div>
-                                                <div className="asistente-info">
-                                                    <div className="asistente-nombre">{asistente.nombre}</div>
-                                                    <div className="asistente-email">{asistente.email}</div>
-                                                    <div className="asistente-detalles">
-                                                        <span className="asistente-rut">RUT: {asistente.rut}</span>
-                                                        <span className={`asistente-tipo tipo-${asistente.tipoAsistente}`}>
+                                    {/* Lista mejorada */}
+                                    <div className="lista-participantes-mejorada">
+                                        <div className="lista-header">
+                                            <h4>Lista de Participantes ({modalAsistentes.asistentes.length})</h4>
+                                        </div>
+
+                                        <div className="participantes-grid">
+                                            {modalAsistentes.asistentes.map((asistente, index) => (
+                                                <div key={index} className="participante-card">
+                                                    <div className="participante-header-card">
+                                                        <div className="participante-avatar-mejorado">
+                                                            <span>{asistente.nombre.charAt(0).toUpperCase()}</span>
+                                                        </div>
+                                                        <span className={`badge-tipo-mejorado ${asistente.tipoAsistente}`}>
                                                             {asistente.tipoAsistente === 'registrado' ? '✓ Registrado' :
                                                              asistente.tipoAsistente === 'invitado' ? '✉ Invitado' : '➕ Manual'}
                                                         </span>
                                                     </div>
-                                                    {asistente.fechaConfirmacion && (
-                                                        <div className="asistente-fecha">
-                                                            Confirmado: {new Date(asistente.fechaConfirmacion).toLocaleString('es-CL')}
+
+                                                    <div className="participante-info-mejorada">
+                                                        <h5 className="participante-nombre-mejorado">{asistente.nombre}</h5>
+                                                        <div className="participante-datos">
+                                                            <div className="dato-row">
+                                                                <span className="dato-icono">📧</span>
+                                                                <span className="dato-texto">{asistente.email}</span>
+                                                            </div>
+                                                            <div className="dato-row">
+                                                                <span className="dato-icono">🆔</span>
+                                                                <span className="dato-texto">{asistente.rut}</span>
+                                                            </div>
+                                                            {asistente.fechaConfirmacion && (
+                                                                <div className="dato-row fecha">
+                                                                    <span className="dato-icono">📅</span>
+                                                                    <span className="dato-texto">
+                                                                        {new Date(asistente.fechaConfirmacion).toLocaleDateString('es-CL', {
+                                                                            day: '2-digit',
+                                                                            month: 'short',
+                                                                            year: 'numeric',
+                                                                            hour: '2-digit',
+                                                                            minute: '2-digit'
+                                                                        })}
+                                                                    </span>
+                                                                </div>
+                                                            )}
                                                         </div>
-                                                    )}
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        ))}
+                                            ))}
+                                        </div>
                                     </div>
                                 </>
                             )}
                         </div>
 
-                        <div className="modal-footer-asistentes">
-                            <button className="btn btn-secondary" onClick={cerrarModalAsistentes}>
+                        <div className="modal-footer-participantes">
+                            <button className="btn-cerrar-footer" onClick={cerrarModalAsistentes}>
                                 Cerrar
                             </button>
                         </div>

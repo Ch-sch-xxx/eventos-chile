@@ -878,13 +878,40 @@ nav a:hover {
     padding: 0 2rem 2rem;
     text-align: center;
     margin-top: -80px;
+    position: relative;
+}
+
+.perfil-hero-content::before {
+    content: '';
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 220px;
+    height: 220px;
+    background: radial-gradient(circle, rgba(108, 99, 255, 0.15) 0%, transparent 70%);
+    border-radius: 50%;
+    z-index: 1;
+    pointer-events: none;
+    animation: pulsoPortal 3s ease-in-out infinite;
+}
+
+@keyframes pulsoPortal {
+    0%, 100% {
+        opacity: 0.6;
+        transform: translateX(-50%) scale(1);
+    }
+    50% {
+        opacity: 1;
+        transform: translateX(-50%) scale(1.1);
+    }
 }
 
 .imagen-container-mejorado {
     position: relative;
     display: inline-block;
-    width: 180px;
-    height: 180px;
+    width: 200px;
+    height: 200px;
     margin: 0 auto 1.5rem;
 }
 
@@ -897,19 +924,233 @@ nav a:hover {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    border: 5px solid white;
+    border: 5px solid rgba(255, 255, 255, 0.95);
     box-shadow:
         0 8px 30px rgba(0, 0, 0, 0.2),
-        0 0 0 1px rgba(108, 99, 255, 0.1);
+        0 0 40px rgba(108, 99, 255, 0.8),
+        0 0 80px rgba(159, 122, 234, 0.6),
+        inset 0 0 30px rgba(255, 255, 255, 0.3);
     z-index: 10;
     transition: all 0.3s ease;
+    animation: resplandorCentralMejorado 3s ease-in-out infinite;
+}
+
+@keyframes resplandorCentralMejorado {
+    0%, 100% {
+        box-shadow:
+            0 8px 30px rgba(0, 0, 0, 0.2),
+            0 0 40px rgba(108, 99, 255, 0.8),
+            0 0 80px rgba(159, 122, 234, 0.6),
+            inset 0 0 30px rgba(255, 255, 255, 0.3);
+    }
+    50% {
+        box-shadow:
+            0 12px 40px rgba(0, 0, 0, 0.25),
+            0 0 60px rgba(108, 99, 255, 1),
+            0 0 120px rgba(159, 122, 234, 0.9),
+            inset 0 0 50px rgba(255, 255, 255, 0.5);
+    }
 }
 
 .imagen-perfil-mejorado:hover {
-    transform: translate(-50%, -50%) scale(1.05);
+    transform: translate(-50%, -50%) scale(1.08);
     box-shadow:
-        0 12px 40px rgba(0, 0, 0, 0.25),
-        0 0 30px rgba(108, 99, 255, 0.3);
+        0 12px 40px rgba(0, 0, 0, 0.3),
+        0 0 70px rgba(108, 99, 255, 1),
+        0 0 140px rgba(159, 122, 234, 1);
+}
+
+/* Agregar los anillos del portal al contenedor mejorado */
+.imagen-container-mejorado .anillo-portal-1 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 195px;
+    height: 195px;
+    border: 4px solid transparent;
+    border-radius: 50%;
+    border-image: conic-gradient(
+        from 0deg,
+        #6C63FF 0%,
+        #9F7AEA 30%,
+        #ED8936 60%,
+        #6C63FF 100%
+    ) 1;
+    transform: translate(-50%, -50%) rotate(0deg);
+    animation: rotarAnillo1 8s linear infinite;
+    filter: drop-shadow(0 0 20px rgba(108, 99, 255, 1));
+}
+
+.imagen-container-mejorado .anillo-portal-1::before,
+.imagen-container-mejorado .anillo-portal-1::after {
+    content: '◈';
+    position: absolute;
+    font-size: 24px;
+    color: #6C63FF;
+    text-shadow: 0 0 15px rgba(108, 99, 255, 1);
+    animation: brilloRuna 2s ease-in-out infinite;
+}
+
+.imagen-container-mejorado .anillo-portal-1::before {
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.imagen-container-mejorado .anillo-portal-1::after {
+    bottom: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.imagen-container-mejorado .anillo-portal-2 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 175px;
+    height: 175px;
+    border: 3px solid transparent;
+    border-radius: 50%;
+    border-image: conic-gradient(
+        from 180deg,
+        #9F7AEA 0%,
+        #ED8936 40%,
+        #6C63FF 80%,
+        #9F7AEA 100%
+    ) 1;
+    transform: translate(-50%, -50%) rotate(0deg);
+    animation: rotarAnillo2 6s linear infinite reverse;
+    filter: drop-shadow(0 0 18px rgba(159, 122, 234, 0.9));
+}
+
+.imagen-container-mejorado .anillo-portal-2::before,
+.imagen-container-mejorado .anillo-portal-2::after {
+    content: '◆';
+    position: absolute;
+    font-size: 20px;
+    color: #9F7AEA;
+    text-shadow: 0 0 12px rgba(159, 122, 234, 1);
+    animation: brilloRuna 2.5s ease-in-out infinite;
+}
+
+.imagen-container-mejorado .anillo-portal-2::before {
+    top: 50%;
+    right: -10px;
+    transform: translateY(-50%);
+}
+
+.imagen-container-mejorado .anillo-portal-2::after {
+    top: 50%;
+    left: -10px;
+    transform: translateY(-50%);
+}
+
+.imagen-container-mejorado .anillo-portal-3 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 155px;
+    height: 155px;
+    border: 2px solid transparent;
+    border-radius: 50%;
+    border-image: conic-gradient(
+        from 90deg,
+        #ED8936 0%,
+        #6C63FF 50%,
+        #9F7AEA 100%
+    ) 1;
+    transform: translate(-50%, -50%) rotate(0deg);
+    animation: rotarAnillo3 4s linear infinite;
+    filter: drop-shadow(0 0 15px rgba(237, 137, 54, 0.8));
+}
+
+.imagen-container-mejorado .anillo-portal-3::before,
+.imagen-container-mejorado .anillo-portal-3::after {
+    content: '✦';
+    position: absolute;
+    font-size: 18px;
+    color: #ED8936;
+    text-shadow: 0 0 10px rgba(237, 137, 54, 1);
+    animation: brilloRuna 3s ease-in-out infinite;
+}
+
+.imagen-container-mejorado .anillo-portal-3::before {
+    top: 50%;
+    right: -9px;
+    transform: translateY(-50%) rotate(45deg);
+}
+
+.imagen-container-mejorado .anillo-portal-3::after {
+    top: 50%;
+    left: -9px;
+    transform: translateY(-50%) rotate(-45deg);
+}
+
+/* Partículas flotantes para el hero mejorado */
+.imagen-container-mejorado .particula-portal {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: radial-gradient(circle, #6C63FF, transparent);
+    border-radius: 50%;
+    opacity: 0.8;
+    animation: orbitarParticula 5s linear infinite;
+}
+
+.imagen-container-mejorado .particula-portal:nth-child(1) {
+    top: 10%;
+    left: 50%;
+    animation-delay: 0s;
+    background: radial-gradient(circle, #6C63FF, transparent);
+}
+
+.imagen-container-mejorado .particula-portal:nth-child(2) {
+    top: 25%;
+    left: 85%;
+    animation-delay: 0.6s;
+    background: radial-gradient(circle, #9F7AEA, transparent);
+}
+
+.imagen-container-mejorado .particula-portal:nth-child(3) {
+    top: 50%;
+    left: 95%;
+    animation-delay: 1.2s;
+    background: radial-gradient(circle, #ED8936, transparent);
+}
+
+.imagen-container-mejorado .particula-portal:nth-child(4) {
+    top: 75%;
+    left: 85%;
+    animation-delay: 1.8s;
+    background: radial-gradient(circle, #6C63FF, transparent);
+}
+
+.imagen-container-mejorado .particula-portal:nth-child(5) {
+    top: 90%;
+    left: 50%;
+    animation-delay: 2.4s;
+    background: radial-gradient(circle, #9F7AEA, transparent);
+}
+
+.imagen-container-mejorado .particula-portal:nth-child(6) {
+    top: 75%;
+    left: 15%;
+    animation-delay: 3s;
+    background: radial-gradient(circle, #ED8936, transparent);
+}
+
+.imagen-container-mejorado .particula-portal:nth-child(7) {
+    top: 50%;
+    left: 5%;
+    animation-delay: 3.6s;
+    background: radial-gradient(circle, #6C63FF, transparent);
+}
+
+.imagen-container-mejorado .particula-portal:nth-child(8) {
+    top: 25%;
+    left: 15%;
+    animation-delay: 4.2s;
+    background: radial-gradient(circle, #9F7AEA, transparent);
 }
 
 .info-basica-mejorada {
@@ -1162,25 +1403,23 @@ nav a:hover {
     color: #a0aec0;
 }
 
-.btn-ver-asistentes-compacto {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
+.btn-ver-participantes {
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
     border: 2px solid var(--primario);
     background: white;
     color: var(--primario);
-    font-size: 1.1rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
+    white-space: nowrap;
 }
 
-.btn-ver-asistentes-compacto:hover {
+.btn-ver-participantes:hover {
     background: var(--primario);
     color: white;
-    transform: scale(1.1);
+    transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(108, 99, 255, 0.3);
 }
 
@@ -1559,10 +1798,9 @@ nav a:hover {
         font-size: 0.95rem;
     }
 
-    .btn-ver-asistentes-compacto {
-        width: 32px;
-        height: 32px;
-        font-size: 1rem;
+    .btn-ver-participantes {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.75rem;
     }
 
     .asistentes-count {
