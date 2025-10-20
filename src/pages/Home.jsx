@@ -1,6 +1,7 @@
 // Página de inicio con secciones de bienvenida y "quiénes somos"
 // Mejorada con más contenido, categorías y mejores CTA
 
+
 import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
@@ -18,18 +19,18 @@ function Home() {
                     <div className="col-lg-10 col-xl-9">
                         <div className="card border-0 shadow-lg" id="destacado">
                             <div className="card-body p-5 text-center">
-                                <h1 className="display-4 fw-bold mb-4 text-gradient">
-                                    Bienvenido a Eventos Chile 🇨🇱
+                                                <h1 className="display-4 fw-bold mb-4 text-gradient">
+                                    ¡Bienvenido a Eventos Chile! 🇨🇱
                                 </h1>
 
                                 <p className="lead mb-4 text-secondary fs-5">
-                                    La plataforma chilena para <strong>descubrir</strong>, <strong>crear</strong> y <strong>gestionar</strong> eventos de todo tipo{' '}
+                                    Descubre, crea y participa en eventos increíbles{' '}
                                     <span className="destacado-opcion">.</span>
                                 </p>
 
                                 <p className="text-muted mb-5">
-                                    Desde conciertos hasta conferencias, encuentra lo que buscas o crea tu propio evento
-                                    y llegue a miles de personas en todo Chile.
+                                    Desde conciertos hasta talleres, aquí encontrarás lo que buscas.
+                                    ¡Únete y no te pierdas nada!
                                 </p>
 
                                 {/* CTAs mejorados */}
@@ -55,9 +56,9 @@ function Home() {
                 {/* Categorías de Eventos */}
                 <section className="row justify-content-center mb-5">
                     <div className="col-lg-10 col-xl-9">
-                        <h2 className="text-center mb-4 fw-bold">¿Qué tipo de evento buscas?</h2>
-                        <p className="text-center text-muted mb-5">
-                            Explora eventos de todas las categorías
+                        <h2 className="text-center mb-3 fw-bold">¿Qué te gustaría hacer?</h2>
+                        <p className="text-center text-muted mb-4">
+                            Tenemos eventos para todos los gustos
                         </p>
 
                         <div className="row g-4">
@@ -147,44 +148,43 @@ function Home() {
                     <div className="col-lg-10 col-xl-9">
                         <div className="card border-0 shadow" id="nosotros">
                             <div className="card-body p-5">
-                                <h2 className="text-center mb-4 fw-bold">
+                                <h2 className="text-center mb-3 fw-bold">
                                     ¿Quiénes somos?
                                 </h2>
 
-                                <p className="text-secondary lh-lg text-center mb-4">
-                                    Somos una <strong>plataforma chilena</strong> dedicada a facilitar la organización
-                                    y confirmación de asistencia a todo tipo de eventos en Chile.
+                                <p className="text-secondary text-center mb-4">
+                                    Somos una plataforma chilena que te ayuda a encontrar y organizar
+                                    eventos de forma fácil y rápida.
                                 </p>
 
-                                <div className="row g-4 mt-3">
+                                <div className="row g-3 mt-2">
                                     <div className="col-md-6">
                                         <div className="caracteristica-card">
                                             <h5>🎯 Nuestra Misión</h5>
                                             <p className="text-muted">
-                                                Conectar a las personas con los eventos que les interesan,
-                                                facilitando el acceso a experiencias culturales, deportivas,
-                                                educativas y de entretenimiento.
+                                                Conectar personas con eventos que les interesen.
+                                                Simple y directo.
                                             </p>
                                         </div>
                                     </div>
 
                                     <div className="col-md-6">
                                         <div className="caracteristica-card">
-                                            <h5>✨ ¿Qué Ofrecemos?</h5>
+                                            <h5>✨ Lo que hacemos</h5>
                                             <p className="text-muted">
-                                                Creación de eventos presenciales, en streaming, gestión de asistencia,
-                                                confirmaciones por correo y una plataforma intuitiva para organizadores.
+                                                Puedes crear eventos, confirmar asistencia y recibir
+                                                notificaciones por correo.
                                             </p>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div className="text-center mt-5">
+                                <div className="text-center mt-4">
                                     <Link
                                         to="/eventos"
                                         className="btn btn-primary btn-lg px-5 py-3 rounded-pill"
                                     >
-                                        Comenzar Ahora
+                                        Ver Eventos
                                     </Link>
                                 </div>
                             </div>
@@ -192,22 +192,22 @@ function Home() {
                     </div>
                 </section>
 
-                {/* Estadísticas o CTA Final */}
+                {/* CTA Final */}
                 <section className="row justify-content-center">
                     <div className="col-lg-10 col-xl-9">
                         <div className="cta-final card border-0 shadow-lg bg-gradient-primary text-white">
-                            <div className="card-body p-5 text-center">
+                            <div className="card-body p-4 text-center">
                                 <h3 className="mb-3 fw-bold">
-                                    ¿Listo para crear tu primer evento?
+                                    ¿Quieres crear tu evento?
                                 </h3>
-                                <p className="mb-4 fs-5">
-                                    Únete a cientos de organizadores que confían en Eventos Chile
+                                <p className="mb-3">
+                                    Regístrate gratis y empieza ahora mismo
                                 </p>
                                 <Link
                                     to="/auth"
-                                    className="btn btn-light btn-lg px-5 py-3 rounded-pill shadow-sm"
+                                    className="btn btn-light btn-lg px-4 py-3 rounded-pill shadow-sm"
                                 >
-                                    Crear Cuenta Gratis
+                                    Crear Cuenta
                                 </Link>
                             </div>
                         </div>

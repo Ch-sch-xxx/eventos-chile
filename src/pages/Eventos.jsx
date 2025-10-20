@@ -7,6 +7,7 @@ import EventCarousel from '../components/EventCarousel';
 import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
 import { obtenerEventos } from '../services/eventos';
+import '../styles/eventos-filtros.css';
 import '../styles/eventos.css';
 
 function Eventos() {
@@ -108,27 +109,27 @@ function Eventos() {
                     </div>
                 </section>
 
-                {/* Sección de Filtros y Búsqueda */}
+                {/* Sección de Filtros y Búsqueda - Versión Simple */}
                 <section className="row justify-content-center mb-4">
                     <div className="col-lg-10">
-                        <div className="card border-0 shadow-sm p-4">
-                            <h3 className="mb-3 fw-bold">
-                                🔍 Encuentra tu evento ideal
+                        <div className="filtros-container p-3">
+                            <h3 className="mb-3 text-center">
+                                🔍 Busca tu evento
                             </h3>
 
                             {/* Barra de búsqueda */}
                             <div className="row g-3">
                                 <div className="col-md-12">
-                                    <div className="input-group input-group-lg">
+                                    <div className="input-group">
                                         <span className="input-group-text bg-white">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
                                                 <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
                                             </svg>
                                         </span>
                                         <input
                                             type="text"
                                             className="form-control"
-                                            placeholder="Buscar por título, descripción, lugar u organizador..."
+                                            placeholder="Buscar eventos..."
                                             value={busqueda}
                                             onChange={(e) => setBusqueda(e.target.value)}
                                         />
@@ -143,15 +144,14 @@ function Eventos() {
                                     </div>
                                 </div>
 
-                                {/* Filtros */}
+                                {/* Filtros - Versión Compacta */}
                                 <div className="col-md-4">
-                                    <label className="form-label fw-semibold">Tipo de Evento</label>
                                     <select
                                         className="form-select"
                                         value={filtroTipo}
                                         onChange={(e) => setFiltroTipo(e.target.value)}
                                     >
-                                        <option value="todos">Todos los tipos</option>
+                                        <option key="todos-tipos" value="todos">Todos los tipos</option>
                                         {tiposDisponibles.map(tipo => (
                                             <option key={tipo} value={tipo}>{tipo}</option>
                                         ))}
@@ -159,13 +159,12 @@ function Eventos() {
                                 </div>
 
                                 <div className="col-md-4">
-                                    <label className="form-label fw-semibold">Categoría</label>
                                     <select
                                         className="form-select"
                                         value={filtroCategoria}
                                         onChange={(e) => setFiltroCategoria(e.target.value)}
                                     >
-                                        <option value="todos">Todas las categorías</option>
+                                        <option key="todas-categorias" value="todos">Todas las categorías</option>
                                         {categoriasDisponibles.map(cat => (
                                             <option key={cat} value={cat}>{cat}</option>
                                         ))}
@@ -173,58 +172,54 @@ function Eventos() {
                                 </div>
 
                                 <div className="col-md-4">
-                                    <label className="form-label fw-semibold">Ordenar por</label>
                                     <select
                                         className="form-select"
                                         value={ordenamiento}
                                         onChange={(e) => setOrdenamiento(e.target.value)}
                                     >
-                                        <option value="fecha">Fecha de creación</option>
-                                        <option value="titulo">Nombre (A-Z)</option>
-                                        <option value="precio-asc">Precio (menor a mayor)</option>
-                                        <option value="precio-desc">Precio (mayor a menor)</option>
-                                        <option value="cupos">Cupos disponibles</option>
+                                        <option key="fecha" value="fecha">Más recientes</option>
+                                        <option key="titulo" value="titulo">Nombre</option>
+                                        <option key="precio-asc" value="precio-asc">Precio ↑</option>
+                                        <option key="precio-desc" value="precio-desc">Precio ↓</option>
+                                        <option key="cupos" value="cupos">Más cupos</option>
                                     </select>
                                 </div>
                             </div>
 
-                            {/* Botón limpiar filtros */}
-                            {(busqueda || filtroTipo !== 'todos' || filtroCategoria !== 'todos' || ordenamiento !== 'fecha') && (
-                                <div className="text-center mt-3">
+                            {/* Resultados y limpiar */}
+                            <div className="d-flex justify-content-between align-items-center mt-3">
+                                <span className="badge bg-light text-dark border">
+                                    {eventosFiltrados.length} eventos
+                                </span>
+
+                                {(busqueda || filtroTipo !== 'todos' || filtroCategoria !== 'todos' || ordenamiento !== 'fecha') && (
                                     <button
-                                        className="btn btn-outline-primary"
+                                        className="btn btn-sm btn-outline-secondary"
                                         onClick={limpiarFiltros}
                                     >
-                                        🔄 Limpiar Filtros
+                                        Limpiar
                                     </button>
-                                </div>
-                            )}
-
-                            {/* Contador de resultados */}
-                            <div className="mt-3 text-center">
-                                <span className="badge bg-primary fs-6">
-                                    {eventosFiltrados.length} evento{eventosFiltrados.length !== 1 ? 's' : ''} encontrado{eventosFiltrados.length !== 1 ? 's' : ''}
-                                </span>
+                                )}
                             </div>
                         </div>
                     </div>
                 </section>
 
                 {/* Sección Grid de Tarjetas 3D */}
-                <section className="eventos-tarjetas-3d container rounded shadow-lg py-4 my-4">
-                    <div className="row gy-4 justify-content-center">
-                        <h2 className="mb-4 text-center fw-bold">
-                            {eventosFiltrados.length > 0 ? 'Resultados de Búsqueda' : 'No hay resultados'}
+                <section className="eventos-tarjetas-3d container py-4 my-4">
+                    <div className="row gy-3 justify-content-center">
+                        <h2 className="mb-3 text-center fw-bold">
+                            {eventosFiltrados.length > 0 ? 'Todos los Eventos' : 'Sin resultados'}
                         </h2>
                         {eventosFiltrados.length > 0 ? (
-                            <p className="mb-4 text-center text-muted">
-                                Explora en detalle cada evento
+                            <p className="mb-3 text-center text-muted">
+                                Haz click en las tarjetas para ver más detalles
                             </p>
                         ) : (
-                            <p className="mb-4 text-center text-muted">
-                                No se encontraron eventos con los filtros seleccionados.
+                            <p className="mb-3 text-center text-muted">
+                                No encontramos eventos.
                                 <button
-                                    className="btn btn-link"
+                                    className="btn btn-link p-0 ms-1"
                                     onClick={limpiarFiltros}
                                 >
                                     Limpiar filtros
@@ -239,7 +234,7 @@ function Eventos() {
                             eventosFiltrados.map((evento) => (
                                 <div
                                     key={evento.id}
-                                    className="col-md-6 col-lg-4 d-flex justify-content-center align-items-stretch mb-4"
+                                    className="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 d-flex justify-content-center align-items-stretch"
                                 >
                                     <EventCard evento={evento} />
                                 </div>

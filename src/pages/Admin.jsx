@@ -3,7 +3,9 @@
 
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import eventoIMG from '../assets/eventosIMG.png';
 import Footer from '../components/Footer';
+import ModalAsistentes from '../components/ModalAsistentes';
 import Navbar from '../components/Navbar';
 import { useAuth } from '../context/AuthContext';
 import {
@@ -36,9 +38,23 @@ function Admin() {
         precio: ''
     });
 
+    // Estados para manejo de imágenes
+    const [tipoImagen, setTipoImagen] = useState('url'); // 'url' o 'archivo'
+    const [imagenPreview, setImagenPreview] = useState(null);
+
+    // Estados para validación y mensajes
+    const [errores, setErrores] = useState({});
+    const [camposTocados, setCamposTocados] = useState({});
+    const [mensajeExito, setMensajeExito] = useState('');
+    const [mensajeError, setMensajeError] = useState('');
+
     // Estados del modal
     const [modalAbierto, setModalAbierto] = useState(false);
     const [eventoDetalle, setEventoDetalle] = useState(null);
+
+    // Estados del modal de asistentes
+    const [modalAsistentesAbierto, setModalAsistentesAbierto] = useState(false);
+    const [eventoAsistentes, setEventoAsistentes] = useState(null);
 
     // Cargar eventos al montar y cuando cambia la vista
     useEffect(() => {
@@ -68,45 +84,231 @@ function Admin() {
             capacidad: '',
             precio: ''
         });
+        setImagenPreview(null);
+        setTipoImagen('url');
+        setErrores({});
+        setCamposTocados({});
+        setMensajeExito('');
+        setMensajeError('');
+    };
+
+    // Validar un campo individual
+    const validarCampo = (nombre, valor) => {
+        let error = '';
+
+        switch (nombre) {
+            case 'titulo':
+                if (!valor || valor.trim().length === 0) {
+                    error = 'El título es obligatorio';
+                } else if (valor.trim().length < 3) {
+                    error = 'El título debe tener al menos 3 caracteres';
+                } else if (valor.trim().length > 100) {
+                    error = 'El título no puede superar 100 caracteres';
+                }
+                break;
+
+            case 'fecha':
+                if (!valor) {
+                    error = 'La fecha es obligatoria';
+                } else {
+                    const fechaSeleccionada = new Date(valor);
+                    const hoy = new Date();
+                    hoy.setHours(0, 0, 0, 0);
+
+                    const año = fechaSeleccionada.getFullYear();
+
+                    if (isNaN(fechaSeleccionada.getTime())) {
+                        error = 'Fecha inválida';
+                    } else if (año < 1900 || año > 2100) {
+                        error = 'El año debe estar entre 1900 y 2100';
+                    } else if (fechaSeleccionada < hoy) {
+                        error = 'La fecha no puede ser anterior a hoy';
+                    }
+                }
+                break;
+
+            case 'lugar':
+                if (!valor || valor.trim().length === 0) {
+                    error = 'El lugar es obligatorio';
+                } else if (valor.trim().length < 3) {
+                    error = 'El lugar debe tener al menos 3 caracteres';
+                } else if (valor.trim().length > 150) {
+                    error = 'El lugar no puede superar 150 caracteres';
+                }
+                break;
+
+            case 'tipo':
+                if (!valor) {
+                    error = 'El tipo de evento es obligatorio';
+                }
+                break;
+
+            case 'capacidad':
+                if (valor && valor !== '') {
+                    const num = parseInt(valor);
+                    if (isNaN(num)) {
+                        error = 'La capacidad debe ser un número';
+                    } else if (num < 1) {
+                        error = 'La capacidad debe ser al menos 1';
+                    } else if (num > 1000000) {
+                        error = 'Capacidad máxima: 1,000,000';
+                    }
+                }
+                break;
+
+            case 'precio':
+                if (valor && valor.trim().length > 50) {
+                    error = 'El precio no puede superar 50 caracteres';
+                }
+                break;
+
+            case 'descripcion':
+                if (valor && valor.trim().length > 500) {
+                    error = 'La descripción no puede superar 500 caracteres';
+                }
+                break;
+
+            default:
+                break;
+        }
+
+        return error;
+    };
+
+    // Validar todo el formulario
+    const validarFormulario = () => {
+        const nuevosErrores = {};
+
+        // Validar campos obligatorios
+        nuevosErrores.titulo = validarCampo('titulo', formData.titulo);
+        nuevosErrores.fecha = validarCampo('fecha', formData.fecha);
+        nuevosErrores.lugar = validarCampo('lugar', formData.lugar);
+        nuevosErrores.tipo = validarCampo('tipo', formData.tipo);
+
+        // Validar campos opcionales solo si tienen valor
+        if (formData.capacidad) {
+            nuevosErrores.capacidad = validarCampo('capacidad', formData.capacidad);
+        }
+        if (formData.precio) {
+            nuevosErrores.precio = validarCampo('precio', formData.precio);
+        }
+        if (formData.descripcion) {
+            nuevosErrores.descripcion = validarCampo('descripcion', formData.descripcion);
+        }
+
+        // Filtrar errores vacíos
+        Object.keys(nuevosErrores).forEach(key => {
+            if (!nuevosErrores[key]) delete nuevosErrores[key];
+        });
+
+        setErrores(nuevosErrores);
+        return Object.keys(nuevosErrores).length === 0;
+    };
+
+    // Manejar cuando un campo pierde el foco
+    const handleBlur = (e) => {
+        const { id } = e.target;
+        setCamposTocados(prev => ({ ...prev, [id]: true }));
+
+        const error = validarCampo(id, formData[id]);
+        setErrores(prev => ({
+            ...prev,
+            [id]: error
+        }));
     };
 
     // Manejar cambios en inputs
     const handleInputChange = (e) => {
         const { id, value } = e.target;
+
+        // Validación especial para fecha: limitar año a 4 dígitos
+        if (id === 'fecha' && value) {
+            const [year] = value.split('-');
+            if (year && year.length > 4) {
+                return; // No actualizar si el año tiene más de 4 dígitos
+            }
+        }
+
         setFormData(prev => ({
             ...prev,
             [id]: value
         }));
+
+        // Validar en tiempo real solo si el campo ya fue tocado
+        if (camposTocados[id]) {
+            const error = validarCampo(id, value);
+            setErrores(prev => ({
+                ...prev,
+                [id]: error
+            }));
+        }
+    };
+
+    // Manejar subida de archivo de imagen
+    const handleImagenArchivo = (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        // Validar que sea una imagen
+        if (!file.type.startsWith('image/')) {
+            alert('Por favor selecciona un archivo de imagen válido');
+            return;
+        }
+
+        // Validar tamaño (máximo 2MB)
+        if (file.size > 2 * 1024 * 1024) {
+            alert('La imagen no debe superar los 2MB');
+            return;
+        }
+
+        // Convertir a base64
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            const base64String = reader.result;
+            setFormData(prev => ({
+                ...prev,
+                imagen: base64String
+            }));
+            setImagenPreview(base64String);
+        };
+        reader.readAsDataURL(file);
     };
 
     // Procesar formulario (crear o editar)
     const handleSubmit = (e) => {
         e.preventDefault();
 
+        // Limpiar mensajes anteriores
+        setMensajeExito('');
+        setMensajeError('');
+
+        // Marcar todos los campos como tocados
+        const todosTocados = {
+            titulo: true,
+            fecha: true,
+            lugar: true,
+            tipo: true,
+            capacidad: true,
+            precio: true,
+            descripcion: true
+        };
+        setCamposTocados(todosTocados);
+
+        // Validar formulario completo
+        if (!validarFormulario()) {
+            setMensajeError('Por favor corrige los errores antes de continuar');
+            // Scroll al primer error
+            setTimeout(() => {
+                const primerError = document.querySelector('.is-invalid');
+                if (primerError) {
+                    primerError.focus();
+                    primerError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            }, 100);
+            return;
+        }
+
         const { titulo, fecha, lugar, tipo, imagen, descripcion, capacidad, precio } = formData;
-
-        // Validaciones
-        if (!titulo || titulo.trim().length < 3) {
-            return alert('El título debe tener al menos 3 caracteres');
-        }
-        if (!fecha) {
-            return alert('Selecciona una fecha válida');
-        }
-        if (!lugar || lugar.trim().length < 3) {
-            return alert('El lugar debe tener al menos 3 caracteres');
-        }
-        if (!tipo) {
-            return alert('Selecciona el tipo de evento');
-        }
-
-        // Validar que la fecha no sea en el pasado
-        const fechaEvento = new Date(fecha);
-        const hoy = new Date();
-        hoy.setHours(0, 0, 0, 0);
-
-        if (fechaEvento < hoy) {
-            return alert('La fecha del evento no puede ser anterior a hoy');
-        }
 
         // Construir objeto evento
         const eventoData = {
@@ -114,7 +316,7 @@ function Admin() {
             fecha,
             lugar: lugar.trim(),
             tipo,
-            imagen: imagen.trim() || '/imagenes/eventosIMG.png',
+            imagen: imagen.trim() || eventoIMG,
             descripcion: descripcion.trim() || 'Sin descripción',
             capacidad: parseInt(capacidad, 10) || 100, // Siempre como número
             precio: parseInt(precio, 10) || 0 // Siempre como número, 0 si es gratis
@@ -242,6 +444,24 @@ function Admin() {
         setEventoDetalle(null);
     };
 
+    // Abrir modal de asistentes
+    const abrirModalAsistentes = () => {
+        if (!eventoDetalle) return;
+        setEventoAsistentes(eventoDetalle);
+        setModalAsistentesAbierto(true);
+    };
+
+    // Cerrar modal de asistentes
+    const cerrarModalAsistentes = () => {
+        setModalAsistentesAbierto(false);
+        setEventoAsistentes(null);
+    };
+
+    // Actualizar eventos después de cambios en asistentes
+    const actualizarDespuesAsistentes = () => {
+        cargarEventos();
+    };
+
     return (
         <>
             <Navbar />
@@ -298,7 +518,7 @@ function Admin() {
                                                 <form onSubmit={handleSubmit}>
                                                     <div className="row g-3">
                                                         <div className="col-md-6">
-                                                            <label htmlFor="titulo" className="form-label">Título</label>
+                                                            <label htmlFor="titulo" className="form-label">🎭 Título</label>
                                                             <input
                                                                 id="titulo"
                                                                 type="text"
@@ -312,7 +532,7 @@ function Admin() {
                                                         </div>
 
                                                         <div className="col-md-6">
-                                                            <label htmlFor="fecha" className="form-label">Fecha</label>
+                                                            <label htmlFor="fecha" className="form-label">📅 Fecha</label>
                                                             <input
                                                                 id="fecha"
                                                                 type="date"
@@ -324,7 +544,7 @@ function Admin() {
                                                         </div>
 
                                                         <div className="col-md-6">
-                                                            <label htmlFor="lugar" className="form-label">Lugar</label>
+                                                            <label htmlFor="lugar" className="form-label">📍 Lugar</label>
                                                             <input
                                                                 id="lugar"
                                                                 type="text"
@@ -337,7 +557,7 @@ function Admin() {
                                                         </div>
 
                                                         <div className="col-md-6">
-                                                            <label htmlFor="tipo" className="form-label">Tipo</label>
+                                                            <label htmlFor="tipo" className="form-label">🎪 Tipo</label>
                                                             <select
                                                                 id="tipo"
                                                                 className="form-select"
@@ -352,20 +572,79 @@ function Admin() {
                                                             </select>
                                                         </div>
 
-                                                        <div className="col-md-6">
-                                                            <label htmlFor="imagen" className="form-label">URL Imagen</label>
-                                                            <input
-                                                                id="imagen"
-                                                                type="text"
-                                                                className="form-control"
-                                                                value={formData.imagen}
-                                                                onChange={handleInputChange}
-                                                                placeholder="/imagenes/eventosIMG.png"
-                                                            />
+                                                        {/* Selector de tipo de imagen */}
+                                                        <div className="col-md-12">
+                                                            <label className="form-label">🖼️ Imagen del Evento</label>
+                                                            <div className="btn-group w-100 mb-3" role="group">
+                                                                <button
+                                                                    type="button"
+                                                                    className={`btn ${tipoImagen === 'url' ? 'btn-primary' : 'btn-outline-primary'}`}
+                                                                    onClick={() => {
+                                                                        setTipoImagen('url');
+                                                                        setImagenPreview(null);
+                                                                    }}
+                                                                >
+                                                                    🔗 URL
+                                                                </button>
+                                                                <button
+                                                                    type="button"
+                                                                    className={`btn ${tipoImagen === 'archivo' ? 'btn-primary' : 'btn-outline-primary'}`}
+                                                                    onClick={() => {
+                                                                        setTipoImagen('archivo');
+                                                                        setFormData(prev => ({ ...prev, imagen: '' }));
+                                                                    }}
+                                                                >
+                                                                    📁 Subir Archivo
+                                                                </button>
+                                                            </div>
+
+                                                            {tipoImagen === 'url' ? (
+                                                                <div>
+                                                                    <input
+                                                                        id="imagen"
+                                                                        type="text"
+                                                                        className="form-control"
+                                                                        value={formData.imagen}
+                                                                        onChange={handleInputChange}
+                                                                        placeholder="https://ejemplo.com/imagen.jpg"
+                                                                    />
+                                                                    <small className="form-text text-muted">
+                                                                        Ingresa la URL de una imagen o deja vacío para usar la imagen por defecto
+                                                                    </small>
+                                                                </div>
+                                                            ) : (
+                                                                <div>
+                                                                    <input
+                                                                        type="file"
+                                                                        className="form-control"
+                                                                        accept="image/*"
+                                                                        onChange={handleImagenArchivo}
+                                                                    />
+                                                                    <small className="form-text text-muted">
+                                                                        Sube una imagen (máximo 2MB). Formatos: JPG, PNG, GIF, WebP
+                                                                    </small>
+                                                                </div>
+                                                            )}
+
+                                                            {/* Vista previa de la imagen */}
+                                                            {(imagenPreview || formData.imagen) && (
+                                                                <div className="mt-3 text-center">
+                                                                    <p className="text-muted small mb-2">Vista previa:</p>
+                                                                    <img
+                                                                        src={imagenPreview || formData.imagen}
+                                                                        alt="Preview"
+                                                                        className="img-thumbnail"
+                                                                        style={{ maxWidth: '200px', maxHeight: '150px', objectFit: 'cover' }}
+                                                                        onError={(e) => {
+                                                                            e.target.style.display = 'none';
+                                                                        }}
+                                                                    />
+                                                                </div>
+                                                            )}
                                                         </div>
 
                                                         <div className="col-md-6">
-                                                            <label htmlFor="capacidad" className="form-label">Capacidad</label>
+                                                            <label htmlFor="capacidad" className="form-label">👥 Capacidad</label>
                                                             <input
                                                                 id="capacidad"
                                                                 type="number"
@@ -378,7 +657,7 @@ function Admin() {
                                                         </div>
 
                                                         <div className="col-md-6">
-                                                            <label htmlFor="precio" className="form-label">Precio</label>
+                                                            <label htmlFor="precio" className="form-label">💰 Precio</label>
                                                             <input
                                                                 id="precio"
                                                                 type="text"
@@ -389,21 +668,21 @@ function Admin() {
                                                             />
                                                         </div>
 
-                                                        <div className="col-md-6">
-                                                            <label htmlFor="descripcion" className="form-label">Descripción</label>
+                                                        <div className="col-md-12">
+                                                            <label htmlFor="descripcion" className="form-label">📝 Descripción</label>
                                                             <textarea
                                                                 id="descripcion"
-                                                                rows="3"
+                                                                rows="4"
                                                                 className="form-control"
                                                                 value={formData.descripcion}
                                                                 onChange={handleInputChange}
-                                                                placeholder="Detalles del evento"
+                                                                placeholder="Describe los detalles y atractivos del evento..."
                                                             />
                                                         </div>
 
                                                         <div className="col-12 text-center mt-4">
                                                             <button type="submit" className="btn btn-primary px-5 py-2 fw-bold">
-                                                                {editandoIndice !== null ? 'Guardar Cambios' : 'Crear Evento'}
+                                                                {editandoIndice !== null ? '💾 Guardar Cambios' : '✨ Crear Evento'}
                                                             </button>
                                                             {editandoIndice !== null && (
                                                                 <button
@@ -415,7 +694,7 @@ function Admin() {
                                                                         cambiarVista('listar');
                                                                     }}
                                                                 >
-                                                                    Cancelar
+                                                                    ❌ Cancelar
                                                                 </button>
                                                             )}
                                                         </div>
@@ -472,7 +751,10 @@ function Admin() {
                                                                         alt="Evento"
                                                                         className="img-fluid rounded"
                                                                         style={{ width: '60px', height: '50px', objectFit: 'cover' }}
-                                                                        onError={(e) => { e.target.src = '/imagenes/eventosIMG.png'; }}
+                                                                        onError={(e) => {
+                                                                            e.target.onerror = null; // Prevenir bucle infinito
+                                                                            e.target.src = eventoIMG;
+                                                                        }}
                                                                     />
                                                                 </td>
                                                                 <td>
@@ -571,7 +853,10 @@ function Admin() {
                                         alt="Imagen Evento"
                                         className="img-fluid rounded shadow-sm mb-3"
                                         style={{ maxWidth: '300px' }}
-                                        onError={(e) => { e.target.src = '/imagenes/eventosIMG.png'; }}
+                                        onError={(e) => {
+                                            e.target.onerror = null; // Prevenir bucle infinito
+                                            e.target.src = eventoIMG;
+                                        }}
                                     />
                                     <h4 className="fw-bold mb-3">{eventoDetalle.titulo}</h4>
                                     <div className="text-start">
@@ -584,6 +869,18 @@ function Admin() {
                                     </div>
                                 </div>
                                 <div className="modal-footer border-0">
+                                    <button
+                                        type="button"
+                                        className="btn btn-primary"
+                                        onClick={abrirModalAsistentes}
+                                        style={{
+                                            background: 'linear-gradient(135deg, var(--primario), #9F7AEA)',
+                                            border: 'none',
+                                            fontWeight: '600'
+                                        }}
+                                    >
+                                        👥 Ver Asistentes
+                                    </button>
                                     <button type="button" className="btn btn-secondary" onClick={cerrarModal}>
                                         Cerrar
                                     </button>
@@ -594,6 +891,14 @@ function Admin() {
                 </>
             )}
 
+            {/* MODAL ASISTENTES */}
+            {modalAsistentesAbierto && eventoAsistentes && (
+                <ModalAsistentes
+                    evento={eventoAsistentes}
+                    onClose={cerrarModalAsistentes}
+                    onUpdate={actualizarDespuesAsistentes}
+                />
+            )}
 
             <Footer />
         </>

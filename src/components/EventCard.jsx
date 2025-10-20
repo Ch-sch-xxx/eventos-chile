@@ -1,9 +1,4 @@
-// Tarjeta 3D con flip para mostrar detalles de un evento
-// Portado desde eventos_interaccion.js SIN REACT
-// - mantiene efectos de mouse y flip
-// - ahora incluye sistema de asistencia con modal
-// - modal se renderiza fuera de la tarjeta usando Portal
-
+// Tarjeta 3D con flip + efecto mouse
 import { useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import Eventos from '../assets/eventosIMG.png';
@@ -11,7 +6,7 @@ import { useAuth } from '../context/AuthContext';
 import ModalAsistencia from './ModalAsistencia';
 import ModalDecisionAsistencia from './ModalDecisionAsistencia';
 
-// Función auxiliar para recortar textos largos (por visual, si no se pierde la respo)
+// Función auxiliar para recortar textos largos
 function truncarTexto(texto, maxCaracteres) {
     if (typeof texto !== "string") return "";
     return texto.length > maxCaracteres ? texto.substring(0, maxCaracteres) + '...' : texto;
@@ -20,7 +15,6 @@ function truncarTexto(texto, maxCaracteres) {
 // Función para formatear fecha ISO a formato legible chileno
 function formatearFechaLegible(fechaISO) {
     if (!fechaISO) return 'No disponible';
-
     const fecha = new Date(fechaISO);
     const opciones = {
         year: 'numeric',
@@ -29,7 +23,6 @@ function formatearFechaLegible(fechaISO) {
         hour: '2-digit',
         minute: '2-digit'
     };
-
     return fecha.toLocaleDateString('es-CL', opciones);
 }
 
@@ -39,11 +32,10 @@ function EventCard({ evento }) {
     const [mostrarModalDecision, setMostrarModalDecision] = useState(false);
     const [mostrarModalAsistencia, setMostrarModalAsistencia] = useState(false);
     const cardRef = useRef(null);
-    const flipRef = useRef(null);
 
-    // Movimiento mouse para efecto 3D
+    // Efecto 3D con mouse (solo cuando NO está volteada)
     const handleMouseMove = (e) => {
-        if (volteada || !flipRef.current) return;
+        if (volteada || !cardRef.current) return;
 
         const rect = cardRef.current.getBoundingClientRect();
         const x = e.clientX - rect.left;
@@ -53,13 +45,16 @@ function EventCard({ evento }) {
         const rotateX = (y - centerY) / 7.80;
         const rotateY = (centerX - x) / 0.65;
 
-        flipRef.current.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+        // Usar CSS variables para no interferir con la clase .volteada
+        cardRef.current.style.setProperty('--rotate-x', `${rotateX}deg`);
+        cardRef.current.style.setProperty('--rotate-y', `${rotateY}deg`);
     };
 
-    // Al salir del mouse, regreso a posición inicial
+    // Al salir del mouse, resetear rotación
     const handleMouseLeave = () => {
-        if (!volteada && flipRef.current) {
-            flipRef.current.style.transform = 'rotateX(0deg) rotateY(0deg)';
+        if (!volteada && cardRef.current) {
+            cardRef.current.style.setProperty('--rotate-x', '0deg');
+            cardRef.current.style.setProperty('--rotate-y', '0deg');
         }
     };
 
@@ -67,29 +62,20 @@ function EventCard({ evento }) {
     const handleVerDetalle = (e) => {
         e.preventDefault();
         setVolteada(true);
-        if (flipRef.current) {
-            flipRef.current.style.transform = 'rotateY(180deg)';
-        }
     };
 
     // Botón volver (devuelve tarjeta a su cara frontal)
     const handleVolver = (e) => {
         e.preventDefault();
         setVolteada(false);
-        if (flipRef.current) {
-            flipRef.current.style.transform = 'rotateX(0deg) rotateY(0deg)';
-        }
     };
 
     // Abrir modal de asistencia
     const handleAsistir = (e) => {
         e.preventDefault();
-
-        // Si está logueado, va directo al modal de asistencia
         if (isLoggedIn()) {
             setMostrarModalAsistencia(true);
         } else {
-            // Si NO está logueado, primero mostrar modal de decisión
             setMostrarModalDecision(true);
         }
     };
@@ -107,7 +93,7 @@ function EventCard({ evento }) {
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
         >
-            <div className={`carta-evento-flip  ${volteada ? 'volteada' : ''}`} ref={flipRef}>
+            <div className={`carta-evento-flip ${volteada ? 'volteada' : ''}`}>
                 {/* Cara frontal */}
                 <div className="cara-frontal">
                     <img
@@ -132,28 +118,25 @@ function EventCard({ evento }) {
                         <h3>{truncarTexto(evento.titulo, 40)}</h3>
                         <p><strong>📋 Descripción:</strong></p>
                         <p className="detalle-completo">{truncarTexto(evento.descripcion, 200)}</p>
-
-                        {/* Contador de asistentes en cara posterior */}
                         <p><strong>👥 Asistentes:</strong> {evento.asistentes?.length || 0}/{evento.capacidad}</p>
-
                         <p><strong>💰 Precio:</strong> {evento.precio === 0 ? 'Gratis' : `$${evento.precio.toLocaleString('es-CL')}`}</p>
                         <p><strong>👤 Organizador:</strong> {truncarTexto(evento.creadoPor, 30)}</p>
                         <p><strong>📆 Creado:</strong> {formatearFechaLegible(evento.fechaCreacion)}</p>
                     </div>
 
-                    {/* Botones de acción - mejor responsive */}
-                    <div style={{ display: 'flex', gap: '8px', marginTop: 'auto', width: '100%' }}>
-                        <button className="boton-asistir" onClick={handleAsistir} style={{ flex: 1, padding: '0.6rem 0.8rem', fontSize: '0.85rem' }}>
+                    {/* Botones de acción */}
+                    <div className="botones-cara-posterior">
+                        <button className="boton-asistir" onClick={handleAsistir}>
                             ✓ Asistir
                         </button>
-                        <button className="boton-volver" onClick={handleVolver} style={{ flex: 1, padding: '0.6rem 0.8rem', fontSize: '0.85rem' }}>
+                        <button className="boton-volver" onClick={handleVolver}>
                             ← Volver
                         </button>
                     </div>
                 </div>
             </div>
 
-            {/* Modal de decisión (NO logueados) - Renderizado fuera de la tarjeta usando Portal */}
+            {/* Modal de decisión (NO logueados) */}
             {mostrarModalDecision && createPortal(
                 <ModalDecisionAsistencia
                     evento={evento}
@@ -163,15 +146,12 @@ function EventCard({ evento }) {
                 document.body
             )}
 
-            {/* Modal de asistencia - Renderizado fuera de la tarjeta usando Portal */}
+            {/* Modal de asistencia */}
             {mostrarModalAsistencia && createPortal(
                 <ModalAsistencia
                     evento={evento}
                     onClose={() => setMostrarModalAsistencia(false)}
-                    onSuccess={() => {
-                        // Opcional: recargar o mostrar mensaje
-                        console.log('Asistencia confirmada exitosamente');
-                    }}
+                    onSuccess={() => console.log('Asistencia confirmada')}
                 />,
                 document.body
             )}

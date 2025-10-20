@@ -1,0 +1,262 @@
+/* Estilos mejorados para sección de filtros - Más simple y coherente */
+
+.filtros-container {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(108, 99, 255, 0.12);
+    border: 1px solid rgba(108, 99, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+.filtros-container:hover {
+    box-shadow: 0 6px 20px rgba(108, 99, 255, 0.18);
+}
+
+.filtros-container h3 {
+    color: var(--primario);
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+/* Input de búsqueda */
+.filtros-container .input-group-text {
+    border: 1px solid #dee2e6;
+    border-right: none;
+}
+
+.filtros-container .form-control {
+    border-left: none;
+    padding: 0.6rem 1rem;
+}
+
+.filtros-container .form-control:focus {
+    border-color: var(--primario);
+    box-shadow: 0 0 0 0.2rem rgba(108, 99, 255, 0.15);
+}
+
+.filtros-container .input-group-text:has(+ .form-control:focus) {
+    border-color: var(--primario);
+}
+
+/* Selects más simples */
+.filtros-container .form-select {
+    border: 1px solid #dee2e6;
+    padding: 0.5rem 1rem;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+}
+
+.filtros-container .form-select:focus {
+    border-color: var(--primario);
+    box-shadow: 0 0 0 0.2rem rgba(108, 99, 255, 0.15);
+}
+
+/* Badge de resultados */
+.filtros-container .badge {
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+}
+
+/* Botón limpiar */
+.filtros-container .btn-sm {
+    padding: 0.4rem 1rem;
+    font-size: 0.85rem;
+}
+
+/* Sección de tarjetas 3D - sin sombra excesiva */
+.eventos-tarjetas-3d {
+    background: transparent;
+    box-shadow: none;
+    border-radius: 0;
+}
+
+/* ========================================
+   RESPONSIVE - MEDIA QUERIES MEJORADAS
+   ======================================== */
+
+/* Tablets grandes (1024px - 1200px) */
+@media (max-width: 1200px) {
+    .filtros-container {
+        border-radius: 12px;
+    }
+
+    .filtros-container h3 {
+        font-size: 1.25rem;
+    }
+
+    .filtros-container .form-control,
+    .filtros-container .form-select {
+        font-size: 0.92rem;
+    }
+
+    .filtros-container .badge {
+        font-size: 0.88rem;
+        padding: 0.45rem 0.95rem;
+    }
+
+    .filtros-container .btn-sm {
+        padding: 0.38rem 0.95rem;
+        font-size: 0.82rem;
+    }
+}
+
+/* Tablets (768px - 1024px) */
+@media (max-width: 1024px) {
+    .filtros-container {
+        border-radius: 12px;
+        padding: 1.25rem;
+    }
+
+    .filtros-container:hover {
+        box-shadow: 0 5px 18px rgba(108, 99, 255, 0.16);
+    }
+
+    .filtros-container h3 {
+        font-size: 1.2rem;
+    }
+
+    .filtros-container .form-control,
+    .filtros-container .form-select {
+        padding: 0.55rem 0.95rem;
+        font-size: 0.9rem;
+    }
+
+    .filtros-container .badge {
+        font-size: 0.85rem;
+        padding: 0.45rem 0.9rem;
+    }
+
+    .filtros-container .btn-sm {
+        padding: 0.36rem 0.9rem;
+        font-size: 0.8rem;
+    }
+}
+
+/* Móviles grandes y tablets pequeñas (576px - 768px) */
+@media (max-width: 768px) {
+    .filtros-container {
+        border-radius: 10px;
+        padding: 1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .filtros-container h3 {
+        font-size: 1.1rem;
+        margin-bottom: 1rem;
+    }
+
+    .filtros-container .input-group {
+        margin-bottom: 0.75rem;
+    }
+
+    .filtros-container .input-group-text {
+        padding: 0.5rem 0.75rem;
+    }
+
+    .filtros-container .form-control,
+    .filtros-container .form-select {
+        font-size: 0.9rem;
+        padding: 0.5rem 0.85rem;
+    }
+
+    .filtros-container .badge {
+        font-size: 0.82rem;
+        padding: 0.4rem 0.85rem;
+    }
+
+    .filtros-container .btn-sm {
+        padding: 0.35rem 0.85rem;
+        font-size: 0.78rem;
+    }
+}
+
+/* Móviles pequeños (hasta 576px) */
+@media (max-width: 576px) {
+    .filtros-container {
+        border-radius: 8px;
+        padding: 0.85rem;
+        margin-bottom: 1.25rem;
+        box-shadow: 0 3px 10px rgba(108, 99, 255, 0.1);
+    }
+
+    .filtros-container:hover {
+        box-shadow: 0 4px 15px rgba(108, 99, 255, 0.15);
+    }
+
+    .filtros-container h3 {
+        font-size: 1rem;
+        margin-bottom: 0.85rem;
+    }
+
+    .filtros-container .input-group {
+        margin-bottom: 0.65rem;
+    }
+
+    .filtros-container .input-group-text {
+        padding: 0.45rem 0.65rem;
+        font-size: 0.85rem;
+    }
+
+    .filtros-container .form-control,
+    .filtros-container .form-select {
+        font-size: 0.85rem;
+        padding: 0.45rem 0.75rem;
+        border-radius: 6px;
+    }
+
+    .filtros-container .badge {
+        font-size: 0.78rem;
+        padding: 0.38rem 0.75rem;
+    }
+
+    .filtros-container .btn-sm {
+        padding: 0.32rem 0.75rem;
+        font-size: 0.75rem;
+    }
+
+    /* Hacer que los filtros sean apilados verticalmente */
+    .filtros-container .row {
+        margin-bottom: 0.5rem;
+    }
+
+    .filtros-container .col-md-6,
+    .filtros-container .col-md-4,
+    .filtros-container .col-md-3 {
+        margin-bottom: 0.65rem;
+    }
+}
+
+/* Pantallas muy pequeñas (hasta 400px) */
+@media (max-width: 400px) {
+    .filtros-container {
+        padding: 0.75rem;
+        margin-bottom: 1rem;
+    }
+
+    .filtros-container h3 {
+        font-size: 0.95rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .filtros-container .input-group-text {
+        padding: 0.4rem 0.55rem;
+        font-size: 0.8rem;
+    }
+
+    .filtros-container .form-control,
+    .filtros-container .form-select {
+        font-size: 0.8rem;
+        padding: 0.4rem 0.65rem;
+    }
+
+    .filtros-container .badge {
+        font-size: 0.75rem;
+        padding: 0.35rem 0.65rem;
+    }
+
+    .filtros-container .btn-sm {
+        padding: 0.3rem 0.65rem;
+        font-size: 0.72rem;
+    }
+}

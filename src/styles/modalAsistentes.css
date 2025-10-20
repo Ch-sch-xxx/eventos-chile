@@ -1,0 +1,600 @@
+/* Estilos para Modal de Gestión de Asistentes */
+
+/* Overlay del modal */
+.modal-overlay-asistentes {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Contenedor principal del modal */
+.modal-asistentes-contenido {
+    background: white;
+    border-radius: 16px;
+    width: 95%;
+    max-width: 1000px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Header del modal */
+.modal-asistentes-header {
+    background: linear-gradient(135deg, var(--primario) 0%, #9F7AEA 100%);
+    color: white;
+    padding: 1.5rem 2rem;
+    border-radius: 16px 16px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-asistentes-titulo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.modal-asistentes-subtitulo {
+    font-size: 0.95rem;
+    margin: 0.3rem 0 0 0;
+    opacity: 0.9;
+}
+
+.btn-cerrar-asistentes {
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    line-height: 1;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-cerrar-asistentes:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: rotate(90deg);
+}
+
+/* Estadísticas */
+.estadisticas-asistentes {
+    display: flex;
+    gap: 1rem;
+    padding: 1.5rem 2rem;
+    background: linear-gradient(135deg, rgba(108,99,255,0.05) 0%, rgba(159,122,234,0.05) 100%);
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.stat-card {
+    flex: 1;
+    background: white;
+    padding: 1rem;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(108, 99, 255, 0.15);
+}
+
+.stat-numero {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primario);
+    margin-bottom: 0.3rem;
+}
+
+.stat-label {
+    font-size: 0.85rem;
+    color: #666;
+    font-weight: 500;
+}
+
+/* Botones de vista */
+.acciones-asistentes {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem 2rem;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.btn-vista {
+    flex: 1;
+    padding: 0.7rem 1.2rem;
+    border: 2px solid #e0e0e0;
+    background: white;
+    color: #666;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-vista:hover {
+    border-color: var(--primario);
+    color: var(--primario);
+}
+
+.btn-vista.activo {
+    background: var(--primario);
+    color: white;
+    border-color: var(--primario);
+}
+
+.btn-vista:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Body del modal */
+.modal-asistentes-body {
+    padding: 1.5rem 2rem;
+    min-height: 300px;
+}
+
+/* Lista de asistentes */
+.lista-asistentes {
+    width: 100%;
+}
+
+.sin-asistentes {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: #999;
+}
+
+.sin-asistentes p {
+    font-size: 1.1rem;
+    margin: 0;
+}
+
+.tabla-asistentes-wrapper {
+    overflow-x: auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.tabla-asistentes {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+}
+
+.tabla-asistentes thead {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+}
+
+.tabla-asistentes th {
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+    color: var(--secundario);
+    font-size: 0.9rem;
+    border-bottom: 2px solid #dee2e6;
+}
+
+.tabla-asistentes tbody tr {
+    border-bottom: 1px solid #f0f0f0;
+    transition: background 0.2s ease;
+}
+
+.tabla-asistentes tbody tr:hover {
+    background: rgba(108, 99, 255, 0.05);
+}
+
+.tabla-asistentes td {
+    padding: 1rem;
+    font-size: 0.9rem;
+    color: #333;
+}
+
+.nombre-asistente {
+    font-weight: 600;
+    color: var(--secundario);
+}
+
+.email-asistente {
+    color: var(--primario);
+    font-size: 0.85rem;
+}
+
+.fecha-asistente {
+    font-size: 0.8rem;
+    color: #666;
+}
+
+/* Badge de tipo */
+.badge-tipo {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    font-size: 1.2rem;
+}
+
+.tipo-registrado {
+    background: linear-gradient(135deg, #4CAF50, #66BB6A);
+}
+
+.tipo-invitado {
+    background: linear-gradient(135deg, #2196F3, #42A5F5);
+}
+
+.tipo-manual {
+    background: linear-gradient(135deg, #FF9800, #FFA726);
+}
+
+/* Botón eliminar */
+.btn-eliminar-asistente {
+    background: linear-gradient(135deg, #f44336, #e53935);
+    color: white;
+    border: none;
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.btn-eliminar-asistente:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(244, 67, 54, 0.3);
+}
+
+/* Leyenda */
+.leyenda-tipos {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+    flex-wrap: wrap;
+}
+
+.leyenda-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    color: #666;
+}
+
+/* Formulario agregar */
+.agregar-asistente-form {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.form-titulo {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--secundario);
+    margin-bottom: 0.5rem;
+}
+
+.form-descripcion {
+    color: #666;
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+}
+
+.form-group {
+    margin-bottom: 1.25rem;
+}
+
+.form-group label {
+    display: block;
+    font-weight: 600;
+    color: var(--secundario);
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.7rem 1rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: var(--primario);
+    box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.1);
+}
+
+.form-group input.input-error {
+    border-color: #f44336;
+}
+
+.error-text {
+    color: #f44336;
+    font-size: 0.8rem;
+    margin-top: 0.3rem;
+    display: block;
+}
+
+.form-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.btn-agregar, .btn-cancelar {
+    flex: 1;
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-agregar {
+    background: linear-gradient(135deg, var(--primario), #9F7AEA);
+    color: white;
+}
+
+.btn-agregar:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(108, 99, 255, 0.3);
+}
+
+.btn-agregar:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.btn-cancelar {
+    background: #e0e0e0;
+    color: #666;
+}
+
+.btn-cancelar:hover {
+    background: #d0d0d0;
+}
+
+/* Footer del modal */
+.modal-asistentes-footer {
+    padding: 1rem 2rem;
+    border-top: 1px solid #e0e0e0;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.btn-cerrar-footer {
+    padding: 0.7rem 2rem;
+    background: var(--secundario);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-cerrar-footer:hover {
+    background: #1a202c;
+    transform: translateY(-2px);
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+
+@media (max-width: 1024px) {
+    .modal-asistentes-contenido {
+        max-width: 95%;
+    }
+
+    .estadisticas-asistentes {
+        padding: 1.25rem 1.5rem;
+    }
+
+    .stat-numero {
+        font-size: 1.75rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .modal-asistentes-contenido {
+        width: 98%;
+        max-height: 95vh;
+    }
+
+    .modal-asistentes-header {
+        padding: 1.25rem 1.5rem;
+    }
+
+    .modal-asistentes-titulo {
+        font-size: 1.3rem;
+    }
+
+    .modal-asistentes-subtitulo {
+        font-size: 0.85rem;
+    }
+
+    .estadisticas-asistentes {
+        flex-direction: column;
+        padding: 1rem;
+        gap: 0.75rem;
+    }
+
+    .stat-card {
+        padding: 0.85rem;
+    }
+
+    .stat-numero {
+        font-size: 1.5rem;
+    }
+
+    .stat-label {
+        font-size: 0.8rem;
+    }
+
+    .acciones-asistentes {
+        flex-direction: column;
+        padding: 0.85rem 1rem;
+        gap: 0.75rem;
+    }
+
+    .modal-asistentes-body {
+        padding: 1rem;
+    }
+
+    .tabla-asistentes th,
+    .tabla-asistentes td {
+        padding: 0.75rem 0.5rem;
+        font-size: 0.85rem;
+    }
+
+    .leyenda-tipos {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .form-actions {
+        flex-direction: column;
+    }
+
+    .modal-asistentes-footer {
+        padding: 0.85rem 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .modal-asistentes-header {
+        padding: 1rem;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+    }
+
+    .btn-cerrar-asistentes {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        width: 35px;
+        height: 35px;
+        font-size: 1.3rem;
+    }
+
+    .modal-asistentes-titulo {
+        font-size: 1.15rem;
+    }
+
+    .estadisticas-asistentes {
+        padding: 0.75rem;
+    }
+
+    .stat-numero {
+        font-size: 1.3rem;
+    }
+
+    .acciones-asistentes {
+        padding: 0.75rem;
+    }
+
+    .btn-vista {
+        padding: 0.6rem 1rem;
+        font-size: 0.85rem;
+    }
+
+    .modal-asistentes-body {
+        padding: 0.75rem;
+    }
+
+    /* Tabla responsive - scroll horizontal */
+    .tabla-asistentes {
+        font-size: 0.8rem;
+    }
+
+    .tabla-asistentes th,
+    .tabla-asistentes td {
+        padding: 0.6rem 0.4rem;
+        font-size: 0.75rem;
+    }
+
+    .badge-tipo {
+        width: 28px;
+        height: 28px;
+        font-size: 1rem;
+    }
+
+    .btn-eliminar-asistente {
+        padding: 0.35rem 0.6rem;
+        font-size: 0.9rem;
+    }
+
+    .form-group input {
+        padding: 0.6rem 0.85rem;
+        font-size: 0.9rem;
+    }
+
+    .btn-agregar, .btn-cancelar {
+        padding: 0.7rem 1.25rem;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 400px) {
+    .modal-asistentes-contenido {
+        border-radius: 12px;
+    }
+
+    .modal-asistentes-titulo {
+        font-size: 1.05rem;
+    }
+
+    .stat-numero {
+        font-size: 1.15rem;
+    }
+
+    .tabla-asistentes th,
+    .tabla-asistentes td {
+        font-size: 0.7rem;
+        padding: 0.5rem 0.3rem;
+    }
+}

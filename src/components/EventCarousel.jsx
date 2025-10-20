@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import Eventos from '../assets/eventosIMG.png';
 import { useAuth } from '../context/AuthContext';
 import ModalAsistencia from './ModalAsistencia';
+import ModalDecisionAsistencia from './ModalDecisionAsistencia';
 
 
 // Función auxiliar para recortar textos largos
@@ -57,10 +58,20 @@ function EventCarousel({ eventos }) {
         };
     }, [eventos]);
 
-    // Abrir modal de asistencia (funciona para logueados e invitados)
+    // Abrir modal según estado de login
     const handleAsistir = (evento) => {
         setEventoSeleccionado(evento);
-        setMostrarModal(true);
+        if (!isLoggedIn()) {
+            setMostrarModalDecision(true);
+        } else {
+            setMostrarModalAsistencia(true);
+        }
+    };
+
+    // Handler para cuando el usuario elige asistir como invitado
+    const handleSeleccionarInvitado = () => {
+        setMostrarModalDecision(false);
+        setMostrarModalAsistencia(true);
     };
 
     // Duplicar el array para dar efecto de loop infinito

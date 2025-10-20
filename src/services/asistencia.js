@@ -11,11 +11,13 @@ const USUARIOS_KEY = 'usuarios-chile';
  */
 export function enviarCorreoConfirmacion(datosAsistente, datosEvento) {
     // Simula envío de correo (en producción sería una API)
-    console.log('📧 Enviando correo de confirmación...');
+    console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+    console.log('📧 ENVIANDO CORREO DE CONFIRMACIÓN');
+    console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
     console.log('Destinatario:', datosAsistente.email);
     console.log('Evento:', datosEvento.titulo);
 
-    // Crear contenido del "correo"
+    // Crear contenido del "correo" con formato mejorado
     const mensajeCorreo = `
     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
     📧 CONFIRMACIÓN DE ASISTENCIA
@@ -28,23 +30,63 @@ export function enviarCorreoConfirmacion(datosAsistente, datosEvento) {
     📋 DETALLES DEL EVENTO:
     • Título: ${datosEvento.titulo}
     • Fecha: ${datosEvento.fecha}
+    • Hora: ${datosEvento.hora || 'Por confirmar'}
     • Lugar: ${datosEvento.lugar}
-    • Categoría: ${datosEvento.categoria}
+    • Dirección: ${datosEvento.direccion || datosEvento.lugar}
+    • Categoría: ${datosEvento.tipo || datosEvento.categoria}
+    ${datosEvento.descripcion ? `• Descripción: ${datosEvento.descripcion}` : ''}
+    ${datosEvento.precio ? `• Precio: ${datosEvento.precio}` : '• Entrada: Gratis'}
 
-    👤 TUS DATOS:
+    👤 TUS DATOS DE CONFIRMACIÓN:
     • Nombre: ${datosAsistente.nombre}
     • Email: ${datosAsistente.email}
     • RUT: ${datosAsistente.rut}
+    • Tipo de asistencia: ${datosAsistente.tipoAsistente === 'registrado' ? 'Usuario registrado' : datosAsistente.tipoAsistente === 'invitado' ? 'Invitado' : 'Agregado manualmente'}
+    • Fecha de confirmación: ${new Date(datosAsistente.fechaConfirmacion).toLocaleString('es-CL')}
 
-    🎫 Guarda este correo como comprobante de tu asistencia.
+    📌 INFORMACIÓN IMPORTANTE:
+    • Cupos totales: ${datosEvento.capacidad || 'Ilimitados'}
+    • Asistentes actuales: ${datosEvento.totalAsistentes || 1}
+    ${datosEvento.requisitos ? `• Requisitos: ${datosEvento.requisitos}` : ''}
 
-    Nos vemos pronto,
+    🎫 COMPROBANTE:
+    Guarda este correo como comprobante de tu asistencia.
+    Presentarlo en la entrada del evento (digital o impreso).
+
+    ❓ DUDAS O CONSULTAS:
+    Contacta con el organizador:
+    • Email: eventoschile@gmail.com
+    • Evento creado por: ${datosEvento.creadoPor || 'Eventos Chile'}
+
+    ¡Nos vemos pronto! 🎉
+
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
     Equipo Eventos Chile 🇨🇱
+    www.eventoschile.cl
     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
     `;
 
     // Mostrar el "correo" en consola (en producción sería enviado por email)
-    console.log(mensajeCorreo);
+    console.log('%c' + mensajeCorreo, 'color: #6C63FF; font-weight: bold;');
+    console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+    console.log('✅ Correo enviado exitosamente');
+    console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n');
+
+    // En producción, aquí harías:
+    // await fetch('https://api.sendgrid.com/v3/mail/send', {
+    //     method: 'POST',
+    //     headers: {
+    //         'Authorization': `Bearer ${SENDGRID_API_KEY}`,
+    //         'Content-Type': 'application/json'
+    //     },
+    //     body: JSON.stringify({
+    //         from: { email: 'noreply@eventoschile.cl', name: 'Eventos Chile' },
+    //         to: [{ email: datosAsistente.email, name: datosAsistente.nombre }],
+    //         subject: `✅ Confirmación de asistencia - ${datosEvento.titulo}`,
+    //         text: mensajeCorreo,
+    //         html: mensajeCorreoHTML
+    //     })
+    // });
 
     // Retornar éxito
     return {
@@ -232,5 +274,154 @@ export function obtenerEventosUsuario(userEmail) {
     } catch (error) {
         console.error('Error al obtener eventos del usuario:', error);
         return [];
+    }
+}
+
+/**
+ * Eliminar un asistente de un evento
+ * Solo admin o creador del evento puede eliminar
+ */
+export function eliminarAsistente(eventoId, asistenteId) {
+    try {
+        const eventos = JSON.parse(localStorage.getItem(EVENTOS_KEY) || '[]');
+        const eventoIndex = eventos.findIndex(e => e.id === eventoId);
+
+        if (eventoIndex === -1) {
+            return { success: false, error: 'Evento no encontrado' };
+        }
+
+        const evento = eventos[eventoIndex];
+
+        if (!evento.asistentes || evento.asistentes.length === 0) {
+            return { success: false, error: 'No hay asistentes en este evento' };
+        }
+
+        // Encontrar y eliminar asistente
+        const asistenteIndex = evento.asistentes.findIndex(a => a.id === asistenteId);
+
+        if (asistenteIndex === -1) {
+            return { success: false, error: 'Asistente no encontrado' };
+        }
+
+        const asistenteEliminado = evento.asistentes[asistenteIndex];
+
+        // Eliminar del array
+        evento.asistentes.splice(asistenteIndex, 1);
+        evento.totalAsistentes = evento.asistentes.length;
+        eventos[eventoIndex] = evento;
+
+        localStorage.setItem(EVENTOS_KEY, JSON.stringify(eventos));
+
+        // Si era usuario registrado, eliminar del perfil también
+        if (asistenteEliminado.tipoAsistente === 'registrado') {
+            const usuarios = JSON.parse(localStorage.getItem(USUARIOS_KEY) || '[]');
+            const usuarioIndex = usuarios.findIndex(u => u.email === asistenteEliminado.email);
+
+            if (usuarioIndex !== -1 && usuarios[usuarioIndex].eventosAsistir) {
+                usuarios[usuarioIndex].eventosAsistir = usuarios[usuarioIndex].eventosAsistir.filter(
+                    ea => ea.eventoId !== eventoId
+                );
+                localStorage.setItem(USUARIOS_KEY, JSON.stringify(usuarios));
+            }
+        }
+
+        return {
+            success: true,
+            mensaje: 'Asistente eliminado correctamente'
+        };
+
+    } catch (error) {
+        console.error('Error al eliminar asistente:', error);
+        return { success: false, error: 'Error al eliminar asistente' };
+    }
+}
+
+/**
+ * Agregar asistente manualmente (solo admin/creador)
+ * Similar a invitado pero con más control
+ */
+export function agregarAsistenteManual(eventoId, datosAsistente) {
+    try {
+        const eventos = JSON.parse(localStorage.getItem(EVENTOS_KEY) || '[]');
+        const eventoIndex = eventos.findIndex(e => e.id === eventoId);
+
+        if (eventoIndex === -1) {
+            return { success: false, error: 'Evento no encontrado' };
+        }
+
+        const evento = eventos[eventoIndex];
+
+        // Inicializar array si no existe
+        if (!evento.asistentes) evento.asistentes = [];
+
+        // Verificar capacidad
+        if (evento.asistentes.length >= evento.capacidad) {
+            return { success: false, error: 'Evento lleno - sin cupos disponibles' };
+        }
+
+        // Verificar si email ya registrado
+        const yaRegistrado = evento.asistentes.find(a => a.email === datosAsistente.email);
+        if (yaRegistrado) {
+            return { success: false, error: 'Este email ya está registrado en el evento' };
+        }
+
+        // Crear objeto del asistente manual
+        const nuevoAsistente = {
+            id: `ast_${Date.now()}`,
+            nombre: datosAsistente.nombre,
+            email: datosAsistente.email,
+            rut: datosAsistente.rut || 'No proporcionado',
+            tipoAsistente: 'manual', // Agregado manualmente por admin
+            fechaConfirmacion: new Date().toISOString()
+        };
+
+        // Agregar al evento
+        evento.asistentes.push(nuevoAsistente);
+        evento.totalAsistentes = evento.asistentes.length;
+        eventos[eventoIndex] = evento;
+
+        localStorage.setItem(EVENTOS_KEY, JSON.stringify(eventos));
+
+        // Enviar correo de confirmación
+        enviarCorreoConfirmacion(nuevoAsistente, evento);
+
+        return {
+            success: true,
+            mensaje: 'Asistente agregado exitosamente y correo enviado'
+        };
+
+    } catch (error) {
+        console.error('Error al agregar asistente manual:', error);
+        return { success: false, error: 'Error al agregar asistente' };
+    }
+}
+
+/**
+ * Obtener estadísticas de asistencia de un evento
+ */
+export function obtenerEstadisticasEvento(eventoId) {
+    try {
+        const eventos = JSON.parse(localStorage.getItem(EVENTOS_KEY) || '[]');
+        const evento = eventos.find(e => e.id === eventoId);
+
+        if (!evento) return null;
+
+        const asistentes = evento.asistentes || [];
+
+        const estadisticas = {
+            total: asistentes.length,
+            capacidad: evento.capacidad,
+            disponibles: evento.capacidad - asistentes.length,
+            porcentajeLlenado: ((asistentes.length / evento.capacidad) * 100).toFixed(1),
+            registrados: asistentes.filter(a => a.tipoAsistente === 'registrado').length,
+            invitados: asistentes.filter(a => a.tipoAsistente === 'invitado').length,
+            manuales: asistentes.filter(a => a.tipoAsistente === 'manual').length
+        };
+
+        return estadisticas;
+
+    } catch (error) {
+        console.error('Error al obtener estadísticas:', error);
+        return null;
     }
 }

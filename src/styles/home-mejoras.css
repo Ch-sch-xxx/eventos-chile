@@ -118,20 +118,97 @@
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
 }
 
-/* Responsive adicionales */
-@media (max-width: 992px) {
+/* ========================================
+   RESPONSIVE - MEDIA QUERIES MEJORADAS
+   ======================================== */
+
+/* Tablets grandes (1024px - 1200px) */
+@media (max-width: 1200px) {
+    .categoria-card .card-title {
+        font-size: 1.2rem;
+    }
+
+    .categoria-card .card-text {
+        font-size: 0.9rem;
+    }
+
+    .caracteristica-card h5 {
+        font-size: 1.05rem;
+    }
+
+    .cta-final h3 {
+        font-size: 1.75rem;
+    }
+}
+
+/* Tablets (768px - 1024px) */
+@media (max-width: 1024px) {
+    .text-gradient {
+        font-size: 2rem;
+    }
+
     .icono-categoria {
         font-size: 3rem;
     }
 
+    .categoria-card {
+        border-radius: 12px;
+        margin-bottom: 1.25rem;
+    }
+
     .categoria-card .card-title {
-        font-size: 1.1rem;
+        font-size: 1.15rem;
+    }
+
+    .categoria-card .card-text {
+        font-size: 0.88rem;
+    }
+
+    .caracteristica-card {
+        padding: 1.25rem;
+        border-radius: 12px;
+    }
+
+    .caracteristica-card h5 {
+        font-size: 1rem;
+        margin-bottom: 0.85rem;
+    }
+
+    .cta-final {
+        border-radius: 20px;
+    }
+
+    .cta-final h3 {
+        font-size: 1.6rem;
+    }
+
+    .cta-final p {
+        font-size: 1.05rem !important;
+    }
+
+    .cta-final .btn-light {
+        padding: 0.7rem 1.5rem;
+        font-size: 0.95rem;
     }
 }
 
+/* Móviles grandes y tablets pequeñas (576px - 768px) */
 @media (max-width: 768px) {
+    .text-gradient {
+        font-size: 1.75rem;
+    }
+
     .icono-categoria {
         font-size: 2.5rem;
+    }
+
+    .categoria-card {
+        border-radius: 10px;
+        margin-bottom: 1rem;
+    }
+
+    .categoria-card:hover {
+        transform: translateY(-5px);
     }
 
     .categoria-card .card-title {
@@ -145,6 +222,20 @@
     .caracteristica-card {
         padding: 1rem;
         margin-bottom: 1rem;
+        border-radius: 10px;
+    }
+
+    .caracteristica-card:hover {
+        transform: translateY(-3px);
+    }
+
+    .caracteristica-card h5 {
+        font-size: 0.95rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .cta-final {
+        border-radius: 18px;
     }
 
     .cta-final .card-body {
@@ -158,15 +249,137 @@
     .cta-final p {
         font-size: 1rem !important;
     }
+
+    .cta-final .btn-light {
+        padding: 0.65rem 1.3rem;
+        font-size: 0.9rem;
+    }
+
+    #destacado .btn-outline-primary {
+        border-width: 1.5px;
+        font-size: 0.9rem;
+        padding: 0.6rem 1.2rem;
+    }
 }
 
-@media (max-width: 480px) {
+/* Móviles pequeños (hasta 576px) */
+@media (max-width: 576px) {
+    .text-gradient {
+        font-size: 1.5rem;
+    }
+
+    .icono-categoria {
+        font-size: 2.25rem;
+    }
+
+    .categoria-card {
+        margin-bottom: 0.85rem;
+    }
+
+    .categoria-card .card-title {
+        font-size: 0.95rem;
+    }
+
+    .categoria-card .card-text {
+        font-size: 0.8rem;
+    }
+
+    .caracteristica-card {
+        padding: 0.85rem;
+        margin-bottom: 0.85rem;
+    }
+
+    .caracteristica-card h5 {
+        font-size: 0.9rem;
+        margin-bottom: 0.65rem;
+    }
+
+    .caracteristica-card p {
+        font-size: 0.8rem;
+    }
+
+    .cta-final {
+        border-radius: 15px;
+    }
+
+    .cta-final .card-body {
+        padding: 1.5rem !important;
+    }
+
+    .cta-final h3 {
+        font-size: 1.3rem;
+    }
+
+    .cta-final p {
+        font-size: 0.9rem !important;
+    }
+
+    .cta-final .btn-light {
+        padding: 0.6rem 1.15rem;
+        font-size: 0.85rem;
+    }
+
+    #destacado .btn-outline-primary {
+        font-size: 0.85rem;
+        padding: 0.55rem 1rem;
+    }
+
+    /* Botones apilados en móvil */
     .d-flex.gap-3 {
         flex-direction: column;
         align-items: stretch;
+        gap: 0.75rem !important;
     }
 
     .d-flex.gap-3 .btn {
         width: 100%;
+    }
+}
+
+/* Pantallas muy pequeñas (hasta 400px) */
+@media (max-width: 400px) {
+    .text-gradient {
+        font-size: 1.3rem;
+    }
+
+    .icono-categoria {
+        font-size: 2rem;
+    }
+
+    .categoria-card .card-title {
+        font-size: 0.9rem;
+    }
+
+    .categoria-card .card-text {
+        font-size: 0.75rem;
+    }
+
+    .caracteristica-card {
+        padding: 0.75rem;
+    }
+
+    .caracteristica-card h5 {
+        font-size: 0.85rem;
+    }
+
+    .caracteristica-card p {
+        font-size: 0.75rem;
+    }
+
+    .cta-final .card-body {
+        padding: 1.25rem !important;
+    }
+
+    .cta-final h3 {
+        font-size: 1.15rem;
+    }
+
+    .cta-final p {
+        font-size: 0.85rem !important;
+    }
+
+    .cta-final .btn-light {
+        padding: 0.55rem 1rem;
+        font-size: 0.8rem;
     }
 }

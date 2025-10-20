@@ -262,3 +262,294 @@ pero le pongo las clases de Bootstrap .btn .btn-primary, .rounded-pill, etc */
 
 /* Con Bootstrap, muchos de estos estilos
 pueden remplazarse con clases tipo .container, .row, .col, .mb-2, .px-3, .py-4 */
+
+/* ========================================
+   RESPONSIVE - MEDIA QUERIES
+   ======================================== */
+
+/* Tablets grandes (1024px - 1200px) */
+@media (max-width: 1200px) {
+    header, footer {
+        min-height: 70px;
+    }
+
+    #h1_titulo {
+        font-size: 1.5rem;
+    }
+
+    nav ul {
+        gap: 0.75rem;
+    }
+
+    nav a {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.9rem;
+    }
+}
+
+/* Tablets (768px - 1024px) */
+@media (max-width: 1024px) {
+    header, footer {
+        min-height: 65px;
+        padding: 0.75rem;
+    }
+
+    .header-content {
+        min-height: 70px;
+        padding: 0 0.75rem;
+    }
+
+    #h1_titulo {
+        font-size: 1.3rem;
+    }
+
+    nav ul {
+        gap: 0.5rem;
+    }
+
+    nav a {
+        padding: 0.4rem 0.7rem;
+        font-size: 0.85rem;
+    }
+
+    /* Sección destacado */
+    #destacado {
+        padding: 1.5rem;
+        margin: 1.5rem auto;
+        max-width: 700px;
+    }
+
+    #destacado h2 {
+        font-size: 1.8rem;
+    }
+
+    #destacado a {
+        padding: 0.7rem 1.5rem;
+        font-size: 1rem;
+    }
+
+    /* Sección nosotros */
+    #nosotros {
+        padding: 1.25rem;
+        max-width: 700px;
+    }
+
+    #nosotros h2 {
+        font-size: 1.5rem;
+    }
+
+    #nosotros p {
+        font-size: 1rem;
+    }
+}
+
+/* Móviles grandes y tablets pequeñas (576px - 768px) */
+@media (max-width: 768px) {
+    /* Efecto confeti menos intenso en móviles */
+    body::before {
+        background-size: 150px 150px, 180px 180px, 220px 220px;
+        animation: confetiMov 15s linear infinite;
+    }
+
+    header, footer {
+        min-height: 60px;
+        padding: 0.5rem;
+    }
+
+    .header-content {
+        min-height: 60px;
+        padding: 0 0.5rem;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    #h1_titulo {
+        font-size: 1.2rem;
+        text-align: center;
+    }
+
+    /* Navbar se convierte en menú vertical en móvil */
+    nav ul {
+        flex-direction: column;
+        gap: 0.5rem;
+        align-items: stretch;
+        width: 100%;
+    }
+
+    nav a {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+        text-align: center;
+        display: block;
+    }
+
+    /* Footer más compacto */
+    #contacto, #mail, #Ftnosotros {
+        font-size: 0.85rem;
+        margin: 0.2rem 0;
+    }
+
+    /* Sección destacado */
+    #destacado {
+        padding: 1.25rem;
+        margin: 1rem auto;
+        max-width: 95%;
+        border-right-width: 5px;
+    }
+
+    #destacado::before {
+        width: 100%;
+        height: 100%;
+    }
+
+    #destacado h2 {
+        font-size: 1.5rem;
+        margin-bottom: 0.75rem;
+    }
+
+    #destacado a {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.95rem;
+        display: block;
+        margin: 0.5rem 0;
+    }
+
+    /* Sección nosotros */
+    #nosotros {
+        padding: 1rem;
+        margin: 0.75rem auto;
+        max-width: 95%;
+        border-left-width: 5px;
+    }
+
+    #nosotros h2 {
+        font-size: 1.3rem;
+        margin-bottom: 0.75rem;
+    }
+
+    #nosotros h2::after {
+        width: 60px;
+        height: 2px;
+        bottom: -6px;
+    }
+
+    #nosotros p {
+        font-size: 0.95rem;
+        line-height: 1.6;
+    }
+}
+
+/* Móviles pequeños (hasta 576px) */
+@media (max-width: 576px) {
+    /* Confeti aún más sutil */
+    body::before {
+        background-size: 120px 120px, 150px 150px, 180px 180px;
+        opacity: 0.5;
+    }
+
+    header, footer {
+        min-height: 55px;
+        padding: 0.4rem;
+    }
+
+    .header-content {
+        min-height: 55px;
+        padding: 0 0.4rem;
+    }
+
+    #h1_titulo {
+        font-size: 1rem;
+        line-height: 1.3;
+    }
+
+    nav a {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.85rem;
+        border-radius: 15px;
+    }
+
+    #contacto, #mail, #Ftnosotros {
+        font-size: 0.8rem;
+    }
+
+    /* Sección destacado */
+    #destacado {
+        padding: 1rem;
+        margin: 0.75rem auto;
+        border-radius: 12px;
+        border-right-width: 4px;
+    }
+
+    #destacado h2 {
+        font-size: 1.3rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .destacado-opcion::after {
+        font-size: 0.9rem;
+    }
+
+    #destacado a {
+        padding: 0.5rem 1rem;
+        font-size: 0.85rem;
+        border-radius: 20px;
+    }
+
+    /* Sección nosotros */
+    #nosotros {
+        padding: 0.85rem;
+        margin: 0.5rem auto;
+        border-radius: 12px;
+        border-left-width: 4px;
+    }
+
+    #nosotros h2 {
+        font-size: 1.15rem;
+    }
+
+    #nosotros h2::after {
+        width: 50px;
+    }
+
+    #nosotros p {
+        font-size: 0.9rem;
+        line-height: 1.5;
+    }
+}
+
+/* Pantallas muy pequeñas (hasta 400px) */
+@media (max-width: 400px) {
+    #h1_titulo {
+        font-size: 0.9rem;
+    }
+
+    nav a {
+        padding: 0.35rem 0.6rem;
+        font-size: 0.8rem;
+    }
+
+    #destacado {
+        padding: 0.75rem;
+    }
+
+    #destacado h2 {
+        font-size: 1.15rem;
+    }
+
+    #destacado a {
+        padding: 0.45rem 0.85rem;
+        font-size: 0.8rem;
+    }
+
+    #nosotros {
+        padding: 0.7rem;
+    }
+
+    #nosotros h2 {
+        font-size: 1.05rem;
+    }
+
+    #nosotros p {
+        font-size: 0.85rem;
+    }
+}
