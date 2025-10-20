@@ -90,52 +90,35 @@ export function validarRUT(rut) {
 }
 
 /**
- * Valida contraseña
- * Debe tener:
- * - Al menos 8 caracteres
- * - Al menos una letra mayúscula
- * - Al menos una letra minúscula
- * - Al menos un número
- * - Al menos un carácter especial
+ * Valida contraseña con longitud entre 4 y 20 caracteres
  */
 export function validarPassword(password) {
-    const regexs = {
-        minLength: /.{8,}/,
-        uppercase: /[A-Z]/,
-        lowercase: /[a-z]/,
-        numbers: /[0-9]/,
-        special: /[!@#$%^&*(),.?":{}|<>]/
-    };
-
-    const validaciones = {
-        minLength: regexs.minLength.test(password),
-        uppercase: regexs.uppercase.test(password),
-        lowercase: regexs.lowercase.test(password),
-        numbers: regexs.numbers.test(password),
-        special: regexs.special.test(password)
-    };
-
-    return {
-        isValid: Object.values(validaciones).every(v => v),
-        errors: Object.entries(validaciones)
-            .filter(([, valid]) => !valid)
-            .map(([key]) => key)
-    };
+    if (!password || password.length < 4 || password.length > 20) {
+        return false;
+    }
+    return true;
 }
 
 /**
- * Hashea una contraseña de forma segura
+ * Hashea una contraseña (simulación simple de hash de 64 caracteres)
  * Nota: En producción usar bcrypt o similar
  */
 export function hashPassword(password) {
-    // Esta es una implementación simple de hash
-    // En producción usar bcrypt u otra librería de hash segura
-    return Array.from(
-        new TextEncoder().encode(password)
-    ).reduce(
-        (hash, byte) => ((hash << 5) - hash) + byte | 0,
-        0
-    ).toString(36);
+    // Implementación simple que siempre devuelve 64 caracteres hexadecimales
+    let hash = 0;
+    for (let i = 0; i < password.length; i++) {
+        const char = password.charCodeAt(i);
+        hash = ((hash << 5) - hash) + char;
+        hash = hash & hash; // Convert to 32bit integer
+    }
+
+    // Convertir a string hex y extender a 64 caracteres
+    let hashStr = Math.abs(hash).toString(16);
+    // Repetir y truncar para llegar a 64 caracteres
+    while (hashStr.length < 64) {
+        hashStr += hashStr;
+    }
+    return hashStr.substring(0, 64);
 }
 
 /**

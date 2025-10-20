@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { generateEventId, validateEvento } from '../services/eventosValidation';
+import { generateEventId, validateEvento } from '../../services/eventosValidation';
 
 describe('Validación de Eventos', () => {
     const eventoValido = {
