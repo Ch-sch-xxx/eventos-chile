@@ -6,6 +6,28 @@ const EVENTOS_KEY = 'eventos-chile';
 const USUARIOS_KEY = 'usuarios-chile';
 
 /**
+ * Función helper para contar asistentes de un evento
+ * Esta es la ÚNICA fuente de verdad para el conteo
+ * @param {Object} evento - Objeto del evento
+ * @returns {number} - Número de asistentes
+ */
+export function contarAsistentes(evento) {
+    if (!evento) return 0;
+    return evento.asistentes?.length || 0;
+}
+
+/**
+ * Función helper para sincronizar el campo totalAsistentes con el array
+ * SIEMPRE usar después de modificar el array de asistentes
+ * @param {Object} evento - Objeto del evento a sincronizar
+ */
+function sincronizarTotalAsistentes(evento) {
+    if (evento) {
+        evento.totalAsistentes = contarAsistentes(evento);
+    }
+}
+
+/**
  * Función simulada para enviar correo de confirmación a invitados
  * En producción real, llamaría a una API de email (SendGrid, Mailgun, etc.)
  */
@@ -46,7 +68,7 @@ export function enviarCorreoConfirmacion(datosAsistente, datosEvento) {
 
     📌 INFORMACIÓN IMPORTANTE:
     • Cupos totales: ${datosEvento.capacidad || 'Ilimitados'}
-    • Asistentes actuales: ${datosEvento.totalAsistentes || 1}
+    • Asistentes actuales: ${contarAsistentes(datosEvento)}
     ${datosEvento.requisitos ? `• Requisitos: ${datosEvento.requisitos}` : ''}
 
     🎫 COMPROBANTE:
@@ -137,7 +159,7 @@ export function registrarAsistenciaLogueado(eventoId, userData) {
 
         // Agregar asistente al evento
         evento.asistentes.push(nuevoAsistente);
-        evento.totalAsistentes = evento.asistentes.length;
+        sincronizarTotalAsistentes(evento); // Sincronizar conteo
         eventos[eventoIndex] = evento;
 
         localStorage.setItem(EVENTOS_KEY, JSON.stringify(eventos));
@@ -214,7 +236,7 @@ export function registrarAsistenciaInvitado(eventoId, invitadoData) {
 
         // Agregar al evento
         evento.asistentes.push(nuevoInvitado);
-        evento.totalAsistentes = evento.asistentes.length;
+        sincronizarTotalAsistentes(evento); // Sincronizar conteo
         eventos[eventoIndex] = evento;
 
         localStorage.setItem(EVENTOS_KEY, JSON.stringify(eventos));
@@ -307,7 +329,7 @@ export function eliminarAsistente(eventoId, asistenteId) {
 
         // Eliminar del array
         evento.asistentes.splice(asistenteIndex, 1);
-        evento.totalAsistentes = evento.asistentes.length;
+        sincronizarTotalAsistentes(evento); // Sincronizar conteo
         eventos[eventoIndex] = evento;
 
         localStorage.setItem(EVENTOS_KEY, JSON.stringify(eventos));
@@ -377,7 +399,7 @@ export function agregarAsistenteManual(eventoId, datosAsistente) {
 
         // Agregar al evento
         evento.asistentes.push(nuevoAsistente);
-        evento.totalAsistentes = evento.asistentes.length;
+        sincronizarTotalAsistentes(evento); // Sincronizar conteo
         eventos[eventoIndex] = evento;
 
         localStorage.setItem(EVENTOS_KEY, JSON.stringify(eventos));
@@ -407,12 +429,13 @@ export function obtenerEstadisticasEvento(eventoId) {
         if (!evento) return null;
 
         const asistentes = evento.asistentes || [];
+        const totalAsistentes = contarAsistentes(evento); // Usar función helper
 
         const estadisticas = {
-            total: asistentes.length,
+            total: totalAsistentes,
             capacidad: evento.capacidad,
-            disponibles: evento.capacidad - asistentes.length,
-            porcentajeLlenado: ((asistentes.length / evento.capacidad) * 100).toFixed(1),
+            disponibles: evento.capacidad - totalAsistentes,
+            porcentajeLlenado: evento.capacidad > 0 ? ((totalAsistentes / evento.capacidad) * 100).toFixed(1) : '0.0',
             registrados: asistentes.filter(a => a.tipoAsistente === 'registrado').length,
             invitados: asistentes.filter(a => a.tipoAsistente === 'invitado').length,
             manuales: asistentes.filter(a => a.tipoAsistente === 'manual').length

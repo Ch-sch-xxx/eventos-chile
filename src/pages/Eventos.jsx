@@ -94,8 +94,8 @@ function Eventos() {
                 break;
             case 'cupos':
                 resultado.sort((a, b) => {
-                    const cuposA = a.capacidad - (a.asistentes?.length || 0);
-                    const cuposB = b.capacidad - (b.asistentes?.length || 0);
+                    const cuposA = a.capacidad - contarAsistentes(a);
+                    const cuposB = b.capacidad - contarAsistentes(b);
                     return cuposB - cuposA;
                 });
                 break;

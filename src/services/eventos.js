@@ -206,7 +206,18 @@ export function obtenerEventos() {
     try {
         const eventosGuardados = localStorage.getItem(STORAGE_KEY);
         if (eventosGuardados) {
-            return JSON.parse(eventosGuardados);
+            const eventos = JSON.parse(eventosGuardados);
+            // Migración: asegurar que todos los eventos tengan totalAsistentes sincronizado
+            const eventosMigrados = eventos.map(evento => ({
+                ...evento,
+                asistentes: evento.asistentes || [],
+                totalAsistentes: evento.asistentes?.length || 0
+            }));
+            // Guardar versión migrada si hubo cambios
+            if (JSON.stringify(eventos) !== JSON.stringify(eventosMigrados)) {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(eventosMigrados));
+            }
+            return eventosMigrados;
         }
         // Si no hay eventos, inicializar con datos de ejemplo
         guardarEventos(eventosIniciales);
@@ -296,12 +307,14 @@ export function editarEvento(indice, eventoEditado, userEmail, isAdmin) {
             return false;
         }
 
-        // Conservar metadatos originales
+        // Conservar metadatos originales Y asistentes
         const eventoActualizado = {
             ...eventoEditado,
             id: eventoOriginal.id,
             creadoPor: eventoOriginal.creadoPor,
             fechaCreacion: eventoOriginal.fechaCreacion,
+            asistentes: eventoOriginal.asistentes || [],
+            totalAsistentes: eventoOriginal.asistentes?.length || 0,
             fechaActualizacion: new Date().toISOString(),
             actualizadoPor: userEmail
         };

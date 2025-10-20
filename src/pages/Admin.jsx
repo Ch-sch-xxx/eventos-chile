@@ -8,6 +8,7 @@ import Footer from '../components/Footer';
 import ModalAsistentes from '../components/ModalAsistentes';
 import Navbar from '../components/Navbar';
 import { useAuth } from '../context/AuthContext';
+import { contarAsistentes } from '../services/asistencia';
 import {
     crearEvento,
     editarEvento,
@@ -930,8 +931,8 @@ function Admin() {
                                         <p className="mb-2"><strong>📍 Lugar:</strong> {eventoDetalle.lugar}</p>
                                         <p className="mb-2"><strong>🎭 Tipo:</strong> {eventoDetalle.tipo}</p>
                                         <p className="mb-2"><strong>📋 Descripción:</strong> {eventoDetalle.descripcion || 'Sin descripción'}</p>
-                                        <p className="mb-2"><strong>👥 Capacidad:</strong> {eventoDetalle.capacidad || 'No informada'}</p>
-                                        <p className="mb-2"><strong>💰 Precio:</strong> {eventoDetalle.precio || 'Gratis'}</p>
+                                        <p className="mb-2"><strong>👥 Asistentes:</strong> {contarAsistentes(eventoDetalle)}/{eventoDetalle.capacidad || 'N/A'}</p>
+                                        <p className="mb-2"><strong>💰 Precio:</strong> {eventoDetalle.precio === 0 ? 'Gratis' : `$${eventoDetalle.precio?.toLocaleString('es-CL') || 'Gratis'}`}</p>
                                     </div>
                                 </div>
                                 <div className="modal-footer border-0">
