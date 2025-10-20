@@ -1664,6 +1664,411 @@ nav a:hover {
 }
 
 /* ═══════════════════════════════════════════════════════════════
+   MODAL DE PARTICIPANTES MEJORADO - NUEVO DISEÑO
+   ═══════════════════════════════════════════════════════════════ */
+
+.modal-overlay-participantes {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    padding: 1rem;
+    backdrop-filter: blur(5px);
+    animation: fadeInModal 0.3s ease;
+}
+
+@keyframes fadeInModal {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.modal-content-participantes {
+    background: white;
+    border-radius: 20px;
+    max-width: 900px;
+    width: 100%;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
+    animation: slideUpModal 0.4s ease;
+}
+
+@keyframes slideUpModal {
+    from {
+        opacity: 0;
+        transform: translateY(60px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Header del modal */
+.modal-header-participantes {
+    padding: 2rem;
+    background: linear-gradient(135deg, var(--primario) 0%, #5a52d5 100%);
+    border-radius: 20px 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.modal-header-participantes::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 20px,
+        rgba(255,255,255,0.03) 20px,
+        rgba(255,255,255,0.03) 40px
+    );
+}
+
+.header-titulo-section {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    position: relative;
+    z-index: 1;
+}
+
+.header-icon {
+    width: 60px;
+    height: 60px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.header-titulo {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: white;
+    margin: 0;
+    line-height: 1.2;
+}
+
+.header-subtitulo {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0.25rem 0 0 0;
+    font-weight: 500;
+}
+
+.btn-cerrar-modal-nuevo {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    position: relative;
+    z-index: 1;
+}
+
+.btn-cerrar-modal-nuevo:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: rotate(90deg) scale(1.1);
+}
+
+/* Body del modal */
+.modal-body-participantes {
+    padding: 2rem;
+    overflow-y: auto;
+    flex: 1;
+}
+
+/* Estado sin participantes */
+.sin-participantes-estado {
+    text-align: center;
+    padding: 4rem 2rem;
+}
+
+.estado-icono {
+    font-size: 5rem;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+}
+
+.sin-participantes-estado h4 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--texto);
+    margin: 0 0 0.5rem 0;
+}
+
+.sin-participantes-estado p {
+    font-size: 1rem;
+    color: #718096;
+    margin: 0;
+}
+
+/* Stats mejoradas */
+.participantes-stats-mejorado {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.stat-card-modal {
+    background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+    border-radius: 16px;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.stat-card-modal:hover {
+    border-color: var(--primario);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(108, 99, 255, 0.2);
+}
+
+.stat-card-modal.total {
+    background: linear-gradient(135deg, rgba(108, 99, 255, 0.1) 0%, rgba(90, 82, 213, 0.1) 100%);
+}
+
+.stat-card-modal.registrados {
+    background: linear-gradient(135deg, rgba(72, 187, 120, 0.1) 0%, rgba(47, 133, 90, 0.1) 100%);
+}
+
+.stat-card-modal.invitados {
+    background: linear-gradient(135deg, rgba(66, 153, 225, 0.1) 0%, rgba(44, 82, 130, 0.1) 100%);
+}
+
+.stat-icono {
+    width: 50px;
+    height: 50px;
+    background: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.stat-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.stat-numero-grande {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--primario);
+    line-height: 1;
+}
+
+.stat-texto {
+    font-size: 0.85rem;
+    color: #718096;
+    font-weight: 600;
+    margin-top: 0.25rem;
+}
+
+/* Lista de participantes */
+.lista-participantes-mejorada {
+    margin-top: 1rem;
+}
+
+.lista-header {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+.lista-header h4 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--texto);
+    margin: 0;
+}
+
+.participantes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.25rem;
+}
+
+.participante-card {
+    background: white;
+    border: 2px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 1.25rem;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.participante-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: var(--primario);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.participante-card:hover {
+    border-color: var(--primario);
+    box-shadow: 0 8px 20px rgba(108, 99, 255, 0.15);
+    transform: translateY(-4px);
+}
+
+.participante-card:hover::before {
+    opacity: 1;
+}
+
+.participante-header-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.participante-avatar-mejorado {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primario) 0%, #5a52d5 100%);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+    box-shadow: 0 4px 12px rgba(108, 99, 255, 0.3);
+}
+
+.badge-tipo-mejorado {
+    padding: 0.4rem 0.9rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.badge-tipo-mejorado.registrado {
+    background: linear-gradient(135deg, #48BB78 0%, #38A169 100%);
+    color: white;
+}
+
+.badge-tipo-mejorado.invitado {
+    background: linear-gradient(135deg, #4299E1 0%, #3182CE 100%);
+    color: white;
+}
+
+.badge-tipo-mejorado.manual {
+    background: linear-gradient(135deg, #ED8936 0%, #DD6B20 100%);
+    color: white;
+}
+
+.participante-info-mejorada {
+    margin-top: 0.5rem;
+}
+
+.participante-nombre-mejorado {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--texto);
+    margin: 0 0 1rem 0;
+}
+
+.participante-datos {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.dato-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem;
+    background: #f7fafc;
+    border-radius: 8px;
+}
+
+.dato-row.fecha {
+    background: rgba(108, 99, 255, 0.05);
+}
+
+.dato-icono {
+    font-size: 1.1rem;
+    flex-shrink: 0;
+}
+
+.dato-texto {
+    font-size: 0.9rem;
+    color: #4a5568;
+    font-weight: 500;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Footer del modal */
+.modal-footer-participantes {
+    padding: 1.5rem 2rem;
+    border-top: 2px solid #e2e8f0;
+    display: flex;
+    justify-content: center;
+    background: #f7fafc;
+    border-radius: 0 0 20px 20px;
+}
+
+.btn-cerrar-footer {
+    padding: 0.75rem 2.5rem;
+    background: linear-gradient(135deg, var(--primario) 0%, #5a52d5 100%);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(108, 99, 255, 0.3);
+}
+
+.btn-cerrar-footer:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(108, 99, 255, 0.4);
+}
+
+/* ═══════════════════════════════════════════════════════════════
    RESPONSIVE DESIGN - MOBILE & TABLET
    ═══════════════════════════════════════════════════════════════ */
 
@@ -1843,5 +2248,165 @@ nav a:hover {
 
     .container {
         max-width: 1320px;
+    }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE - MODAL DE PARTICIPANTES
+   ═══════════════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+    .modal-content-participantes {
+        border-radius: 16px;
+        max-height: 95vh;
+    }
+
+    .modal-header-participantes {
+        padding: 1.5rem 1rem;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .header-titulo-section {
+        width: 100%;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+    }
+
+    .header-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 1.5rem;
+    }
+
+    .header-titulo {
+        font-size: 1.5rem;
+    }
+
+    .header-subtitulo {
+        font-size: 0.9rem;
+    }
+
+    .btn-cerrar-modal-nuevo {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        width: 38px;
+        height: 38px;
+        font-size: 1.2rem;
+    }
+
+    .modal-body-participantes {
+        padding: 1.5rem 1rem;
+    }
+
+    .participantes-stats-mejorado {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .stat-card-modal {
+        padding: 1rem;
+    }
+
+    .stat-icono {
+        width: 44px;
+        height: 44px;
+        font-size: 1.25rem;
+    }
+
+    .stat-numero-grande {
+        font-size: 1.5rem;
+    }
+
+    .stat-texto {
+        font-size: 0.75rem;
+    }
+
+    .participantes-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .participante-card {
+        padding: 1rem;
+    }
+
+    .participante-avatar-mejorado {
+        width: 48px;
+        height: 48px;
+        font-size: 1.25rem;
+    }
+
+    .badge-tipo-mejorado {
+        padding: 0.35rem 0.75rem;
+        font-size: 0.7rem;
+    }
+
+    .participante-nombre-mejorado {
+        font-size: 1rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .dato-row {
+        padding: 0.4rem 0.5rem;
+    }
+
+    .dato-icono {
+        font-size: 1rem;
+    }
+
+    .dato-texto {
+        font-size: 0.85rem;
+    }
+
+    .modal-footer-participantes {
+        padding: 1rem;
+    }
+
+    .btn-cerrar-footer {
+        padding: 0.65rem 2rem;
+        font-size: 0.95rem;
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .modal-overlay-participantes {
+        padding: 0.5rem;
+    }
+
+    .modal-content-participantes {
+        border-radius: 12px;
+    }
+
+    .modal-header-participantes {
+        padding: 1.25rem 0.75rem;
+        border-radius: 12px 12px 0 0;
+    }
+
+    .header-titulo {
+        font-size: 1.3rem;
+    }
+
+    .btn-cerrar-modal-nuevo {
+        width: 36px;
+        height: 36px;
+    }
+
+    .modal-body-participantes {
+        padding: 1rem 0.75rem;
+    }
+
+    .participante-card {
+        padding: 0.85rem;
+    }
+
+    .modal-footer-participantes {
+        padding: 0.85rem;
+        border-radius: 0 0 12px 12px;
     }
 }
