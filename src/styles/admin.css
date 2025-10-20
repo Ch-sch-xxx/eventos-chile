@@ -341,11 +341,11 @@ nav a:hover {
 }
 
 .btn-editar {
-    background: linear-gradient(135deg, #28a745, #34ce57);
+    background: linear-gradient(135deg, var(--acento), #f6ad55);
 }
 
 .btn-eliminar {
-    background: linear-gradient(135deg, #dc3545, #e74c3c);
+    background: linear-gradient(135deg, var(--secundario), #4A5568);
 }
 
 .btn-ver:hover, .btn-editar:hover, .btn-eliminar:hover {
@@ -507,15 +507,15 @@ nav a:hover {
 }
 
 .alert-success {
-    background: linear-gradient(135deg, #d4edda, #c3e6cb) !important;
-    color: #155724 !important;
-    border-left: 4px solid #28a745 !important;
+    background: linear-gradient(135deg, #e9e6ff, #d4d0ff) !important;
+    color: var(--primario) !important;
+    border-left: 4px solid var(--primario) !important;
 }
 
 .alert-danger {
-    background: linear-gradient(135deg, #f8d7da, #f5c6cb) !important;
-    color: #721c24 !important;
-    border-left: 4px solid #dc3545 !important;
+    background: linear-gradient(135deg, var(--acento-suave), #ffc6a5) !important;
+    color: #c05621 !important;
+    border-left: 4px solid var(--acento) !important;
 }
 
 .alert strong {
@@ -644,23 +644,8 @@ nav a:hover {
     box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 
-.btn-ver {
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    color: white;
-}
-
-.btn-editar {
-    background: linear-gradient(135deg, #f093fb, #f5576c);
-    color: white;
-}
-
-.btn-eliminar {
-    background: linear-gradient(135deg, #fa709a, #fee140);
-    color: white;
-}
-
 .btn-asistentes {
-    background: linear-gradient(135deg, #4facfe, #00f2fe);
+    background: linear-gradient(135deg, var(--primario), #9F7AEA);
     color: white;
 }
 

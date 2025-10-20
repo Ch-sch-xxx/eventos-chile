@@ -122,7 +122,7 @@ function EventCard({ evento }) {
                         <h3>{truncarTexto(evento.titulo, 40)}</h3>
                         <p><strong>📋 Descripción:</strong></p>
                         <p className="detalle-completo">{truncarTexto(evento.descripcion, 200)}</p>
-                        <p><strong>👥 Asistentes:</strong> {evento.asistentes?.length || 0}/{evento.capacidad}</p>
+                        <p><strong>👥 Asistentes:</strong> {evento.totalAsistentes || evento.asistentes?.length || 0}/{evento.capacidad}</p>
                         <p><strong>💰 Precio:</strong> {evento.precio === 0 ? 'Gratis' : `$${evento.precio.toLocaleString('es-CL')}`}</p>
                         <p><strong>👤 Organizador:</strong> {truncarTexto(evento.creadoPor, 30)}</p>
                         <p><strong>📆 Creado:</strong> {formatearFechaLegible(evento.fechaCreacion)}</p>
