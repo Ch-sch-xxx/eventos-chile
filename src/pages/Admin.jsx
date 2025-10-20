@@ -327,32 +327,33 @@ function Admin() {
                 // Modo edición
                 const resultado = editarEvento(editandoIndice, eventoData, user.email, isAdmin());
                 if (resultado) {
-                    limpiarFormulario();
-                    setEditandoIndice(null);
-                    cambiarVista('listar');
-                    cargarEventos(); // Recargar después de cambiar vista
-                    alert('✅ Evento editado exitosamente!');
+                    setMensajeExito('✅ Evento editado exitosamente! Redirigiendo...');
+                    setTimeout(() => {
+                        limpiarFormulario();
+                        setEditandoIndice(null);
+                        cambiarVista('listar');
+                        cargarEventos();
+                    }, 1500);
                 } else {
-                    alert('No tienes permisos para editar este evento');
+                    setMensajeError('❌ No tienes permisos para editar este evento');
                 }
             } else {
                 // Modo creación
                 const resultado = crearEvento(eventoData, user.email);
                 if (resultado) {
-                    // Primero limpio y cambio vista
-                    limpiarFormulario();
-                    cambiarVista('listar');
-                    // Luego recargo eventos (para asegurar que se muestren)
-                    cargarEventos();
-                    // Mensaje final
-                    alert('✅ Evento creado exitosamente! Ya puedes verlo en la lista.');
+                    setMensajeExito('✅ Evento creado exitosamente! Redirigiendo...');
+                    setTimeout(() => {
+                        limpiarFormulario();
+                        cambiarVista('listar');
+                        cargarEventos();
+                    }, 1500);
                 } else {
-                    alert('Error al crear el evento');
+                    setMensajeError('❌ Error al crear el evento. Intenta nuevamente.');
                 }
             }
         } catch (error) {
             console.error('Error al guardar evento:', error);
-            alert('Error al guardar el evento');
+            setMensajeError('❌ Error inesperado al guardar el evento');
         }
     };
 
@@ -515,61 +516,100 @@ function Admin() {
                                                     {editandoIndice !== null ? 'Editar Evento' : 'Crear Evento'}
                                                 </h2>
 
+                                                {/* Alerta de éxito */}
+                                                {mensajeExito && (
+                                                    <div className="alert alert-success alert-dismissible fade show" role="alert">
+                                                        <strong>{mensajeExito}</strong>
+                                                        <button type="button" className="btn-close" onClick={() => setMensajeExito('')}></button>
+                                                    </div>
+                                                )}
+
+                                                {/* Alerta de error */}
+                                                {mensajeError && (
+                                                    <div className="alert alert-danger alert-dismissible fade show" role="alert">
+                                                        <strong>{mensajeError}</strong>
+                                                        <button type="button" className="btn-close" onClick={() => setMensajeError('')}></button>
+                                                    </div>
+                                                )}
+
                                                 <form onSubmit={handleSubmit}>
                                                     <div className="row g-3">
                                                         <div className="col-md-6">
-                                                            <label htmlFor="titulo" className="form-label">🎭 Título</label>
+                                                            <label htmlFor="titulo" className="form-label">🎭 Título *</label>
                                                             <input
                                                                 id="titulo"
                                                                 type="text"
-                                                                className="form-control"
+                                                                className={`form-control ${camposTocados.titulo && errores.titulo ? 'is-invalid' : ''} ${camposTocados.titulo && !errores.titulo && formData.titulo ? 'is-valid' : ''}`}
                                                                 value={formData.titulo}
                                                                 onChange={handleInputChange}
-                                                                required
-                                                                minLength="3"
+                                                                onBlur={handleBlur}
                                                                 placeholder="Nombre del evento"
+                                                                maxLength="100"
                                                             />
+                                                            {camposTocados.titulo && errores.titulo && (
+                                                                <div className="invalid-feedback d-block">
+                                                                    {errores.titulo}
+                                                                </div>
+                                                            )}
                                                         </div>
 
                                                         <div className="col-md-6">
-                                                            <label htmlFor="fecha" className="form-label">📅 Fecha</label>
+                                                            <label htmlFor="fecha" className="form-label">📅 Fecha *</label>
                                                             <input
                                                                 id="fecha"
                                                                 type="date"
-                                                                className="form-control"
+                                                                className={`form-control ${camposTocados.fecha && errores.fecha ? 'is-invalid' : ''} ${camposTocados.fecha && !errores.fecha && formData.fecha ? 'is-valid' : ''}`}
                                                                 value={formData.fecha}
                                                                 onChange={handleInputChange}
-                                                                required
+                                                                onBlur={handleBlur}
+                                                                min={new Date().toISOString().split('T')[0]}
+                                                                max="2100-12-31"
                                                             />
+                                                            {camposTocados.fecha && errores.fecha && (
+                                                                <div className="invalid-feedback d-block">
+                                                                    {errores.fecha}
+                                                                </div>
+                                                            )}
                                                         </div>
 
                                                         <div className="col-md-6">
-                                                            <label htmlFor="lugar" className="form-label">📍 Lugar</label>
+                                                            <label htmlFor="lugar" className="form-label">📍 Lugar *</label>
                                                             <input
                                                                 id="lugar"
                                                                 type="text"
-                                                                className="form-control"
+                                                                className={`form-control ${camposTocados.lugar && errores.lugar ? 'is-invalid' : ''} ${camposTocados.lugar && !errores.lugar && formData.lugar ? 'is-valid' : ''}`}
                                                                 value={formData.lugar}
                                                                 onChange={handleInputChange}
-                                                                required
+                                                                onBlur={handleBlur}
                                                                 placeholder="Ubicación del evento"
+                                                                maxLength="150"
                                                             />
+                                                            {camposTocados.lugar && errores.lugar && (
+                                                                <div className="invalid-feedback d-block">
+                                                                    {errores.lugar}
+                                                                </div>
+                                                            )}
                                                         </div>
 
                                                         <div className="col-md-6">
-                                                            <label htmlFor="tipo" className="form-label">🎪 Tipo</label>
+                                                            <label htmlFor="tipo" className="form-label">🎪 Tipo *</label>
                                                             <select
                                                                 id="tipo"
-                                                                className="form-select"
+                                                                className={`form-select ${camposTocados.tipo && errores.tipo ? 'is-invalid' : ''} ${camposTocados.tipo && !errores.tipo && formData.tipo ? 'is-valid' : ''}`}
                                                                 value={formData.tipo}
                                                                 onChange={handleInputChange}
-                                                                required
+                                                                onBlur={handleBlur}
                                                             >
                                                                 <option value="">Selecciona tipo</option>
                                                                 <option>Presencial</option>
                                                                 <option>Streaming</option>
                                                                 <option>Consumo</option>
                                                             </select>
+                                                            {camposTocados.tipo && errores.tipo && (
+                                                                <div className="invalid-feedback d-block">
+                                                                    {errores.tipo}
+                                                                </div>
+                                                            )}
                                                         </div>
 
                                                         {/* Selector de tipo de imagen */}
@@ -648,12 +688,20 @@ function Admin() {
                                                             <input
                                                                 id="capacidad"
                                                                 type="number"
-                                                                className="form-control"
+                                                                className={`form-control ${camposTocados.capacidad && errores.capacidad ? 'is-invalid' : ''} ${camposTocados.capacidad && !errores.capacidad && formData.capacidad ? 'is-valid' : ''}`}
                                                                 value={formData.capacidad}
                                                                 onChange={handleInputChange}
+                                                                onBlur={handleBlur}
                                                                 min="1"
+                                                                max="1000000"
                                                                 placeholder="100"
                                                             />
+                                                            {camposTocados.capacidad && errores.capacidad && (
+                                                                <div className="invalid-feedback d-block">
+                                                                    {errores.capacidad}
+                                                                </div>
+                                                            )}
+                                                            <small className="form-text text-muted">Opcional. Deja vacío para capacidad por defecto (100)</small>
                                                         </div>
 
                                                         <div className="col-md-6">
@@ -661,11 +709,19 @@ function Admin() {
                                                             <input
                                                                 id="precio"
                                                                 type="text"
-                                                                className="form-control"
+                                                                className={`form-control ${camposTocados.precio && errores.precio ? 'is-invalid' : ''} ${camposTocados.precio && !errores.precio && formData.precio ? 'is-valid' : ''}`}
                                                                 value={formData.precio}
                                                                 onChange={handleInputChange}
+                                                                onBlur={handleBlur}
                                                                 placeholder="Gratis o $5000"
+                                                                maxLength="50"
                                                             />
+                                                            {camposTocados.precio && errores.precio && (
+                                                                <div className="invalid-feedback d-block">
+                                                                    {errores.precio}
+                                                                </div>
+                                                            )}
+                                                            <small className="form-text text-muted">Opcional. Ejemplo: Gratis, $5000, $15.000</small>
                                                         </div>
 
                                                         <div className="col-md-12">
@@ -673,11 +729,21 @@ function Admin() {
                                                             <textarea
                                                                 id="descripcion"
                                                                 rows="4"
-                                                                className="form-control"
+                                                                className={`form-control ${camposTocados.descripcion && errores.descripcion ? 'is-invalid' : ''} ${camposTocados.descripcion && !errores.descripcion && formData.descripcion ? 'is-valid' : ''}`}
                                                                 value={formData.descripcion}
                                                                 onChange={handleInputChange}
+                                                                onBlur={handleBlur}
                                                                 placeholder="Describe los detalles y atractivos del evento..."
+                                                                maxLength="500"
                                                             />
+                                                            {camposTocados.descripcion && errores.descripcion && (
+                                                                <div className="invalid-feedback d-block">
+                                                                    {errores.descripcion}
+                                                                </div>
+                                                            )}
+                                                            <small className="form-text text-muted">
+                                                                Opcional. Máximo 500 caracteres ({formData.descripcion.length}/500)
+                                                            </small>
                                                         </div>
 
                                                         <div className="col-12 text-center mt-4">

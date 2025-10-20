@@ -98,8 +98,12 @@ function EventCard({ evento }) {
                 <div className="cara-frontal">
                     <img
                         className="imagen-evento"
-                        src={Eventos}
+                        src={evento.imagen || Eventos}
                         alt={truncarTexto(evento.titulo, 30)}
+                        onError={(e) => {
+                            e.target.onerror = null;
+                            e.target.src = Eventos;
+                        }}
                     />
                     <div className="informacion-evento">
                         <h3>{truncarTexto(evento.titulo, 50)}</h3>

@@ -354,6 +354,14 @@
     display: block;
 }
 
+.form-hint {
+    color: #6c757d;
+    font-size: 0.8rem;
+    margin-top: 0.3rem;
+    display: block;
+    font-style: italic;
+}
+
 .form-actions {
     display: flex;
     gap: 1rem;

@@ -1,7 +1,7 @@
 // Página principal de eventos con carrusel infinito y grilla de tarjetas 3D
 // Mejorada con buscador, filtros, ordenamiento y mejor UX
 
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import EventCard from '../components/EventCard';
 import EventCarousel from '../components/EventCarousel';
 import Footer from '../components/Footer';
@@ -11,13 +11,35 @@ import '../styles/eventos-filtros.css';
 import '../styles/eventos.css';
 
 function Eventos() {
-    const todosLosEventos = obtenerEventos();
+    // Estado para eventos (se actualiza cuando cambia localStorage)
+    const [todosLosEventos, setTodosLosEventos] = useState(obtenerEventos());
 
     // Estados para filtros y búsqueda
     const [busqueda, setBusqueda] = useState('');
     const [filtroTipo, setFiltroTipo] = useState('todos');
     const [filtroCategoria, setFiltroCategoria] = useState('todos');
     const [ordenamiento, setOrdenamiento] = useState('fecha');
+
+    // Efecto para recargar eventos cuando cambie el localStorage
+    useEffect(() => {
+        // Función para recargar eventos
+        const recargarEventos = () => {
+            const eventosActualizados = obtenerEventos();
+            setTodosLosEventos(eventosActualizados);
+        };
+
+        // Escuchar cambios en localStorage (cuando otra pestaña/ventana modifica)
+        window.addEventListener('storage', recargarEventos);
+
+        // Polling cada 2 segundos para detectar cambios en la misma pestaña
+        const intervalo = setInterval(recargarEventos, 2000);
+
+        // Cleanup
+        return () => {
+            window.removeEventListener('storage', recargarEventos);
+            clearInterval(intervalo);
+        };
+    }, []);
 
     // Obtener tipos únicos de eventos
     const tiposDisponibles = useMemo(() => {
@@ -234,7 +256,7 @@ function Eventos() {
                             eventosFiltrados.map((evento) => (
                                 <div
                                     key={evento.id}
-                                    className="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 d-flex justify-content-center align-items-stretch"
+                                    className="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 d-flex justify-content-center align-items-stretch"
                                 >
                                     <EventCard evento={evento} />
                                 </div>

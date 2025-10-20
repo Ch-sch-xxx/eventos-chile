@@ -84,8 +84,12 @@ function EventCarousel({ eventos }) {
                     <article className="Tarjetas" key={`${evento.id}-${index}`}>
                         <img
                             className="imagen-evento"
-                            src={Eventos}
+                            src={evento.imagen || Eventos}
                             alt={truncarTexto(evento.titulo, 30)}
+                            onError={(e) => {
+                                e.target.onerror = null;
+                                e.target.src = Eventos;
+                            }}
                         />
                         <h3>{truncarTexto(evento.titulo, 40)}</h3>
                         <p>

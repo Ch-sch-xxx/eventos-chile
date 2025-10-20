@@ -42,10 +42,44 @@ function ModalAsistentes({ evento, onClose, onUpdate }) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    // Formatear RUT automáticamente
+    const formatearRUTInput = (rut) => {
+        // Eliminar todo lo que no sea número o K
+        let rutLimpio = rut.replace(/[^0-9kK]/g, '');
+
+        // Limitar longitud máxima (8 o 9 dígitos)
+        if (rutLimpio.length > 9) {
+            rutLimpio = rutLimpio.substring(0, 9);
+        }
+
+        // Si no hay nada, retornar vacío
+        if (rutLimpio.length === 0) return '';
+
+        // Separar cuerpo y dígito verificador
+        const cuerpo = rutLimpio.slice(0, -1);
+        const dv = rutLimpio.slice(-1).toUpperCase();
+
+        // Si solo hay un dígito, retornarlo sin formato
+        if (cuerpo.length === 0) return dv;
+
+        // Formatear cuerpo con puntos
+        const cuerpoFormateado = cuerpo.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+
+        return `${cuerpoFormateado}-${dv}`;
+    };
+
     // Manejar cambios en formulario
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setFormData(prev => ({ ...prev, [name]: value }));
+
+        // Si es el campo RUT, aplicar formato
+        if (name === 'rut') {
+            const rutFormateado = formatearRUTInput(value);
+            setFormData(prev => ({ ...prev, [name]: rutFormateado }));
+        } else {
+            setFormData(prev => ({ ...prev, [name]: value }));
+        }
+
         // Limpiar error al escribir
         if (errors[name]) {
             setErrors(prev => ({ ...prev, [name]: null }));
@@ -77,14 +111,17 @@ function ModalAsistentes({ evento, onClose, onUpdate }) {
         const newErrors = {};
 
         if (!validarNombre(formData.nombre)) {
-            newErrors.nombre = 'Ingresa el nombre completo (mínimo 3 caracteres)';
+            newErrors.nombre = 'Ingresa el nombre completo (mínimo 2 caracteres)';
         }
 
         if (!validarEmail(formData.email)) {
             newErrors.email = 'Ingresa un email válido';
         }
 
-        if (!validarRUT(formData.rut)) {
+        // RUT es obligatorio y debe ser válido
+        if (!formData.rut || formData.rut.trim() === '') {
+            newErrors.rut = 'El RUT es obligatorio';
+        } else if (!validarRUT(formData.rut)) {
             newErrors.rut = 'Ingresa un RUT válido (ej: 12.345.678-9)';
         }
 
@@ -156,10 +193,6 @@ function ModalAsistentes({ evento, onClose, onUpdate }) {
                         <div className="stat-card">
                             <div className="stat-numero">{estadisticas.disponibles}</div>
                             <div className="stat-label">Cupos Disponibles</div>
-                        </div>
-                        <div className="stat-card">
-                            <div className="stat-numero">{estadisticas.porcentajeLlenado}%</div>
-                            <div className="stat-label">Ocupación</div>
                         </div>
                     </div>
                 )}
@@ -301,8 +334,10 @@ function ModalAsistentes({ evento, onClose, onUpdate }) {
                                         onChange={handleChange}
                                         placeholder="Ej: 12.345.678-9"
                                         className={errors.rut ? 'input-error' : ''}
+                                        maxLength="12"
                                     />
                                     {errors.rut && <span className="error-text">{errors.rut}</span>}
+                                    <small className="form-hint">Se formatea automáticamente mientras escribes. Acepta 8 o 9 dígitos.</small>
                                 </div>
 
                                 <div className="form-actions">
