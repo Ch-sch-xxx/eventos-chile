@@ -9,9 +9,11 @@ import Home from './pages/Home';
 import Perfil from "./pages/Perfil.jsx";
 
 function App() {
+    // Solo usar basename en producción (GitHub Pages)
+    const basename = import.meta.env.MODE === 'production' ? '/eventos-chile' : '';
+
     return (
-        // basename para GitHub Pages
-        <BrowserRouter basename="/eventos-chile">
+        <BrowserRouter basename={basename}>
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/eventos" element={<Eventos />} />
