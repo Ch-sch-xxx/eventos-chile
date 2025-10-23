@@ -1,22 +1,21 @@
-// src/App.jsx
 // Configuración de rutas principales con React Router
 
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Home from './pages/Home';
-import Eventos from './pages/Eventos';
-import Auth from "./pages/Auth.jsx";
-import Admin from "./pages/Admin.jsx";
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import ProtectedRoute from './context/ProtectedRoute';
+import Admin from "./pages/Admin.jsx";
+import Auth from "./pages/Auth.jsx";
+import Eventos from './pages/Eventos';
+import Home from './pages/Home';
 import Perfil from "./pages/Perfil.jsx";
 
 function App() {
-    return (
-        <BrowserRouter>
-            <Routes>
-                {/* Ruta principal - Home */}
-                <Route path="/" element={<Home />} />
+    // Usar la base que provee Vite (funciona en dev y prod)
+    const basename = (import.meta.env.BASE_URL || '/').replace(/\/$/, '');
 
-                {/* Ruta de eventos - ACTIVADA */}
+    return (
+        <BrowserRouter basename={basename}>
+            <Routes>
+                <Route path="/" element={<Home />} />
                 <Route path="/eventos" element={<Eventos />} />
                 <Route path="/auth" element={<Auth />} />
                 <Route path="/admin" element={<ProtectedRoute><Admin /></ProtectedRoute>}/>
@@ -25,5 +24,6 @@ function App() {
         </BrowserRouter>
     );
 }
+
 
 export default App;

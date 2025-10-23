@@ -1,3 +1,13 @@
+/* Variables CSS - Colores del tema */
+:root {
+    --primario: #6C63FF;
+    --secundario: #4A4A4A;
+    --acento: #ED8936;
+    --texto: #2D3748;
+    --fondo: #ffffff;
+    --fondo-alt: #f7fafc;
+}
+
 /* Reset básico para eliminar márgenes y paddings por defecto del navegador */
 * {
     margin: 0;
@@ -135,4 +145,110 @@ img {
 code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+/* ========================================
+   RESPONSIVE - MEDIA QUERIES MEJORADAS
+   ======================================== */
+
+/* Tablets y pantallas medianas (768px - 1024px) */
+@media (max-width: 1024px) {
+    body {
+        font-size: 15px;
+    }
+
+    .container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    h1 {
+        font-size: calc(1.2rem + 1.2vw);
+    }
+
+    h2 {
+        font-size: calc(1rem + 1vw);
+    }
+}
+
+/* Móviles grandes y tablets pequeñas (576px - 768px) */
+@media (max-width: 768px) {
+    body {
+        font-size: 14px;
+    }
+
+    .container,
+    .container-fluid {
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    h2 {
+        font-size: 1.3rem;
+    }
+
+    h3 {
+        font-size: 1.1rem;
+    }
+
+    /* Ajustar espaciado en móviles */
+    main {
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+    }
+}
+
+/* Móviles pequeños (hasta 576px) */
+@media (max-width: 576px) {
+    body {
+        font-size: 13px;
+    }
+
+    .container,
+    .container-fluid {
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+    }
+
+    h1 {
+        font-size: 1.3rem;
+        line-height: 1.3;
+    }
+
+    h2 {
+        font-size: 1.15rem;
+    }
+
+    h3 {
+        font-size: 1rem;
+    }
+
+    /* Reducir espaciado general */
+    main {
+        padding-top: 0.75rem;
+        padding-bottom: 0.75rem;
+    }
+}
+
+/* Pantallas muy pequeñas (hasta 400px) */
+@media (max-width: 400px) {
+    body {
+        font-size: 12px;
+    }
+
+    h1 {
+        font-size: 1.2rem;
+    }
+
+    h2 {
+        font-size: 1.05rem;
+    }
+
+    h3 {
+        font-size: 0.95rem;
+    }
 }
