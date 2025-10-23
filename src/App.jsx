@@ -9,8 +9,8 @@ import Home from './pages/Home';
 import Perfil from "./pages/Perfil.jsx";
 
 function App() {
-    // Solo usar basename en producción (GitHub Pages)
-    const basename = import.meta.env.MODE === 'production' ? '/eventos-chile' : '';
+    // Usar la base que provee Vite (funciona en dev y prod)
+    const basename = (import.meta.env.BASE_URL || '/').replace(/\/$/, '');
 
     return (
         <BrowserRouter basename={basename}>
