@@ -90,13 +90,45 @@ export function validarRUT(rut) {
 }
 
 /**
- * Valida contraseña con longitud entre 4 y 20 caracteres
+ * Valida contraseña con requisitos de seguridad
+ * Requisitos:
+ * - Mínimo 8 caracteres
+ * - Al menos una mayúscula
+ * - Al menos una minúscula
+ * - Al menos un número
+ * - Al menos un carácter especial
  */
 export function validarPassword(password) {
-    if (!password || password.length < 4 || password.length > 20) {
-        return false;
+    const errores = [];
+    
+    if (!password || password.length < 8) {
+        errores.push('Debe tener al menos 8 caracteres');
     }
-    return true;
+    
+    if (password.length > 50) {
+        errores.push('No debe exceder 50 caracteres');
+    }
+    
+    if (!/[A-Z]/.test(password)) {
+        errores.push('Debe incluir al menos una letra mayúscula');
+    }
+    
+    if (!/[a-z]/.test(password)) {
+        errores.push('Debe incluir al menos una letra minúscula');
+    }
+    
+    if (!/[0-9]/.test(password)) {
+        errores.push('Debe incluir al menos un número');
+    }
+    
+    if (!/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password)) {
+        errores.push('Debe incluir al menos un carácter especial (!@#$%^&*()_+-=[]{}...)');
+    }
+    
+    return {
+        isValid: errores.length === 0,
+        errores: errores
+    };
 }
 
 /**
